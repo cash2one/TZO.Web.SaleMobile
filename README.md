@@ -15,83 +15,48 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 
 ```
 
-# 效果演示
-
-[查看demo请戳这里](http://cangdu.org:8001/)（请用chrome手机模式预览）
-
-### 移动端扫描下方二维码
-
-![](https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/ewm.png)
-
-
 # 目标功能
-- [x] 定位功能 -- 完成
-- [x] 选择城市 -- 完成
-- [x] 搜索地址 -- 完成
-- [x] 展示所选地址附近商家列表 -- 完成
-- [x] 搜索美食，餐馆 -- 完成
-- [x] 根据距离、销量、评分、特色菜、配送方式等进行排序和筛选 -- 完成
-- [x] 餐馆食品列表页 -- 完成
-- [x] 购物车功能 -- 完成
-- [x] 店铺评价页面 -- 完成
-- [x] 单个食品详情页面 -- 完成
-- [x] 商家详情页 -- 完成
-- [x] 登录、注册 -- 完成
-- [x] 修改密码 -- 完成
-- [x] 个人中心 -- 完成
-- [x] 发送短信、语音验证 -- 完成
-- [x] 下单功能 -- 完成 ✨✨🎉🎉
-- [x] 订单列表 -- 完成
-- [x] 订单详情 -- 完成
-- [x] 下载App -- 完成
-- [x] 添加、删除、修改收货地址 -- 完成
-- [x] 帐户信息 -- 完成
-- [x] 服务中心 -- 完成
-- [x] 红包 -- 完成
-- [x] 上传头像 -- 完成
-- [ ] 付款 -- 臣妾做不到啊~~
-
-# 部分截图
-
-
-### 商铺列表页
-
-<img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/msite.png" width="365" height="619"/> <img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/msite.gif" width="365" height="619"/>
-
-
-### 商铺筛选页
-
-<img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/food.png" width="365" height="619"/> <img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/food.gif" width="365" height="619"/>
-
-
-
-### 餐馆食品列表与购物车
-
-<img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/shop_cart.png" width="365" height="619"/> <img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/shop_cart.gif" width="365" height="619"/>
-
-### 确认订单页
-
-<img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/confirm1.png" width="365" height="619"/> <img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/confirmOrder.gif" width="365" height="619"/>
-
-
-### 搜索页
-
-<img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/search.png" width="365" height="619"/> <img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/search.gif" width="365" height="619"/>
-
-
-### 登录页
-
-<img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/login1.png" width="365" height="619"/> <img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/login.gif" width="365" height="619"/>
-
-
-### 个人中心
-
-<img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/profile.png" width="365" height="619"/> <img src="https://github.com/bailicangdu/vue2-elm/blob/master/screenshots/profile.gif" width="365" height="619"/>
-
-
-
-
-
+- [ ] 认证集成 -- 未完成
+- [ ] 选择分公司 corp-list -- 未完成
+- [ ] 展示当前位置附近客户列表 customer-list -- 未完成
+- [ ] 根据距离、业务区域等进行排序和筛选客户 customer-list -- 未完成
+- [ ] 客户搜索 customer-search -- 未完成
+- [ ] 首页 home -- 未完成
+- [ ] 商家详情页 customer-detail -- 未完成
+- [ ] 商家签到页 sign-in -- 未完成
+- [ ] 路线与位置 -- 未完成
+- [ ] 路线规划 location -- 未完成
+- [ ] 定位功能 location -- 未完成
+- [ ] 购物车功能 buy-cart -- 完成
+- [ ] 商品列表 goods-list -- 未完成
+- [ ] 根据商品分类、类目属性等进行排序和筛选商品 goods-list -- 未完成
+- [ ] 商品搜索 goods-search -- 未完成
+- [ ] 单个商品信息 goods-detail -- 未完成
+- [ ] 商品库存 stocks -- 未完成
+- [ ] 下单功能 订货\意向 confirm-order -- 未完成
+- [ ] 库存商品列表 goods-stock -- 未完成
+- [ ] 根据商品分类、类目属性等进行排序和筛选过滤库存商品 goods-stock -- 未完成
+- [ ] 销售出库 order-retail -- 未完成
+- [ ] 订单列表 order-list -- 未完成
+- [ ] 根据时间、单号等进行排序和筛选过滤订单 order-list -- 未完成
+- [ ] 订单详情 order-detail -- 未完成
+- [ ] 退货 order-return -- 未完成
+- [ ] 收款 payment-- 未完成
+- [ ] 收款列表 payment-list -- 未完成
+- [ ] 收款单详情 payment-detail -- 未完成
+- [ ] 客户对账 bill -- 未完成
+- [ ] 新客户 customer -- 未完成
+- [ ] 送货 delivery -- 未完成
+- [ ] 送货明细 delivery-detail -- 未完成
+- [ ] 物流发货 express -- 未完成
+- [ ] 物流发货 express-detail -- 未完成
+- [ ] 知识库-车型搜索 knowledge-search -- 未完成
+- [ ] 知识库-车型详情 knowledge-detail -- 未完成
+- [ ] 微信推广 customer-detail .. we-chat-- 未完成
+- [ ] 个人中心 profile -- 未完成
+- [ ] 出店 shop-go -- 未完成
+- [ ] 回店 shop-back -- 未完成
+- [ ] 设置 profile .. settings -- 未完成
 
 # 项目布局
 
