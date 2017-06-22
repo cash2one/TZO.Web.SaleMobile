@@ -1,138 +1,187 @@
 import App from '../App'
 
+const bill = r => require.ensure([], () => r(require('../page/bill/bill')), 'bill')
+const corpList = r => require.ensure([], () => r(require('../page/corp-list/corp-list')), 'corp-list')
+const customer = r => require.ensure([], () => r(require('../page/customer/customer')), 'home')
+const customerDetail = r => require.ensure([], () => r(require('../page/customer-detail/customer-detail')), 'customer-detail')
+const weChat = r => require.ensure([], () => r(require('../page/customer-detail/we-chat/we-chat')), 'we-chat')
+const customerList = r => require.ensure([], () => r(require('../page/customer-list/customer-list')), 'customer-list')
+const customerSearch = r => require.ensure([], () => r(require('../page/customer-search/customer-search')), 'customer-search')
+const delivery = r => require.ensure([], () => r(require('../page/delivery/delivery')), 'delivery')
+const deliveryDetail = r => require.ensure([], () => r(require('../page/delivery-detail/delivery-detail')), 'delivery-detail')
+const express = r => require.ensure([], () => r(require('../page/express/express')), 'express')
+const expressDetail = r => require.ensure([], () => r(require('../page/express-detail/express-detail')), 'express-detail')
+const goodsDetail = r => require.ensure([], () => r(require('../page/goods-detail/goods-detail')), 'goods-detail')
+const stocks = r => require.ensure([], () => r(require('../page/goods-detail/stocks/stocks')), 'stocks')
+const goodsList = r => require.ensure([], () => r(require('../page/goods-list/goods-list')), 'goods-list')
+const goodsSearch = r => require.ensure([], () => r(require('../page/goods-search/goods-search')), 'goods-search')
+const goodsStock = r => require.ensure([], () => r(require('../page/goods-stock/goods-stock')), 'goods-stock')
 const home = r => require.ensure([], () => r(require('../page/home/home')), 'home')
-const city = r => require.ensure([], () => r(require('../page/city/city')), 'city')
-const msite = r => require.ensure([], () => r(require('../page/msite/msite')), 'msite')
-const search = r => require.ensure([], () => r(require('../page/search/search')), 'search')
-const shop = r => require.ensure([], () => r(require('../page/shop/shop')), 'shop')
-const login = r => require.ensure([], () => r(require('../page/login/login')), 'login')
+const knowledgeDetail = r => require.ensure([], () => r(require('../page/knowledge-detail/knowledge-detail')), 'knowledge-detail')
+const knowledgeSearch = r => require.ensure([], () => r(require('../page/knowledge-search/knowledge-search')), 'hnowledge-search')
+const location = r => require.ensure([], () => r(require('../page/location/location')), 'location')
+const orderConfirm = r => require.ensure([], () => r(require('../page/order-confirm/order-confirm')), 'order-confirm')
+const chooseAddress = r => require.ensure([], () => r(require('../page/order-confirm/choose-address')), 'choose-address')
+const remark = r => require.ensure([], () => r(require('../page/order-confirm/remark')), 'remark')
+const orderList = r => require.ensure([], () => r(require('../page/order-list/order-list')), 'order-list')
+const orderRetail = r => require.ensure([], () => r(require('../page/order-retail/order-retail')), 'order-retail')
+const orderReturn = r => require.ensure([], () => r(require('../page/order-return/order-return')), 'order-return')
+const path = r => require.ensure([], () => r(require('../page/path/path')), 'path')
+const payment = r => require.ensure([], () => r(require('../page/payment/payment')), 'payment')
+const paymentDetail = r => require.ensure([], () => r(require('../page/payment-detail/payment-detail')), 'payment-detail')
+const paymentList = r => require.ensure([], () => r(require('../page/payment-list/payment-list')), 'payment-list')
 const profile = r => require.ensure([], () => r(require('../page/profile/profile')), 'profile')
-const forget = r => require.ensure([], () => r(require('../page/forget/forget')), 'forget')
-const order = r => require.ensure([], () => r(require('../page/order/order')), 'order')
-const orderDetail = r => require.ensure([], () => r(require('../page/order/children/orderDetail')), 'orderDetail')
-const vipcard = r => require.ensure([], () => r(require('../page/vipcard/vipcard')), 'vipcard')
-const invoiceRecord = r => require.ensure([], () => r(require('../page/vipcard/children/invoiceRecord')), 'invoiceRecord')
-const useCart = r => require.ensure([], () => r(require('../page/vipcard/children/useCart')), 'useCart')
-const vipDescription = r => require.ensure([], () => r(require('../page/vipcard/children/vipDescription')), 'vipDescription')
-const food = r => require.ensure([], () => r(require('../page/food/food')), 'food')
-const confirmOrder = r => require.ensure([], () => r(require('../page/confirmOrder/confirmOrder')), 'confirmOrder')
-const remark = r => require.ensure([], () => r(require('../page/confirmOrder/children/remark')), 'remark')
-const payment = r => require.ensure([], () => r(require('../page/confirmOrder/children/payment')), 'payment')
-const userValidation = r => require.ensure([], () => r(require('../page/confirmOrder/children/userValidation')), 'userValidation')
-const invoice = r => require.ensure([], () => r(require('../page/confirmOrder/children/invoice')), 'invoice')
-const chooseAddress = r => require.ensure([], () => r(require('../page/confirmOrder/children/chooseAddress')), 'chooseAddress')
-const addAddress = r => require.ensure([], () => r(require('../page/confirmOrder/children/children/addAddress')), 'addAddress')
-const searchAddress = r => require.ensure([], () => r(require('../page/confirmOrder/children/children/children/searchAddress')), 'searchAddress')
-const foodDetail = r => require.ensure([], () => r(require('../page/shop/children/foodDetail')), 'foodDetail')
-const shopDetail = r => require.ensure([], () => r(require('../page/shop/children/shopDetail')), 'shopDetail')
-const shopSafe = r => require.ensure([], () => r(require('../page/shop/children/children/shopSafe')), 'shopSafe')
-const info = r => require.ensure([], () => r(require('../page/profile/children/info')), 'info')
-const setusername = r => require.ensure([], () => r(require('../page/profile/children/setusername')), 'setusername')
-const address = r => require.ensure([], () => r(require('../page/profile/children/children/address')), 'address')
-const add = r => require.ensure([], () => r(require('../page/profile/children/children/children/add')), 'add')
-const addDetail = r => require.ensure([], () => r(require('../page/profile/children/children/children/children/addDetail')), 'addDetail')
-const balance = r => require.ensure([], () => r(require('../page/balance/balance')), 'balance')
-const balanceDetail = r => require.ensure([], () => r(require('../page/balance/children/detail')), 'balanceDetail')
-const benefit = r => require.ensure([], () => r(require('../page/benefit/benefit')), 'benefit')
-const coupon = r => require.ensure([], () => r(require('../page/benefit/children/coupon')), 'coupon')
-const hbDescription = r => require.ensure([], () => r(require('../page/benefit/children/hbDescription')), 'hbDescription')
-const hbHistory = r => require.ensure([], () => r(require('../page/benefit/children/hbHistory')), 'hbHistory')
-const exchange = r => require.ensure([], () => r(require('../page/benefit/children/exchange')), 'exchange')
-const commend = r => require.ensure([], () => r(require('../page/benefit/children/commend')), 'commend')
-const points = r => require.ensure([], () => r(require('../page/points/points')), 'points')
-const pointsDetail = r => require.ensure([], () => r(require('../page/points/children/detail')), 'pointsDetail')
-const service = r => require.ensure([], () => r(require('../page/service/service')), 'service')
-const questionDetail = r => require.ensure([], () => r(require('../page/service/children/questionDetail')), 'questionDetail')
-const find = r => require.ensure([], () => r(require('../page/find/find')), 'find')
-const download = r => require.ensure([], () => r(require('../page/download/download')), 'download')
-
-
-
+const info = r => require.ensure([], () => r(require('../page/profile/info')), 'info')
+const settings = r => require.ensure([], () => r(require('../page/profile/settings')), 'settings')
+const shopBack = r => require.ensure([], () => r(require('../page/shop-back/shop-back')), 'shop-back')
+const shopGo = r => require.ensure([], () => r(require('../page/shop-go/shop-go')), 'shop-go')
+const signIn = r => require.ensure([], () => r(require('../page/sign-in/sign-in')), 'sign-in')
 
 export default [{
     path: '/',
-    component: App, //顶层路由，对应index.html
-    children: [ //二级路由。对应App.vue
-        //地址为空时跳转home页面
+    component: App, // 顶层路由，对应index.html
+    children: [ // 二级路由。对应App.vue
+        // 地址为空时跳转home页面
         {
             path: '',
             redirect: '/home'
         },
-        //首页城市列表页
+        // 首页客户资料
         {
             path: '/home',
             component: home
         },
-        //当前选择城市页
+        // 客户账单
         {
-            path: '/city/:cityid',
-            component: city
+            path: '/bill/:customerId',
+            component: bill
         },
-        //所有商铺列表页
+        // 可选公司列表
         {
-            path: '/msite',
-            component: msite,
+            path: '/corp-list',
+            component: corpList,
             meta: { keepAlive: true },
         },
-        //特色商铺列表页
+        // 新增客户
         {
-            path: '/food',
-            component: food
+            path: '/customer',
+            component: customer
         },
-        //搜索页
+        // 客户详情
         {
-            path: '/search/:geohash',
-            component: search
-        },
-        //商铺详情页
-        {
-            path: '/shop',
-            component: shop,
+            path: '/customer-detail/:customerId',
+            component: customerDetail,
             children: [{
-                path: 'foodDetail', //食品详情页
-                component: foodDetail,
-            }, {
-                path: 'shopDetail', //商铺详情页
-                component: shopDetail,
-                children: [{
-                    path: 'shopSafe', //商铺安全认证页
-                    component: shopSafe,
-                }, ]
+                path: 'we-chat',
+                component: weChat
             }]
         },
-        //确认订单页
+        // 客户搜索
         {
-            path: '/confirmOrder',
-            component: confirmOrder,
-            children: [{
-                path: 'remark', //订单备注
-                component: remark,
-            }, {
-                path: 'invoice', //发票抬头
-                component: invoice,
-            }, {
-                path: 'payment', //付款页面
-                component: payment,
-            }, {
-                path: 'userValidation', //用户验证
-                component: userValidation,
-            }, {
-                path: 'chooseAddress', //选择地址
-                component: chooseAddress,
-                children: [{
-                    path: 'addAddress', //添加地址
-                    component: addAddress,
-                    children: [{
-                        path: 'searchAddress', //搜索地址
-                        component: searchAddress,
-                    }]
-                }, ]
-            }, ]
+            path: '/customer-search',
+            component: customerSearch
         },
-        //登录注册页
+        // 送货
         {
-            path: '/login',
-            component: login
+            path: '/delivery',
+            component: delivery,
+            children: [{
+                path: '/delivery-detail', // 送货详情
+                component: deliveryDetail
+            }]
+        },
+        // 发货
+        {
+            path: '/express',
+            component: express,
+            children: [{
+                path: '/express-detail', // 发货详情
+                component: expressDetail
+            }]
+        },
+        // 商品详情
+        {
+            path: '/goods-detail',
+            component: goodsDetail
+        },
+        // 商品列表
+        {
+            path: '/goods-list',
+            component: goodsList
+        },
+        // 商品搜索
+        {
+            path: '/goods-search',
+            component: goodsSearch
+        },
+        // 当前仓库有库存商品
+        {
+            path: '/goods-stock',
+            component: goodsStock
+        },
+        // 知识库搜索
+        {
+            path: '/knowledge-search',
+            component: knowledgeSearch,
+            children: [{
+                path: 'detail', // 知识库详情
+                component: knowledgeDetail
+            }]
+        },
+        // 定位
+        {
+            path: '/location',
+            component: location
+        },
+        // 确认订单页
+        {
+            path: '/order-confirm',
+            component: orderConfirm,
+            children: [{
+                path: 'remark', // 订单备注
+                component: remark
+            }, {
+                path: 'choose-address', // 选择地址
+                component: chooseAddress
+            },]
+        },
+        // 订单列表
+        {
+            path: '/order-list',
+            component: orderList,
+            children: [{
+                path: '/order-detail', // 订单详情
+                component: orderDetail
+            }]
+        },
+        // 销售出库
+        {
+            path: '/order-retail',
+            component: orderRetail
+        },
+        // 销售退货
+        {
+            path: '/order-return',
+            component: orderReturn
+        },
+        // 路径
+        {
+            path: '/path',
+            component: path
+        },
+        // 支付
+        {
+            path: '/payment',
+            component: payment
+        },
+        // 支付列表
+        {
+            path: '/payment-list',
+            component: paymentList,
+            children: [{
+                path: '/payment-detail', // 支付明细
+                component: paymentDetail
+            }]
         },
         //个人信息页
         {
@@ -140,115 +189,27 @@ export default [{
             component: profile,
             children: [{
                 path: 'info', //个人信息详情页
-                component: info,
-                children: [{
-                    path: 'address',
-                    component: address,     //编辑地址
-                    children:[{
-                        path:'add',
-                        component:add,
-                        children:[{
-                            path:'addDetail',
-                            component:addDetail
-                        }]
-                    }]
-                }]
+                component: info
             },
             {
-                path: 'setusername',
-                component: setusername,
-            },
-            {
-                path: 'service', //服务中心
-                component: service,
-            },]
+                path: 'settings',
+                component: settings
+            }]
         },
-        //修改密码页
+        // 回店
         {
-            path: '/forget',
-            component: forget
+            path: '/shop-back',
+            component: shopBack
         },
-        //订单列表页
+        // 离店
         {
-            path: '/order',
-            component: order,
-            children: [{
-                path: 'orderDetail', //订单详情页
-                component: orderDetail,
-            }, ]
+            path: '/shop-go',
+            component: shopGo
         },
-        //vip卡页
+        // 签到
         {
-            path: '/vipcard',
-            component: vipcard,
-            children: [{
-                path: 'invoiceRecord', //开发票
-                component: invoiceRecord,
-            }, {
-                path: 'useCart', //购买会员卡
-                component: useCart,
-            }, {
-                path: 'vipDescription', //会员说明
-                component: vipDescription,
-            },]
-        },
-        //发现页
-        {
-            path: '/find',
-            component: find
-        },
-        //下载页
-        {
-            path: '/download',
-            component: download
-        },
-        //服务中心
-        {
-            path: '/service',
-            component: service,
-             children: [{
-                path: 'questionDetail', //订单详情页
-                component: questionDetail,
-            }, ]
-        },
-        //余额
-        {
-            path: 'balance',
-            component: balance,
-            children: [{
-                path: 'detail', //余额说明
-                component: balanceDetail,
-            }, ]
-        },
-        //我的优惠页
-        {
-            path: 'benefit',
-            component: benefit,
-            children: [{
-                path: 'coupon', //代金券说明
-                component: coupon,
-            }, {
-                path: 'hbDescription', //红包说明
-                component: hbDescription,
-            }, {
-                path: 'hbHistory', //历史红包
-                component: hbHistory,
-            }, {
-                path: 'exchange', //兑换红包
-                component: exchange,
-            }, {
-                path: 'commend', //推荐有奖
-                component: commend,
-            },]
-        },
-        //我的积分页
-        {
-            path: 'points',
-            component: points,
-            children: [{
-                path: 'detail', //积分说明
-                component: pointsDetail,
-            }, ]
+            path: '/sign-in',
+            component: signIn
         },
     ]
 }]
