@@ -18,8 +18,8 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 # 目标功能
 - [ ] 认证集成 -- 未完成
 - [ ] 选择分公司 corp-list -- 未完成
-- [ ] 展示当前位置附近客户列表 customer-list -- 未完成
-- [ ] 根据距离、业务区域等进行排序和筛选客户 customer-list -- 未完成
+- [ ] 展示当前位置附近客户列表 customer-search -- 未完成
+- [ ] 根据距离、业务区域等进行排序和筛选客户 customer-search -- 未完成
 - [ ] 客户搜索 customer-search -- 未完成
 - [ ] 首页 home -- 未完成
 - [ ] 商家详情页 customer-detail -- 未完成

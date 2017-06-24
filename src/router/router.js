@@ -5,7 +5,6 @@ const corpList = r => require.ensure([], () => r(require('../page/corp-list/corp
 const customer = r => require.ensure([], () => r(require('../page/customer/customer')), 'home')
 const customerDetail = r => require.ensure([], () => r(require('../page/customer-detail/customer-detail')), 'customer-detail')
 const weChat = r => require.ensure([], () => r(require('../page/customer-detail/we-chat/we-chat')), 'we-chat')
-const customerList = r => require.ensure([], () => r(require('../page/customer-list/customer-list')), 'customer-list')
 const customerSearch = r => require.ensure([], () => r(require('../page/customer-search/customer-search')), 'customer-search')
 const delivery = r => require.ensure([], () => r(require('../page/delivery/delivery')), 'delivery')
 const deliveryDetail = r => require.ensure([], () => r(require('../page/delivery-detail/delivery-detail')), 'delivery-detail')
@@ -13,7 +12,6 @@ const express = r => require.ensure([], () => r(require('../page/express/express
 const expressDetail = r => require.ensure([], () => r(require('../page/express-detail/express-detail')), 'express-detail')
 const goodsDetail = r => require.ensure([], () => r(require('../page/goods-detail/goods-detail')), 'goods-detail')
 const stocks = r => require.ensure([], () => r(require('../page/goods-detail/stocks/stocks')), 'stocks')
-const goodsList = r => require.ensure([], () => r(require('../page/goods-list/goods-list')), 'goods-list')
 const goodsSearch = r => require.ensure([], () => r(require('../page/goods-search/goods-search')), 'goods-search')
 const goodsStock = r => require.ensure([], () => r(require('../page/goods-stock/goods-stock')), 'goods-stock')
 const home = r => require.ensure([], () => r(require('../page/home/home')), 'home')
@@ -23,6 +21,7 @@ const location = r => require.ensure([], () => r(require('../page/location/locat
 const orderConfirm = r => require.ensure([], () => r(require('../page/order-confirm/order-confirm')), 'order-confirm')
 const chooseAddress = r => require.ensure([], () => r(require('../page/order-confirm/choose-address')), 'choose-address')
 const remark = r => require.ensure([], () => r(require('../page/order-confirm/remark')), 'remark')
+const orderDetail = r => require.ensure([], () => r(require('../page/order-detail/order-detail')), 'order-detail')
 const orderList = r => require.ensure([], () => r(require('../page/order-list/order-list')), 'order-list')
 const orderRetail = r => require.ensure([], () => r(require('../page/order-retail/order-retail')), 'order-retail')
 const orderReturn = r => require.ensure([], () => r(require('../page/order-return/order-return')), 'order-return')
@@ -103,11 +102,6 @@ export default [{
         {
             path: '/goods-detail',
             component: goodsDetail
-        },
-        // 商品列表
-        {
-            path: '/goods-list',
-            component: goodsList
         },
         // 商品搜索
         {
