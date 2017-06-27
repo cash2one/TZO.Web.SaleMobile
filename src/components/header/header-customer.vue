@@ -15,19 +15,21 @@
         </svg>
         <img :src="imgBaseUrl+'15cc9bbe3981688.jpg'" class="header_cover_img">
         <section class="description_header">
-            <router-link to="/shop/shopDetail" class="description_top">
+            <section class="description_top">
                 <section class="description_left">
                     <img :src="imgBaseUrl+'15cc9bbe3981688.jpg'">
                 </section>
-                <section class="description_right">
+                <router-link to="/customer/detail/1" class="description_right">
                     <h4 class="description_title ellipsis">客户名称</h4>
                     <p class="description_text">联系人：李四</p>
                     <p class="description_promotion ellipsis">联系电话：11112222919</p>
-                </section>
-                <svg class="sign_in">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
-                </svg>
-            </router-link>
+                </router-link>
+                <router-link to="/customer/sgin-in">
+                    <svg class="sign_in">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
+                    </svg>
+                </router-link>
+            </section>
             <footer class="description_footer">
                 <p class="ellipsis">
                     地址：济南市高新区舜泰广场8号楼东404

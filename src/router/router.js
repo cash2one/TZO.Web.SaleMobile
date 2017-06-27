@@ -50,42 +50,47 @@ export default [{
             path: '/home',
             component: home
         },
-        // 客户账单
-        {
-            path: '/bill/:customerId',
-            component: bill
-        },
         // 可选公司列表
         {
             path: '/corp-list',
             component: corpList,
             meta: { keepAlive: true },
         },
-        // 新增客户
         {
             path: '/customer',
-            component: customer
-        },
-        // 客户详情
-        {
-            path: '/customer-detail/:customerId',
-            component: customerDetail,
-            children: [{
-                path: 'we-chat',
-                component: weChat
-            }]
-        },
-        // 客户搜索
-        {
-            path: '/customer-search',
-            component: customerSearch
+            children: [
+                {
+                    path: '/new', // 新增客户
+                    component: customer,
+                },
+                {
+                    path: '/detail/:customerId', // 客户详情
+                    component: customerDetail,
+                    children: [{
+                        path: 'we-chat',
+                        component: weChat
+                    }]
+                },
+                {
+                    path: '/search', // 客户搜索
+                    component: customerSearch
+                },
+                {
+                    path: '/sign-in', // 签到
+                    component: signIn
+                },
+                {
+                    path: '/bill/:customerId', // 客户账单
+                    component: bill
+                },
+            ]
         },
         // 送货
         {
             path: '/delivery',
             component: delivery,
             children: [{
-                path: '/delivery-detail', // 送货详情
+                path: '/detail', // 送货详情
                 component: deliveryDetail
             }]
         },
@@ -94,24 +99,26 @@ export default [{
             path: '/express',
             component: express,
             children: [{
-                path: '/express-detail', // 发货详情
+                path: '/detail', // 发货详情
                 component: expressDetail
             }]
         },
-        // 商品详情
         {
-            path: '/goods-detail',
-            component: goodsDetail
-        },
-        // 商品搜索
-        {
-            path: '/goods-search',
-            component: goodsSearch
-        },
-        // 当前仓库有库存商品
-        {
-            path: '/goods-stock',
-            component: goodsStock
+            path: '/goods',
+            children: [
+                {
+                    path: '/search', // 商品搜索
+                    component: goodsSearch
+                },
+                {
+                    path: '/detail', // 商品详情
+                    component: goodsDetail
+                },
+                {
+                    path: '/stock', // 当前仓库有库存商品
+                    component: goodsStock
+                },
+            ]
         },
         // 知识库搜索
         {
@@ -122,60 +129,64 @@ export default [{
                 component: knowledgeDetail
             }]
         },
-        // 定位
         {
-            path: '/location',
-            component: location
-        },
-        // 确认订单页
-        {
-            path: '/order-confirm',
-            component: orderConfirm,
-            children: [{
-                path: 'remark', // 订单备注
-                component: remark
-            }, {
-                path: 'choose-address', // 选择地址
-                component: chooseAddress
-            },]
-        },
-        // 订单列表
-        {
-            path: '/order-list',
-            component: orderList,
-            children: [{
-                path: '/order-detail', // 订单详情
-                component: orderDetail
-            }]
-        },
-        // 销售出库
-        {
-            path: '/order-retail',
-            component: orderRetail
-        },
-        // 销售退货
-        {
-            path: '/order-return',
-            component: orderReturn
+            path: '/order',
+            children: [
+                {
+                    path: '/list',// 订单列表
+                    component: orderList
+                },
+                {
+                    path: '/detail', // 订单详情
+                    component: orderDetail
+                },
+                {
+                    path: '/confirm', // 确认订单页
+                    component: orderConfirm,
+                    children: [{
+                        path: 'remark', // 订单备注
+                        component: remark
+                    }, {
+                        path: 'choose-address', // 选择地址
+                        component: chooseAddress
+                    },]
+                },
+                {
+                    path: '/retail', // 销售出库
+                    component: orderRetail
+                },
+                {
+                    path: '/return', // 销售退货
+                    component: orderReturn
+                },
+            ]
         },
         // 路径
         {
             path: '/path',
             component: path
         },
-        // 支付
+        // 定位
+        {
+            path: '/location',
+            component: location
+        },
         {
             path: '/payment',
-            component: payment
-        },
-        // 支付列表
-        {
-            path: '/payment-list',
-            component: paymentList,
-            children: [{
-                path: '/payment-detail', // 支付明细
-                component: paymentDetail
-            }]
+            children: [
+                {
+                    path: '/new', // 支付
+                    component: payment
+                },
+                {
+                    path: '/list',// 支付列表
+                    component: paymentList
+                },
+                {
+                    path: '/detail', // 支付明细
+                    component: paymentDetail
+                }
+            ]
         },
         //个人信息页
         {
@@ -200,10 +211,6 @@ export default [{
             path: '/shop-go',
             component: shopGo
         },
-        // 签到
-        {
-            path: '/sign-in',
-            component: signIn
-        },
+
     ]
 }]
