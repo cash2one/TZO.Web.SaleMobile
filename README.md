@@ -87,6 +87,7 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 │   │   └── rem.js                              // px转换rem
 │   ├── images                                  // 公共图片
 │   ├── page
+│   │   ├── bill                                // 客户对帐
 │   │   ├── balance
 │   │   │   ├── balance.vue                     // 余额页
 │   │   │   └── children

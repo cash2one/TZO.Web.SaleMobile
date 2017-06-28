@@ -1,40 +1,59 @@
 import App from '../App'
 
-const bill = r => require.ensure([], () => r(require('../page/bill/bill')), 'bill')
+
 const corpList = r => require.ensure([], () => r(require('../page/corp-list/corp-list')), 'corp-list')
-const customer = r => require.ensure([], () => r(require('../page/customer/customer')), 'home')
-const customerDetail = r => require.ensure([], () => r(require('../page/customer-detail/customer-detail')), 'customer-detail')
-const weChat = r => require.ensure([], () => r(require('../page/customer-detail/we-chat/we-chat')), 'we-chat')
-const customerSearch = r => require.ensure([], () => r(require('../page/customer-search/customer-search')), 'customer-search')
-const delivery = r => require.ensure([], () => r(require('../page/delivery/delivery')), 'delivery')
-const deliveryDetail = r => require.ensure([], () => r(require('../page/delivery-detail/delivery-detail')), 'delivery-detail')
-const express = r => require.ensure([], () => r(require('../page/express/express')), 'express')
-const expressDetail = r => require.ensure([], () => r(require('../page/express-detail/express-detail')), 'express-detail')
-const goodsDetail = r => require.ensure([], () => r(require('../page/goods-detail/goods-detail')), 'goods-detail')
-const stocks = r => require.ensure([], () => r(require('../page/goods-detail/stocks/stocks')), 'stocks')
-const goodsSearch = r => require.ensure([], () => r(require('../page/goods-search/goods-search')), 'goods-search')
-const goodsStock = r => require.ensure([], () => r(require('../page/goods-stock/goods-stock')), 'goods-stock')
+
+const customer = r => require.ensure([], () => r(require('../page/customer/customer')), 'customer')
+const customerBill = r => require.ensure([], () => r(require('../page/customer/bill/customer-bill')), 'customer-bill')
+const customerDetail = r => require.ensure([], () => r(require('../page/customer/detail/customer-detail')), 'customer-detail')
+const customerDetailWeChat = r => require.ensure([], () => r(require('../page/customer/detail/customer-detail-we-chat')), 'customer-detail-we-chat')
+const customerNew = r => require.ensure([], () => r(require('../page/customer/new/customer-new')), 'customer-new')
+const customerSearch = r => require.ensure([], () => r(require('../page/customer/search/customer-search')), 'customer-search')
+const customerSignIn = r => require.ensure([], () => r(require('../page/customer/sign-in/customer-sign-in')), 'customer-sign-in')
+
+const deliveryList = r => require.ensure([], () => r(require('../page/delivery/list/delivery-list')), 'delivery-list')
+const deliveryDetail = r => require.ensure([], () => r(require('../page/delivery/detail/delivery-detail')), 'delivery-detail')
+
+const expressList = r => require.ensure([], () => r(require('../page/express/list/express-list')), 'express-list')
+const expressDetail = r => require.ensure([], () => r(require('../page/express/detail/express-detail')), 'express-detail')
+
+const goods = r => require.ensure([], () => r(require('../page/goods/goods')), 'goods')
+const goodsDetail = r => require.ensure([], () => r(require('../page/goods/detail/goods-detail')), 'goods-detail')
+const goodsDetailStocks = r => require.ensure([], () => r(require('../page/goods/detail/goods-detail-stocks')), 'goods-detail-stocks')
+const goodsSearch = r => require.ensure([], () => r(require('../page/goods/search/goods-search')), 'goods-search')
+const goodsStock = r => require.ensure([], () => r(require('../page/goods/stock/goods-stock')), 'goods-stock')
+
 const home = r => require.ensure([], () => r(require('../page/home/home')), 'home')
-const knowledgeDetail = r => require.ensure([], () => r(require('../page/knowledge-detail/knowledge-detail')), 'knowledge-detail')
-const knowledgeSearch = r => require.ensure([], () => r(require('../page/knowledge-search/knowledge-search')), 'hnowledge-search')
+
+const knowledge = r => require.ensure([], () => r(require('../page/knowledge/knowledge')), 'knowledge')
+const knowledgeDetail = r => require.ensure([], () => r(require('../page/knowledge/detail/knowledge-detail')), 'knowledge-detail')
+const knowledgeSearch = r => require.ensure([], () => r(require('../page/knowledge/search/knowledge-search')), 'hnowledge-search')
+
 const location = r => require.ensure([], () => r(require('../page/location/location')), 'location')
-const orderConfirm = r => require.ensure([], () => r(require('../page/order-confirm/order-confirm')), 'order-confirm')
-const chooseAddress = r => require.ensure([], () => r(require('../page/order-confirm/choose-address')), 'choose-address')
-const remark = r => require.ensure([], () => r(require('../page/order-confirm/remark')), 'remark')
-const orderDetail = r => require.ensure([], () => r(require('../page/order-detail/order-detail')), 'order-detail')
-const orderList = r => require.ensure([], () => r(require('../page/order-list/order-list')), 'order-list')
-const orderRetail = r => require.ensure([], () => r(require('../page/order-retail/order-retail')), 'order-retail')
-const orderReturn = r => require.ensure([], () => r(require('../page/order-return/order-return')), 'order-return')
+
+const order = r => require.ensure([], () => r(require('../page/order/order')), 'order')
+const orderConfirm = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm')), 'order-confirm')
+const orderConfirmChooseAddress = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-choose-address')), 'order-confirm-choose-address')
+const orderConfirmRemark = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-remark')), 'order-confirm-remark')
+const orderDetail = r => require.ensure([], () => r(require('../page/order/detail/order-detail')), 'order-detail')
+const orderList = r => require.ensure([], () => r(require('../page/order/list/order-list')), 'order-list')
+const orderRetail = r => require.ensure([], () => r(require('../page/order/retail/order-retail')), 'order-retail')
+const orderReturn = r => require.ensure([], () => r(require('../page/order/return/order-return')), 'order-return')
+
 const path = r => require.ensure([], () => r(require('../page/path/path')), 'path')
+
 const payment = r => require.ensure([], () => r(require('../page/payment/payment')), 'payment')
-const paymentDetail = r => require.ensure([], () => r(require('../page/payment-detail/payment-detail')), 'payment-detail')
-const paymentList = r => require.ensure([], () => r(require('../page/payment-list/payment-list')), 'payment-list')
+const paymentDetail = r => require.ensure([], () => r(require('../page/payment/detail/payment-detail')), 'payment-detail')
+const paymentList = r => require.ensure([], () => r(require('../page/payment/list/payment-list')), 'payment-list')
+const paymentNew = r => require.ensure([], () => r(require('../page/payment/new/payment-new')), 'payment-new')
+
 const profile = r => require.ensure([], () => r(require('../page/profile/profile')), 'profile')
-const info = r => require.ensure([], () => r(require('../page/profile/info')), 'info')
-const settings = r => require.ensure([], () => r(require('../page/profile/settings')), 'settings')
-const shopBack = r => require.ensure([], () => r(require('../page/shop-back/shop-back')), 'shop-back')
-const shopGo = r => require.ensure([], () => r(require('../page/shop-go/shop-go')), 'shop-go')
-const signIn = r => require.ensure([], () => r(require('../page/sign-in/sign-in')), 'sign-in')
+const profileInfo = r => require.ensure([], () => r(require('../page/profile/profile-info')), 'profileInfoinfo')
+
+const settings = r => require.ensure([], () => r(require('../page/profile/settings/settings')), 'settings')
+
+const shopBack = r => require.ensure([], () => r(require('../page/shop/back/shop-back')), 'shop-back')
+const shopGo = r => require.ensure([], () => r(require('../page/shop/go/shop-go')), 'shop-go')
 
 export default [{
     path: '/',
@@ -45,7 +64,7 @@ export default [{
             path: '',
             redirect: '/home'
         },
-        // 首页客户资料
+        // 首页
         {
             path: '/home',
             component: home
@@ -58,37 +77,39 @@ export default [{
         },
         {
             path: '/customer',
+            component: customer,
+            redirect: '/customer/search',
             children: [
                 {
-                    path: '/new', // 新增客户
-                    component: customer,
+                    path: 'new', // 新增客户
+                    component: customerNew,
                 },
                 {
-                    path: '/detail/:customerId', // 客户详情
+                    path: 'detail/:customerId', // 客户详情
                     component: customerDetail,
                     children: [{
                         path: 'we-chat',
-                        component: weChat
+                        component: customerDetailWeChat
                     }]
                 },
                 {
-                    path: '/search', // 客户搜索
+                    path: 'search', // 客户搜索
                     component: customerSearch
                 },
                 {
-                    path: '/sign-in', // 签到
-                    component: signIn
+                    path: 'sign-in', // 签到
+                    component: customerSignIn
                 },
                 {
-                    path: '/bill/:customerId', // 客户账单
-                    component: bill
+                    path: 'bill/:customerId', // 客户账单
+                    component: customerBill
                 },
             ]
         },
         // 送货
         {
             path: '/delivery',
-            component: delivery,
+            component: deliveryList,
             children: [{
                 path: '/detail', // 送货详情
                 component: deliveryDetail
@@ -97,66 +118,90 @@ export default [{
         // 发货
         {
             path: '/express',
-            component: express,
+            component: expressList,
             children: [{
                 path: '/detail', // 发货详情
                 component: expressDetail
             }]
         },
+        // 商品
         {
             path: '/goods',
+            component: goods,
+            redirect: '/goods/search',
             children: [
                 {
-                    path: '/search', // 商品搜索
+                    path: 'search', // 商品搜索
                     component: goodsSearch
                 },
                 {
-                    path: '/detail', // 商品详情
-                    component: goodsDetail
+                    path: 'detail', // 商品详情
+                    component: goodsDetail,
+                    children: [
+                        {
+                            path: 'stocks',
+                            component: goodsDetailStocks
+                        }
+                    ]
                 },
                 {
-                    path: '/stock', // 当前仓库有库存商品
+                    path: 'stock', // 当前仓库有库存商品
                     component: goodsStock
                 },
             ]
         },
         // 知识库搜索
         {
-            path: '/knowledge-search',
-            component: knowledgeSearch,
-            children: [{
-                path: 'detail', // 知识库详情
-                component: knowledgeDetail
-            }]
-        },
-        {
-            path: '/order',
+            path:'/knowledge',
+            component:knowledge,
+            redirect: '/knowledge/search',
             children: [
                 {
-                    path: '/list',// 订单列表
+                    path: 'search',
+                    component: knowledgeSearch,
+                },
+                {
+                    path: 'detail', // 知识库详情
+                    component: knowledgeDetail
+                }
+            ]
+        },
+        // 定位
+        {
+            path: '/location',
+            component: location
+        },
+        // 订单
+        {
+            path: '/order',
+            component: order,
+            redirect: '/order/list',
+            children: [
+                {
+                    path: 'list',// 订单列表
                     component: orderList
                 },
                 {
-                    path: '/detail', // 订单详情
+                    path: 'detail', // 订单详情
                     component: orderDetail
                 },
                 {
-                    path: '/confirm', // 确认订单页
+                    path: 'confirm', // 确认订单页
                     component: orderConfirm,
                     children: [{
                         path: 'remark', // 订单备注
-                        component: remark
+                        component: orderConfirmRemark
                     }, {
                         path: 'choose-address', // 选择地址
-                        component: chooseAddress
+                        component: orderConfirmChooseAddress
                     },]
                 },
                 {
-                    path: '/retail', // 销售出库
+                    path: 'retail', // 销售出库
                     component: orderRetail
                 },
                 {
-                    path: '/return', // 销售退货
+                    path: 'return', // 销售退货
                     component: orderReturn
                 },
             ]
@@ -166,35 +211,33 @@ export default [{
             path: '/path',
             component: path
         },
-        // 定位
-        {
-            path: '/location',
-            component: location
-        },
+        // 支付
         {
             path: '/payment',
+            component: payment,
+            redirect: '/payment/new',
             children: [
                 {
-                    path: '/new', // 支付
-                    component: payment
+                    path: 'new', // 支付
+                    component: paymentNew
                 },
                 {
-                    path: '/list',// 支付列表
+                    path: 'list',// 支付列表
                     component: paymentList
                 },
                 {
-                    path: '/detail', // 支付明细
+                    path: 'detail', // 支付明细
                     component: paymentDetail
                 }
             ]
         },
-        //个人信息页
+        // 个人信息页
         {
             path: '/profile',
             component: profile,
             children: [{
                 path: 'info', //个人信息详情页
-                component: info
+                component: profileInfo
             },
             {
                 path: 'settings',
@@ -211,6 +254,5 @@ export default [{
             path: '/shop-go',
             component: shopGo
         },
-
     ]
 }]

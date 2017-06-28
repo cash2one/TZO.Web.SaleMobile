@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header-title header-title="定位" go-back='true'>
+        <header-title header-title="客户对帐" go-back='true'>
         </header-title>
     </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header-title header-title="定位" go-back='true'>
+        <header-title header-title="支付列表" go-back='true'>
         </header-title>
     </div>
 </template>
@@ -13,3 +13,4 @@ export default {
     },
 }
 </script>
+
