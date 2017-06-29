@@ -4,56 +4,54 @@ import App from '../App'
 const corpList = r => require.ensure([], () => r(require('../page/corp-list/corp-list')), 'corp-list')
 
 const customer = r => require.ensure([], () => r(require('../page/customer/customer')), 'customer')
-const customerBill = r => require.ensure([], () => r(require('../page/customer/bill/customer-bill')), 'customer-bill')
-const customerDetail = r => require.ensure([], () => r(require('../page/customer/detail/customer-detail')), 'customer-detail')
-const customerDetailWeChat = r => require.ensure([], () => r(require('../page/customer/detail/customer-detail-we-chat')), 'customer-detail-we-chat')
-const customerNew = r => require.ensure([], () => r(require('../page/customer/new/customer-new')), 'customer-new')
-const customerSearch = r => require.ensure([], () => r(require('../page/customer/search/customer-search')), 'customer-search')
-const customerSignIn = r => require.ensure([], () => r(require('../page/customer/sign-in/customer-sign-in')), 'customer-sign-in')
+const customerBill = r => require.ensure([], () => r(require('../page/customer/bill/customer-bill')), 'customer')
+const customerDetail = r => require.ensure([], () => r(require('../page/customer/detail/customer-detail')), 'customer')
+const customerDetailWeChat = r => require.ensure([], () => r(require('../page/customer/detail/customer-detail-we-chat')), 'customer')
+const customerNew = r => require.ensure([], () => r(require('../page/customer/new/customer-new')), 'customer')
+const customerSearch = r => require.ensure([], () => r(require('../page/customer/search/customer-search')), 'customer')
+const customerSignIn = r => require.ensure([], () => r(require('../page/customer/sign-in/customer-sign-in')), 'customer')
 
-const deliveryList = r => require.ensure([], () => r(require('../page/delivery/list/delivery-list')), 'delivery-list')
-const deliveryDetail = r => require.ensure([], () => r(require('../page/delivery/detail/delivery-detail')), 'delivery-detail')
+const deliveryList = r => require.ensure([], () => r(require('../page/delivery/list/delivery-list')), 'delivery')
+const deliveryDetail = r => require.ensure([], () => r(require('../page/delivery/detail/delivery-detail')), 'delivery')
 
-const expressList = r => require.ensure([], () => r(require('../page/express/list/express-list')), 'express-list')
-const expressDetail = r => require.ensure([], () => r(require('../page/express/detail/express-detail')), 'express-detail')
+const expressList = r => require.ensure([], () => r(require('../page/express/list/express-list')), 'express')
+const expressDetail = r => require.ensure([], () => r(require('../page/express/detail/express-detail')), 'express')
 
 const goods = r => require.ensure([], () => r(require('../page/goods/goods')), 'goods')
-const goodsDetail = r => require.ensure([], () => r(require('../page/goods/detail/goods-detail')), 'goods-detail')
-const goodsDetailStocks = r => require.ensure([], () => r(require('../page/goods/detail/goods-detail-stocks')), 'goods-detail-stocks')
-const goodsSearch = r => require.ensure([], () => r(require('../page/goods/search/goods-search')), 'goods-search')
-const goodsStock = r => require.ensure([], () => r(require('../page/goods/stock/goods-stock')), 'goods-stock')
+const goodsDetail = r => require.ensure([], () => r(require('../page/goods/detail/goods-detail')), 'goods')
+const goodsDetailStocks = r => require.ensure([], () => r(require('../page/goods/detail/goods-detail-stocks')), 'goods')
+const goodsSearch = r => require.ensure([], () => r(require('../page/goods/search/goods-search')), 'goods')
+const goodsStock = r => require.ensure([], () => r(require('../page/goods/stock/goods-stock')), 'goods')
 
 const home = r => require.ensure([], () => r(require('../page/home/home')), 'home')
 
 const knowledge = r => require.ensure([], () => r(require('../page/knowledge/knowledge')), 'knowledge')
-const knowledgeDetail = r => require.ensure([], () => r(require('../page/knowledge/detail/knowledge-detail')), 'knowledge-detail')
-const knowledgeSearch = r => require.ensure([], () => r(require('../page/knowledge/search/knowledge-search')), 'hnowledge-search')
+const knowledgeDetail = r => require.ensure([], () => r(require('../page/knowledge/detail/knowledge-detail')), 'knowledge')
+const knowledgeSearch = r => require.ensure([], () => r(require('../page/knowledge/search/knowledge-search')), 'knowledge')
 
 const location = r => require.ensure([], () => r(require('../page/location/location')), 'location')
+const path = r => require.ensure([], () => r(require('../page/path/path')), 'location')
 
 const order = r => require.ensure([], () => r(require('../page/order/order')), 'order')
-const orderConfirm = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm')), 'order-confirm')
-const orderConfirmChooseAddress = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-choose-address')), 'order-confirm-choose-address')
-const orderConfirmRemark = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-remark')), 'order-confirm-remark')
-const orderDetail = r => require.ensure([], () => r(require('../page/order/detail/order-detail')), 'order-detail')
-const orderList = r => require.ensure([], () => r(require('../page/order/list/order-list')), 'order-list')
-const orderRetail = r => require.ensure([], () => r(require('../page/order/retail/order-retail')), 'order-retail')
-const orderReturn = r => require.ensure([], () => r(require('../page/order/return/order-return')), 'order-return')
-
-const path = r => require.ensure([], () => r(require('../page/path/path')), 'path')
+const orderConfirm = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm')), 'order')
+const orderConfirmChooseAddress = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-choose-address')), 'order')
+const orderConfirmRemark = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-remark')), 'order')
+const orderDetail = r => require.ensure([], () => r(require('../page/order/detail/order-detail')), 'order')
+const orderList = r => require.ensure([], () => r(require('../page/order/list/order-list')), 'order')
+const orderRetail = r => require.ensure([], () => r(require('../page/order/retail/order-retail')), 'order')
+const orderReturn = r => require.ensure([], () => r(require('../page/order/return/order-return')), 'order')
 
 const payment = r => require.ensure([], () => r(require('../page/payment/payment')), 'payment')
-const paymentDetail = r => require.ensure([], () => r(require('../page/payment/detail/payment-detail')), 'payment-detail')
-const paymentList = r => require.ensure([], () => r(require('../page/payment/list/payment-list')), 'payment-list')
-const paymentNew = r => require.ensure([], () => r(require('../page/payment/new/payment-new')), 'payment-new')
+const paymentDetail = r => require.ensure([], () => r(require('../page/payment/detail/payment-detail')), 'payment')
+const paymentList = r => require.ensure([], () => r(require('../page/payment/list/payment-list')), 'payment')
+const paymentNew = r => require.ensure([], () => r(require('../page/payment/new/payment-new')), 'payment')
 
 const profile = r => require.ensure([], () => r(require('../page/profile/profile')), 'profile')
-const profileInfo = r => require.ensure([], () => r(require('../page/profile/profile-info')), 'profileInfoinfo')
+const profileInfo = r => require.ensure([], () => r(require('../page/profile/profile-info')), 'profile')
+const settings = r => require.ensure([], () => r(require('../page/profile/settings/settings')), 'profile')
 
-const settings = r => require.ensure([], () => r(require('../page/profile/settings/settings')), 'settings')
-
-const shopBack = r => require.ensure([], () => r(require('../page/shop/back/shop-back')), 'shop-back')
-const shopGo = r => require.ensure([], () => r(require('../page/shop/go/shop-go')), 'shop-go')
+const shopBack = r => require.ensure([], () => r(require('../page/shop/back/shop-back')), 'shop')
+const shopGo = r => require.ensure([], () => r(require('../page/shop/go/shop-go')), 'shop')
 
 export default [{
     path: '/',
