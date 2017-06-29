@@ -761,9 +761,9 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-better-scroll@^0.1.15:
-  version "0.1.15"
-  resolved "https://registry.yarnpkg.com/better-scroll/-/better-scroll-0.1.15.tgz#17bd5fc175d2fb422d370163c8ab9e28729b2fc1"
+better-scroll@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/better-scroll/-/better-scroll-0.2.4.tgz#c359c41cfc26d29e04dba86599f8266d6fc2f27a"
   dependencies:
     babel-runtime "^6.0.0"
 
@@ -1278,13 +1278,13 @@ de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
 
-debug@2.6.7, debug@^2.1.1:
+debug@2.6.7, debug@^2.1.1, debug@^2.2.0:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.7.tgz#92bad1f6d05bbb6bba22cca88bcd0ec894c2861e"
   dependencies:
     ms "2.0.0"
 
-debug@2.6.8, debug@^2.2.0, debug@^2.6.6:
+debug@2.6.8, debug@^2.6.6:
   version "2.6.8"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
   dependencies:
@@ -3787,7 +3787,7 @@ shelljs@^0.7.4:
     interpret "^1.0.0"
     rechoir "^0.6.2"
 
-showdown@^1.6.4:
+showdown@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/showdown/-/showdown-1.7.1.tgz#4cbc7b2b333bbd3d679d581c59fc8f27d88db0b1"
   dependencies:
@@ -4238,7 +4238,7 @@ vue-loader@^10.0.0:
     vue-style-loader "^2.0.0"
     vue-template-es2015-compiler "^1.2.2"
 
-vue-router@^2.1.1:
+vue-router@^2.6.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-2.6.0.tgz#77b271f6e0ac6d57e8e556da58c6582fce0ab712"
 
@@ -4266,11 +4266,11 @@ vue-template-es2015-compiler@^1.2.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.5.2.tgz#a0a6c50c941d2a4abda963f2f42c337ac450ee95"
 
-vue@^2.1.0:
+vue@^2.3.4:
   version "2.3.4"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.3.4.tgz#5ec3b87a191da8090bbef56b7cfabd4158038171"
 
-vuex@^2.0.0:
+vuex@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/vuex/-/vuex-2.3.1.tgz#cde8e997c1f9957719bc7dea154f9aa691d981a6"
 

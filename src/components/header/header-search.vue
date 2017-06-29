@@ -1,5 +1,10 @@
 <template>
     <header id='header_search'>
+        <section class="header_title_goback" @click="$router.go(-1)">
+            <svg class="icon">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>
+            </svg>
+        </section>
         <section class="header_search_icon">
             <svg class="icon">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
@@ -38,10 +43,18 @@ export default {
     @include wh(100%, 1.95rem);
 }
 
-.header_search_icon {
+.header_title_goback {
+    display: inline-block;
     left: .4rem;
     margin-top: .35rem;
-    margin-left: .6rem;
+    margin-left: .4rem;
+    @include wh(1rem, 1rem);
+}
+
+.header_search_icon {
+    display: inline-block;
+    left: .4rem;
+    margin-top: .35rem;
 }
 
 .header_search_icon .icon {
@@ -52,7 +65,7 @@ export default {
 .search_keyword {
     @include ct();
     width: 100%;
-    padding-left: 0.7rem;
+    padding-left: 1.7rem;
     padding-right: 0.7rem;
     .search_text {
         @include sc(0.8rem, #fff);
@@ -66,6 +79,7 @@ export default {
         color: #ddd;
         font-weight: normal;
         font-style:italic;
+        font-size: 0.8rem;
     }
 }
 </style>

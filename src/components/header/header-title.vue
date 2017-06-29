@@ -1,11 +1,11 @@
 <template>
     <header id='header_title'>
-        <section class="header_title_goback" v-if="goBack" @click="$router.go(-1)">
+        <section class="header_title_goback" @click="$router.go(-1)">
             <svg class="icon">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#goback"></use>
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>
             </svg>
         </section>
-        <section class="title_head ellipsis" v-if="headerTitle">
+        <section class="title_head ellipsis">
             <span class="title_text">{{headerTitle}}</span>
         </section>
     </header>
