@@ -1,9 +1,9 @@
 <template>
     <div class="profile_page">
-        <header-title header-title="我的资料"></header-title>
+        <header-title header-title="我的"></header-title>
         <section>
             <section class="profile-number">
-                <router-link :to="userInfo&&userInfo.user_id? '/profile/info' : '/login'" class="profile-link">
+                <router-link to="/profile/info" class="profile-link">
                     <!--<img :src="imgBaseUrl + userInfo.avatar" class="privateImage" v-if="userInfo&&userInfo.user_id" />-->
                     <span class="privateImage">
                         <svg class="privateImage-svg">
@@ -31,98 +31,31 @@
             <section class="info-data">
                 <ul class="clear">
                     <router-link to="/balance" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>11</b>元</span>
-                        <span class="info-data-bottom">我的余额</span>
+                        <span class="info-data-top"><b>11.00</b>元</span>
+                        <span class="info-data-bottom">销售</span>
                     </router-link>
                     <router-link to="/benefit" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>111</b>个</span>
-                        <span class="info-data-bottom">我的优惠</span>
+                        <span class="info-data-top"><b>111.00</b>元</span>
+                        <span class="info-data-bottom">退货</span>
                     </router-link>
                     <router-link to="/points" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>222</b>分</span>
-                        <span class="info-data-bottom">我的积分</span>
+                        <span class="info-data-top"><b>222.00</b>元</span>
+                        <span class="info-data-bottom">收款</span>
                     </router-link>
                 </ul>
             </section>
             <section class="profile-1reTe">
-                <!-- 我的订单 -->
-                <router-link to='/order' class="myorder">
+                <router-link to='/profile/settings' class="myorder">
                     <aside>
                         <svg fill="#4aa5f0">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#order"></use>
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#settings"></use>
                         </svg>
                     </aside>
                     <div class="myorder-div">
-                        <span>我的订单</span>
+                        <span>设置</span>
                         <span class="myorder-divsvg">
                             <svg fill="#bbb">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
-                            </svg>
-                        </span>
-                    </div>
-                </router-link>
-                <!-- 积分商城 -->
-                <a href='https://home.m.duiba.com.cn/#/chome/index' class="myorder">
-                    <aside>
-                        <svg fill="#fc7b53">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#point"></use>
-                        </svg>
-                    </aside>
-                    <div class="myorder-div">
-                        <span>积分商城</span>
-                        <span class="myorder-divsvg">
-                            <svg fill="#bbb">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
-                            </svg>
-                        </span>
-                    </div>
-                </a>
-                <!-- 饿了么会员卡 -->
-                <router-link to='/vipcard' class="myorder">
-                    <aside>
-                        <svg fill="#ffc636">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#vip"></use>
-                        </svg>
-                    </aside>
-                    <div class="myorder-div">
-                        <span>饿了么会员卡</span>
-                        <span class="myorder-divsvg">
-                            <svg fill="#bbb">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
-                            </svg>
-                        </span>
-                    </div>
-                </router-link>
-            </section>
-            <section class="profile-1reTe">
-                <!-- 服务中心 -->
-                <router-link to='/service' class="myorder">
-                    <aside>
-                        <svg fill="#4aa5f0">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#service"></use>
-                        </svg>
-                    </aside>
-                    <div class="myorder-div">
-                        <span>服务中心</span>
-                        <span class="myorder-divsvg">
-                            <svg fill="#bbb">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
-                            </svg>
-                        </span>
-                    </div>
-                </router-link>
-                <!-- 下载饿了么APP -->
-                <router-link to='/download' class="myorder">
-                    <aside>
-                        <svg fill="#3cabff">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#download"></use>
-                        </svg>
-                    </aside>
-                    <div class="myorder-div" style="border-bottom:0;">
-                        <span>下载饿了么APP</span>
-                        <span class="myorder-divsvg">
-                            <svg fill="#bbb">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
                             </svg>
                         </span>
                     </div>
@@ -236,7 +169,7 @@ export default {
             }
         }
         .arrow {
-            @include wh(.46667rem, .98rem);
+            @include wh(1rem, 1rem);
             display: inline-block;
             svg {
                 @include wh(100%, 100%);
@@ -265,7 +198,7 @@ export default {
                 padding: .853333rem 0 .453333rem;
                 b {
                     display: inline-block;
-                    @include sc(1.2rem, #f90);
+                    @include sc(.8rem, #f90);
                     font-weight: 700;
                     line-height: 1rem;
                     font-family: Helvetica Neue, Tahoma;
@@ -323,7 +256,7 @@ export default {
                 display: block;
             }
             .myorder-divsvg {
-                @include wh(.46667rem, .466667rem);
+                @include wh(1rem, 1rem);
                 svg {
                     @include wh(100%, 100%);
                 }

@@ -16,47 +16,47 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 ```
 
 # 目标功能
-- [ ] 认证集成 -- 未完成
-- [ ] 选择分公司 corp-list -- 未完成
-- [ ] 展示当前位置附近客户列表 customer-search -- 未完成
-- [ ] 根据距离、业务区域等进行排序和筛选客户 customer-search -- 未完成
-- [ ] 客户搜索 customer-search -- 未完成
-- [ ] 首页 home -- 未完成
-- [ ] 商家详情页 customer-detail -- 未完成
-- [ ] 商家签到页 sign-in -- 未完成
-- [ ] 路线与位置 -- 未完成
-- [ ] 路线规划 location -- 未完成
+- [ ] 认证集成 -- 未完成 李海全
+- [ ] 选择分公司 corp-list -- 未完成 李海全
+- [ ] 首页 home -- 未完成 李季
+- [ ] 展示当前位置附近客户列表 customer-list -- 未完成
+- [ ] 根据距离、业务区域等进行排序和筛选客户 customer-list -- 未完成
+- [ ] 客户搜索 customer/search -- 未完成
+- [ ] 商家详情页 customer/detail -- 未完成 李光波
+- [ ] 商家签到页 customer/sign-in -- 未完成 李光波
+- [ ] 客户对账 customer/bill -- 未完成 冯建彬
+- [ ] 新客户 customer/new -- 未完成
+- [ ] 路线与位置 home -- 未完成
+- [ ] 路线规划 path -- 未完成
 - [ ] 定位功能 location -- 未完成
-- [ ] 购物车功能 buy-cart -- 完成
+- [ ] 购物车功能 buy-cart -- 未完成
 - [ ] 商品列表 goods-list -- 未完成
 - [ ] 根据商品分类、类目属性等进行排序和筛选商品 goods-list -- 未完成
-- [ ] 商品搜索 goods-search -- 未完成
-- [ ] 单个商品信息 goods-detail -- 未完成
-- [ ] 商品库存 goods-detail .. stocks -- 未完成
+- [ ] 商品搜索 goods/search -- 未完成
+- [ ] 单个商品信息 goods/detail -- 未完成
+- [ ] 商品库存 goods/detail/stocks -- 未完成
 - [ ] 下单功能 订货\意向 confirm-order -- 未完成
-- [ ] 库存商品列表 goods-stock -- 未完成
-- [ ] 根据商品分类、类目属性等进行排序和筛选过滤库存商品 goods-stock -- 未完成
-- [ ] 销售出库 order-retail -- 未完成
-- [ ] 订单列表 order-list -- 未完成
-- [ ] 根据时间、单号等进行排序和筛选过滤订单 order-list -- 未完成
-- [ ] 订单详情 order-detail -- 未完成
-- [ ] 退货 order-return -- 未完成
-- [ ] 收款 payment-- 未完成
-- [ ] 收款列表 payment-list -- 未完成
-- [ ] 收款单详情 payment-detail -- 未完成
-- [ ] 客户对账 bill -- 未完成
-- [ ] 新客户 customer -- 未完成
-- [ ] 送货 delivery -- 未完成
-- [ ] 送货明细 delivery-detail -- 未完成
-- [ ] 物流发货 express -- 未完成
-- [ ] 物流发货 express-detail -- 未完成
-- [ ] 知识库-车型搜索 knowledge-search -- 未完成
-- [ ] 知识库-车型详情 knowledge-detail -- 未完成
-- [ ] 微信推广 customer-detail .. we-chat-- 未完成
-- [ ] 个人中心 profile -- 未完成
+- [ ] *库存商品列表 goods-stock -- 未完成
+- [ ] *根据商品分类、类目属性等进行排序和筛选过滤库存商品 goods-stock -- 未完成
+- [ ] *销售出库 order-retail -- 未完成
+- [ ] 订单列表 order/list -- 未完成 冯建彬
+- [ ] 根据时间、单号等进行排序和筛选过滤订单 order/list -- 未完成 冯建彬
+- [ ] 订单详情 order/detail -- 未完成 冯建彬
+- [ ] 退货 order/return -- 未完成 冯建彬
+- [ ] 收款 payment/new-- 未完成
+- [ ] 收款列表 payment/list -- 未完成
+- [ ] 收款单详情 payment/detail -- 未完成
+- [ ] 送货 delivery/list -- 未完成
+- [ ] 送货明细 delivery/detail -- 未完成
+- [ ] 物流发货 express/list -- 未完成
+- [ ] 物流发货 express/detail -- 未完成
+- [ ] *知识库-车型搜索 knowledge-search -- 未完成
+- [ ] *知识库-车型详情 knowledge-detail -- 未完成
+- [ ] 微信推广 customer-detail .. we-chat-- 未完成 李光波
+- [ ] 个人中心 profile -- 未完成 李季
 - [ ] 出店 shop-go -- 未完成
 - [ ] 回店 shop-back -- 未完成
-- [ ] 设置 profile .. settings -- 未完成
+- [ ] 设置 profile/settings -- 未完成 李季
 
 # 项目布局
 

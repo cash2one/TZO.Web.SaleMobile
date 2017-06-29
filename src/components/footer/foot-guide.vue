@@ -47,7 +47,7 @@
         	<svg class="icon_style">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="$route.path.indexOf('order') !== -1? '#foot_orderActive' : '#foot_order'"></use>
             </svg>
-            <span>订单</span>
+            <span>订单列表</span>
         </section>
         <section @click = "gotoAddress('/profile')" class="guide_item">
         	<svg class="icon_style">
