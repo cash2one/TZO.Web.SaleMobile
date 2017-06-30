@@ -20,11 +20,12 @@ export default async(url = '', data = {}, type = 'GET', method = 'fetch') => {
 
 	if (window.fetch && method == 'fetch') {
 		let requestConfig = {
-			credentials: 'include',
+			//credentials: 'include',
 			method: type,
 			headers: {
 				'Accept': 'application/json',
-				'Content-Type': 'application/json'
+				'Content-Type': 'application/json',
+				'Authorization': 'bearer y71aV_vEJPi-U-6I9zCnyN54gczWCHcOry8R9bRRLoedQri7LAZMrYVlH6RED3TcQs57tf5fhcgJRhM0g-U1fZSsbiarEyuuSjTuQDnxsiRvmQFPpXDakQiAiazq6v-XyUBcTRkaOW3xwFIoeOE4vclQ91XOyAKt0Icem-wvMh_NgAglFJ_vPFaH0-907G3MiUHZLID32snuORllP5GOWGmYP44PnrvgLSsmxY6-6wX5ZU05npJkOdgY7izADHADZUUt5AofOJ6gA7jjp1EAwBQ2M97KA4HC8N07BcWDbfs1l9VJwixBsdMW5CmQjkNImUrZ88otKRV60C_XreqimY6hxDqV48E9EZsA-VSHqu54CFwB77eZ4LMJ-O376gx7Kb_WYl7TluhtytTXZvHRDBRTVG5rYNGHhCz_lTbT1z4tzNDgRjBiojgAAx3gGN2y6AzusJuGjJMWrQIzTlHw_YdRUcEQQsVp1fT1MekcvxY'
 			},
 			mode: "cors",
 			cache: "force-cache"

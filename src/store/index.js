@@ -7,6 +7,8 @@ import getters from './getters'
 Vue.use(Vuex)
 
 const state = {
+	storage: {}, // 当前仓库
+
 	latitude: '', // 当前位置纬度
 	longitude: '', // 当前位置经度
 	cartList: {}, // 加入购物车的商品列表
@@ -28,9 +30,9 @@ const state = {
 	orderMessage: null, //订单返回的信息
 	orderDetail: null, //订单详情
 	login: true,//是否登录
-	imgPath:null,//头像地址
-	removeAddress:[],//移除地址
-	addAddress:'',		//新增地址
+	imgPath: null,//头像地址
+	removeAddress: [],//移除地址
+	addAddress: '',		//新增地址
 	question: null,//问题详情
 	cartPrice: null, //会员卡价格
 }

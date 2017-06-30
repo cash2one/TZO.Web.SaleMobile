@@ -1,3 +1,6 @@
+export const INIT_SHOOSE_DATA = 'INIT_SHOOSE_DATA'
+export const SAVE_STORAGE = 'SAVE_STORAGE'
+
 export const RECORD_ADDRESS = 'RECORD_ADDRESS'
 export const ADD_CART = 'ADD_CART'
 export const REDUCE_CART = 'REDUCE_CART'

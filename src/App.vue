@@ -12,9 +12,20 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex'
 
 export default {
-
+	mounted() {
+		this.initData();
+	},
+	methods: {
+		...mapMutations([
+			'INIT_SHOOSE_DATA',
+		]),
+		 initData() {
+			this.INIT_SHOOSE_DATA();
+		},
+	}
 }
 
 </script>
