@@ -1,6 +1,8 @@
 import {
 	INIT_SHOOSE_DATA,
 	SAVE_STORAGE,
+	SAVE_EXPRESS_CORP,
+	SAVE_PRINTER,
 
 	RECORD_ADDRESS,
 	ADD_CART,
@@ -39,18 +41,40 @@ import { localapi, proapi } from 'src/config/env'
 
 export default {
 
-	//网页初始化时从本地缓存默认选项
+	// 网页初始化时从本地缓存默认选项
 	[INIT_SHOOSE_DATA](state) {
 		let initStorage = getStore('storage');
 		if (initStorage) {
 			state.storage = JSON.parse(initStorage);
 		}
+
+		let initExpressCorp = getStore('expressCorp');
+		if (initExpressCorp) {
+			state.expressCorp = JSON.parse(initExpressCorp);
+		}
+
+		let initPrinter = getStore('printer');
+		if (initPrinter) {
+			state.printer = JSON.parse(initPrinter);
+		}
 	},
 
-	//选择默认仓库
+	// 选择默认仓库
 	[SAVE_STORAGE](state, place) {
 		state.storage = place;
 		setStore('storage', place);
+	},
+
+	// 选择默认物流
+	[SAVE_EXPRESS_CORP](state, place) {
+		state.express = place;
+		setStore('expressCorp', place);
+	},
+
+	// 选择默认打印机
+	[SAVE_PRINTER](state, place) {
+		state.printer = place;
+		setStore('printer', place);
 	},
 
 	// 记录当前经度纬度

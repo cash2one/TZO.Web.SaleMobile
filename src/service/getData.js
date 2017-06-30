@@ -8,7 +8,10 @@ import {getStore} from '../config/mUtils'
 
 export const getStorages = () => fetch('/api/Storage/Storage/IsValid');
 
-
+/**
+ * 获取可用物流公司
+ */
+export const getExpressCorps = () => fetch('/api/Logistics/LogisticsCorp');
 
 
 /**

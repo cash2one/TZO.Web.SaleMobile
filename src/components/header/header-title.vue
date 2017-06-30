@@ -22,7 +22,7 @@ export default {
     mounted() {
 
     },
-    props: ['headerTitle','goBack']
+    props: ['headerTitle']
 }
 </script>
 

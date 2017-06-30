@@ -1,5 +1,8 @@
 export const INIT_SHOOSE_DATA = 'INIT_SHOOSE_DATA'
 export const SAVE_STORAGE = 'SAVE_STORAGE'
+export const SAVE_EXPRESS_CORP = 'SAVE_EXPRESS_CORP'
+export const SAVE_PRINTER = 'SAVE_PRINTER'
+
 
 export const RECORD_ADDRESS = 'RECORD_ADDRESS'
 export const ADD_CART = 'ADD_CART'

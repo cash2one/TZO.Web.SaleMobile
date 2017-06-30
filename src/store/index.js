@@ -8,6 +8,8 @@ Vue.use(Vuex)
 
 const state = {
 	storage: {}, // 当前仓库
+	expressCorp: {}, // 物流
+	printer: {}, // 打印机
 
 	latitude: '', // 当前位置纬度
 	longitude: '', // 当前位置经度

@@ -1,148 +1,57 @@
 <template>
     <div class="rating_page">
         <header-title header-title="设置"></header-title>
-        <section class="pay_way container_style">
-            <header class="header_style">
-                <span>默认仓库</span>
-                <div class="more_type" @click="showStoragesFun">
-                    <span>{{storage.Name}}</span>
-                    <svg class="address_empty_right">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
-                    </svg>
-                </div>
-            </header>
-        </section>
-        <transition name="fade">
-            <div class="cover" v-if="showStorages" @click="showStoragesFun"></div>
-        </transition>
-        <transition name="slid_up">
-            <div class="choose_type_Container" v-if="showStorages">
-                <header>仓库</header>
-                <ul>
-                    <li v-for="item in storages.Items" :key="item.Id" :class="{choose: storage.Id == item.Id}">
-                        <span>{{item.Name}}
-                            <span>{{item.Position}}</span>
-                        </span>
-                        <svg class="address_empty_right" @click="chooseStorage(item.Id,item.Name)">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
-                        </svg>
-                    </li>
-                </ul>
-            </div>
-        </transition>
-        <section class="pay_way container_style">
-            <header class="header_style">
-                <span>默认物流</span>
-                <div class="more_type" @click="showPayWayFun">
-                    <span>在线支付</span>
-                    <svg class="address_empty_right">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
-                    </svg>
-                </div>
-            </header>
-        </section>
-        <section class="pay_way container_style">
-            <header class="header_style">
-                <span>默认区域</span>
-                <div class="more_type" @click="showPayWayFun">
-                    <span>在线支付</span>
-                    <svg class="address_empty_right">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
-                    </svg>
-                </div>
-            </header>
-        </section>
-        <section class="pay_way container_style">
-            <header class="header_style">
-                <span>默认打印机</span>
-                <div class="more_type" @click="showPayWayFun">
-                    <span>在线支付</span>
-                    <svg class="address_empty_right">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-right"></use>
-                    </svg>
-                </div>
-            </header>
-        </section>
-        <transition name="fade">
-            <div class="cover" v-if="showPayWay" @click="showPayWayFun"></div>
-        </transition>
-        <transition name="slid_up">
-            <div class="choose_type_Container" v-if="showPayWay">
-                <header>支付方式</header>
-                <ul>
-                    <li v-for="item in checkoutData.payments" :key="item.id" :class="{choose: payWayId == item.id}">
-                        <span>{{item.name}}
-                            <span v-if="!item.is_online_payment">{{item.description}}</span>
-                        </span>
-                        <svg class="address_empty_right" @click="choosePayWay(item.is_online_payment, item.id)">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
-                        </svg>
-                    </li>
-                </ul>
-            </div>
-        </transition>
+        <select-slid-up title="仓库" :model="storage" :selected="chooseStorage" :items="storages"></select-slid-up>
+        <select-slid-up title="物流" :model="expressCorp" :selected="chooseExpress" :items="expressCorps"></select-slid-up>
+        <select-slid-up title="打印机" :model="printer" :selected="choosePrinter" :items="printers"></select-slid-up>
     </div>
 </template>
 
 <script>
 import { mapMutations, mapState } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
-import { getStorages } from 'src/service/getData'
+import selectSlidUp from 'src/components/common/select-slid-up'
+import { getStorages, getExpressCorps } from 'src/service/getData'
 
 export default {
     data() {
         return {
-            storages: null, // 仓库集合
-            showStorages: false,
-
-            checkoutData: {
-                payments: [{
-                    name: 'aaa',
-                    description: 'abcd'
-                }]
-            },//数据返回值
-            showPayWay: false,//显示付款方式
-            payWayId: 1, //付款方式
+            storages: [],
+            expressCorps: [],
+            printers: []
         }
     },
     mounted() {
         this.initData();
     },
     components: {
-        headerTitle
+        headerTitle,
+        selectSlidUp
     },
     computed: {
         ...mapState([
-            'storage',
+            'storage', 'expressCorp', 'printer'
         ]),
     },
     methods: {
         ...mapMutations([
-            'SAVE_STORAGE',
+            'SAVE_STORAGE', 'SAVE_EXPRESS_CORP', 'SAVE_PRINTER'
         ]),
-        //显示仓库
-        showStoragesFun() {
-            this.showStorages = !this.showStorages;
-        },
-        //选择仓库
+        // 选择仓库
         chooseStorage(id, name) {
-            this.showStorages = !this.showStorages;
             this.SAVE_STORAGE({ Id: id, Name: name });
         },
-
-        //显示付款方式
-        showPayWayFun() {
-            this.showPayWay = !this.showPayWay;
+        // 选择物流
+        chooseExpress(id, name) {
+            this.SAVE_EXPRESS_CORP({ Id: id, Name: name });
         },
-        //选择付款方式
-        choosePayWay(is_online_payment, id) {
-            // if (is_online_payment) {
-            //     this.showPayWay = !this.showPayWay;
-            //     this.payWayId = id;
-            // }
+        // 选择打印机
+        choosePrinter(id, name) {
+            this.SAVE_PRINTER({ Id: id, Name: name });
         },
-        async initData() {
-            this.storages = await getStorages('aa');
+        initData() {
+            getStorages().then(res => { this.storages = res.Items; });
+            getExpressCorps().then(res => { this.expressCorps = res.Items; });
         },
     },
 }
