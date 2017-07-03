@@ -31,33 +31,35 @@
             <section class="info-data">
                 <ul class="clear">
                     <router-link to="/balance" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>11.00</b>元</span>
+                        <span class="info-data-top">
+                            <b>11.00</b>元</span>
                         <span class="info-data-bottom">销售</span>
                     </router-link>
                     <router-link to="/benefit" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>111.00</b>元</span>
+                        <span class="info-data-top">
+                            <b>111.00</b>元</span>
                         <span class="info-data-bottom">退货</span>
                     </router-link>
                     <router-link to="/points" tag="li" class="info-data-link">
-                        <span class="info-data-top"><b>222.00</b>元</span>
+                        <span class="info-data-top">
+                            <b>222.00</b>元</span>
                         <span class="info-data-bottom">收款</span>
                     </router-link>
                 </ul>
             </section>
-            <section class="profile-1reTe">
-                <router-link to='/profile/settings' class="myorder">
-                    <aside>
-                        <svg fill="#4aa5f0">
+            <section class="m-list">
+                <router-link to='/profile/settings' class="m-list-item start end">
+                    <h2>
+                        <svg class="icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#settings"></use>
                         </svg>
-                    </aside>
-                    <div class="myorder-div">
-                        <span>设置</span>
-                        <span class="myorder-divsvg">
-                            <svg fill="#bbb">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
-                            </svg>
-                        </span>
+                        设置
+                    </h2>
+                    <div class="content">
+                        <p>1111111111</p>
+                        <svg class="icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
+                        </svg>
                     </div>
                 </router-link>
             </section>
@@ -176,106 +178,5 @@ export default {
             }
         }
     }
-}
-
-.info-data {
-    width: 100%;
-    background: $fc;
-    box-sizing: border-box;
-    ul {
-        .info-data-link {
-            float: left;
-            width: 33.33%;
-            display: inline-block;
-            border-right: 1px solid #f1f1f1;
-            span {
-                display: block;
-                width: 100%;
-                text-align: center;
-            }
-            .info-data-top {
-                @include sc(.55rem, #333);
-                padding: .853333rem 0 .453333rem;
-                b {
-                    display: inline-block;
-                    @include sc(.8rem, #f90);
-                    font-weight: 700;
-                    line-height: 1rem;
-                    font-family: Helvetica Neue, Tahoma;
-                }
-            }
-            .info-data-bottom {
-                @include sc(.57333rem, #666);
-                font-weight: 400;
-                padding-bottom: .453333rem;
-            }
-        }
-        .info-data-link:nth-of-type(2) {
-            .info-data-top {
-                b {
-                    color: #ff5f3e;
-                }
-            }
-        }
-        .info-data-link:nth-of-type(3) {
-            border: 0;
-            .info-data-top {
-                b {
-                    color: #6ac20b;
-                }
-            }
-        }
-    }
-}
-
-.profile-1reTe {
-    margin-top: .4rem;
-    background: $fc;
-    .myorder {
-        padding-left: 1.6rem;
-        display: flex;
-        align-items: center;
-        aside {
-            @include wh(.7rem, .7rem);
-            margin-left: -.866667rem;
-            margin-right: .266667rem;
-            display: flex;
-            align-items: center;
-            svg {
-                @include wh(100%, 100%);
-            }
-        }
-        .myorder-div {
-            width: 100%;
-            border-bottom: 1px solid #f1f1f1;
-            padding: .433333rem .266667rem .433333rem 0;
-            @include sc(.7rem, #333);
-            display: flex;
-            justify-content: space-between;
-            span {
-                display: block;
-            }
-            .myorder-divsvg {
-                @include wh(1rem, 1rem);
-                svg {
-                    @include wh(100%, 100%);
-                }
-            }
-        }
-    }
-    .myorder:nth-of-type(3) .myorder-div {
-        border: 0;
-    }
-}
-
-.router-slid-enter-active,
-.router-slid-leave-active {
-    transition: all .4s;
-}
-
-.router-slid-enter,
-.router-slid-leave-active {
-    transform: translate3d(2rem, 0, 0);
-    opacity: 0;
 }
 </style>

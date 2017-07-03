@@ -43,6 +43,9 @@ export default {
     margin-top: .35rem;
     margin-left: .4rem;
     @include wh(1rem, 1rem);
+    .icon {
+        fill: $icon-light-color;
+    }
 }
 
 .title_head {

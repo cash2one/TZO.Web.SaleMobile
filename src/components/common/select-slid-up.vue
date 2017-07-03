@@ -1,16 +1,18 @@
 <template>
     <div class="select">
-        <section class="select_container">
-            <header class="select_header">
-                <span>{{title}}</span>
-                <div class="more_type" @click="showItems">
-                    <span>{{model.Name}}</span>
-                    <svg class="icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
-                    </svg>
-                </div>
-            </header>
-        </section>
+        <section class="m-list">
+                <section class="m-list-item start end" @click="showItems">
+                    <h2>
+                       {{title}}
+                    </h2>
+                    <div class="content">
+                        <p>{{model.Name}}</p>
+                        <svg class="icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
+                        </svg>
+                    </div>
+                </section>
+            </section>
         <transition name="fade">
             <div class="cover" v-if="show" @click="showItems"></div>
         </transition>
@@ -56,32 +58,6 @@ export default {
 @import 'src/style/mixin';
 
 .select {
-    .select_container {
-        background-color: $background-light-color;
-        margin-top: .4rem;
-        padding: 0 .7rem;
-        .select_header {
-            @include fj;
-            line-height: 2rem;
-            margin-right: -.3rem;
-            span:nth-of-type(1) {
-                @include sc(.7rem, $font-light-color);
-            }
-            .more_type {
-                span:nth-of-type(1) {
-                    @include sc(.6rem, #aaa);
-                    width: 10rem;
-                    display: inline-block;
-                    text-align: right;
-                    vertical-align: middle;
-                }
-                .icon {
-                    @include wh(1rem, 1rem);
-                    vertical-align: middle;
-                }
-            }
-        }
-    }
     .cover {
         position: fixed;
         top: 0;

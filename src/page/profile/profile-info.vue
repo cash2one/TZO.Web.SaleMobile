@@ -1,49 +1,47 @@
  <template>
     <div class="rating_page">
         <header-title header-title="我的资料"></header-title>
-        <section class="profile-info">
-            <section class="headportrait">
+        <section class="m-list">
+            <section class="m-list-item start">
                 <input type="file" class="profileinfopanel-upload" @change="uploadAvatar">
                 <h2>头像</h2>
-                <div class="headportrait-div">
+                <div class="content">
                     <!--<img  v-if="userInfo" :src="imgBaseUrl + userInfo.avatar" class="headportrait-div-top">-->
-                    <span class="headportrait-div-top">
-                        <svg>
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#avatar-default"></use>
-                        </svg>
-                    </span>
-                    <span class="headportrait-div-bottom">
-                        <svg fill="#ddd">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
-                        </svg>
-                    </span>
+                    <svg class="icon-big">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#avatar-default"></use>
+                    </svg>
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
+                    </svg>
                 </div>
             </section>
-            <section class="headportrait headportraitwo">
+            <section class="m-list-item end">
                 <h2>用户名</h2>
-                <div class="headportrait-div">
+                <div class="content">
                     <p>{{username}}2222222</p>
                 </div>
             </section>
-            <section class="bind-phone">
+            <section class="title">
                 微信绑定
             </section>
-            <section class="info-router">
-                <section class="headportrait headportraitwo headportraithree">
+            <section>
+                <section class="m-list-item end">
                     <h2>
-                        <img src="../../images/bindphone.png" style="display:inline-block;margin-right:.4rem;" alt="">手机</h2>
-                    <div class="headportrait-div">
+                        <svg class="icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
+                        </svg>
+                        <!--<img src="../../images/bindphone.png" style="display:inline-block;margin-right:.4rem;" alt="">-->
+                        手机
+                    </h2>
+                    <div class="content">
                         <p>{{infotel}}1111111111</p>
-                        <span class="headportrait-div-bottom">
-                            <svg fill="#ddd">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
-                            </svg>
-                        </span>
+                        <svg class="icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
+                        </svg>
                     </div>
                 </section>
             </section>
         </section>
-    
         <alert-tip v-if="showAlert" @closeTip="showAlert = false" :alertText="alertText"></alert-tip>
         <transition name="router-slid" mode="out-in">
             <router-view></router-view>
@@ -123,8 +121,7 @@ export default {
 <style lang="scss" scoped>
 @import 'src/style/mixin.scss';
 
-.profile-info {
-    @include wh(100%, 3.1rem);
+.m-list {
     .profileinfopanel-upload {
         display: block;
         position: absolute;
@@ -133,79 +130,5 @@ export default {
         left: 0;
         @include wh(100%, 3.1rem);
     }
-    .headportrait {
-        margin-top: .4rem;
-        padding: .5rem .4rem;
-        @include fj(space-between);
-        align-items: center;
-        border-top: 1px solid #ddd;
-        background: #fff;
-
-        h2 {
-            @include sc(.6rem, #333);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-        }
-        .headportrait-div {
-            span {
-                display: inline-block;
-
-                svg {
-                    @include wh(100%, 100%);
-                }
-            }
-            .headportrait-div-top {
-                @include wh(2rem, 2rem);
-                @include borderRadius(50%);
-                vertical-align: middle;
-            }
-            .headportrait-div-bottom {
-                @include wh(.66667rem, 1.4rem);
-                position: relative;
-                top: 0.44rem;
-            }
-        }
-    }
-    .headportraitwo {
-        margin-top: 0;
-        padding: .3rem .4rem;
-        .headportrait-div {
-            @include fj(left);
-            p {
-                text-align: left;
-                line-height: 1.39rem;
-                @include sc(.7rem, #999);
-                margin-right: .2rem;
-                font-weight: 100;
-                font-family: Arial;
-            }
-            .headportrait-div-bottom {
-                top: 0;
-            }
-        }
-    }
-    .headportraithree {
-        border-bottom: 1px solid #ddd;
-    }
-    .bind-phone {
-        padding: .4rem .4rem;
-        @include sc(.5rem, #666);
-    }
-}
-
-.info-router {
-    display: block;
-}
-
-.router-slid-enter-active,
-.router-slid-leave-active {
-    transition: all .4s;
-}
-
-.router-slid-enter,
-.router-slid-leave-active {
-    transform: translate3d(2rem, 0, 0);
-    opacity: 0;
 }
 </style>
