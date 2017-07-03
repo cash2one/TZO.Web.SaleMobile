@@ -164,13 +164,13 @@ html,body{
     width: 100%;
     background: $fc;
     box-sizing: border-box;
-    
+    border-bottom: 1px solid $border-color;
     ul {
         .info-data-link {
             float: left;
             width: 33.33%;
             display: block;
-            border-right: 1px solid #f1f1f1;
+            border-right: 1px solid $border-color;
             span {
                 display: block;
                 width: 100%;
@@ -267,6 +267,40 @@ html,body{
     }
 }
 
+.tabs{
+    display: flex;
+    background-color: #fff;
+    padding: .3rem 0 .6rem;
+    border-bottom: 1px solid #ebebeb;
+    .item{
+        flex: 1;
+        text-align: center;
+        span {
+            @include sc(.65rem, #666);
+            padding: .2rem .1rem;
+            border-bottom: 0.12rem solid #fff;
+        }
+        .active{
+            color: #3190e8;
+            border-color: #3190e8;
+        }
+    }
+}
+
+.tab-choose-enter-active,
+.tab-choose-leave-active {
+    transition: opacity .5s;
+}
+
+.tab-choose-leave,
+.tab-choose-leave-active {
+    display: none;
+}
+
+.tab-choose-enter,
+.tab-choose-leave-active {
+    opacity: 0;
+}
 
 // 页面切换动画
 .router-fade-enter-active,

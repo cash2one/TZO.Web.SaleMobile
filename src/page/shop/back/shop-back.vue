@@ -11,22 +11,45 @@
                 </router-link>
                 <router-link to="/benefit" tag="li" class="info-data-link">
                     <span class="info-data-top">
-                        <b>111.00</b>单</span>
-                    <span class="info-data-bottom">欠款</span>
+                        <b>111</b>单</span>
+                    <span class="info-data-bottom">挂帐</span>
                 </router-link>
                 <router-link to="/points" tag="li" class="info-data-link">
                     <span class="info-data-top">
-                        <b>222.00</b>单</span>
+                        <b>22</b>单</span>
                     <span class="info-data-bottom">退货</span>
                 </router-link>
             </ul>
         </section>
+        <section class="tabs" ref="chooseType">
+            <div class="item" >
+                <span :class='{active: changeShowType =="return"}' @click="changeShowType='return'">退货</span>
+            </div>
+            <div class="item">
+                <span :class='{active: changeShowType =="transfer"}' @click="changeShowType='transfer'">备货</span>
+            </div>
+        </section>
+        <transition name="tab-choose">
+            <section v-show="changeShowType =='return'" class="container">
+                return
+            </section>
+        </transition>
+        <transition name="tab-choose">
+            <section v-show="changeShowType =='transfer'" class="container">
+                transfer
+            </section>
+        </transition>
     </div>
 </template>
 
 <script>
 import headerTitle from 'src/components/header/header-title'
 export default {
+    data() {
+        return {
+            changeShowType: 'return',
+        }
+    },
     components: {
         headerTitle
     },
@@ -38,52 +61,13 @@ export default {
 
 .info-data {
     padding-top: 1.95rem;
-    width: 100%;
-    background: $fc;
-    box-sizing: border-box;
-    ul {
-        .info-data-link {
-            float: left;
-            width: 33.33%;
-            display: inline-block;
-            border-right: 1px solid #f1f1f1;
-            span {
-                display: block;
-                width: 100%;
-                text-align: center;
-            }
-            .info-data-top {
-                @include sc(.55rem, #333);
-                padding: .853333rem 0 .453333rem;
-                b {
-                    display: inline-block;
-                    @include sc(.8rem, #f90);
-                    font-weight: 700;
-                    line-height: 1rem;
-                    font-family: Helvetica Neue, Tahoma;
-                }
-            }
-            .info-data-bottom {
-                @include sc(.57333rem, #666);
-                font-weight: 400;
-                padding-bottom: .453333rem;
-            }
-        }
-        .info-data-link:nth-of-type(2) {
-            .info-data-top {
-                b {
-                    color: #ff5f3e;
-                }
-            }
-        }
-        .info-data-link:nth-of-type(3) {
-            border: 0;
-            .info-data-top {
-                b {
-                    color: #6ac20b;
-                }
-            }
-        }
-    }
+}
+
+.container {
+    display: flex;
+    flex: 1;
+    padding-bottom: 2rem;
+    .header{}
+    .list{}
 }
 </style>

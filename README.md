@@ -54,8 +54,8 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [ ] *知识库-车型详情 knowledge-detail -- 未完成
 - [ ] 微信推广 customer-detail .. we-chat-- 未完成 李光波
 - [ ] 个人中心 profile -- 未完成 李季
-- [ ] 出店 shop-go -- 未完成
-- [ ] 回店 shop-back -- 未完成
+- [ ] 出店 shop-go -- 未完成 李季
+- [ ] 回店 shop-back -- 未完成 李季
 - [ ] 设置 profile/settings -- 未完成 李季
 
 # 项目布局
