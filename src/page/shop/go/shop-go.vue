@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="shop_container">
         <header-title header-title="出店" go-back='true'>
         </header-title>
         <section class="info-data">
@@ -30,13 +30,151 @@
             </div>
         </section>
         <transition name="tab-choose">
-            <section v-show="changeShowType =='delivery'" class="container">
-                delivery
+            <section v-show="changeShowType =='delivery'" class="tab-container">
+                <ul>
+                    <li>
+                        <header>济南舜泰广场</header>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                    </li>
+                    <li>
+                        <header>济南舜泰广场</header>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                    </li>
+                </ul>
             </section>
         </transition>
         <transition name="tab-choose">
-            <section v-show="changeShowType =='transfer'" class="container">
-                transfer
+            <section v-show="changeShowType =='transfer'" class="tab-container">
+                <ul>
+                    <li>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                        <section class="list">
+                            <strong class="name">刹车片</strong>
+                            <div class="number">
+                                <span>11</span>
+                                <span>个</span>
+                            </div>
+                            <p class="content">No-a22|12121|111</p>
+                        </section>
+                    </li>
+                </ul>
             </section>
         </transition>
     </div>
@@ -56,17 +194,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import 'src/style/mixin';
-.info-data {
-    padding-top: 1.95rem;
-}
-
-.container {
-    display: flex;
-    flex: 1;
-    padding-bottom: 2rem;
-    .header{}
-    .list{}
-}
-
+@import 'src/style/shop';
 </style>

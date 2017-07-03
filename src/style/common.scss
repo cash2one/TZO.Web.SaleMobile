@@ -286,6 +286,11 @@ html,body{
         }
     }
 }
+.tab-container{
+    display: flex;
+    flex: 1;
+    overflow-y: auto;
+}
 
 .tab-choose-enter-active,
 .tab-choose-leave-active {
