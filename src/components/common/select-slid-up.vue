@@ -1,7 +1,7 @@
 <template>
     <div class="select">
-        <section class="m-list">
-                <section class="m-list-item start end" @click="showItems">
+        <section class="m-form-list">
+                <section class="item start end" @click="showItems">
                     <h2>
                        {{title}}
                     </h2>

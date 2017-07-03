@@ -109,7 +109,7 @@ export default [{
             path: '/delivery',
             component: deliveryList,
             children: [{
-                path: '/detail', // 送货详情
+                path: 'detail', // 送货详情
                 component: deliveryDetail
             }]
         },
@@ -118,7 +118,7 @@ export default [{
             path: '/express',
             component: expressList,
             children: [{
-                path: '/detail', // 发货详情
+                path: 'detail', // 发货详情
                 component: expressDetail
             }]
         },

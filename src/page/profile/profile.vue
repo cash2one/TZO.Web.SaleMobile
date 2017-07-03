@@ -47,8 +47,8 @@
                     </router-link>
                 </ul>
             </section>
-            <section class="m-list">
-                <router-link to='/profile/settings' class="m-list-item start end">
+            <section class="m-form-list">
+                <router-link to='/profile/settings' class="item start end">
                     <h2>
                         <svg class="icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#settings"></use>

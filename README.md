@@ -46,10 +46,10 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [ ] 收款 payment/new-- 未完成
 - [ ] 收款列表 payment/list -- 未完成
 - [ ] 收款单详情 payment/detail -- 未完成
-- [ ] 送货 delivery/list -- 未完成
-- [ ] 送货明细 delivery/detail -- 未完成
-- [ ] 物流发货 express/list -- 未完成
-- [ ] 物流发货 express/detail -- 未完成
+- [ ] 送货 delivery/list -- 未完成 李季
+- [ ] 送货明细 delivery/detail -- 未完成 李季
+- [ ] 物流发货 express/list -- 未完成 李季
+- [ ] 物流发货 express/detail -- 未完成 李季
 - [ ] *知识库-车型搜索 knowledge-search -- 未完成
 - [ ] *知识库-车型详情 knowledge-detail -- 未完成
 - [ ] 微信推广 customer-detail .. we-chat-- 未完成 李光波

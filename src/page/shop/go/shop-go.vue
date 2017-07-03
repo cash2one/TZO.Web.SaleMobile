@@ -1,5 +1,5 @@
 <template>
-    <div class="shop_container">
+    <div class="page">
         <header-title header-title="出店" go-back='true'>
         </header-title>
         <section class="info-data">
@@ -21,7 +21,7 @@
                 </router-link>
             </ul>
         </section>
-        <section class="tabs" ref="chooseType">
+        <section class="m-tabs" ref="chooseType">
             <div class="item">
                 <span :class='{active: changeShowType =="delivery"}' @click="changeShowType='delivery'">送货</span>
             </div>
@@ -29,152 +29,142 @@
                 <span :class='{active: changeShowType =="transfer"}' @click="changeShowType='transfer'">备货</span>
             </div>
         </section>
-        <transition name="tab-choose">
-            <section v-show="changeShowType =='delivery'" class="tab-container">
-                <ul>
-                    <li>
-                        <header>济南舜泰广场</header>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                    </li>
-                    <li>
-                        <header>济南舜泰广场</header>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                    </li>
-                </ul>
+        <transition name="m-tab-choose">
+            <section v-show="changeShowType =='delivery'" class="m-tab-container m-list">
+                <header>济南舜泰广场</header>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <header>济南舜泰广场</header>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
             </section>
         </transition>
         <transition name="tab-choose">
-            <section v-show="changeShowType =='transfer'" class="tab-container">
-                <ul>
-                    <li>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                        <section class="list">
-                            <strong class="name">刹车片</strong>
-                            <div class="number">
-                                <span>11</span>
-                                <span>个</span>
-                            </div>
-                            <p class="content">No-a22|12121|111</p>
-                        </section>
-                    </li>
-                </ul>
+            <section v-show="changeShowType =='transfer'" class="m-tab-container m-list">
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
+                <section>
+                    <strong class="name">刹车片</strong>
+                    <div class="number">
+                        <span>11</span>
+                        <span>个</span>
+                    </div>
+                    <p class="content">No-a22|12121|111</p>
+                </section>
             </section>
         </transition>
     </div>
@@ -193,6 +183,3 @@ export default {
     },
 }
 </script>
-<style lang="scss" scoped>
-@import 'src/style/shop';
-</style>

@@ -211,8 +211,8 @@ html,body{
     }
 }
 
-.m-list{
-    .m-list-item {
+.m-form-list{
+    .item {
         margin-top: 0;
         padding: .3rem .4rem .3rem .7rem;
         @include fj();
@@ -255,10 +255,10 @@ html,body{
         }
         
     }
-    .m-list-item.start {
+    .item.start {
         margin-top: .4rem;
     }
-    .m-list-item.end {
+    .item.end {
         border-bottom: 1px solid $border-color;
     }
     .title {
@@ -267,7 +267,7 @@ html,body{
     }
 }
 
-.tabs{
+.m-tabs{
     display: flex;
     background-color: #fff;
     padding: .3rem 0 .6rem;
@@ -286,25 +286,68 @@ html,body{
         }
     }
 }
-.tab-container{
-    display: flex;
-    flex: 1;
+
+.m-tab-container{
     overflow-y: auto;
+    header {
+        width: 100%;
+        padding: .4rem;
+        position: relative;
+        @include fj;
+        align-items: center;
+        @include sc(.7rem, #666);
+        font-weight: bold;
+    }
 }
 
-.tab-choose-enter-active,
-.tab-choose-leave-active {
+.m-tab-choose-enter-active,
+.m-tab-choose-leave-active {
     transition: opacity .5s;
 }
 
-.tab-choose-leave,
-.tab-choose-leave-active {
+.m-tab-choose-leave,
+.m-tab-choose-leave-active {
     display: none;
 }
 
-.tab-choose-enter,
-.tab-choose-leave-active {
+.m-tab-choose-enter,
+.m-tab-choose-leave-active {
     opacity: 0;
+}
+
+.m-list {
+    section{
+        width: 100%;
+        background-color: #fff;
+        padding: .6rem .4rem;
+        border-bottom: 1px solid #f8f8f8;
+        position: relative;
+        overflow: hidden;
+        display: block;
+    }
+    .name {
+        @include fj;
+        margin-bottom: .2rem;
+        @include sc(.7rem, #333);
+        display: inline-block;
+    }
+    .content {
+        @include sc(.5rem, #999);
+        line-height: .6rem;
+    }
+    .number {
+        display: inline-block;
+        span {
+            font-family: 'Helvetica Neue', Tahoma, Arial;
+        }
+        span:nth-of-type(1) {
+            @include sc(.7rem, #f60);
+            font-weight: bold;
+        }
+        span:nth-of-type(2) {
+            @include sc(.5rem, #666);
+        }
+    }
 }
 
 // 页面切换动画
