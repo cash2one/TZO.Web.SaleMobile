@@ -13,6 +13,7 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import { getUserInfo } from 'src/service/getData'
 
 export default {
 	mounted() {
@@ -20,17 +21,19 @@ export default {
 	},
 	methods: {
 		...mapMutations([
-			'INIT_SHOOSE_DATA',
+			'INIT_SHOOSE_DATA', 'GET_USERINFO'
 		]),
-		 initData() {
+		initData() {
+			getUserInfo().then(res => {
+				this.GET_USERINFO(res);
+			});
 			this.INIT_SHOOSE_DATA();
-		},
+		}
 	}
 }
 
 </script>
 
 <style lang="scss">
-@import './style/common';
-
+@import 'src/style/common';
 </style>

@@ -6,6 +6,12 @@ import {getStore} from '../config/mUtils'
  * 获取可用仓库
  */
 
+export const getUserInfo = () => fetch('/api/Account/UserInfo');
+
+/**
+ * 获取可用仓库
+ */
+
 export const getStorages = () => fetch('/api/Storage/Storage/IsValid');
 
 /**

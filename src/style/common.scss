@@ -235,8 +235,9 @@ html,body{
             line-height: 1.5rem;
             p {
                 text-align: left;
+                padding-right: .3rem;
                 @include sc(.6rem, $font-light-color);
-                font-weight: 300;
+                font-weight: 400;
                 font-family: Arial;
                 display: inline-block;
                 vertical-align: middle;

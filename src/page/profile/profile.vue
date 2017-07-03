@@ -11,14 +11,14 @@
                         </svg>
                     </span>
                     <div class="user-info">
-                        <p>张三</p>
+                        <p>{{userInfo.UserName}}</p>
                         <p>
                             <span class="user-icon">
                                 <svg class="icon-mobile" fill="#fff">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
                                 </svg>
                             </span>
-                            <span class="icon-mobile-number">{{mobile}}</span>
+                            <span class="icon-mobile-number">{{userInfo.Telephone}}</span>
                         </p>
                     </div>
                     <span class="arrow">
@@ -56,7 +56,7 @@
                         设置
                     </h2>
                     <div class="content">
-                        <p>1111111111</p>
+                        <p></p>
                         <svg class="icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
                         </svg>
@@ -81,13 +81,6 @@ import { getImgPath } from 'src/components/common/mixin'
 export default {
     data() {
         return {
-            profiletitle: '我的',
-            mobile: '暂无绑定手机号',             //电话号码
-            balance: 0,            //我的余额
-            count: 0,             //优惠券个数
-            pointNumber: 0,       //积分数
-            avatar: '',             //头像地址
-            imgBaseUrl,
         }
     },
     mixins: [getImgPath],
@@ -99,18 +92,7 @@ export default {
     computed: {
         ...mapState([
             'userInfo',
-        ]),
-        //后台会返回两种头像地址格式，分别处理
-        imgpath: function () {
-            let path;
-            if (this.avatar.indexOf('/') !== -1) {
-                path = imgBaseUrl + this.avatar;
-            } else {
-                path = this.getImgPath(this.avatar)
-            }
-            this.SAVE_AVANDER(path);
-            return path;
-        }
+        ])
     },
 }
 </script>
