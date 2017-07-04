@@ -32,7 +32,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import '../../style/mixin';
+@import 'src/style/mixin';
 
 #header_search {
     background-color: $blue;
@@ -49,6 +49,9 @@ export default {
     margin-top: .35rem;
     margin-left: .4rem;
     @include wh(1rem, 1rem);
+    .icon {
+        fill: $icon-light-color;
+    }
 }
 
 .header_search_icon {
@@ -60,6 +63,7 @@ export default {
 .header_search_icon .icon {
     margin-top: .2rem;
     @include wh(1.1rem, 1.1rem);
+    fill: $icon-light-color;
 }
 
 .search_keyword {
@@ -78,7 +82,7 @@ export default {
     .search_text::-webkit-input-placeholder {
         color: #ddd;
         font-weight: normal;
-        font-style:italic;
+        font-style: italic;
         font-size: 0.8rem;
     }
 }

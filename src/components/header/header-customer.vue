@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../style/mixin';
+@import 'src/style/mixin';
 .customer_detail_header {
     overflow: hidden;
     position: relative;

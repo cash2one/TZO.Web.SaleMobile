@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '../../style/mixin';
+@import 'src/style/mixin';
 
 #header_title {
     background-color: $blue;
