@@ -68,9 +68,9 @@ export default {
 
 .search_keyword {
     @include ct();
-    width: 100%;
-    padding-left: 1.7rem;
-    padding-right: 0.7rem;
+    position: absolute;
+    left: 1.7rem;
+    right: 0.7rem;
     .search_text {
         @include sc(0.8rem, #fff);
         width: 100%;
