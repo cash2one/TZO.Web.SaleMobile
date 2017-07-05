@@ -54,6 +54,18 @@ export const getBizAreas = customerId => fetch('/api/Core/BizArea');
 
 
 /**
+ * 获取商品分类api/Goods/Category/GetProperties/0
+ */
+
+export const getCategories = customerId => fetch('/api/Goods/Category');
+
+/**
+ * 获取商品属性
+ */
+
+export const getProperties = customerId => fetch('/api/Goods/Category/GetProperties/1');
+
+/**
  * 获取首页默认地址
  */
 

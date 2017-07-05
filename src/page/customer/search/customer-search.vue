@@ -112,6 +112,9 @@
                 </transition>
             </div>
         </section>
+        <transition name="showcover">
+            <div class="back_cover" v-show="sortBy"></div>
+        </transition>
         <customer-list></customer-list>
         <foot-guide></foot-guide>
     </div>
@@ -210,4 +213,21 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
+
+.showcover-enter-active,
+.showcover-leave-active {
+    transition: opacity .3s
+}
+
+.showcover-enter,
+.showcover-leave-active {
+    opacity: 0
+}
+
+.back_cover {
+    position: fixed;
+    @include wh(100%, 100%);
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.3);
+}
 </style>
