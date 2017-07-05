@@ -21,10 +21,16 @@ export const getExpressCorps = () => fetch('/api/Logistics/LogisticsCorp');
 
 
 /**
- + * 获取客户信息
- + */
+ * 获取客户信息
+ */
 
  export const getCustomer = customerId => fetch('/api/CRM/Customer/'+ customerId);
+
+/**
+ * 获取客户信用设置信息
+ */
+
+ export const getCustomerCredit = customerId => fetch('/api/Finance/CustCredit/'+ customerId);
 
 /**
  * 获取首页默认地址

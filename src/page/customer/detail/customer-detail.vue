@@ -1,35 +1,63 @@
 <template>
-    <div>
+    <div class="rating_page">
         <header-title header-title="客户资料" go-back='true'>
         </header-title>
         <section class="shop_status_info">
-            <header>商家信息</header>
-            <p>ddd</p>
-            <p>地址：ssss</p>
-            <p>营业时间：sdsd</p>
-            <p @click="showLicenseImg(mmm)">
-                <span>营业执照</span>
-                <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow" >
-                    <path d="M0 0 L8 7 L0 14"  stroke="#bbb" stroke-width="1.5" fill="none"/>
-                </svg></p>
-            <p @click="showLicenseImg(nnn)">
-                <span>餐饮服务许可证</span>
-                <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow" >
-                    <path d="M0 0 L8 7 L0 14"  stroke="#bbb" stroke-width="1.5" fill="none"/>
-                </svg>
-            </p>
+            <header>{{customer.BizObj.Name}}</header>
+            <div v-for="item in customer.BizObj.Phones" :key="item.id">
+            <p>联系人：{{item.Contact}}</p>
+            <p>电话：{{item.PhoneNum}}</p>
+            </div>
+            <div v-for="item in customer.BizObj.Addrs" :key="item.id">
+            <p>地址：{{item.Addr}}</p>
+            </div>
+            <p>业务区域：{{customer.BizAreaName}}</p>
+            <p>客户等级：{{customer.CustomerLevelName}}</p>
+            <p>业务员：{{customer.EmployeeName}}</p>
+            <p>备注：{{customer.BizObj.Note}}</p>
+            <!--<div v-if="customerCredit.ChargeOffDay>0 &&customerCredit.BalanceDay>0">
+            <p>信用模式：信用卡模式</p>
+            <p>出账日（首月）：{{customerCredit.ChargeOffDay}}</p>
+            <p>结算日（末月）：{{customerCredit.BalanceDay}}</p>
+            <p>结算周期（月）：{{customerCredit.GapMonth}}</p>
+            </div>
+            <div v-else>
+            <p>信用模式：账期模式</p>
+            <p>账期天数：<span v-if="customerCredit.UnlimitedDeadLine">无限账期</span><span v-else>{{customerCredit.DeadLine}}</span></p>         
+            </div>
+            <div>
+            <p>信用额度：<span v-if="customerCredit.UnlimitedCredit">无限额度</span><span v-else>{{customerCredit.CreditLimit}}</span></p>
+            </div>         -->
+        </section>
+        <section class="activities_container">
+            <header>信用信息</header>
+            <ul class="actibities_ul" v-if="customerCredit.ChargeOffDay>0 &&customerCredit.BalanceDay>0">              
+                <li><span>信用模式：信用卡模式</span></li>
+                <li><span>出账日（首月）：{{customerCredit.ChargeOffDay}}</span></li>
+                <li><span>结算日（末月）：{{customerCredit.BalanceDay}}</span></li>
+                <li><span>结算周期（月）：{{customerCredit.GapMonth}}</span></li>
+            </ul>
+            <ul class="actibities_ul"  v-else>
+                <li><span>信用模式：账期模式</span></li>
+                <li><span>账期天数：<span v-if="customerCredit.UnlimitedDeadLine">无限账期</span><span v-else>{{customerCredit.DeadLine}}</span></span></li>         
+            </ul>          
+            <ul class="actibities_ul">
+                <li><span>信用额度：<span v-if="customerCredit.UnlimitedCredit">无限额度</span><span v-else>{{customerCredit.CreditLimit}}</span></span>
+                </li>
+            </ul>                                           
         </section>
     </div>
 </template>
 
 <script>
 import headerTitle from 'src/components/header/header-title'
-import { getCustomer } from 'src/service/getData'
+import { getCustomer,getCustomerCredit } from 'src/service/getData'
 export default {
     data(){
             return{                
                 customerId:'', // 当前客户id   
-                customer:{}     //当前客户信息           
+                customer:{},     //当前客户信息    
+                customerCredit:{}   //当前客户信用设置信息       
             }
         },
 
@@ -39,6 +67,11 @@ export default {
             getCustomer(this.customerId).then(res => {
                 this.customer = res;
             })
+            //获取当前客户信用设置信息
+            getCustomerCredit(this.customerId).then(res => {
+                this.customerCredit = res;
+            })
+
             //this.initData();
         },
 
@@ -76,14 +109,8 @@ export default {
             padding: 0 .6rem;
             li{
                 margin-bottom: .2rem;
+                
                 span:nth-of-type(1){
-                    @include sc(.45rem, #fff);
-                    padding: .1rem;
-                    border: 1px;
-                    border-radius: 0.1rem;
-                    margin-right: .2rem;
-                }
-                span:nth-of-type(2){
                     @include sc(.55rem, #666);
                 }
             }
