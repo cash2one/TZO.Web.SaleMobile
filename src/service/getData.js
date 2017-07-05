@@ -50,20 +50,37 @@ export const getCustomers = (areaid, keyword, offset, gps, statements) => {
  * 获取业务区域
  */
 
-export const getBizAreas = customerId => fetch('/api/Core/BizArea');
+export const getBizAreas = () => fetch('/api/Core/BizArea');
 
 
 /**
- * 获取商品分类api/Goods/Category/GetProperties/0
+ * 获取商品分类
  */
 
-export const getCategories = customerId => fetch('/api/Goods/Category');
+export const getCategories = () => fetch('/api/Goods/Category');
 
 /**
  * 获取商品属性
  */
 
-export const getProperties = customerId => fetch('/api/Goods/Category/GetProperties/1');
+export const getProperties = () => fetch('/api/Goods/Category/GetProperties/1');
+
+/**
+ * 获取商品
+ */
+
+export const getGoods = (keyword, offset) => {
+	let data = {
+		PageIndex: parseInt(offset / 20),
+		PageSize: 20,
+		GoodsTypes: [1, 3],
+		Keyword: keyword
+	};
+
+	return fetch('/api/Storage/SubStock/GoodsSource', data, 'POST')
+};
+
+
 
 /**
  * 获取首页默认地址

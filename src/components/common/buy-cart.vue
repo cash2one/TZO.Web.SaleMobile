@@ -1,6 +1,6 @@
  <template>
     <section class="cart_module">
-        <section v-if="!foods.specifications.length" class="cart_button">
+        <section class="cart_button">
             <transition name="showReduce">
                 <span @click="removeOutCart(foods.category_id, foods.item_id, foods.specfoods[0].food_id, foods.specfoods[0].name, foods.specfoods[0].price, '', foods.specfoods[0].packing_fee, foods.specfoods[0].sku_id, foods.specfoods[0].stock)" v-if="foodNum">
                     <svg>
@@ -15,7 +15,7 @@
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-add"></use>
             </svg>
         </section>
-        <section v-else class="choose_specification">
+        <section class="choose_specification">
             <section class="choose_icon_container">
                 <transition name="showReduce">
                     <svg class="specs_reduce_icon" v-if="foodNum" @click="showReduceTip">
@@ -54,17 +54,17 @@
             },
             //shopCart变化的时候重新计算当前商品的数量
             foodNum: function (){
-                let category_id = this.foods.category_id;
-                let item_id = this.foods.item_id;
-                if (this.shopCart&&this.shopCart[category_id]&&this.shopCart[category_id][item_id]) {
-                    let num = 0;
-                    Object.values(this.shopCart[category_id][item_id]).forEach((item,index) => {
-                        num += item.num;
-                    })
-                    return num;
-                }else {
-                    return 0;
-                }
+                // let category_id = this.foods.category_id;
+                // let item_id = this.foods.item_id;
+                // if (this.shopCart&&this.shopCart[category_id]&&this.shopCart[category_id][item_id]) {
+                //     let num = 0;
+                //     Object.values(this.shopCart[category_id][item_id]).forEach((item,index) => {
+                //         num += item.num;
+                //     })
+                //     return num;
+                // }else {
+                //     return 0;
+                // }
             },
         },
         props:['foods', 'shopId'],
