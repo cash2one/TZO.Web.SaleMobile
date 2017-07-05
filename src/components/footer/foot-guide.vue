@@ -1,22 +1,19 @@
 <template>
     <section id='foot_guide'>
-    	<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
-	    	<defs>
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
+            <defs>
                 <symbol viewBox="0 0 24 24" id="foot_home">
                     <path fill="#666" d="M9,19V13H11L13,13H15V19H18V10.91L12,4.91L6,10.91V19H9M12,2.09L21.91,12H20V21H13V15H11V21H4V12H2.09L12,2.09Z" />
                 </symbol>
                 <symbol viewBox="0 0 24 24" id="foot_homeActive">
                     <path fill="#0095FF" d="M10,20V14H14V20H19V12H22L12,3L2,12H5V20H10Z" />
                 </symbol>
-
                 <symbol viewBox="0 0 24 24" id="foot_order">
                     <path fill="#666" d="M7,5H21V7H7V5M7,13V11H21V13H7M4,4.5A1.5,1.5 0 0,1 5.5,6A1.5,1.5 0 0,1 4,7.5A1.5,1.5 0 0,1 2.5,6A1.5,1.5 0 0,1 4,4.5M4,10.5A1.5,1.5 0 0,1 5.5,12A1.5,1.5 0 0,1 4,13.5A1.5,1.5 0 0,1 2.5,12A1.5,1.5 0 0,1 4,10.5M7,19V17H21V19H7M4,16.5A1.5,1.5 0 0,1 5.5,18A1.5,1.5 0 0,1 4,19.5A1.5,1.5 0 0,1 2.5,18A1.5,1.5 0 0,1 4,16.5Z" />
                 </symbol>
-
                 <symbol viewBox="0 0 24 24" id="foot_orderActive">
                     <path fill="#0095FF" d="M14,17H7V15H14M17,13H7V11H17M17,9H7V7H17M19,3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3Z" />
                 </symbol>
-
                 <symbol viewBox="0 0 24 24" id="foot_search">
                     <path fill="#666" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
                 </symbol>
@@ -29,93 +26,86 @@
                 <symbol viewBox="0 0 24 24" id="foot_profileActive">
                     <path fill="#0095FF" d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z" />
                 </symbol>
-	    	</defs>
-    	</svg>
-        <section @click = "gotoAddress({path: '/home', query: {geohash}})" class="guide_item">
-        	<svg class="icon_style">
+            </defs>
+        </svg>
+        <router-link to="/home" class="guide_item">
+            <svg class="icon_style">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="$route.path.indexOf('home') !== -1? '#foot_homeActive' : '#foot_home'"></use>
             </svg>
             <span>首页</span>
-        </section>
-        <section @click = "gotoAddress({path: '/customer/search'})" class="guide_item">
-        	<svg class="icon_style">
+        </router-link>
+        <router-link to="/customer/search" class="guide_item">
+            <svg class="icon_style">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="$route.path.indexOf('search') !== -1? '#foot_searchActive' : '#foot_search'"></use>
             </svg>
             <span>搜索</span>
-        </section>
-        <section @click = "gotoAddress('/order/list')" class="guide_item">
-        	<svg class="icon_style">
+        </router-link>
+        <router-link to="/order/list" class="guide_item">
+            <svg class="icon_style">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="$route.path.indexOf('order') !== -1? '#foot_orderActive' : '#foot_order'"></use>
             </svg>
             <span>订单列表</span>
-        </section>
-        <section @click = "gotoAddress('/profile')" class="guide_item">
-        	<svg class="icon_style">
+        </router-link>
+        <router-link to="/profile" class="guide_item">
+            <svg class="icon_style">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="$route.path.indexOf('profile') !== -1? '#foot_profileActive' : '#foot_profile'"></use>
             </svg>
             <span>我的</span>
-        </section>
+        </router-link>
     </section>
 </template>
 
 <script>
-    import {mapState} from 'vuex'
-    export default {
-    	data(){
-            return{
-                
-            }
-        },
-        created(){
-           
-        },
-        mounted(){
-            
-        },
-        computed: {
-            ...mapState([
-                'geohash'
-            ]),
-        },
-        methods: {
-        	gotoAddress(path){
-        		this.$router.push(path)
-        	}
-        },
+//import { mapState } from 'vuex'
+export default {
+    data() {
+        return {
 
-    }
+        }
+    },
+    created() {
+
+    },
+    mounted() {
+    },
+    computed: {
+    },
+    methods: {
+    },
+
+}
 
 </script>
 
 <style lang="scss" scoped>
-    @import '../../style/mixin';
+@import 'src/style/mixin';
 
-    #foot_guide{
-        background-color: #fff;
-        position: fixed;
-        z-index: 100;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        @include wh(100%, 1.95rem);
-        display: flex;
-        box-shadow: 0 -0.026667rem 0.053333rem rgba(0,0,0,.1);
+#foot_guide {
+    background-color: #fff;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include wh(100%, 1.95rem);
+    display: flex;
+    box-shadow: 0 -0.026667rem 0.053333rem rgba(0, 0, 0, .1);
+}
+
+.guide_item {
+    flex: 1;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    .icon_style {
+        @include wh(1rem, 1rem);
+        margin-bottom: .1rem;
+        margin-top: .2rem;
+        fill: #ccc;
     }
-    .guide_item{
-    	flex: 1;
-    	display: flex;
-    	text-align: center;
-    	flex-direction: column;
-    	align-items: center;
-		.icon_style{
-			@include wh(1rem, 1rem);
-			margin-bottom: .1rem;
-			margin-top: .2rem;
-			fill: #ccc;
-		}
-		span{
-			@include sc(.45rem, #666);
-		}
+    span {
+        @include sc(.45rem, #666);
     }
-   
+}
 </style>

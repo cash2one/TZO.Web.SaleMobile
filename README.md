@@ -19,9 +19,9 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [ ] 认证集成 -- 未完成 李海全
 - [ ] 选择分公司 corp-list -- 未完成 李海全
 - [ ] 首页 home -- 未完成 李季
-- [ ] 展示当前位置附近客户列表 customer-list -- 未完成
-- [ ] 根据距离、业务区域等进行排序和筛选客户 customer-list -- 未完成
-- [ ] 客户搜索 customer/search -- 未完成
+- [ ] 展示当前位置附近客户列表 customer-list -- 未完成 李季
+- [ ] 根据距离、业务区域等进行排序和筛选客户 customer-list -- 未完成 李季
+- [ ] 客户搜索 customer/search -- 未完成 李季
 - [ ] 商家详情页 customer/detail -- 未完成 李光波
 - [ ] 商家签到页 customer/sign-in -- 未完成 李光波
 - [ ] 客户对账 customer/bill -- 未完成 冯建彬
@@ -32,7 +32,7 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [ ] 购物车功能 buy-cart -- 未完成
 - [ ] 商品列表 goods-list -- 未完成
 - [ ] 根据商品分类、类目属性等进行排序和筛选商品 goods-list -- 未完成
-- [ ] 商品搜索 goods/search -- 未完成
+- [ ] 商品搜索 goods/search -- 未完成 李季
 - [ ] 单个商品信息 goods/detail -- 未完成
 - [ ] 商品库存 goods/detail/stocks -- 未完成
 - [ ] 下单功能 订货\意向 confirm-order -- 未完成
@@ -46,10 +46,10 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [ ] 收款 payment/new-- 未完成
 - [ ] 收款列表 payment/list -- 未完成
 - [ ] 收款单详情 payment/detail -- 未完成
-- [ ] 送货 delivery/list -- 未完成
-- [ ] 送货明细 delivery/detail -- 未完成
-- [ ] 物流发货 express/list -- 未完成
-- [ ] 物流发货 express/detail -- 未完成
+- [ ] 送货 delivery/list -- 未完成 李季
+- [ ] 送货明细 delivery/detail -- 未完成 李季
+- [ ] 物流发货 express/list -- 未完成 李季
+- [ ] 物流发货 express/detail -- 未完成 李季
 - [ ] *知识库-车型搜索 knowledge-search -- 未完成
 - [ ] *知识库-车型详情 knowledge-detail -- 未完成
 - [ ] 微信推广 customer-detail .. we-chat-- 未完成 李光波

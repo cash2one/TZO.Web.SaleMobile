@@ -1,8 +1,8 @@
  <template>
     <div class="rating_page">
         <header-title header-title="我的资料"></header-title>
-        <section class="m-list">
-            <section class="m-list-item start">
+        <section class="m-form-list">
+            <section class="item start">
                 <input type="file" class="profileinfopanel-upload">
                 <h2>头像</h2>
                 <div class="content">
@@ -15,13 +15,13 @@
                     </svg>
                 </div>
             </section>
-            <section class="m-list-item end">
+            <section class="item">
                 <h2>用户名</h2>
                 <div class="content">
                     <p>{{userInfo.UserName}}</p>
                 </div>
             </section>
-            <section class="m-list-item end">
+            <section class="item end">
                 <h2>当前公司</h2>
                 <div class="content">
                     <p>{{userInfo.CorpName}}</p>
@@ -30,7 +30,7 @@
             <section class="title">
                 微信绑定
             </section>
-            <section class="m-list-item end">
+            <section class="item end">
                 <h2>
                     <svg class="icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
@@ -78,7 +78,7 @@ export default {
 <style lang="scss" scoped>
 @import 'src/style/mixin.scss';
 
-.m-list {
+.m-form-list {
     .profileinfopanel-upload {
         display: block;
         position: absolute;

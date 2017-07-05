@@ -211,8 +211,8 @@ html,body{
     }
 }
 
-.m-list{
-    .m-list-item {
+.m-form-list{
+    .item {
         margin-top: 0;
         padding: .3rem .4rem .3rem .7rem;
         @include fj();
@@ -255,10 +255,10 @@ html,body{
         }
         
     }
-    .m-list-item.start {
+    .item.start {
         margin-top: .4rem;
     }
-    .m-list-item.end {
+    .item.end {
         border-bottom: 1px solid $border-color;
     }
     .title {
@@ -267,7 +267,7 @@ html,body{
     }
 }
 
-.tabs{
+.m-tabs{
     display: flex;
     background-color: #fff;
     padding: .3rem 0 .6rem;
@@ -287,19 +287,302 @@ html,body{
     }
 }
 
-.tab-choose-enter-active,
-.tab-choose-leave-active {
+.m-tab-container{
+    overflow-y: auto;
+    header {
+        width: 100%;
+        padding: .4rem;
+        position: relative;
+        @include fj;
+        align-items: center;
+        @include sc(.7rem, #666);
+        font-weight: bold;
+    }
+}
+
+.m-tab-choose-enter-active,
+.m-tab-choose-leave-active {
     transition: opacity .5s;
 }
 
-.tab-choose-leave,
-.tab-choose-leave-active {
+.m-tab-choose-leave,
+.m-tab-choose-leave-active {
     display: none;
 }
 
-.tab-choose-enter,
-.tab-choose-leave-active {
+.m-tab-choose-enter,
+.m-tab-choose-leave-active {
     opacity: 0;
+}
+
+.m-list {
+    section{
+        width: 100%;
+        background-color: #fff;
+        padding: .6rem .4rem;
+        border-bottom: 1px solid #f8f8f8;
+        position: relative;
+        overflow: hidden;
+        display: block;
+    }
+    .name {
+        @include fj;
+        margin-bottom: .2rem;
+        @include sc(.7rem, #333);
+        display: inline-block;
+    }
+    .content {
+        @include sc(.5rem, #999);
+        line-height: .6rem;
+    }
+    .number {
+        display: inline-block;
+        span {
+            font-family: 'Helvetica Neue', Tahoma, Arial;
+        }
+        span:nth-of-type(1) {
+            @include sc(.7rem, #f60);
+            font-weight: bold;
+        }
+        span:nth-of-type(2) {
+            @include sc(.5rem, #666);
+        }
+    }
+}
+
+.m-sort{
+    background-color: #fff;
+    border-bottom: 0.025rem solid #f1f1f1;
+    position: fixed;
+    top: 1.95rem;
+    right: 0;
+    width: 100%;
+    display: flex;
+    z-index: 13;
+    box-sizing: border-box;
+    .sort_item {
+        @include sc(0.55rem, #444);
+        @include wh(33.3%, 1.6rem);
+        text-align: center;
+        line-height: 1rem;
+        .sort_item_container {
+            @include wh(100%, 100%);
+            position: relative;
+            z-index: 14;
+            background-color: #fff;
+            box-sizing: border-box;
+            padding-top: .3rem;
+            .sort_item_border {
+                height: 1rem;
+                border-right: 0.025rem solid $bc;
+            }
+        }
+        .sort_icon {
+            vertical-align: middle;
+            transition: all .3s;
+            fill: #666;
+        }
+    }
+    .choose_type {
+        .sort_item_container {
+
+            .category_title {
+                color: $blue;
+            }
+            .sort_icon {
+                transform: rotate(180deg);
+                fill: $blue;
+            }
+        }
+    }
+    .showlist-enter-active,
+    .showlist-leave-active {
+        transition: all .3s;
+        transform: translateY(0);
+    }
+    .showlist-enter,
+    .showlist-leave-active {
+        opacity: 0;
+        transform: translateY(-100%);
+    }
+    .sort_detail_type {
+        width: 100%;
+        position: absolute;
+        display: flex;
+        top: 1.6rem;
+        left: 0;
+        border-top: 0.025rem solid $bc;
+        background-color: #fff;
+    }
+    .category_container {
+        .category_left {
+            flex: 1;
+            background-color: #f1f1f1;
+            height: 16rem;
+            overflow-y: auto;
+            span {
+                @include sc(0.5rem, #666);
+                line-height: 1.8rem;
+            }
+            .category_left_li {
+                @include fj;
+                padding: 0 0.5rem;
+                .category_icon {
+                    @include wh(.8rem, .8rem);
+                    vertical-align: middle;
+                    margin-right: .2rem;
+                }
+                .category_count {
+                    background-color: #ccc;
+                    @include sc(.4rem, #fff);
+                    padding: 0 .1rem;
+                    border: 0.025rem solid #ccc;
+                    border-radius: 0.8rem;
+                    vertical-align: middle;
+                    margin-right: 0.25rem;
+                }
+                .category_arrow {
+                    vertical-align: middle;
+                }
+            }
+            .category_active {
+                background-color: #fff;
+            }
+        }
+        .category_right {
+            flex: 1;
+            background-color: #fff;
+            padding-left: 0.5rem;
+            // height: 16rem;
+            overflow-y: auto;
+            .category_right_li {
+                @include fj;
+                height: 1.8rem;
+                line-height: 1.8rem;
+                padding-right: 0.5rem;
+                border-bottom: 0.025rem solid $bc;
+                display: flex;
+                align-items: center;
+                span {
+                    color: #666;
+                }
+                svg {
+                    @include wh(0.6rem, 0.6rem);
+                }
+            }
+            .category_right_choosed {
+                span {
+                    color: $blue;
+                }
+            }
+        }
+    }
+    .sort_list_container {
+        width: 100%;
+        .sort_list_li {
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            svg {
+                @include wh(0.7rem, 0.7rem);
+                margin: 0 .3rem 0 .8rem;
+            }
+            p {
+                line-height: 2.5rem;
+                flex: auto;
+                text-align: left;
+                text-indent: 0.25rem;
+                border-bottom: 0.025rem solid $bc;
+                @include fj;
+                align-items: center;
+                span {
+                    color: #666;
+                }
+            }
+            .sort_select {
+                span {
+                    color: $blue;
+                }
+            }
+        }
+    }
+    .filter_container {
+        flex-direction: column;
+        align-items: flex-start;
+        // min-height: 10.6rem;
+        background-color: #f1f1f1;
+        .filter_header_style {
+            @include sc(0.4rem, #333);
+            line-height: 1.5rem;
+            height: 1.5rem;
+            text-align: left;
+            padding-left: .5rem;
+            background-color: #fff;
+        }
+        .filter_ul {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0 0.5rem;
+            background-color: #fff;
+            .filter_li {
+                display: flex;
+                align-items: center;
+                border: 0.025rem solid #eee;
+                @include wh(4.7rem, 1.4rem);
+                margin-right: 0.25rem;
+                border-radius: 0.125rem;
+                padding: 0 0.25rem;
+                margin-bottom: 0.25rem;
+                svg {
+                    @include wh(.8rem, .8rem);
+                    margin-right: 0.125rem;
+                }
+                span {
+                    @include sc(0.4rem, #333);
+                }
+                .filter_icon {
+                    @include wh(.8rem, .8rem);
+                    font-size: 0.5rem;
+                    border: 0.025rem solid $bc;
+                    border-radius: 0.15rem;
+                    margin-right: 0.25rem;
+                    line-height: .8rem;
+                    text-align: center;
+                }
+                .activity_svg {
+                    margin-right: .25rem;
+                }
+                .selected_filter {
+                    color: $blue;
+                }
+            }
+        }
+        .confirm_filter {
+            display: flex;
+            background-color: #f1f1f1;
+            width: 100%;
+            padding: .3rem .2rem;
+            .filter_button_style {
+                @include wh(50%, 1.8rem);
+                font-size: 0.8rem;
+                line-height: 1.8rem;
+                border-radius: 0.2rem;
+            }
+            .clear_all {
+                background-color: #fff;
+                margin-right: .5rem;
+                border: 0.025rem solid #fff;
+            }
+            .confirm_select {
+                background-color: #56d176;
+                color: #fff;
+                border: 0.025rem solid #56d176;
+                span {
+                    color: #fff;
+                }
+            }
+        }
+    }
 }
 
 // 页面切换动画
