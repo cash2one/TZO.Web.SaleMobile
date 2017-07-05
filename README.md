@@ -30,8 +30,8 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [ ] 路线规划 path -- 未完成
 - [ ] 定位功能 location -- 未完成
 - [ ] 购物车功能 buy-cart -- 未完成
-- [ ] 商品列表 goods-list -- 未完成
-- [ ] 根据商品分类、类目属性等进行排序和筛选商品 goods-list -- 未完成
+- [ ] 商品列表 goods-list -- 未完成 李季
+- [ ] 根据商品分类、类目属性等进行排序和筛选商品 goods-list -- 未完成 李季
 - [ ] 商品搜索 goods/search -- 未完成 李季
 - [ ] 单个商品信息 goods/detail -- 未完成
 - [ ] 商品库存 goods/detail/stocks -- 未完成
