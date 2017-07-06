@@ -35,7 +35,7 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [ ] 0.1.0 订单列表 order/list -- 未完成 冯建彬
 - [ ] 0.1.0 订单详情 order/detail -- 未完成 冯建彬
 - [ ] 0.1.0 个人中心 profile -- 未完成 李季
-- [*] 0.1.0 设置 profile/settings -- 完成 李季
+- [x] 0.1.0 设置 profile/settings -- 完成 李季
 
 - [ ] 0.2.0 库存商品列表 goods-stock -- 未完成
 - [ ] 0.2.0 根据商品分类、类目属性等进行排序和筛选过滤库存商品 goods-stock -- 未完成
