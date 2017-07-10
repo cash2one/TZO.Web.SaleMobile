@@ -46,6 +46,20 @@
                 </li>
             </ul>                                           
         </section>
+        <section class="shop_status_container">
+            <router-link :to="customerWeChatstr" class="shop_status_header">
+                <span class="shop_detail_title">微信推广</span>
+                <div>                  
+                    <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow" >
+                        <path d="M0 0 L8 7 L0 14"  stroke="#bbb" stroke-width="1.5" fill="none"/>
+                    </svg>
+                </div>
+            </router-link>         
+        </section>
+
+        <transition name="router-slid" mode="out-in">
+            <router-view></router-view>
+        </transition>
     </div>
 </template>
 
@@ -57,12 +71,14 @@ export default {
             return{                
                 customerId:'', // 当前客户id   
                 customer:{},     //当前客户信息    
-                customerCredit:{}   //当前客户信用设置信息       
+                customerCredit:{},   //当前客户信用设置信息   
+                customerWeChatstr:""    //客户微信推广的页面路径    
             }
         },
 
         mounted(){
             this.customerId = this.$route.params.customerId;
+            
             //获取当前客户信息
             getCustomer(this.customerId).then(res => {
                 this.customer = res;
@@ -72,7 +88,8 @@ export default {
                 this.customerCredit = res;
             })
 
-            //this.initData();
+            //赋值客户微信推广的页面路径 
+            this.customerWeChatstr="/customer/detail/"+this.customerId+"/we-chat";
         },
 
     components: {
@@ -94,6 +111,29 @@ export default {
 		background-color: #ebebeb;
 		z-index: 18;
 	}
+    .shop_status_info{
+        background-color: #fff;
+        margin-bottom: .4rem;
+        header{
+            line-height: 1.8rem;
+            padding: 0 .6rem;
+            @include sc(.75rem, #333);
+            border-bottom: 0.025rem solid #f1f1f1;
+        }
+        p{
+            @include sc(.6rem, #666);
+            padding: .7rem .6rem .7rem 0;
+            margin-left: .6rem;
+            border-bottom: 0.025rem solid #f5f5f5;
+        }
+        span{
+            color: #666;
+        }
+        p:nth-of-type(4), p:nth-of-type(5){
+            display: flex;
+            justify-content: space-between;
+        }
+    }
     .activities_container{
         background-color: #fff;
         margin: .4rem 0;
@@ -158,29 +198,7 @@ export default {
             }
         }
     }
-    .shop_status_info{
-        background-color: #fff;
-        margin-bottom: .4rem;
-        header{
-            line-height: 1.8rem;
-            padding: 0 .6rem;
-            @include sc(.75rem, #333);
-            border-bottom: 0.025rem solid #f1f1f1;
-        }
-        p{
-            @include sc(.6rem, #666);
-            padding: .7rem .6rem .7rem 0;
-            margin-left: .6rem;
-            border-bottom: 0.025rem solid #f5f5f5;
-        }
-        span{
-            color: #666;
-        }
-        p:nth-of-type(4), p:nth-of-type(5){
-            display: flex;
-            justify-content: space-between;
-        }
-    }
+    
     .license_container{
         position: fixed;
         top: 0;
