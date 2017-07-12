@@ -316,11 +316,15 @@ html,body{
 }
 
 .m-list {
-    section{
+    header{
+        @include sc(.5rem, #999);
+        padding: .2rem .4rem;
+    }
+    .item {
         width: 100%;
-        background-color: #fff;
+        background-color: $background-light-color;
         padding: .6rem .4rem;
-        border-bottom: 1px solid #f8f8f8;
+        border-bottom: 1px solid $border-color;
         position: relative;
         overflow: hidden;
         display: block;
@@ -333,7 +337,7 @@ html,body{
     }
     .content {
         @include sc(.5rem, #999);
-        line-height: .6rem;
+        line-height: .8rem;
     }
     .number {
         display: inline-block;

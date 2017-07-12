@@ -38,34 +38,34 @@
                 </div>
                 <transition name="showlist">
                     <section v-show="sortBy == 'sort'" class="sort_detail_type">
-                        <ul class="sort_list_container" @click="sortList($event)">
-                            <li class="sort_list_li">
+                        <ul class="sort_list_container">
+                            <li class="sort_list_li" @click="sortList(1)">
                                 <svg>
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#default"></use>
                                 </svg>
-                                <p data="0" :class="{sort_select: sortByType == ''}">
+                                <p :class="{sort_select: sortByType == ''}">
                                     <span>智能排序</span>
                                     <svg v-if="sortByType == 0">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
                                 </p>
                             </li>
-                            <li class="sort_list_li">
+                            <li class="sort_list_li" @click="sortList(2)">
                                 <svg>
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#distance"></use>
                                 </svg>
-                                <p data="5" :class="{sort_select: sortByType == 'j'}">
+                                <p :class="{sort_select: sortByType == 'j'}">
                                     <span>距离最近</span>
                                     <svg v-if="sortByType == 5">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
                                 </p>
                             </li>
-                            <li class="sort_list_li">
+                            <li class="sort_list_li" @click="sortList(3)">
                                 <svg>
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hot"></use>
                                 </svg>
-                                <p data="6" :class="{sort_select: sortByType == 'sale'}">
+                                <p :class="{sort_select: sortByType == 'sale'}">
                                     <span>销量最高</span>
                                     <svg v-if="sortByType == 6">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
@@ -115,7 +115,7 @@
         <transition name="showcover">
             <div class="back_cover" v-show="sortBy"></div>
         </transition>
-        <customer-list></customer-list>
+        <customer-list :sortByType='sortByType'></customer-list>
         <foot-guide></foot-guide>
     </div>
 </template>
@@ -177,9 +177,9 @@ export default {
             this.bizAreaTitle = name;
         },
         //点击某个排序方式，获取事件对象的data值，并根据获取的值重新获取数据渲染
-        sortList(event) {
-            console.log(this.filterNum)
-            this.sortByType = event.target.getAttribute('data');
+        sortList(val) {
+            console.log(val)
+            this.sortByType = val;
             this.sortBy = '';
         },
         selectFilter(name) {

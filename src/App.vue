@@ -12,22 +12,35 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-import { getUserInfo } from 'src/service/getData'
+import { mapMutations, mapActions } from 'vuex'
+import { apiGetToken } from 'src/service/getData'
 
 export default {
 	mounted() {
 		this.initData();
 	},
 	methods: {
-		...mapMutations([
-			'INIT_SHOOSE_DATA', 'GET_USERINFO'
+		...mapActions([
+			'refreshToken',
+			'setCurCorp'
 		]),
-		initData() {
-			getUserInfo().then(res => {
-				this.GET_USERINFO(res);
-			});
-			this.INIT_SHOOSE_DATA();
+		...mapMutations([
+			'GET_CORPLIST',
+			'INIT_DATA'
+		]),
+		async initData() {
+			let res = await apiGetToken(this.$route.query.code);
+
+			this.refreshToken(res.Token);
+
+			this.GET_CORPLIST(res.EmployeeCorpRel);
+			this.INIT_DATA();
+
+			if (res.EmployeeCorpRel.length == 1) {
+				this.setCurCorp(res.EmployeeCorpRel[0]);
+			}
+			else
+				this.$router.push('/corp-list');
 		}
 	}
 }

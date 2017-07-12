@@ -115,7 +115,7 @@
 import { mapMutations } from 'vuex'
 import headerCustomer from 'src/components/header/header-customer'
 import footGuide from 'src/components/footer/foot-guide'
-import { msiteAdress, msiteFoodTypes, cityGuess } from 'src/service/getData'
+import { } from 'src/service/getData'
 import 'src/plugins/swiper.min.js'
 import 'src/style/swiper.min.css'
 
@@ -194,6 +194,7 @@ export default {
 		}
 	},
 	mounted() {
+		
 		//初始化swiper
 		new Swiper('.swiper-container', {
 			pagination: '.swiper-pagination',

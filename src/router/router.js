@@ -65,13 +65,14 @@ export default [{
         // 首页
         {
             path: '/home',
-            component: home
+            component: home,
+            meta: { keepAlive: true },
         },
         // 可选公司列表
         {
             path: '/corp-list',
             component: corpList,
-            meta: { keepAlive: true },
+            history: false
         },
         {
             path: '/customer',
@@ -150,8 +151,8 @@ export default [{
         },
         // 知识库搜索
         {
-            path:'/knowledge',
-            component:knowledge,
+            path: '/knowledge',
+            component: knowledge,
             redirect: '/knowledge/search',
             children: [
                 {

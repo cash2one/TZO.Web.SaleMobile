@@ -1,6 +1,11 @@
 import {
-	INIT_SHOOSE_DATA,
+	REFRESH_TOKEN,
 	GET_USERINFO,
+	GET_CORPLIST,
+	SAVE_CUR_CORP,
+	INIT_DATA,
+	INIT_CORP_DATA,
+
 	SAVE_STORAGE,
 	SAVE_EXPRESS_CORP,
 	SAVE_PRINTER,
@@ -36,34 +41,58 @@ import {
 	BUY_CART,
 } from './mutation-types.js'
 
-import { setStore, getStore } from '../config/mUtils'
-import { localapi, proapi } from 'src/config/env'
+import { setStore, getStore } from 'src/config/mUtils'
+import { token } from 'src/config/env'
+
+// 事件处理程序
 
 export default {
 
-	// 网页初始化时从本地缓存默认选项
-	[INIT_SHOOSE_DATA](state) {
-		let initStorage = getStore('storage');
-		if (initStorage) {
-			state.storage = JSON.parse(initStorage);
-		}
-
-		let initExpressCorp = getStore('expressCorp');
-		if (initExpressCorp) {
-			state.expressCorp = JSON.parse(initExpressCorp);
-		}
-
-		let initPrinter = getStore('printer');
-		if (initPrinter) {
-			state.printer = JSON.parse(initPrinter);
-		}
+	// 刷新 token
+	[REFRESH_TOKEN](state, token) {
+		token = 'bearer ' + token;
 	},
 
-	//获取用户信息存入vuex
+	// 获取用户信息存入vuex
 	[GET_USERINFO](state, info) {
 		state.userInfo = { ...info };
-		state.corpId = info.CorpId;
 	},
+
+	// 获取员工绑定的公司列表
+	[GET_CORPLIST](state, list) {
+		state.corpList = [...list];
+	},
+
+	[SAVE_CUR_CORP](state, corp) {
+		state.curCorp = corp;
+		setStore('curCorp', corp);
+	},
+	// 
+	[INIT_DATA](state) {
+		let initCorp = getStore('curCorp');
+		if (initCorp)
+			state.curCorp = JSON.parse(initCorp);
+
+		let initPrinter = getStore('curPrinter');
+		if (initPrinter) {
+			state.curPrinter = JSON.parse(initPrinter);
+		}
+	},
+
+	// 网页初始化时从本地缓存默认选项
+	[INIT_CORP_DATA](state, corpId) {
+		let initStorage = getStore(corpId + '_curStorage');
+		if (initStorage) {
+			state.curStorage = JSON.parse(initStorage);
+		}
+
+		let initExpress = getStore(corpId + '_curExpress');
+		if (initExpress) {
+			state.curExpress = JSON.parse(initExpress);
+		}
+	},
+
+
 	// 选择默认仓库
 	[SAVE_STORAGE](state, place) {
 		state.storage = place;

@@ -65,7 +65,7 @@
 
 <script>
 import headerTitle from 'src/components/header/header-title'
-import { getCustomer,getCustomerCredit } from 'src/service/getData'
+import { apiGetCustomer,apiGetCustomerCredit } from 'src/service/getData'
 export default {
     data(){
             return{                
@@ -80,11 +80,11 @@ export default {
             this.customerId = this.$route.params.customerId;
             
             //获取当前客户信息
-            getCustomer(this.customerId).then(res => {
+            apiGetCustomer(this.customerId).then(res => {
                 this.customer = res;
             })
             //获取当前客户信用设置信息
-            getCustomerCredit(this.customerId).then(res => {
+            apiGetCustomerCredit(this.customerId).then(res => {
                 this.customerCredit = res;
             })
 
