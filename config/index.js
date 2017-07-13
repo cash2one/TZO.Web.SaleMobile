@@ -6,8 +6,8 @@ module.exports = {
         env: {
             NODE_ENV: '"production"'
         },
-        index: path.resolve(__dirname, '../elm/index.html'),
-        assetsRoot: path.resolve(__dirname, '../elm'),
+        index: path.resolve(__dirname, '../tzo/index.html'),
+        assetsRoot: path.resolve(__dirname, '../tzo'),
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
         productionSourceMap: true,
@@ -26,17 +26,6 @@ module.exports = {
         assetsPublicPath: '/',
         context: [ //代理路径
             '/api',
-            // '/ugc',
-            // '/v1',
-            // '/v2',
-            // '/v3',
-            // '/v4',
-            // '/bos',
-            // '/member',
-            // '/promotion',
-            // '/eus',
-            // '/payapi',
-            // '/m.ele.me@json',
         ],
         proxypath: 'http://oaingatek.eicp.net:27473',
         // CSS Sourcemaps off by default because relative paths are "buggy"
