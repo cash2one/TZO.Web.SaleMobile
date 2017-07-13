@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <header-title header-title="我的"></header-title>
+    <section class="profile_container">
         <router-link to="/profile/info" class="profile-link">
             <!--<img :src="imgBaseUrl + userInfo.avatar" class="privateImage" v-if="userInfo&&userInfo.user_id" />-->
             <span class="privateImage">
@@ -63,7 +62,7 @@
         <transition name="router-slid" mode="out-in">
             <router-view></router-view>
         </transition>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -96,6 +95,14 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
+.profile_container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
 .profile-link {
     display: block;
     display: flex;

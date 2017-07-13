@@ -1,5 +1,5 @@
 <template>
-    <header v-if="curCustomer.Id" id='header_customer' class="customer_detail_header" ref="customerheader">
+    <header v-if="curCustomer.CustomerId" id='header_customer' class="customer_detail_header" ref="customerheader">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
             <defs>
                 <symbol viewBox="0 0 24 24" id="header_signIn">
@@ -10,21 +10,24 @@
                 </symbol>
             </defs>
         </svg>
-        <img :src="imgBaseUrl+'/images/customer/'+ curCustomer.Id +'.jpg'" class="header_cover_img">
+        <img :src="imgBaseUrl+'/images/customer/'+ curCustomer.CoustomerId +'.jpg'" class="header_cover_img">
         <section class="description_header">
             <section class="description_top">
                 <section class="description_left">
-                    <img :src="imgBaseUrl+'/images/customer/'+ curCustomer.Id +'.jpg'" onerror="this.onerror=null;this.src='/images/account-card-details.svg'">
+                    <!-- <img :src="imgBaseUrl+'/images/customer/'+ curCustomer.CoustomerId +'.jpg'" onerror="this.onerror=null;this.src='/images/account-card-details.svg'"> -->
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#customer"></use>
+                    </svg>
                 </section>
                 <router-link to="/customer/detail/1" class="description_right">
-                    <h4 class="description_title ellipsis">{{curCustomer.Name}}</h4>
+                    <h4 class="description_title ellipsis">{{curCustomer.BizObj.Name}}</h4>
                     <p class="description_text">联系人：李四</p>
                     <p class="description_promotion ellipsis">联系电话：11112222919</p>
                 </router-link>
                 <router-link to="/customer/sgin-in">
-                    <svg class="sign_in">
+                     <svg class="sign_in">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
-                    </svg>
+                    </svg> 
                 </router-link>
             </section>
             <footer class="description_footer">
@@ -38,9 +41,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import { imgBaseUrl } from 'src/config/env'
+
 export default {
     data() {
         return {
@@ -54,7 +58,7 @@ export default {
         ...mapState([
             'curCustomer'
         ]),
-    },
+    }
 }
 </script>
 
@@ -82,6 +86,7 @@ export default {
             display: flex;
             .description_left {
                 margin-right: 0.3rem;
+                .icon,
                 img {
                     @include wh(2.9rem, 2.9rem);
                     display: block;

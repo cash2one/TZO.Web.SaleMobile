@@ -6,6 +6,8 @@
 
 <script>
 import { mapMutations, mapActions } from 'vuex'
+import headerTitle from 'src/components/header/header-title'
+import footGuide from 'src/components/footer/foot-guide'
 
 export default {
 	mounted() {

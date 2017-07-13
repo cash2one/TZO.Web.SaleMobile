@@ -1,11 +1,14 @@
 <template>
 	<div class="customer_container">
-		<div v-load-more="loaderMore" v-if="shopListArr.length" class="m-list">
-			<router-link :to="'customer/detail/' + item.Id" v-for="item in shopListArr" tag='section' :key="item.Id" class="item customer_li">
-				<section>
-					<img :src="imgBaseUrl + item.image_path" class="customer_img">
+		<div v-load-more="loaderMore" v-if="customerList.length" class="m-list">
+			<section v-for="item in customerList" :key="item.Id" class="item customer_li">
+				<section :to="'customer/detail/' + item.Id">
+					<!-- <img :src="imgBaseUrl + item.image_path" class="customer_img"> -->
+					<svg class="icon customer_img">
+						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#customer"></use>
+					</svg>
 				</section>
-				<section class="ellipsis">
+				<section class="ellipsis" @click="chooseCustomer(item)">
 					<strong class="name">{{item.BizObj.Name}}</strong>
 					<div class="content">
 						<section v-for="phone in item.BizObj.Phones" :key="phone.Id">
@@ -24,7 +27,7 @@
 						</p>
 					</div>
 				</section>
-			</router-link>
+			</section>
 		</div>
 		<section v-else class="m-list">
 			<section class="list_back_li" v-for="item in 10" :key="item">
@@ -33,10 +36,10 @@
 		</section>
 		<!--<p v-if="touchend" class="empty_data">没有更多了</p>-->
 		<!--<aside class="return_top" @click="backTop" v-if="showBackStatus">
-											<svg class="back_top_svg">
-												<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
-											</svg>
-										</aside>-->
+										<svg class="back_top_svg">
+											<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
+										</svg>
+									</aside>-->
 		<div ref="abc" style="background-color: red;"></div>
 		<transition name="loading">
 			<loading v-show="showLoading"></loading>
@@ -45,8 +48,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { imgBaseUrl } from 'src/config/env'
+import { mapState, mapMutations } from 'vuex'
 import { loadMore, getImgPath } from './mixin'
 import { showBack, animate } from 'src/config/mUtils'
 import loading from './loading'
@@ -55,13 +57,13 @@ import { apiGetCustomers } from 'src/service/getData'
 export default {
 	data() {
 		return {
-			offset: 0, // 批次加载店铺列表，每次加载20个 limit = 20
-			shopListArr: [], // 店铺列表数据
+			offset: 0, 			// 批次加载店铺列表，每次加载20个 limit = 20
+			customerList: [],	// 客户列表
 			preventRepeatReuqest: false, //到达底部加载数据，防止重复加载
 			showBackStatus: false, //显示返回顶部按钮
 			showLoading: true, //显示加载动画
 			touchend: false, //没有更多数据
-			imgBaseUrl,
+
 			areaId: null,
 			keyword: null,
 			gps: null,
@@ -78,14 +80,21 @@ export default {
 	mixins: [loadMore, getImgPath],
 	computed: {
 		...mapState([
-			'latitude', 'longitude'
+			'curCustomer', 'latitude', 'longitude'
 		]),
 	},
 	methods: {
+		...mapMutations([
+			'SAVE_CUR_CUSTOMER'
+		]),
+		chooseCustomer(val) {
+			this.SAVE_CUR_CUSTOMER(val);
+			this.$router.push('/home');
+		},
 		async initData() {
 			//获取数据
 			let res = await apiGetCustomers(this.areaId, this.keyword, this.offset, this.gps, this.statements);
-			this.shopListArr = [...res.Items];
+			this.customerList = [...res.Items];
 			if (res.length < 20) {
 				this.touchend = true;
 			}
@@ -111,7 +120,7 @@ export default {
 			this.offset += 20;
 			let res = await apiGetCustomers(this.areaId, this.keyword, this.offset, this.gps, this.statements);
 			this.hideLoading();
-			this.shopListArr = [...this.shopListArr, ...res.Items];
+			this.customerList = [...this.customerList, ...res.Items];
 			//当获取数据小于20，说明没有更多数据，不需要再次请求数据
 			if (res.length < 20) {
 				this.touchend = true;
@@ -130,7 +139,7 @@ export default {
 			let res = await apiGetCustomers(this.areaId, this.keyword, this.offset, this.gps, this.statements);
 			this.hideLoading();
 			//考虑到本地模拟数据是引用类型，所以返回一个新的数组
-			this.shopListArr = [...res.Items];
+			this.customerList = [...res.Items];
 		},
 		//开发环境与编译环境loading隐藏方式不同
 		hideLoading() {
@@ -162,7 +171,7 @@ export default {
 	.m-list section {
 		width: inherit;
 	}
-	
+
 	.customer_li {
 		display: flex;
 		.customer_img {

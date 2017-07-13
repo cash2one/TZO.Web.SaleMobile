@@ -70,11 +70,11 @@ export default [{
                 {
                     path: 'home', // 首页
                     component: home,
-                    meta: { keepAlive: true },
                 },
                 {
                     path: 'profile', // 个人信息页
                     component: profile,
+                    meta: { keepAlive: true },
                     children: [{
                         path: 'info', //个人信息详情页
                         component: profileInfo

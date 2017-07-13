@@ -1,5 +1,5 @@
 <template>
-	<section>
+	<section class="home_container">
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
 			<defs>
 				<symbol viewBox="0 0 1024 1024" id="home_order">
@@ -43,26 +43,26 @@
 		</svg>
 		<header-customer></header-customer>
 		<!-- <section class="shop_status_container">
-							<div class="shop_status_header">
-								<router-link to="/path">
-									<span class="shop_detail_title">路线</span>
-								</router-link>
-								<svg style="width:24px;height:24px">
-									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
-								</svg>
-								<router-link to="location">
-									<span class="identification_detail">定位</span>
-									<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
-									</svg>
-								</router-link>
-							</div>
-						</section> -->
-		<section class="shop_status_container">
-			<router-link to="/shop/shopDetail/shopSafe" class="shop_status_header">
-				<span class="shop_detail_title">业务情况</span>
+					<div class="shop_status_header">
+						<router-link to="/path">
+							<span class="shop_detail_title">路线</span>
+						</router-link>
+						<svg style="width:24px;height:24px">
+							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
+						</svg>
+						<router-link to="location">
+							<span class="identification_detail">定位</span>
+							<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
+								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
+							</svg>
+						</router-link>
+					</div>
+				</section> -->
+		<section class="status_container">
+			<router-link to="/shop/shopDetail/shopSafe" class="header">
+				<span class="title">业务情况</span>
 				<div>
-					<span class="identification_detail">详情</span>
+					<span class="detail">详情</span>
 					<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
 						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
 					</svg>
@@ -91,8 +91,8 @@
 		<nav class="msite_nav">
 			<div class="swiper-container" v-if="shortcuts.length">
 				<div class="swiper-wrapper">
-					<div class="swiper-slide food_types_container" v-for="(group, index) in shortcuts" :key="index">
-						<router-link :to="{path: item.path}" v-for="item in group" :key="item.id" class="link_to_food">
+					<div class="swiper-slide shortcut_container" v-for="(group, index) in shortcuts" :key="index">
+						<router-link :to="{path: item.path}" v-for="item in group" :key="item.id" class="link">
 							<figure>
 								<svg class="icon_style">
 									<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="item.image_url"></use>
@@ -110,10 +110,9 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState } from 'vuex'
 import headerCustomer from 'src/components/header/header-customer'
 import headerTitle from 'src/components/header/header-title'
-import { } from 'src/service/getData'
 import 'src/plugins/swiper.min.js'
 import 'src/style/swiper.min.css'
 
@@ -160,21 +159,28 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
+.home_container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
 
-.shop_status_container {
+.status_container {
 	background-color: #fff;
 	margin-bottom: .4rem;
-	.shop_status_header {
+	.header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
 		line-height: 1.8rem;
 		padding: 0 .6rem;
 		border-bottom: 0.025rem solid #f1f1f1;
-		.shop_detail_title {
+		.title {
 			@include sc(.75rem, #333);
 		}
-		.identification_detail {
+		.detail {
 			@include sc(.7rem, #bbb);
 			vertical-align: middle;
 		}
@@ -202,10 +208,10 @@ export default {
 	}
 }
 
-.food_types_container {
+.shortcut_container {
 	display: flex;
 	flex-wrap: wrap;
-	.link_to_food {
+	.link {
 		width: 25%;
 		padding: 0.3rem 0rem;
 		@include fj(center);
