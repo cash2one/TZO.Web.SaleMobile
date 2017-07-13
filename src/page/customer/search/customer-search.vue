@@ -125,7 +125,7 @@ import { mapState, mapMutations } from 'vuex'
 import headerSearch from 'src/components/header/header-search'
 import customerList from 'src/components/common/customer-list'
 import footGuide from 'src/components/footer/foot-guide'
-import { getBizAreas } from 'src/service/getData'
+import { apiGetBizAreas } from 'src/service/getData'
 
 export default {
     data() {
@@ -205,7 +205,7 @@ export default {
             this.sortBy = '';
         },
         initData() {
-            getBizAreas().then(res => { this.bizAreas = res.Items; });
+            apiGetBizAreas().then(res => { this.bizAreas = res.Items; });
         }
     },
 }

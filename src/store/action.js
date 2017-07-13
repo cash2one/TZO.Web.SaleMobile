@@ -1,12 +1,16 @@
 import {
 	apiSetCorpId,
-	apiGetUserInfo
+	apiGetUserInfo,
+	apiGetStorages,
+	apiGetExpressCorps
 } from 'src/service/getData'
 import {
 	REFRESH_TOKEN,
 	GET_USERINFO,
 	SAVE_CUR_CORP,
 	INIT_CORP_DATA,
+	GET_STORAGE_LIST,
+	GET_EXPRESS_LIST,
 	SAVE_ADDRESS
 } from './mutation-types.js'
 
@@ -27,12 +31,27 @@ export default {
 	},
 
 	async getUserInfo({ commit, state }) {
-		if (state.userInfo == null) {
+		if (!state.userInfo.UserId) {
 			let res = await apiGetUserInfo();
-			commit(GET_USERINFO, res)
+			commit(GET_USERINFO, res);
 		}
 	},
 
+	async getStorageList({ commit, state }) {
+		if (!state.storageList.length > 0) {
+			let res = await apiGetStorages();
+			commit(GET_STORAGE_LIST, res.Items);
+		}
+
+	},
+	
+	async getExpressList({ commit, state }) {
+		if (!state.expressList.length > 0) {
+			let res = await apiGetExpressCorps();
+			commit(GET_EXPRESS_LIST, res.Items);
+		}
+	},
+	async getPrinterList({ commit, state }) { },
 
 	async saveAddress({
 		commit,

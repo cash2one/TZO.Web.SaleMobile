@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 const state = {
 	token: '',
-	userInfo: null, 			//用户信息
+	userInfo: {}, 			//用户信息
 	latitude: '', 				// 当前位置纬度
 	longitude: '', 				// 当前位置经度
 

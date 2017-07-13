@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<section>
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
 			<defs>
 				<symbol viewBox="0 0 1024 1024" id="home_order">
@@ -41,23 +41,23 @@
 				</symbol>
 			</defs>
 		</svg>
-		<header-customer customerId="1"></header-customer>
-		<section class="shop_status_container">
-			<div class="shop_status_header">
-				<router-link to="/path">
-					<span class="shop_detail_title">路线</span>
-				</router-link>
-				<svg style="width:24px;height:24px">
-					<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
-				</svg>
-				<router-link to="location">
-					<span class="identification_detail">定位</span>
-					<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
-					</svg>
-				</router-link>
-			</div>
-		</section>
+		<header-customer></header-customer>
+		<!-- <section class="shop_status_container">
+							<div class="shop_status_header">
+								<router-link to="/path">
+									<span class="shop_detail_title">路线</span>
+								</router-link>
+								<svg style="width:24px;height:24px">
+									<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
+								</svg>
+								<router-link to="location">
+									<span class="identification_detail">定位</span>
+									<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
+										<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
+									</svg>
+								</router-link>
+							</div>
+						</section> -->
 		<section class="shop_status_container">
 			<router-link to="/shop/shopDetail/shopSafe" class="shop_status_header">
 				<span class="shop_detail_title">业务情况</span>
@@ -97,7 +97,6 @@
 								<svg class="icon_style">
 									<use xmlns:xlink="http://www.w3.org/1999/xlink" :xlink:href="item.image_url"></use>
 								</svg>
-								<!--<img :src="imgBaseUrl + item.image_url">-->
 								<figcaption>{{item.title}}</figcaption>
 							</figure>
 						</router-link>
@@ -107,14 +106,13 @@
 			</div>
 			<img src="../../images/fl.svg" class="fl_back animation_opactiy" v-else>
 		</nav>
-		<foot-guide></foot-guide>
-	</div>
+	</section>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import headerCustomer from 'src/components/header/header-customer'
-import footGuide from 'src/components/footer/foot-guide'
+import headerTitle from 'src/components/header/header-title'
 import { } from 'src/service/getData'
 import 'src/plugins/swiper.min.js'
 import 'src/style/swiper.min.css'
@@ -124,77 +122,23 @@ export default {
 		return {
 			shortcuts: [
 				[
-					{
-						id: 1,
-						path: '/goods/search',
-						image_url: '#home_order',
-						title: '订单'
-					},
-					{
-						id: 2,
-						path: '/goods/stock',
-						image_url: '#home_retail',
-						title: '销售出库'
-					},
-					{
-						id: 3,
-						path: '/order/list',
-						image_url: '#home_return',
-						title: '退货'
-					},
-					{
-						id: 4,
-						path: '/payment/new',
-						image_url: '#home_payment',
-						title: '收款'
-					},
-					{
-						id: 5,
-						path: '/delivery',
-						image_url: '#home_delivery',
-						title: '送货'
-					},
-					{
-						id: 6,
-						path: '/express',
-						image_url: '#home_express',
-						title: '发货'
-					},
-					{
-						id: 7,
-						path: '/knowledge',
-						image_url: '#home_knowledge',
-						title: '知识库'
-					},
-					{
-						id: 8,
-						path: '/customer/new',
-						image_url: '#home_customer',
-						title: '新客户'
-					},
+					{ id: 1, path: '/goods/search', image_url: '#home_order', title: '订单' },
+					{ id: 2, path: '/goods/stock', image_url: '#home_retail', title: '销售出库' },
+					{ id: 3, path: '/order/list', image_url: '#home_return', title: '退货' },
+					{ id: 4, path: '/payment/new', image_url: '#home_payment', title: '收款' },
+					{ id: 5, path: '/delivery', image_url: '#home_delivery', title: '送货' },
+					{ id: 6, path: '/express', image_url: '#home_express', title: '发货' },
+					{ id: 7, path: '/knowledge', image_url: '#home_knowledge', title: '知识库' },
+					{ id: 8, path: '/customer/new', image_url: '#home_customer', title: '新客户' },
 				],
 				[
-					{
-						id: 9,
-						path: '/shop-go',
-						image_url: '#home_shop_go',
-						title: '出店'
-					},
-					{
-						id: 10,
-						path: '/shop-back',
-						image_url: '#home_shop_back',
-						title: '回店'
-					},
+					{ id: 9, path: '/shop-go', image_url: '#home_shop_go', title: '出店' },
+					{ id: 10, path: '/shop-back', image_url: '#home_shop_back', title: '回店' },
 				]
-
-			],
-			foodTypes: [], // 食品分类列表
-			imgBaseUrl: 'https://fuss10.elemecdn.com', //图片域名地址
+			]
 		}
 	},
 	mounted() {
-		
 		//初始化swiper
 		new Swiper('.swiper-container', {
 			pagination: '.swiper-pagination',
@@ -203,13 +147,12 @@ export default {
 	},
 	components: {
 		headerCustomer,
-		footGuide,
+		headerTitle
 	},
-	methods: {
-
-	},
-	watch: {
-
+	computed: {
+		...mapState([
+			'curCustomer'
+		]),
 	}
 }
 

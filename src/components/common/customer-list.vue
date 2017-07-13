@@ -50,7 +50,7 @@ import { imgBaseUrl } from 'src/config/env'
 import { loadMore, getImgPath } from './mixin'
 import { showBack, animate } from 'src/config/mUtils'
 import loading from './loading'
-import { getCustomers } from 'src/service/getData'
+import { apiGetCustomers } from 'src/service/getData'
 
 export default {
 	data() {
@@ -84,7 +84,7 @@ export default {
 	methods: {
 		async initData() {
 			//获取数据
-			let res = await getCustomers(this.areaId, this.keyword, this.offset, this.gps, this.statements);
+			let res = await apiGetCustomers(this.areaId, this.keyword, this.offset, this.gps, this.statements);
 			this.shopListArr = [...res.Items];
 			if (res.length < 20) {
 				this.touchend = true;
@@ -109,7 +109,7 @@ export default {
 
 			//数据的定位加20位
 			this.offset += 20;
-			let res = await getCustomers(this.areaId, this.keyword, this.offset, this.gps, this.statements);
+			let res = await apiGetCustomers(this.areaId, this.keyword, this.offset, this.gps, this.statements);
 			this.hideLoading();
 			this.shopListArr = [...this.shopListArr, ...res.Items];
 			//当获取数据小于20，说明没有更多数据，不需要再次请求数据
@@ -127,7 +127,7 @@ export default {
 		async listenPropChange() {
 			this.showLoading = true;
 			this.offset = 0;
-			let res = await getCustomers(this.areaId, this.keyword, this.offset, this.gps, this.statements);
+			let res = await apiGetCustomers(this.areaId, this.keyword, this.offset, this.gps, this.statements);
 			this.hideLoading();
 			//考虑到本地模拟数据是引用类型，所以返回一个新的数组
 			this.shopListArr = [...res.Items];

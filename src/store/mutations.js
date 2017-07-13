@@ -5,10 +5,12 @@ import {
 	SAVE_CUR_CORP,
 	INIT_DATA,
 	INIT_CORP_DATA,
-
-	SAVE_STORAGE,
-	SAVE_EXPRESS_CORP,
-	SAVE_PRINTER,
+	GET_STORAGE_LIST,
+	GET_EXPRESS_LIST,
+	GET_PRINTER_LIST,
+	SAVE_CUR_STORAGE,
+	SAVE_CUR_EXPRESS,
+	SAVE_CUR_PRINTER,
 
 	RECORD_ADDRESS,
 	ADD_CART,
@@ -92,23 +94,32 @@ export default {
 		}
 	},
 
-
+	[GET_STORAGE_LIST](state, list) {
+		state.storageList = list;
+	},
+	[GET_EXPRESS_LIST](state, list) {
+		state.exprpessList = list;
+	},
+	[GET_PRINTER_LIST](state, list) {
+		state.printerList = list;
+	},
+	
 	// 选择默认仓库
-	[SAVE_STORAGE](state, place) {
-		state.storage = place;
-		setStore('storage', place);
+	[SAVE_CUR_STORAGE](state, storage) {
+		state.curStorage = storage;
+		setStore(state.curCorp.CorpId + '_curStorage', storage);
 	},
 
 	// 选择默认物流
-	[SAVE_EXPRESS_CORP](state, place) {
-		state.express = place;
-		setStore('expressCorp', place);
+	[SAVE_CUR_EXPRESS](state, express) {
+		state.curExpress = express;
+		setStore(state.curCorp.CorpId + '_curExpress', express);
 	},
 
 	// 选择默认打印机
-	[SAVE_PRINTER](state, place) {
-		state.printer = place;
-		setStore('printer', place);
+	[SAVE_CUR_PRINTER](state, printer) {
+		state.curPrinter = printer;
+		setStore('curPrinter', printer);
 	},
 
 	// 记录当前经度纬度

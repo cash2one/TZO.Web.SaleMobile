@@ -3,6 +3,8 @@ import App from '../App'
 
 const corpList = r => require.ensure([], () => r(require('../page/corp-list/corp-list')), 'corp-list')
 
+const index = r => require.ensure([], () => r(require('../page/index/index')), 'index')
+
 const customer = r => require.ensure([], () => r(require('../page/customer/customer')), 'customer')
 const customerBill = r => require.ensure([], () => r(require('../page/customer/bill/customer-bill')), 'customer')
 const customerDetail = r => require.ensure([], () => r(require('../page/customer/detail/customer-detail')), 'customer')
@@ -57,22 +59,32 @@ export default [{
     path: '/',
     component: App, // 顶层路由，对应index.html
     children: [ // 二级路由。对应App.vue
-        // 地址为空时跳转home页面
         {
-            path: '',
-            redirect: '/home'
+            path: '', // 可选公司列表
+            component: corpList
         },
-        // 首页
         {
-            path: '/home',
-            component: home,
-            meta: { keepAlive: true },
-        },
-        // 可选公司列表
-        {
-            path: '/corp-list',
-            component: corpList,
-            history: false
+            path: '/',
+            component: index,
+            children: [
+                {
+                    path: 'home', // 首页
+                    component: home,
+                    meta: { keepAlive: true },
+                },
+                {
+                    path: 'profile', // 个人信息页
+                    component: profile,
+                    children: [{
+                        path: 'info', //个人信息详情页
+                        component: profileInfo
+                    },
+                    {
+                        path: 'settings',
+                        component: settings
+                    }]
+                },
+            ]
         },
         {
             path: '/customer',
@@ -230,19 +242,8 @@ export default [{
                 }
             ]
         },
-        // 个人信息页
-        {
-            path: '/profile',
-            component: profile,
-            children: [{
-                path: 'info', //个人信息详情页
-                component: profileInfo
-            },
-            {
-                path: 'settings',
-                component: settings
-            }]
-        },
+
+
         // 回店
         {
             path: '/shop-back',

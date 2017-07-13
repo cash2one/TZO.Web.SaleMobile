@@ -124,31 +124,12 @@ html,body{
     p, span{
         font-family: Helvetica Neue,Tahoma,Arial;
     }
-}
-.light-page{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding-top: 1.95rem;
-    z-index: 203;
-    background-color: $background-light-color;
-    p, span{
-        font-family: Helvetica Neue,Tahoma,Arial;
+    .light{
+        background-color: $background-light-color;
     }
-}
-.rating_page{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 202;
-    background:$background-color;
-    padding-top: 1.95rem;
-    p, span{
-        font-family: Helvetica Neue,Tahoma,Arial;
+    .rating{
+        position: absolute;
+        z-index: 202;
     }
 }
 
@@ -590,8 +571,7 @@ html,body{
 }
 
 // 页面切换动画
-.router-fade-enter-active,
-.router-fade-leave-active {
+.router-fade-enter-active {
 	transition: opacity .3s;
 }
 

@@ -1,6 +1,6 @@
  <template>
-    <div class="rating_page">
-        <header-title header-title="我的资料"></header-title>
+    <div class="page rating">
+        <header-title header-title="我的资料" goback="true"></header-title>
         <section class="m-form-list">
             <section class="item start">
                 <input type="file" class="profileinfopanel-upload">

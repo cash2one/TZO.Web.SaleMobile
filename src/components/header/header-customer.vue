@@ -1,5 +1,5 @@
 <template>
-    <header id='header_customer' class="customer_detail_header" ref="customerheader">
+    <header v-if="curCustomer.Id" id='header_customer' class="customer_detail_header" ref="customerheader">
         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
             <defs>
                 <symbol viewBox="0 0 24 24" id="header_signIn">
@@ -8,19 +8,16 @@
                 <symbol viewBox="0 0 24 24" id="header_signInActive">
                     <path fill="#000000" d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
                 </symbol>
-                <svg viewBox="0 0 24 24" id="header_location">
-                    <path fill="#fff" d="M12,2C15.31,2 18,4.66 18,7.95C18,12.41 12,19 12,19C12,19 6,12.41 6,7.95C6,4.66 8.69,2 12,2M12,6A2,2 0 0,0 10,8A2,2 0 0,0 12,10A2,2 0 0,0 14,8A2,2 0 0,0 12,6M20,19C20,21.21 16.42,23 12,23C7.58,23 4,21.21 4,19C4,17.71 5.22,16.56 7.11,15.83L7.75,16.74C6.67,17.19 6,17.81 6,18.5C6,19.88 8.69,21 12,21C15.31,21 18,19.88 18,18.5C18,17.81 17.33,17.19 16.25,16.74L16.89,15.83C18.78,16.56 20,17.71 20,19Z" />
-                </svg>
             </defs>
         </svg>
-        <img :src="imgBaseUrl+'15cc9bbe3981688.jpg'" class="header_cover_img">
+        <img :src="imgBaseUrl+'/images/customer/'+ curCustomer.Id +'.jpg'" class="header_cover_img">
         <section class="description_header">
             <section class="description_top">
                 <section class="description_left">
-                    <img :src="imgBaseUrl+'15cc9bbe3981688.jpg'">
+                    <img :src="imgBaseUrl+'/images/customer/'+ curCustomer.Id +'.jpg'" onerror="this.onerror=null;this.src='/images/account-card-details.svg'">
                 </section>
                 <router-link to="/customer/detail/1" class="description_right">
-                    <h4 class="description_title ellipsis">客户名称</h4>
+                    <h4 class="description_title ellipsis">{{curCustomer.Name}}</h4>
                     <p class="description_text">联系人：李四</p>
                     <p class="description_promotion ellipsis">联系电话：11112222919</p>
                 </router-link>
@@ -37,10 +34,12 @@
             </footer>
         </section>
     </header>
+    <header-title v-else header-title="请选择客户"></header-title>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import headerTitle from 'src/components/header/header-title'
 import { imgBaseUrl } from 'src/config/env'
 export default {
     data() {
@@ -48,9 +47,14 @@ export default {
             imgBaseUrl,
         }
     },
-    mounted() {
+    components: {
+        headerTitle
     },
-    props: ['customerId']
+    computed: {
+        ...mapState([
+            'curCustomer'
+        ]),
+    },
 }
 </script>
 
