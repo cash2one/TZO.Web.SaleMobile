@@ -10,7 +10,7 @@
                 </symbol>
             </defs>
         </svg>
-        <img :src="imgBaseUrl+'/images/customer/'+ curCustomer.CoustomerId +'.jpg'" class="header_cover_img">
+        <!-- <img :src="imgBaseUrl+'/images/customer/'+ curCustomer.CoustomerId +'.jpg'" class="header_cover_img"> -->
         <section class="description_header">
             <section class="description_top">
                 <section class="description_left">
@@ -21,23 +21,74 @@
                 </section>
                 <router-link to="/customer/detail/1" class="description_right">
                     <h4 class="description_title ellipsis">{{curCustomer.BizObj.Name}}</h4>
-                    <p class="description_text">{{curCustomer.BizObj.Phones}}</p>
-                    <p class="description_promotion ellipsis">联系电话：11112222919</p>
+                    <p class="description_text">{{curCustomer.CustomerLevelName}}</p>
+                    <p v-for="item in curCustomer.BizObj.Phones" :key="item.Id" class="description_text">{{item.Contact}}:{{item.PhoneNum}}</p>
                 </router-link>
                 <router-link to="/customer/sgin-in">
-                     <svg class="sign_in">
+                    <svg class="sign_in">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
-                    </svg> 
+                    </svg>
                 </router-link>
             </section>
             <footer class="description_footer">
                 <p v-for="item in curCustomer.BizObj.Addrs" :key="item.Id" class="ellipsis">
-                    地址：{{item.Addr}}
+                    地址：
+                    <span v-if="item.Distance">{{item.Distance > 1000? (item.Distance/1000).toFixed(2) + 'km': item.Distance + 'm'}} / </span>
+                    {{item.Addr}}
                 </p>
+                <p>{{curCustomer.BizAreaName}}</p>
             </footer>
         </section>
+        <!-- <section class="shop_status_container">
+    					<div class="shop_status_header">
+    						<router-link to="/path">
+    							<span class="shop_detail_title">路线</span>
+    						</router-link>
+    						<svg style="width:24px;height:24px">
+    							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
+    						</svg>
+    						<router-link to="location">
+    							<span class="identification_detail">定位</span>
+    							<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
+    								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
+    							</svg>
+    						</router-link>
+    					</div>
+    				</section> -->
+        <section class="status_container">
+            <router-link to="/shop/shopDetail/shopSafe" class="header">
+                <span class="title">业务情况</span>
+                <div>
+                    <span class="detail">详情</span>
+                    <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
+                    </svg>
+                </div>
+            </router-link>
+            <section class="info-data">
+                <ul class="clear">
+                    <router-link to="/customer/bill/1" tag="li" class="info-data-link">
+                        <span class="info-data-top">
+                            <b>{{curCustomer.OughtRecMoney}}</b> 元</span>
+                        <span class="info-data-bottom">欠款金额</span>
+                    </router-link>
+                    <router-link to="/order/list" tag="li" class="info-data-link">
+                        <span class="info-data-top">
+                            <b>{{curCustomer.ChargeOffMoney}}</b> 元</span>
+                        <span class="info-data-bottom">出账金额</span>
+                    </router-link>
+                    <router-link to="/order/detail" tag="li" class="info-data-link">
+                        <span class="info-data-top">
+                            <b>{{curCustomer.SaleCount}}</b> 个</span>
+                        <span class="info-data-bottom">订单数量</span>
+                    </router-link>
+                </ul>
+            </section>
+        </section>
     </header>
-    <header-title v-else header-title="请选择客户"></header-title>
+    <section v-else class="customer_header">
+        <header-title header-title="请选择客户"></header-title>
+    </section>
 </template>
 
 <script>
@@ -64,6 +115,9 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
+.customer_header{
+    padding-bottom: 1.95rem;
+}
 .customer_detail_header {
     overflow: hidden;
     position: relative;
@@ -105,10 +159,6 @@ export default {
                     @include sc(.5rem, #fff);
                     margin-bottom: 0.3rem;
                 }
-                .description_promotion {
-                    @include sc(.5rem, #fff);
-                    width: 11.5rem;
-                }
             }
             .sign_in {
                 position: absolute;
@@ -129,17 +179,34 @@ export default {
                 span {
                     color: #fff;
                 }
-                .tip_icon {
-                    padding: 0 .04rem;
-                    border: 0.025rem solid #fff;
-                    border-radius: 0.1rem;
-                    font-size: .4rem;
-                    display: inline-block;
-                }
             }
             .ellipsis {
                 width: 84%;
             }
+        }
+    }
+}
+
+.status_container {
+    background-color: #fff;
+    margin-bottom: .4rem;
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        line-height: 1.8rem;
+        padding: 0 .6rem;
+        border-bottom: 0.025rem solid #f1f1f1;
+        .title {
+            @include sc(.75rem, #333);
+        }
+        .detail {
+            @include sc(.7rem, #bbb);
+            vertical-align: middle;
+        }
+        svg {
+            @include wh(.6rem, .6rem);
+            vertical-align: middle;
         }
     }
 }

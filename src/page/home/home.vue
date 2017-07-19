@@ -42,52 +42,6 @@
 			</defs>
 		</svg>
 		<header-customer></header-customer>
-		<!-- <section class="shop_status_container">
-					<div class="shop_status_header">
-						<router-link to="/path">
-							<span class="shop_detail_title">路线</span>
-						</router-link>
-						<svg style="width:24px;height:24px">
-							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
-						</svg>
-						<router-link to="location">
-							<span class="identification_detail">定位</span>
-							<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
-							</svg>
-						</router-link>
-					</div>
-				</section> -->
-		<section class="status_container">
-			<router-link to="/shop/shopDetail/shopSafe" class="header">
-				<span class="title">业务情况</span>
-				<div>
-					<span class="detail">详情</span>
-					<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
-					</svg>
-				</div>
-			</router-link>
-			<section class="info-data">
-				<ul class="clear">
-					<router-link to="/customer/bill/1" tag="li" class="info-data-link">
-						<span class="info-data-top">
-							<b>22</b>元</span>
-						<span class="info-data-bottom">欠款金额</span>
-					</router-link>
-					<router-link to="/order/list" tag="li" class="info-data-link">
-						<span class="info-data-top">
-							<b>11</b>个</span>
-						<span class="info-data-bottom">订单数量</span>
-					</router-link>
-					<router-link to="/order/detail" tag="li" class="info-data-link">
-						<span class="info-data-top">
-							<b>111</b>个</span>
-						<span class="info-data-bottom">商品数量</span>
-					</router-link>
-				</ul>
-			</section>
-		</section>
 		<nav class="msite_nav">
 			<div class="swiper-container" v-if="shortcuts.length">
 				<div class="swiper-wrapper">
@@ -165,30 +119,6 @@ export default {
 	left: 0;
 	right: 0;
 	bottom: 0;
-}
-
-.status_container {
-	background-color: #fff;
-	margin-bottom: .4rem;
-	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		line-height: 1.8rem;
-		padding: 0 .6rem;
-		border-bottom: 0.025rem solid #f1f1f1;
-		.title {
-			@include sc(.75rem, #333);
-		}
-		.detail {
-			@include sc(.7rem, #bbb);
-			vertical-align: middle;
-		}
-		svg {
-			@include wh(.6rem, .6rem);
-			vertical-align: middle;
-		}
-	}
 }
 
 .msite_nav {
