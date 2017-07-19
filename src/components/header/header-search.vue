@@ -11,7 +11,7 @@
             </svg>
         </section>
         <section class="search_keyword">
-            <input type="text" placeholder="请输关键字或拼音码" class="search_text" />
+            <input v-model="keyword" type="text" placeholder="请输关键字或拼音码" class="search_text" />
         </section>
     </header>
 </template>
@@ -26,7 +26,7 @@ export default {
     mounted() {
 
     },
-    props: ['searchKeyword']
+    props: ['keyword']
 }
 </script>
 

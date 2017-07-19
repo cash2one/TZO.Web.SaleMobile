@@ -1,4 +1,4 @@
-import { baseUrl, token } from './env'
+import { baseUrl, getToken } from './env'
 
 export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
 	type = type.toUpperCase();
@@ -7,9 +7,15 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
 	if (type == 'GET') {
 		let dataStr = ''; //数据拼接字符串
 		Object.keys(data).forEach(key => {
-			dataStr += key + '=' + data[key] + '&';
+			if (Array.isArray(data[key]))
+				data[key].forEach(val => {
+					dataStr += key + '=' + val + '&';
+				});
+			else if (typeof data[key] == 'string')
+				dataStr += key + '=' + data[key] + '&';
+			else
+				dataStr += key + '=' + JSON.stringify(data[key]) + '&';
 		})
-
 		if (dataStr !== '') {
 			dataStr = dataStr.substr(0, dataStr.lastIndexOf('&'));
 			url = url + '?' + dataStr;
@@ -23,7 +29,7 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
-				'Authorization': token
+				'Authorization': getToken()
 			},
 			mode: "cors",
 			cache: "force-cache"

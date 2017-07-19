@@ -21,7 +21,7 @@
                 </section>
                 <router-link to="/customer/detail/1" class="description_right">
                     <h4 class="description_title ellipsis">{{curCustomer.BizObj.Name}}</h4>
-                    <p class="description_text">联系人：李四</p>
+                    <p class="description_text">{{curCustomer.BizObj.Phones}}</p>
                     <p class="description_promotion ellipsis">联系电话：11112222919</p>
                 </router-link>
                 <router-link to="/customer/sgin-in">
@@ -31,8 +31,8 @@
                 </router-link>
             </section>
             <footer class="description_footer">
-                <p class="ellipsis">
-                    地址：济南市高新区舜泰广场8号楼东404
+                <p v-for="item in curCustomer.BizObj.Addrs" :key="item.Id" class="ellipsis">
+                    地址：{{item.Addr}}
                 </p>
             </footer>
         </section>

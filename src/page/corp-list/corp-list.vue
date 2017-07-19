@@ -5,18 +5,22 @@
             <section class="m-list">
                 <header>最近用过的公司</header>
                 <section class="item" @click="chooseCorp(curCorp)">
-                    <strong class="name">{{curCorp.CorpName}}</strong>
-                    <div class="number">
-                        <span>{{curCorp.Position}}</span>
-                    </div>
+                    <section class="title">
+                        <strong class="name">{{curCorp.CorpName}}</strong>
+                        <div v-if="curCorp.Position" class="number">
+                            <span>{{curCorp.Position}}</span>
+                        </div>
+                    </section>
                     <p class="content">{{curCorp.DeptName}}</p>
                 </section>
                 <header>选择公司</header>
                 <section class="item" v-for="item in corpList" :key="item.CorpId" @click="chooseCorp(item)">
-                    <strong class="name">{{item.CorpName}}</strong>
-                    <div class="number">
-                        <span>{{item.Position}}</span>
-                    </div>
+                    <section class="title">
+                        <strong class="name">{{item.CorpName}}</strong>
+                        <div class="number">
+                            <span>{{item.Position}}</span>
+                        </div>
+                    </section>
                     <p class="content">{{item.DeptName}}</p>
                 </section>
             </section>
@@ -27,10 +31,14 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
-import { apiGetToken } from 'src/service/getData'
 
 export default {
+    data() {
+        return {
+        }
+    },
     mounted() {
+        console.log('corp-list mounted');
         this.initData();
     },
     components: {
@@ -38,12 +46,11 @@ export default {
     },
     methods: {
         ...mapActions([
-            'refreshToken',
             'getUserInfo',
             'setCurCorp'
         ]),
         ...mapMutations([
-            'GET_CORPLIST'
+            'SAVE_CUR_CORP'
         ]),
         async chooseCorp(corp) {
             await this.initAuthData(corp);
@@ -54,14 +61,10 @@ export default {
             await this.getUserInfo();
         },
         async initData() {
-            let res = await apiGetToken(this.$route.query.code);
+            if (!this.corpList) await this.SAVE_CUR_CORP({});
 
-            await this.refreshToken(res.Token);
-
-            this.GET_CORPLIST(res.EmployeeCorpRel);
-
-            if (res.EmployeeCorpRel.length == 1) {
-                await this.initAuthData(res.EmployeeCorpRel[0]);
+            if (this.corpList.length == 1) {
+                await this.initAuthData(this.corpList[0]);
                 this.$router.push('/home');
             }
         }
@@ -75,7 +78,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import 'src/style/mixin';
 .corp_container {
     overflow-y: auto;
+    .title {
+        @include fj();
+    }
 }
 </style>

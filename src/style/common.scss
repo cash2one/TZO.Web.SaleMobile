@@ -309,28 +309,28 @@ html,body{
         position: relative;
         overflow: hidden;
         display: block;
-    }
-    .name {
-        @include fj;
-        margin-bottom: .2rem;
-        @include sc(.7rem, #333);
-        display: inline-block;
-    }
-    .content {
-        @include sc(.5rem, #999);
-        line-height: .8rem;
-    }
-    .number {
-        display: inline-block;
-        span {
-            font-family: 'Helvetica Neue', Tahoma, Arial;
+        .title{
+            @include fj();
+            margin:.2rem;
+            @include sc(.7rem, #333);
         }
-        span:nth-of-type(1) {
-            @include sc(.7rem, #f60);
-            font-weight: bold;
+        .content {
+            @include sc(.5rem, #999);
+            margin:.2rem;
+            line-height: .8rem;
         }
-        span:nth-of-type(2) {
-            @include sc(.5rem, #666);
+        .number {
+            display: inline-block;
+            span {
+                font-family: 'Helvetica Neue', Tahoma, Arial;
+            }
+            span:nth-of-type(1) {
+                @include sc(.7rem, #f60);
+                font-weight: bold;
+            }
+            span:nth-of-type(2) {
+                @include sc(.6rem, #666);
+            }
         }
     }
 }
@@ -567,6 +567,59 @@ html,body{
                 }
             }
         }
+    }
+}
+
+#header_search {
+    background-color: $blue;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    @include wh(100%, 1.95rem);
+}
+
+.header_title_goback {
+    display: inline-block;
+    left: .4rem;
+    margin-top: .35rem;
+    margin-left: .4rem;
+    @include wh(1rem, 1rem);
+    .icon {
+        fill: $icon-light-color;
+    }
+}
+
+.header_search_icon {
+    display: inline-block;
+    left: .4rem;
+    margin-top: .35rem;
+}
+
+.header_search_icon .icon {
+    margin-top: .2rem;
+    @include wh(1.1rem, 1.1rem);
+    fill: $icon-light-color;
+}
+
+.search_keyword {
+    @include ct();
+    position: absolute;
+    left: 1.7rem;
+    right: 0.7rem;
+    .search_text {
+        @include sc(0.8rem, #fff);
+        width: 100%;
+        background-color: transparent;
+        border-bottom: #fff 2px solid;
+        padding-left: 1.1rem;
+        font-weight: bold;
+    }
+    .search_text::-webkit-input-placeholder {
+        color: #ddd;
+        font-weight: normal;
+        font-style: italic;
+        font-size: 0.8rem;
     }
 }
 

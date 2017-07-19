@@ -19,27 +19,37 @@ export const apiGetStorages = () => fetch('/api/Storage/Storage/IsValid');
 export const apiGetExpressCorps = () => fetch('/api/Logistics/LogisticsCorp');
 
 // 获取客户列表
-export const apiGetCustomers = (areaid, keyword, offset, gps, statements) => {
+export const apiGetCustomers = (longitude, latitude, areaId, keyword, sortByFiled, sortByType, filters, offset) => {
 	let data = {
-		pageIndex: parseInt(offset / 20),
-		pageSize: 20,
+		PageIndex: parseInt(offset / 20),
+		PageSize: 20,
+		Longitude: longitude,
+		Latitude: latitude,
+		SortParam: {
+			FiledName: sortByFiled,
+			SortType: sortByType ? sortByType : 'asc'
+		},
 		quickResult: {
-			"IsValids": [true]
+			"IsValids": [true],
+			HasGps: [true, false],
+			OpenOpenStatements: [true, false]
 		}
 	};
-	if (areaid) data.BizAreaId = areaid;
-	if (keyword) data.keyWord = keyword;
-	if (gps) data.quickResult.HasGps = gps;
-	if (statements) data.quickResult.OpenOpenStatements = statements;
+	if (areaId) data.BizAreaIds = areaId;
+	if (keyword) data.KeyWord = keyword;
+	if (filters.HasGps) data.quickResult.HasGps = [true];
+	if (filters.OpenStatements) data.quickResult.OpenOpenStatements = [true];
+	if (filters.LastOrderTime) data.LastOrderTime = filters.LastOrderTime;
+	if (filters.HasExpire) data.HasExpire = filters.HasExpire;
 
-	return fetch('/api/CRM/Customer', data);
+	return fetch('/api/CRM/Customer/GetCustomers4Mobile', data);
 };
 
 // 获取客户详细信息
 export const apiGetCustomer = customerId => fetch('/api/CRM/Customer/' + customerId);
 
 // 获取负责的业务区域
-export const apiGetBizAreas = () => fetch('/api/Core/BizArea');
+export const apiGetBizAreas = () => fetch('/api/Core/BizArea/getMyResponsibleArea');
 
 // 获取商品类目
 export const apiGetCategories = () => fetch('/api/Goods/Category');

@@ -11,9 +11,10 @@ import {
 	INIT_CORP_DATA,
 	GET_STORAGE_LIST,
 	GET_EXPRESS_LIST,
-	SAVE_ADDRESS
+	SAVE_ADDRESS,
+	GET_POSITION,
+	POSITION_INTERVAL
 } from './mutation-types.js'
-
 // 提交事件而不是直接改变state
 
 export default {
@@ -44,7 +45,7 @@ export default {
 		}
 
 	},
-	
+
 	async getExpressList({ commit, state }) {
 		if (!state.expressList.length > 0) {
 			let res = await apiGetExpressCorps();
@@ -52,6 +53,20 @@ export default {
 		}
 	},
 	async getPrinterList({ commit, state }) { },
+
+	async autoGetPosition({ commit, state }) {
+		let getPositionCallback = function (position) {
+			console.log('position callback')
+			commit(GET_POSITION, position.coords)
+		};
+		navigator.geolocation.getCurrentPosition(getPositionCallback);
+		console.log('position get')
+		let interval = setInterval(() => {
+			console.log(state.lastPositionTime);
+			navigator.geolocation.getCurrentPosition(getPositionCallback);
+		}, 1000000);
+		commit(POSITION_INTERVAL, interval);
+	},
 
 	async saveAddress({
 		commit,

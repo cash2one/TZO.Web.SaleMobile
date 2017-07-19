@@ -16,17 +16,8 @@ import { mapState } from 'vuex'
 import footGuide from 'src/components/footer/foot-guide'
 
 export default {
-    mounted() {
-        if (!this.curCorp.CorpId)
-            this.$router.push('/');
-    },
     components: {
         footGuide
-    },
-    computed: {
-        ...mapState([
-            'curCorp'
-        ]),
-    },
+    }
 }
 </script>

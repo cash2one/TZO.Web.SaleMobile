@@ -11,19 +11,21 @@ import {
 	SAVE_CUR_STORAGE,
 	SAVE_CUR_EXPRESS,
 	SAVE_CUR_PRINTER,
-	SAVE_CUR_CUSTOMER
+	SAVE_CUR_CUSTOMER,
+	GET_POSITION,
+	POSITION_INTERVAL
 } from './mutation-types.js'
 
 import { setStore, getStore } from 'src/config/mUtils'
-import { token } from 'src/config/env'
+import { setToken } from 'src/config/env'
 
 // 事件处理程序
 
 export default {
 
 	// 刷新 token
-	[REFRESH_TOKEN](state, token) {
-		token = 'bearer ' + token;
+	[REFRESH_TOKEN](state, val) {
+		setToken('bearer ' + val);
 	},
 
 	// 获取用户信息存入vuex
@@ -96,9 +98,18 @@ export default {
 	// 选择当前客户
 	[SAVE_CUR_CUSTOMER](state, customer) {
 		state.curCustomer = customer;
-		console.log(state);
 	},
 
+	[GET_POSITION](state, position) {
+		console.log(position);
+		state.latitude = position.latitude;
+		state.longitude = position.longitude;
+		state.lastPositionTime = new Date();
+	},
+	[POSITION_INTERVAL](state, id) {
+		state.intervalId = id;
+	},
+	
 	// 记录当前经度纬度
 	// [RECORD_ADDRESS](state, {
 	// 	latitude,

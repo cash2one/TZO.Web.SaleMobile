@@ -60,7 +60,11 @@ export default [{
     component: App, // 顶层路由，对应index.html
     children: [ // 二级路由。对应App.vue
         {
-            path: '', // 可选公司列表
+            path: '',
+            redirect:'/corp-list'
+        },
+        {
+            path: '/corp-list', // 可选公司列表
             component: corpList
         },
         {

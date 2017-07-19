@@ -5,15 +5,22 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import footGuide from 'src/components/footer/foot-guide'
 
 export default {
-	mounted() {
+	created() {
+		console.log('app created');
 		this.INIT_DATA();
 	},
+	mounted() {
+		this.autoGetPosition();
+	},
 	methods: {
+		...mapActions([
+			'autoGetPosition'
+		]),
 		...mapMutations([
 			'INIT_DATA'
 		])
