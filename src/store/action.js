@@ -2,18 +2,27 @@ import {
 	apiSetCorpId,
 	apiGetUserInfo,
 	apiGetStorages,
-	apiGetExpressCorps
+	apiGetExpressCorps,
+	apiGetBizAreas,
+	apiGetCategories,
+	apiGetGlobalProperty,
+	apiGetProperties
 } from 'src/service/getData'
 import {
 	REFRESH_TOKEN,
-	GET_USERINFO,
-	SAVE_CUR_CORP,
 	INIT_CORP_DATA,
+	GET_USERINFO,
 	GET_STORAGE_LIST,
 	GET_EXPRESS_LIST,
-	SAVE_ADDRESS,
 	GET_POSITION,
-	POSITION_INTERVAL
+	GET_BIZAREA_LIST,
+	GET_GLOBAL_PROPERTY,
+	GET_PROPERTY_LIST,
+	GET_CATEGORY_LIST,
+	GET_CATEGORY_DETAIL_LIST,
+	SAVE_CUR_CORP,
+	POSITION_INTERVAL,
+	SAVE_ADDRESS,
 } from './mutation-types.js'
 // 提交事件而不是直接改变state
 
@@ -53,6 +62,34 @@ export default {
 		}
 	},
 	async getPrinterList({ commit, state }) { },
+
+	async getBizAreaList({ commit, state }) {
+		if (!state.bizAreaList.length > 0) {
+			let res = await apiGetBizAreas();
+			commit(GET_BIZAREA_LIST, res.Items);
+		}
+	},
+
+	async getGlobalProperty({ commit, state }) {
+		if (!state.globalPropertyList.length > 0) {
+			let res = await apiGetGlobalProperty();
+			commit(GET_GLOBAL_PROPERTY, res.GlobalProperties);
+		}
+	},
+
+	async getPorpertyList({ commit, state }) {
+		if (!state.propertyList.length > 0) {
+			let res = await apiGetProperties();
+			commit(GET_PROPERTY_LIST, res);
+		}
+	},
+	async getCategoryList({ commit, state }) {
+		if (!state.categoryList.length > 0) {
+			let res = await apiGetCategories();
+
+			commit(GET_CATEGORY_LIST, res.Items);
+		}
+	},
 
 	async autoGetPosition({ commit, state }) {
 		let getPositionCallback = function (position) {

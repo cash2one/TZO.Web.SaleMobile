@@ -1,10 +1,10 @@
 <template>
 	<div class="customer_container">
 		<div v-load-more="loaderMore" v-if="customerList.length" class="m-list">
-			<section v-for="item in customerList" :key="item.Id" class="item customer_li">
+			<section v-for="item in customerList" :key="item.Id" class="item">
 				<section class="item-left" :to="'customer/detail/' + item.Id">
 					<!-- <img :src="imgBaseUrl + item.image_path" class="customer_img"> -->
-					<svg class="icon customer_img">
+					<svg class="icon">
 						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#customer"></use>
 					</svg>
 					<div class="distance">
@@ -111,7 +111,6 @@ export default {
 			'SAVE_CUR_CUSTOMER'
 		]),
 		chooseCustomer(val) {
-			console.log(val);
 			this.SAVE_CUR_CUSTOMER(val);
 			this.$router.push('/home');
 		},
@@ -210,6 +209,10 @@ export default {
 			@include fj();
 			.item-left {
 				margin-right: .2rem;
+				.icon {
+					@include wh(2.7rem, 2.7rem);
+					display: block;
+				}
 			}
 			.item-right {
 				flex: auto;
@@ -232,10 +235,7 @@ export default {
 					}
 				}
 			}
-			.customer_img {
-				@include wh(2.7rem, 2.7rem);
-				display: block;
-			}
+
 			.distance {
 				margin-top: 1rem;
 				text-align: center;

@@ -7,7 +7,7 @@ import getters from './getters'
 Vue.use(Vuex)
 
 const state = {
-	userInfo: {}, 				//用户信息
+	userInfo: {}, 				// 用户信息
 	latitude: 0, 				// 当前位置纬度
 	longitude: 0, 				// 当前位置经度
 	lastPositionTime: null,		// 位置更新时间
@@ -23,6 +23,11 @@ const state = {
 	storageList: [],			// 有效仓库列表
 	expressList: [],			// 可用物流列表
 	printerList: [],			// 打印机列表
+	bizAreaList: [],			// 业务区域
+	globalPropertyList: [],		// 全局属性
+	propertyList: [],			// 商品属性
+	categoryList: [],			// 商品类目
+	categoryDetailList: [],		// 二级类目
 
 	cartList: {}, 				// 购物车的商品列表
 }

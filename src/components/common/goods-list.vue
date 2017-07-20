@@ -1,49 +1,56 @@
 <template>
-    <section class="food_container">
-        <section class="menu_container">
-            <section class="menu_right" ref="menuFoodList">
-                <ul v-load-more="loaderMore" v-if="goodsList.length">
-                    <li v-for="item in goodsList" :key="item.Id" class="menu_detail_list">
-                        <router-link :to="'goods/detail/' + item.Id" class="menu_detail_link">
-                            <section class="menu_food_img">
-                                <img :src="imgBaseUrl + item.image_path">
-                            </section>
-                            <section class="menu_food_description">
-                                <h3 class="food_description_head">
-                                    <strong class="description_foodname">{{item.Name}}</strong>
-                                </h3>
-                                <p class="food_description_content">详细属性</p>
-                                <p v-if="item.activity" class="food_activity">
-                                    <span :style="{color: '#' + item.activity.image_text_color,borderColor:'#' +item.activity.icon_color}">{{item.activity.image_text}}</span>
-                                </p>
-                            </section>
-                        </router-link>
-                        <footer class="menu_detail_footer">
-                            <section class="food_price">
-                                <span>¥</span>
-                                <span>1</span>
-                                <span>起</span>
-                            </section>
-                            <buy-cart></buy-cart>
-                            <!--<buy-cart :shopId='shopId' :foods='foods' @moveInCart="listenInCart" @showChooseList="showChooseList" @showReduceTip="showReduceTip" @showMoveDot="showMoveDotFun"></buy-cart>-->
-                        </footer>
-                    </li>
-                </ul>
-                <ul v-else class="animation_opactiy">
-                    <li class="list_back_li" v-for="item in 10" :key="item">
-                        <img src="../../images/shopback.svg" class="list_back_svg">
-                    </li>
-                </ul>
-                <p v-if="touchend" class="empty_data">没有更多了</p>
-                <aside class="return_top" @click="backTop" v-if="showBackStatus">
-                    <svg class="back_top_svg">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
+    <section class="goods_container">
+        <div v-load-more="loaderMore" v-if="goodsList.length" class="m-list">
+            <section v-for="item in goodsList" :key="item.Id" class="item">
+                <router-link :to="'goods/detail/' + item.Id" class="item-left">
+                    <!-- <img :src="imgBaseUrl + item.image_path"> -->
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#goods"></use>
                     </svg>
-                </aside>
-                <div ref="abc" style="background-color: red;"></div>
     
+                </router-link>
+                <section class="item-right">
+                    <section class="title">
+                        <div class="name ellipsis">
+                            <strong>{{item.Name}}</strong>
+                        </div>
+                    </section>
+                    <section class="content">
+                        <section v-for="prop in propertyList" :key="prop.Id">
+                            <span>{{prop.PropertyName}}</span>:
+                            <span>{{item.Goods.Properties['p'+prop.PropertyId]}}</span>
+                        </section>
+                    </section>
+                    <div class="number">
+                        <span>价格:</span>
+                        <span>100</span>
+                        <span>¥</span>
+                        <buy-cart></buy-cart>
+                        <!--<buy-cart :shopId='shopId' :foods='foods' @moveInCart="listenInCart" @showChooseList="showChooseList" @showReduceTip="showReduceTip" @showMoveDot="showMoveDotFun"></buy-cart>-->
+                    </div>
+                    <ul class="detail">
+                        <li>
+                            <span>库存:</span>
+                            <span>
+                                {{item.UseableStockNum}}
+                            </span>
+                            <span>{{item.Units}}</span>
+                        </li>
+                    </ul>
+                </section>
             </section>
-        </section>
+        </div>
+        <ul v-else class="animation_opactiy">
+            <li class="list_back_li" v-for="item in 10" :key="item">
+                <img src="../../images/shopback.svg" class="list_back_svg">
+            </li>
+        </ul>
+        <p v-if="touchend" class="empty_data">没有更多了</p>
+        <aside class="return_top" @click="backTop" v-if="showBackStatus">
+            <svg class="back_top_svg">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
+            </svg>
+        </aside>
         <section class="buy_cart_container">
             <section @click="toggleCartList" class="cart_icon_num">
                 <div class="cart_icon_container" :class="{cart_icon_activity: totalPrice > 0, move_in_cart:receiveInCart}" ref="cartContainer">
@@ -113,19 +120,18 @@
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import loading from 'src/components/common/loading'
-import buyCart from 'src/components/common/buy-cart'
-import { loadMore, getImgPath } from 'src/components/common/mixin'
-import { imgBaseUrl } from 'src/config/env'
-import BScroll from 'better-scroll'
+import { loadMore, getImgPath } from './mixin'
 import { showBack, animate } from 'src/config/mUtils'
-import { getGoods } from 'src/service/getData'
+import { imgBaseUrl } from 'src/config/env'
+import loading from './loading'
+import buyCart from './buy-cart'
+import { apiGetGoods } from 'src/service/getData'
 
 export default {
     data() {
         return {
-            keyword: '',
-            offset: 0, // 批次加载商品列表，每次加载20个 limit = 20
+
+            offset: 0,
             goodsList: [], // 商品列表
 
             preventRepeatReuqest: false, //到达底部加载数据，防止重复加载
@@ -133,12 +139,6 @@ export default {
             showLoading: true, //显示加载动画
             touchend: false, //没有更多数据
 
-            showLoading: true, //显示加载动画
-
-            imgBaseUrl,
-            menuList: [], //食品列表
-            menuIndex: 0, //已选菜单索引值，默认为0
-            menuIndexChange: true,//解决选中index时，scroll监听事件重复判断设置index的bug
             totalPrice: 0, //总共价格
             receiveInCart: false, //购物车组件下落的圆点是否到达目标位置
             cartFoodList: [], //购物车商品列表
@@ -152,9 +152,13 @@ export default {
         loading,
         buyCart
     },
+    props: ['keyword', 'sortByFiled', 'sortByType', 'filters', 'confirmSelect'],
     mixins: [loadMore, getImgPath],
     computed: {
-        //配送费
+        ...mapState([
+            'propertyList',
+        ]),
+        // 配送费
         deliveryFee: function () {
             if (this.shopDetailData) {
                 return this.shopDetailData.float_delivery_fee;
@@ -162,7 +166,7 @@ export default {
                 return null;
             }
         },
-        //还差多少元起送，为负数时显示去结算按钮
+        // 还差多少元起送，为负数时显示去结算按钮
         minimumOrderAmount: function () {
             if (this.shopDetailData) {
                 return this.shopDetailData.float_minimum_order_amount - this.totalPrice;
@@ -170,7 +174,7 @@ export default {
                 return null;
             }
         },
-        //购物车中总共商品的数量
+        // 购物车中总共商品的数量
         totalNum: function () {
             let num = 0;
             this.cartFoodList.forEach(item => {
@@ -182,7 +186,7 @@ export default {
     methods: {
         async initData() {
             //获取数据
-            let res = await getGoods(this.keyword, this.offset, );
+            let res = await apiGetGoods(this.keyword, this.offset, );
             this.goodsList = [...res.Items];
             if (res.length < 20) {
                 this.touchend = true;
@@ -249,6 +253,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
+
 @keyframes mymove {
     0% {
         transform: scale(1)
@@ -321,223 +326,53 @@ export default {
     }
 }
 
-.food_container {
+.goods_container {
     display: flex;
     flex: 1;
     padding-bottom: 2rem;
     margin-top: 3.5rem;
-}
-
-.menu_container {
-    display: flex;
-    flex: 1;
-    overflow-y: hidden;
-    position: relative;
-    .menu_left {
-        width: 3.8rem;
-        .menu_left_li {
-            padding: .7rem .3rem;
-            border-bottom: 0.025rem solid #ededed;
-            box-sizing: border-box;
-            border-left: 0.15rem solid #f8f8f8;
-            position: relative;
-            img {
-                @include wh(.5rem, .6rem);
+    .m-list {
+        flex: 1;
+        .item {
+            @include fj();
+            .item-left {
+                margin-right: .2rem;
+                .icon {
+                    @include wh(2.7rem, 2.7rem);
+                    display: block;
+                }
             }
-            span {
-                @include sc(.6rem, #666);
-            }
-            .category_num {
-                position: absolute;
-                top: .1rem;
-                right: .1rem;
-                background-color: #ff461d;
-                line-height: .6rem;
-                text-align: center;
-                border-radius: 50%;
-                border: 0.025rem solid #ff461d;
-                min-width: .6rem;
-                height: .6rem;
-                @include sc(.5rem, #fff);
-                font-family: Helvetica Neue, Tahoma, Arial;
-            }
-        }
-        .activity_menu {
-            border-left: 0.15rem solid #3190e8;
-            background-color: #fff;
-            span:nth-of-type(1) {
-                font-weight: bold;
+            .item-right {
+                flex: auto;
+                .detail {
+                    padding-top: 0.25rem;
+                    border-top: 0.025rem solid #f1f1f1;
+                    li {
+                        font-size: 0;
+                        span {
+                            font-size: .5rem;
+                            vertical-align: middle;
+                            display: inline-block;
+                            margin-bottom: 0.2rem;
+                        }
+                    }
+                }
             }
         }
     }
-    .menu_right {
-        flex: 4;
-        overflow-y: auto;
-        .menu_detail_header {
-            width: 100%;
-            padding: .4rem;
-            position: relative;
-            @include fj;
-            align-items: center;
-            .menu_detail_header_left {
-                width: 11rem;
-                white-space: nowrap;
-                overflow: hidden;
-                .menu_item_title {
-                    @include sc(.7rem, #666);
-                    font-weight: bold;
-                }
-                .menu_item_description {
-                    @include sc(.5rem, #999);
-                    width: 30%;
-                    overflow: hidden;
-                }
-            }
-            .menu_detail_header_right {
-                @include wh(.5rem, 1rem);
-                display: block;
-                @include bis('../../images/icon_point.png');
-                background-size: 100% .4rem;
-                background-position: left center;
-            }
-            .description_tip {
-                background-color: #39373a;
-                opacity: 0.95;
-                @include sc(.5rem, #fff);
-                position: absolute;
-                top: 1.5rem;
-                z-index: 14;
-                width: 8rem;
-                right: .2rem;
-                padding: .5rem .4rem;
-                border: 1px;
-                border-radius: .2rem;
-                span {
-                    color: #fff;
-                    line-height: .6rem;
-                    font-size: .55rem;
-                }
-            }
-            .description_tip::after {
-                content: '';
-                position: absolute;
-                @include wh(.4rem, .4rem);
-                background-color: #39373a;
-                top: -.5rem;
-                right: .7rem;
-                transform: rotate(-45deg) translateY(.41rem);
-            }
-        }
-        .menu_detail_list {
-            background-color: #fff;
-            padding: .6rem .4rem;
-            border-bottom: 1px solid #f8f8f8;
-            position: relative;
-            overflow: hidden;
-            .menu_detail_link {
-                display: flex;
-                .menu_food_img {
-                    margin-right: .4rem;
-                    img {
-                        @include wh(2rem, 2rem);
-                        display: block;
-                    }
-                }
-                .menu_food_description {
-                    width: 100%;
-                    .food_description_head {
-                        @include fj;
-                        margin-bottom: .2rem;
-                        .description_foodname {
-                            @include sc(.7rem, #333);
-                        }
-                        .attributes_ul {
-                            display: flex;
-                            li {
-                                font-size: .3rem;
-                                height: .6rem;
-                                line-height: .35rem;
-                                padding: .1rem;
-                                border: 1px solid #666;
-                                border-radius: 0.3rem;
-                                margin-right: .1rem;
-                                transform: scale(.8);
-                                p {
-                                    white-space: nowrap;
-                                }
-                            }
-                            .attribute_new {
-                                position: absolute;
-                                top: 0;
-                                left: 0;
-                                background-color: #4cd964;
-                                @include wh(2rem, 2rem);
-                                display: flex;
-                                align-items: flex-end;
-                                transform: rotate(-45deg) translate(-.1rem, -1.5rem);
-                                border: none;
-                                border-radius: 0;
-                                p {
-                                    @include sc(.4rem, #fff);
-                                    text-align: center;
-                                    flex: 1;
-                                }
-                            }
-                        }
-                    }
-                    .food_description_content {
-                        @include sc(.5rem, #999);
-                        line-height: .6rem;
-                    }
-                    .food_description_sale_rating {
-                        line-height: .8rem;
-                        span {
-                            @include sc(.5rem, #333);
-                        }
-                    }
-                    .food_activity {
-                        line-height: .4rem;
-                        span {
-                            font-size: .3rem;
-                            border: 1px solid currentColor;
-                            border-radius: 0.3rem;
-                            padding: .08rem;
-                            display: inline-block;
-                            transform: scale(.8);
-                            margin-left: -0.35rem;
-                        }
-                    }
-                }
-            }
-            .menu_detail_footer {
-                margin-left: 2.4rem;
-                font-size: 0;
-                margin-top: .3rem;
-                @include fj;
-                .food_price {
-                    span {
-                        font-family: 'Helvetica Neue', Tahoma, Arial;
-                    }
-                    span:nth-of-type(1) {
-                        @include sc(.5rem, #f60);
-                        margin-right: .05rem;
-                    }
-                    span:nth-of-type(2) {
-                        @include sc(.7rem, #f60);
-                        font-weight: bold;
-                        margin-right: .3rem;
-                    }
-                    span:nth-of-type(3) {
-                        @include sc(.5rem, #666);
-                    }
-                }
-            }
-        }
+}
+
+.return_top {
+    position: fixed;
+    bottom: 3rem;
+    right: 1rem;
+    .back_top_svg {
+        @include wh(2rem, 2rem);
     }
 }
 
 .buy_cart_container {
-    position: absolute;
+    position: fixed;
     background-color: #3d3d3f;
     bottom: 0;
     left: 0;

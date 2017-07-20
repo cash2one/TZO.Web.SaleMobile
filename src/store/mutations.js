@@ -1,19 +1,23 @@
 import {
 	REFRESH_TOKEN,
-	GET_USERINFO,
-	GET_CORPLIST,
-	SAVE_CUR_CORP,
 	INIT_DATA,
 	INIT_CORP_DATA,
+	GET_USERINFO,
+	GET_CORP_LIST,
 	GET_STORAGE_LIST,
 	GET_EXPRESS_LIST,
 	GET_PRINTER_LIST,
+	GET_BIZAREA_LIST,
+	GET_GLOBAL_PROPERTY,
+	GET_PROPERTY_LIST,
+	GET_CATEGORY_LIST,
+	GET_POSITION,
+	SAVE_CUR_CORP,
 	SAVE_CUR_STORAGE,
 	SAVE_CUR_EXPRESS,
 	SAVE_CUR_PRINTER,
 	SAVE_CUR_CUSTOMER,
-	GET_POSITION,
-	POSITION_INTERVAL
+	POSITION_INTERVAL,
 } from './mutation-types.js'
 
 import { setStore, getStore } from 'src/config/mUtils'
@@ -34,7 +38,7 @@ export default {
 	},
 
 	// 获取员工绑定的公司列表
-	[GET_CORPLIST](state, list) {
+	[GET_CORP_LIST](state, list) {
 		state.corpList = [...list];
 	},
 
@@ -77,6 +81,30 @@ export default {
 		state.printerList = list;
 	},
 
+	[GET_BIZAREA_LIST](state, list) {
+		state.bizAreaList = list;
+	},
+	[GET_GLOBAL_PROPERTY](state, list) {
+		console.log(list);
+		state.globalPropertyList = list;
+	},
+	[GET_PROPERTY_LIST](state, list) {
+		state.propertyList = list;
+	},
+	[GET_CATEGORY_LIST](state, list) {
+		list.forEach(function (i) {
+			if (i.ParentId == 1) {
+				state.categoryList.push(i);
+				let detailItem = { Id: i.Id, Children: [] };
+				list.forEach(function (j) {
+					if (j.ParentId == detailItem.Id)
+						detailItem.Children.push(j);
+				});
+				state.categoryDetailList.push(detailItem);
+			}
+		});
+	},
+
 	// 选择默认仓库
 	[SAVE_CUR_STORAGE](state, storage) {
 		state.curStorage = storage;
@@ -109,7 +137,7 @@ export default {
 	[POSITION_INTERVAL](state, id) {
 		state.intervalId = id;
 	},
-	
+
 	// 记录当前经度纬度
 	// [RECORD_ADDRESS](state, {
 	// 	latitude,

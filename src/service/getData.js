@@ -54,6 +54,9 @@ export const apiGetBizAreas = () => fetch('/api/Core/BizArea/getMyResponsibleAre
 // 获取商品类目
 export const apiGetCategories = () => fetch('/api/Goods/Category');
 
+// 获取商品全局属性
+export const apiGetGlobalProperty = () => fetch('/api/Goods/Goods/ListView');
+
 // 获取商品属性
 export const apiGetProperties = () => fetch('/api/Goods/Category/GetProperties/1');
 

@@ -209,7 +209,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import customerList from 'src/components/common/customer-list'
 import footGuide from 'src/components/footer/foot-guide'
 import { apiGetBizAreas } from 'src/service/getData'
@@ -217,7 +217,6 @@ import { apiGetBizAreas } from 'src/service/getData'
 export default {
     data() {
         return {
-            bizAreaList: [],           // 业务区域选项
             sortBy: '',                 // 选项卡控制
 
             keyword: '',
@@ -246,6 +245,8 @@ export default {
         footGuide
     },
     methods: {
+        ...mapActions(['getBizAreaList']),
+
         // 点击顶部三个选项，展示不同的列表，选中当前选项进行展示，同时收回其他选项
         async chooseType(type) {
             if (this.sortBy !== type) {
@@ -307,17 +308,17 @@ export default {
             this.sortBy = '';
         },
         async initData() {
-            await apiGetBizAreas().then(res => {
-                this.bizAreaList = res.Items;
-                this.bizAreaList.forEach(val => this.allBizAreaIds.push(val.Id))
-                this.bizAreaId = this.allBizAreaIds;
-            });
+            await this.getBizAreaList();
+
+            this.bizAreaList.forEach(val => this.allBizAreaIds.push(val.Id))
+            this.bizAreaId = this.allBizAreaIds;
         }
     },
     computed: {
         ...mapState([
             'latitude',
-            'longitude'
+            'longitude',
+            'bizAreaList'
         ]),
     },
 }
