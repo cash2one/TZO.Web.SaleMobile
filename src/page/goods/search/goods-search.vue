@@ -243,12 +243,12 @@ export default {
                 }
             }
         },
-        //只有点击清空按钮才清空数据，否则一直保持原有状态
+        // 只有点击清空按钮才清空数据，否则一直保持原有状态
         clearSelect() {
             this.filters = {};
             this.filterNum = 0;
         },
-        //点击确认时，将需要筛选的id值传递给子组件，并且收回列表
+        // 点击确认时，将需要筛选的id值传递给子组件，并且收回列表
         confirmSelectFun() {
             //状态改变时，因为子组件进行了监听，会重新获取数据进行筛选
             this.confirmStatus = !this.confirmStatus;
@@ -266,7 +266,7 @@ export default {
             'propertyList',
             'categoryList',
             'categoryDetailList'
-        ])
+        ]),
     }
 }
 </script>

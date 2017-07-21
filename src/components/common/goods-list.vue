@@ -25,9 +25,9 @@
                         <span>价格:</span>
                         <span>100</span>
                         <span>¥</span>
-                        <buy-cart></buy-cart>
-                        <!--<buy-cart :shopId='shopId' :foods='foods' @moveInCart="listenInCart" @showChooseList="showChooseList" @showReduceTip="showReduceTip" @showMoveDot="showMoveDotFun"></buy-cart>-->
+                        <!--<buy-cart :shopId='shopId' :foods='foods' @moveInCart="listenInCart" @showChooseList="showChooseList" @showReduceTip="showReduceTip" ></buy-cart>-->
                     </div>
+                    <buy-cart :goods="item" @showMoveDot="showMoveDotFun"></buy-cart>
                     <ul class="detail">
                         <li>
                             <span>库存:</span>
@@ -51,11 +51,14 @@
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
             </svg>
         </aside>
+        <transition name="loading">
+            <loading v-show="showLoading"></loading>
+        </transition>
         <section class="buy_cart_container">
             <section @click="toggleCartList" class="cart_icon_num">
                 <div class="cart_icon_container" :class="{cart_icon_activity: totalPrice > 0, move_in_cart:receiveInCart}" ref="cartContainer">
                     <span v-if="totalNum" class="cart_list_length">
-                        1111
+                        {{totalNum}}
                     </span>
                     <svg class="cart_icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-icon"></use>
@@ -63,16 +66,16 @@
                 </div>
                 <div class="cart_num">
                     <div>¥ {{totalPrice}}</div>
-                    <div>配送费¥{{deliveryFee}}</div>
+                    <div>可用额度:¥100</div>
                 </div>
             </section>
             <section class="gotopay" :class="{gotopay_acitvity: minimumOrderAmount <= 0}">
                 <span class="gotopay_button_style" v-if="minimumOrderAmount > 0">还差¥{{minimumOrderAmount}}起送</span>
-                <router-link :to="{path:'/confirmOrder', query:{}}" class="gotopay_button_style" v-else>去结算</router-link>
+                <router-link :to="{path:'/confirmOrder', query:{}}" class="gotopay_button_style" v-else>去下单</router-link>
             </section>
         </section>
-        <!--<transition name="toggle-cart">
-            <section class="cart_food_list" v-show="showCartList&&cartFoodList.length">
+        <transition name="toggle-cart">
+            <section class="cart_food_list" v-show="showCartList&&customerCart.Items.length">
                 <header>
                     <h4>购物车</h4>
                     <div @click="clearCart">
@@ -84,10 +87,9 @@
                 </header>
                 <section class="cart_food_details" id="cartFood">
                     <ul>
-                        <li v-for="(item, index) in cartFoodList" :key="index" class="cart_food_li">
+                        <li v-for="(item, index) in customerCart.Items" :key="index" class="cart_food_li">
                             <div class="cart_list_num">
-                                <p class="ellipsis">{{item.name}}</p>
-                                <p class="ellipsis">{{item.specs}}</p>
+                                <p class="ellipsis">{{item.Name}}</p>
                             </div>
                             <div class="cart_list_price">
                                 <span>¥</span>
@@ -108,12 +110,16 @@
                     </ul>
                 </section>
             </section>
-        </transition>-->
+        </transition>
         <transition name="fade">
             <div class="screen_cover" v-show="showCartList&&cartFoodList.length" @click="toggleCartList"></div>
         </transition>
-        <transition name="loading">
-            <loading v-show="showLoading"></loading>
+        <transition appear @after-appear='afterEnter' @before-appear="beforeEnter" v-for="(item,index) in showMoveDot" :key="index">
+            <span class="move_dot" v-if="item">
+                <svg class="move_liner">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-add"></use>
+                </svg>
+            </span>
         </transition>
     </section>
 </template>
@@ -139,14 +145,19 @@ export default {
             showLoading: true, //显示加载动画
             touchend: false, //没有更多数据
 
-            totalPrice: 0, //总共价格
-            receiveInCart: false, //购物车组件下落的圆点是否到达目标位置
-            cartFoodList: [], //购物车商品列表
-            showCartList: false,//显示购物车列表
+            receiveInCart: false,           // 购物车组件下落的圆点是否到达目标位置
+            cartFoodList: [],               // 购物车商品列表
+            showCartList: false,            // 显示购物车列表
+
+            showMoveDot: [], //控制下落的小圆点显示隐藏
+            windowHeight: null, //屏幕的高度
+            elLeft: 0, //当前点击加按钮在网页中的绝对top值
+            elBottom: 0, //当前点击加按钮在网页中的绝对left值
         }
     },
     mounted() {
         this.initData();
+        this.windowHeight = window.innerHeight;
     },
     components: {
         loading,
@@ -157,16 +168,13 @@ export default {
     computed: {
         ...mapState([
             'propertyList',
+            'curCustomer',
+            'cartList'
         ]),
-        // 配送费
-        deliveryFee: function () {
-            if (this.shopDetailData) {
-                return this.shopDetailData.float_delivery_fee;
-            } else {
-                return null;
-            }
+        customerCart: function () {
+            return Object.assign({}, this.cartList[this.curCustomer.Id]);
         },
-        // 还差多少元起送，为负数时显示去结算按钮
+        // 检查额度 TODO:
         minimumOrderAmount: function () {
             if (this.shopDetailData) {
                 return this.shopDetailData.float_minimum_order_amount - this.totalPrice;
@@ -174,13 +182,27 @@ export default {
                 return null;
             }
         },
+        // 总共价格
+        totalPrice: function () {
+            let num = 0;
+            for (var key in this.customerCart.Items) {
+                if (this.customerCart.Items.hasOwnProperty(key)) {
+                    var element = this.customerCart.Items[key];
+                    num += element.num * element.price;
+                }
+            }
+            return num;
+        },
         // 购物车中总共商品的数量
         totalNum: function () {
             let num = 0;
-            this.cartFoodList.forEach(item => {
-                num += item.num
-            })
-            return num
+            for (var key in this.customerCart.Items) {
+                if (this.customerCart.Items.hasOwnProperty(key)) {
+                    var element = this.customerCart.Items[key];
+                    num += element.num
+                }
+            }
+            return num;
         },
     },
     methods: {
@@ -234,18 +256,55 @@ export default {
             //考虑到本地模拟数据是引用类型，所以返回一个新的数组
             this.goodsList = [...res.Items];
         },
-        //开发环境与编译环境loading隐藏方式不同
+        // 开发环境与编译环境loading隐藏方式不同
         hideLoading() {
             this.showLoading = false;
         },
-        //控制购物列表是否显示
+        // 控制购物列表是否显示
         toggleCartList() {
             this.cartFoodList.length ? this.showCartList = !this.showCartList : true;
         },
-        //清除购物车
+        // 清除购物车
         clearCart() {
             this.toggleCartList();
             this.CLEAR_CART(this.shopId);
+        },
+        // 监听圆点是否进入购物车
+        listenInCart() {
+            if (!this.receiveInCart) {
+                this.receiveInCart = true;
+                this.$refs.cartContainer.addEventListener('animationend', () => {
+                    this.receiveInCart = false;
+                })
+                this.$refs.cartContainer.addEventListener('webkitAnimationEnd', () => {
+                    this.receiveInCart = false;
+                })
+            }
+        },
+        //显示下落圆球
+        showMoveDotFun(showMoveDot, elLeft, elBottom) {
+            this.showMoveDot = [...this.showMoveDot, ...showMoveDot];
+            this.elLeft = elLeft;
+            this.elBottom = elBottom;
+        },
+        beforeEnter(el) {
+            el.style.transform = `translate3d(0,${37 + this.elBottom - this.windowHeight}px,0)`;
+            el.children[0].style.transform = `translate3d(${this.elLeft - 30}px,0,0)`;
+            el.children[0].style.opacity = 0;
+        },
+        afterEnter(el) {
+            el.style.transform = `translate3d(0,0,0)`;
+            el.children[0].style.transform = `translate3d(0,0,0)`;
+            el.style.transition = 'transform .55s cubic-bezier(0.3, -0.25, 0.7, -0.15)';
+            el.children[0].style.transition = 'transform .55s linear';
+            this.showMoveDot = this.showMoveDot.map(item => false);
+            el.children[0].style.opacity = 1;
+            el.children[0].addEventListener('transitionend', () => {
+                this.listenInCart();
+            })
+            el.children[0].addEventListener('webkitAnimationEnd', () => {
+                this.listenInCart();
+            })
         },
     }
 }
@@ -327,16 +386,14 @@ export default {
 }
 
 .goods_container {
-    display: flex;
-    flex: 1;
     padding-bottom: 2rem;
-    margin-top: 3.5rem;
+    margin-top: 3.7rem;
     .m-list {
         flex: 1;
         .item {
             @include fj();
             .item-left {
-                margin-right: .2rem;
+                margin: .2rem;
                 .icon {
                     @include wh(2.7rem, 2.7rem);
                     display: block;
@@ -370,6 +427,7 @@ export default {
         @include wh(2rem, 2rem);
     }
 }
+
 
 .buy_cart_container {
     position: fixed;
@@ -527,5 +585,26 @@ export default {
             }
         }
     }
+}
+
+.move_dot {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 200;
+    svg {
+        @include wh(.9rem, .9rem);
+        fill: #3190e8;
+    }
+}
+
+.toggle-cart-enter-active,
+.toggle-cart-leave-active {
+    transition: all .3s ease-out;
+}
+
+.toggle-cart-enter,
+.toggle-cart-leave-active {
+    transform: translateY(100%);
 }
 </style>

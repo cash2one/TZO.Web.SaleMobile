@@ -16,12 +16,12 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 ```
 
 # 目标功能 x
-- [x] 0.1.0 认证集成 -- 完成
-- [x] 0.1.0 选择分公司 corp-list -- 完成
-- [ ] 0.1.0 首页 home -- 未完成 李季
-- [ ] 0.1.0 展示当前位置附近客户列表 customer-list -- 未完成 李季
-- [ ] 0.1.0 根据距离、业务区域等进行排序和筛选客户 customer-list -- 未完成 李季
-- [ ] 0.1.0 客户搜索 customer/search -- 未完成 李季
+- [x] 0.1.0 认证集成 -- 完成 李季
+- [x] 0.1.0 选择分公司 corp-list -- 完成 李季
+- [x] 0.1.0 首页 home -- 完成 李季
+- [x] 0.1.0 展示当前位置附近客户列表 customer-list -- 完成 李季
+- [x] 0.1.0 根据距离、业务区域等进行排序和筛选客户 customer-list -- 完成 李季
+- [x] 0.1.0 客户搜索 customer/search -- 完成 李季
 - [ ] 0.1.0 商家详情页 customer/detail -- 未完成 李光波
 - [ ] 0.1.0 客户对账 customer/bill -- 未完成
 - [ ] 0.1.0 购物车功能 buy-cart -- 未完成
@@ -34,7 +34,7 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [ ] 0.1.0 根据时间、单号等进行排序和筛选过滤订单 order/list -- 未完成
 - [ ] 0.1.0 订单列表 order/list -- 未完成
 - [ ] 0.1.0 订单详情 order/detail -- 未完成
-- [ ] 0.1.0 个人中心 profile -- 未完成 李季
+- [x] 0.1.0 个人中心 profile -- 完成 李季
 - [x] 0.1.0 设置 profile/settings -- 完成 李季
 
 - [ ] 0.2.0 库存商品列表 goods-stock -- 未完成

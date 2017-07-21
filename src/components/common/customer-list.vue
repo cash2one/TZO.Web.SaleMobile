@@ -203,12 +203,12 @@ export default {
 <style lang="scss" scoped>
 @import 'src/style/mixin';
 .customer_container {
-	margin-top: 3.5rem;
+	margin-top: 3.7rem;
 	.m-list {
 		.item {
 			@include fj();
 			.item-left {
-				margin-right: .2rem;
+				margin: .2rem;
 				.icon {
 					@include wh(2.7rem, 2.7rem);
 					display: block;
