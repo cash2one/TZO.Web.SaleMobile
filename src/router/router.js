@@ -55,13 +55,15 @@ const settings = r => require.ensure([], () => r(require('../page/profile/settin
 const shopBack = r => require.ensure([], () => r(require('../page/shop/back/shop-back')), 'shop')
 const shopGo = r => require.ensure([], () => r(require('../page/shop/go/shop-go')), 'shop')
 
+const cart = r => require.ensure([],()=>r(require('../page/cart/cart')),'cart')
+
 export default [{
     path: '/',
     component: App, // 顶层路由，对应index.html
     children: [ // 二级路由。对应App.vue
         {
             path: '',
-            redirect:'/corp-list'
+            redirect: '/corp-list'
         },
         {
             path: '/corp-list', // 可选公司列表
@@ -258,5 +260,9 @@ export default [{
             path: '/shop-go',
             component: shopGo
         },
+        {
+            path: '/cart',
+            component: cart
+        }
     ]
 }]

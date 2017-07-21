@@ -204,14 +204,13 @@
             <div class="back_cover" v-show="sortBy"></div>
         </transition>
         <customer-list :keyword='keyword' :bizAreaId='bizAreaId' :sortByFiled='sort.sortByFiled' :sortByType='sort.sortByType' :filters='filters' :confirmSelect="confirmStatus" @DidConfrim="clearSelect"></customer-list>
-        <foot-guide></foot-guide>
+        
     </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 import customerList from 'src/components/common/customer-list'
-import footGuide from 'src/components/footer/foot-guide'
 import { apiGetBizAreas } from 'src/service/getData'
 
 export default {
@@ -242,7 +241,6 @@ export default {
     },
     components: {
         customerList,
-        footGuide
     },
     methods: {
         ...mapActions(['getBizAreaList']),

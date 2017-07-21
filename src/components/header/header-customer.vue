@@ -86,9 +86,9 @@
             </section>
         </section>
     </header>
-    <section v-else class="customer_header">
+    <router-link v-else to="/customer/search" tag="section" class="customer_header">
         <header-title header-title="请选择客户"></header-title>
-    </section>
+    </router-link>
 </template>
 
 <script>
