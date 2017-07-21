@@ -29,7 +29,12 @@
                     <section v-show="sortBy == 'category'" class="category_container sort_detail_type">
                         <section class="category_left">
                             <ul>
-                                <li v-for="(first, index) in categoryList" :key="index" class="category_left_li ellipsis" :class="{category_active:categoryId==first.Id}" @click="selectCategory(first)">
+                                <li>
+                                    <section class="category_left_li ellipsis" :class="{category_active:categoryId==0}" @click="selectCategory(0)">
+                                        <span>全部</span>
+                                    </section>
+                                </li>
+                                <li v-for="(first, index) in categoryList" :key="index" class="category_left_li ellipsis" :class="{category_active:firstCategoryId==first.Id}" @click="selectCategory(first.Id,0)">
                                     <section>
                                         <!--<img :src="getImgPath(item.image_url)" v-if="index" class="category_icon">-->
                                         <span>{{first.Name}}</span>
@@ -44,8 +49,8 @@
                             </ul>
                         </section>
                         <section class="category_right">
-                            <ul v-for="item in categoryDetailList" :key="item.Id" v-if="item.Id==categoryId">
-                                <li v-for="second in item.Children" :key="second.Id" class="category_right_li" @click="selectCategoies(second)" :class="{category_right_choosed: secondCategoryId == second.id || (!secondCategoryId)}">
+                            <ul v-for="item in categoryDetailList" :key="item.Id" v-if="item.Id==firstCategoryId">
+                                <li v-for="second in item.Children" :key="second.Id" class="category_right_li" @click="selectCategory(item.Id,second.Id)" :class="{category_right_choosed: secondCategoryId == second.Id}">
                                     <span>{{second.Name}}</span>
                                     <span></span>
                                 </li>
@@ -66,35 +71,46 @@
                 <transition name="showlist">
                     <section v-show="sortBy == 'sort'" class="sort_detail_type">
                         <ul class="sort_list_container">
-                            <li v-for="item in globalPropertyList" :key="item.Id" class="sort_list_li" @click="selectSort('Distance','asc')">
+                            <li class="sort_list_li" @click="selectSort('GoodsName','asc')">
                                 <svg>
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#default"></use>
                                 </svg>
-                                <p data="0" :class="{sort_select: sort.sortByType == 0}">
-                                    <span>{{item.Name}}</span>
-                                    <svg v-if="sort.sortByType == 0">
+                                <p :class="{sort_select: sort.sortByFiled == 'GoodsName'}">
+                                    <span>商品名称</span>
+                                    <svg v-if="sort.sortByFiled == 'GoodsName'">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
                                 </p>
                             </li>
-                            <li class="sort_list_li">
+                            <li v-for="item in globalPropertyList" :key="item.Id" class="sort_list_li" @click="selectSort('Property',item.Id)">
+                                <svg>
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#default"></use>
+                                </svg>
+                                <p :class="{sort_select: sort.sortByFiled == 'Property' && sort.sortByType == item.Id }">
+                                    <span>{{item.Name}}</span>
+                                    <svg v-if="sort.sortByFiled == 'Property' && sort.sortByType == item.Id">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                    </svg>
+                                </p>
+                            </li>
+                            <li class="sort_list_li" @click="selectSort('RangeSaleNum','desc')">
                                 <svg>
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hot"></use>
                                 </svg>
-                                <p data="6" :class="{sort_select: sort.sortByType == 6}">
-                                    <span>销量</span>
-                                    <svg v-if="sort.sortByType == 6">
+                                <p data="6" :class="{sort_select: sort.sortByFiled == 'RangeSaleNum'}">
+                                    <span>客户销量</span>
+                                    <svg v-if="sort.sortByFiled == 'RangeSaleNum'">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
                                 </p>
                             </li>
-                            <li class="sort_list_li">
+                            <li class="sort_list_li" @click="selectSort('StockNum','desc')">
                                 <svg>
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#speed"></use>
                                 </svg>
-                                <p data="2" :class="{sort_select: sort.sortByType == 2}">
+                                <p data="2" :class="{sort_select: sort.sortByFiled == 'StockNum'}">
                                     <span>库存</span>
-                                    <svg v-if="sort.sortByType == 2">
+                                    <svg v-if="sort.sortByFiled == 'StockNum'">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
                                 </p>
@@ -115,45 +131,45 @@
                         <section v-for="property in propertyList" :key="property.Id" v-if="property.Options.length>0" style="width: 100%;">
                             <header class="filter_header_style">{{property.PropertyName}}</header>
                             <ul class="filter_ul">
-                                <li v-for="(item,index) in property.Options" :key="index" class="filter_li" @click="selectFilter(item,property.Id)">
-                                    <svg v-show="filters[property.Id]==item" class="activity_svg">
+                                <li v-for="(item,index) in property.Options" :key="index" class="filter_li" @click="selectProperty(property.Id,item)">
+                                    <svg v-show="filters.properties[property.Id]==item" class="activity_svg">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
-                                    <span class="ellipsis" :class="{selected_filter: true}">{{item}}</span>
+                                    <span class="ellipsis" :class="{selected_filter: filters.properties[property.Id]==item}">{{item}}</span>
                                 </li>
                             </ul>
                         </section>
                         <section style="width: 100%;">
                             <header class="filter_header_style">销售</header>
                             <ul class="filter_ul">
-                                <li class="filter_li" @click="selectfilter('LastOrderTime',7)">
-                                    <svg v-show="filters.LastOrderTime == 7" class="activity_svg">
+                                <li class="filter_li" @click="selectFilter('LastSaleTime',7)">
+                                    <svg v-show="filters.LastSaleTime == 7" class="activity_svg">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
-                                    <span :class="{selected_filter: filters.LastOrderTime == 7}">一周</span>
+                                    <span :class="{selected_filter: filters.LastSaleTime == 7}">一周</span>
                                 </li>
-                                <li class="filter_li" @click="selectfilter('LastOrderTime',30)">
-                                    <svg v-show="filters.LastOrderTime == 30" class="activity_svg">
+                                <li class="filter_li" @click="selectFilter('LastSaleTime',30)">
+                                    <svg v-show="filters.LastSaleTime == 30" class="activity_svg">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
-                                    <span :class="{selected_filter: filters.LastOrderTime == 30}">一月</span>
+                                    <span :class="{selected_filter: filters.LastSaleTime == 30}">一月</span>
                                 </li>
-                                <li class="filter_li" @click="selectfilter('LastOrderTime',365)">
-                                    <svg v-show="filters.LastOrderTime == 365" class="activity_svg">
+                                <li class="filter_li" @click="selectFilter('LastSaleTime',365)">
+                                    <svg v-show="filters.LastSaleTime == 365" class="activity_svg">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
-                                    <span :class="{selected_filter: filters.LastOrderTime == 365}">一年</span>
+                                    <span :class="{selected_filter: filters.LastSaleTime == 365}">一年</span>
                                 </li>
                             </ul>
                         </section>
                         <section style="width: 100%;">
                             <header class="filter_header_style">库存</header>
                             <ul class="filter_ul">
-                                <li class="filter_li" @click="selectfilter('HasExpire')">
-                                    <svg v-show="filters.HasExpire" class="activity_svg">
+                                <li class="filter_li" @click="selectFilter('ZeroStock')">
+                                    <svg v-show="filters.ZeroStock" class="activity_svg">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
-                                    <span :class="{selected_filter: filters.HasExpire}">0库存</span>
+                                    <span :class="{selected_filter: filters.ZeroStock}">0库存</span>
                                 </li>
                             </ul>
                         </section>
@@ -170,7 +186,7 @@
         <transition name="showcover">
             <div class="back_cover" v-show="sortBy"></div>
         </transition>
-        <goods-list></goods-list>
+        <goods-list :keyword='keyword' :categoryId='categoryId' :sortByFiled='sort.sortByFiled' :sortByType='sort.sortByType' :filters='filters' :confirmSelect="confirmStatus" @DidConfrim="clearSelect"></goods-list>
     </div>
 </template>
 
@@ -184,13 +200,17 @@ export default {
             sortBy: '',                     // 选项卡控制
             keyword: '',
             categoryId: 0,                  // 当前选中业务区域
+            firstCategoryId: 0,              // 选中的一级分类
             secondCategoryId: 0,            // 选中的二级分类
             sort: {
-                sortByFiled: 'Distance',
+                sortByFiled: 'GoodsName',
                 sortByType: 'asc',          // 根据何种方式排序
             },
 
-            filters: {},
+            filters: {
+                properties: {},
+                LastSaleTime: 7,
+            },
             filterNum: 0,                   // 所选中的所有样式的集合
             confirmStatus: false,           // 确认选择
         }
@@ -216,11 +236,13 @@ export default {
                 this.sortBy = '';
             }
         },
-        selectCategory(item) {
-            this.categoryId = item.Id;
-        },
-        selectCategoies(item) {
-
+        selectCategory(first, second) {
+            this.firstCategoryId = first;
+            this.secondCategoryId = second;
+            if (second)
+                this.categoryId = second;
+            else
+                this.categoryId = first;
         },
         //点击某个排序方式，获取事件对象的data值，并根据获取的值重新获取数据渲染
         selectSort(filed, type) {
@@ -228,12 +250,23 @@ export default {
             this.sort.sortByType = type;
             this.clearSelect();
         },
-        selectFilter(txt, propertyid) {
-            if (this.filters[propertyid] == txt)
-                this.filters[propertyid] = '';
+        selectProperty(id, txt) {
+            if (this.filters.properties[id] && this.filters.properties[id] == txt)
+                delete this.filters.properties[id];
             else
-                this.filters[propertyid] = txt;
+                this.filters.properties[id] = txt;
 
+            this.countFilterNum();
+        },
+        selectFilter(name, val) {
+            if (val)
+                this.filters[name] = val;
+            else
+                this.filters[name] = !this.filters[name];
+
+            this.countFilterNum();
+        },
+        countFilterNum() {
             this.filterNum = 0;
             for (var key in this.filters) {
                 if (this.filters.hasOwnProperty(key)) {
@@ -245,7 +278,10 @@ export default {
         },
         // 只有点击清空按钮才清空数据，否则一直保持原有状态
         clearSelect() {
-            this.filters = {};
+            this.filters = {
+                properties: {},
+                LastSaleTime: 7,
+            };
             this.filterNum = 0;
         },
         // 点击确认时，将需要筛选的id值传递给子组件，并且收回列表
@@ -273,11 +309,10 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-.search_container {
-    display: flex;
-    flex-direction: column;
-}
-
+// .search_container {
+//     display: flex;
+//     flex-direction: column;
+// }
 .showcover-enter-active,
 .showcover-leave-active {
     transition: opacity .3s

@@ -115,7 +115,6 @@ export default {
 			this.$router.push('/home');
 		},
 		async getCustomers() {
-			console.log(this.curLatitude + ':' + this.curLongitude);
 			return await apiGetCustomers(this.curLongitude, this.curLatitude, this.bizAreaId, this.keyword, this.sortByFiled, this.sortByType, this.filters, this.offset);
 		},
 		async initData() {

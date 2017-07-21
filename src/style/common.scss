@@ -331,6 +331,9 @@ html,body{
             span:nth-of-type(2) {
                 @include sc(.6rem, #666);
             }
+            span:nth-of-type(3) {
+                @include sc(.6rem, #666);
+            }
         }
     }
 }
@@ -438,7 +441,7 @@ html,body{
             flex: 1;
             background-color: #fff;
             padding-left: 0.5rem;
-            // height: 16rem;
+            height: 16rem;
             overflow-y: auto;
             .category_right_li {
                 @include fj;
@@ -494,7 +497,7 @@ html,body{
     .filter_container {
         flex-direction: column;
         align-items: flex-start;
-        // min-height: 10.6rem;
+        min-height: 10.6rem;
         background-color: #f1f1f1;
         .filter_header_style {
             @include sc(0.4rem, #333);

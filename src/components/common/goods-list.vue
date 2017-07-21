@@ -7,12 +7,11 @@
                     <svg class="icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#goods"></use>
                     </svg>
-    
                 </router-link>
                 <section class="item-right">
                     <section class="title">
                         <div class="name ellipsis">
-                            <strong>{{item.Name}}</strong>
+                            <strong>{{item.GoodsName}}</strong>
                         </div>
                     </section>
                     <section class="content">
@@ -23,18 +22,27 @@
                     </section>
                     <div class="number">
                         <span>价格:</span>
-                        <span>100</span>
+                        <span>{{item.LevelPrice}}</span>
                         <span>¥</span>
-                        <!--<buy-cart :shopId='shopId' :foods='foods' @moveInCart="listenInCart" @showChooseList="showChooseList" @showReduceTip="showReduceTip" ></buy-cart>-->
                     </div>
                     <buy-cart :goods="item" @showMoveDot="showMoveDotFun"></buy-cart>
                     <ul class="detail">
                         <li>
                             <span>库存:</span>
                             <span>
-                                {{item.UseableStockNum}}
+                                {{item.StockNum}}
                             </span>
-                            <span>{{item.Units}}</span>
+                            <span>{{item.Goods.Units}}</span>
+                        </li>
+                        <li>
+                            <span>近{{filters.LastSaleTime}}天:</span>
+                            <span>{{item.RangeSaleNum}}</span>
+                            <span>{{item.Goods.Units}}</span>
+                        </li>
+                        <li>
+                            <span>上次销售:</span>
+                            <span>{{item.LastSaleNum}}</span>
+                            <span>{{item.Goods.Units}}</span>
                         </li>
                     </ul>
                 </section>
@@ -75,7 +83,7 @@
             </section>
         </section>
         <transition name="toggle-cart">
-            <section class="cart_food_list" v-show="showCartList&&customerCart.Items.length">
+            <section class="cart_food_list" v-show="showCartList&&customerCartCount">
                 <header>
                     <h4>购物车</h4>
                     <div @click="clearCart">
@@ -89,20 +97,20 @@
                     <ul>
                         <li v-for="(item, index) in customerCart.Items" :key="index" class="cart_food_li">
                             <div class="cart_list_num">
-                                <p class="ellipsis">{{item.Name}}</p>
+                                <p class="ellipsis">{{item.info.GoodsName}}</p>
                             </div>
                             <div class="cart_list_price">
                                 <span>¥</span>
                                 <span>{{item.price}}</span>
                             </div>
                             <section class="cart_list_control">
-                                <span @click="removeOutCart(item.category_id, item.item_id, item.food_id, item.name, item.price, item.specs)">
+                                <span @click="removeOutCart(index)">
                                     <svg>
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-minus"></use>
                                     </svg>
                                 </span>
                                 <span class="cart_num">{{item.num}}</span>
-                                <svg class="cart_add" @click="addToCart(item.category_id, item.item_id, item.food_id, item.name, item.price, item.specs)">
+                                <svg class="cart_add" @click="addToCart(item.info)">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-add"></use>
                                 </svg>
                             </section>
@@ -112,7 +120,7 @@
             </section>
         </transition>
         <transition name="fade">
-            <div class="screen_cover" v-show="showCartList&&cartFoodList.length" @click="toggleCartList"></div>
+            <div class="screen_cover" v-show="showCartList&&customerCartCount" @click="toggleCartList"></div>
         </transition>
         <transition appear @after-appear='afterEnter' @before-appear="beforeEnter" v-for="(item,index) in showMoveDot" :key="index">
             <span class="move_dot" v-if="item">
@@ -146,7 +154,6 @@ export default {
             touchend: false, //没有更多数据
 
             receiveInCart: false,           // 购物车组件下落的圆点是否到达目标位置
-            cartFoodList: [],               // 购物车商品列表
             showCartList: false,            // 显示购物车列表
 
             showMoveDot: [], //控制下落的小圆点显示隐藏
@@ -163,16 +170,24 @@ export default {
         loading,
         buyCart
     },
-    props: ['keyword', 'sortByFiled', 'sortByType', 'filters', 'confirmSelect'],
+    props: ['keyword', 'categoryId', 'sortByFiled', 'sortByType', 'filters', 'confirmSelect'],
     mixins: [loadMore, getImgPath],
     computed: {
         ...mapState([
             'propertyList',
+            'orderStorage',
             'curCustomer',
             'cartList'
         ]),
         customerCart: function () {
             return Object.assign({}, this.cartList[this.curCustomer.Id]);
+        },
+        customerCartCount: function () {
+            var count = 0;
+            for (var i in this.customerCart.Items) if (this.customerCart.Items.hasOwnProperty(i)) {
+                count++;
+            }
+            return count;
         },
         // 检查额度 TODO:
         minimumOrderAmount: function () {
@@ -206,9 +221,17 @@ export default {
         },
     },
     methods: {
+        ...mapMutations([
+            'ADD_CART',
+            'REDUCE_CART',
+            'CLEAR_CART'
+        ]),
+        async getGoods() {
+            return await apiGetGoods(this.curCustomer.CustomerId, this.orderStorage.Id, this.categoryId, this.keyword, this.sortByFiled, this.sortByType, this.filters, this.offset);
+        },
         async initData() {
             //获取数据
-            let res = await apiGetGoods(this.keyword, this.offset, );
+            let res = await this.getGoods();
             this.goodsList = [...res.Items];
             if (res.length < 20) {
                 this.touchend = true;
@@ -233,7 +256,7 @@ export default {
 
             //数据的定位加20位
             this.offset += 20;
-            let res = await getGoods(this.keyword, this.offset, );
+            let res = await this.getGoods();
             this.hideLoading();
             this.goodsList = [...this.goodsList, ...res.Items];
             //当获取数据小于20，说明没有更多数据，不需要再次请求数据
@@ -243,17 +266,17 @@ export default {
             }
             this.preventRepeatReuqest = false;
         },
-        //返回顶部
+        // 返回顶部
         backTop() {
             animate(document.body, { scrollTop: '0' }, 400, 'ease-out');
         },
-        //监听父级传来的数据发生变化时，触发此函数重新根据属性值获取数据
+        // 监听父级传来的数据发生变化时，触发此函数重新根据属性值获取数据
         async listenPropChange() {
             this.showLoading = true;
             this.offset = 0;
-            let res = await getGoods(this.keyword, this.offset, );
+            let res = await this.getGoods();;
             this.hideLoading();
-            //考虑到本地模拟数据是引用类型，所以返回一个新的数组
+            // 考虑到本地模拟数据是引用类型，所以返回一个新的数组
             this.goodsList = [...res.Items];
         },
         // 开发环境与编译环境loading隐藏方式不同
@@ -262,12 +285,13 @@ export default {
         },
         // 控制购物列表是否显示
         toggleCartList() {
-            this.cartFoodList.length ? this.showCartList = !this.showCartList : true;
+            console.log(this.customerCart);
+            this.customerCartCount ? this.showCartList = !this.showCartList : true;
         },
         // 清除购物车
         clearCart() {
             this.toggleCartList();
-            this.CLEAR_CART(this.shopId);
+            this.CLEAR_CART(this.curCustomer.Id);
         },
         // 监听圆点是否进入购物车
         listenInCart() {
@@ -305,6 +329,33 @@ export default {
             el.children[0].addEventListener('webkitAnimationEnd', () => {
                 this.listenInCart();
             })
+        },
+        // 移出购物车
+        removeOutCart(goodsId) {
+            this.REDUCE_CART({ customerId: this.curCustomer.Id, goodsId });
+        },
+        // 加入购物车，计算按钮位置。
+        addToCart(goods) {
+            this.ADD_CART({ customer: this.curCustomer, goods, price: goods.LevelPrice });
+        },
+    },
+    watch: {
+        keyword: function (val) {
+            this.listenPropChange();
+        },
+        categoryId: function (val) {
+            this.listenPropChange();
+        },
+        //监听父级传来的排序方式
+        sortByFiled: function (val) {
+            this.listenPropChange();
+        },
+        sortByType: function (val) {
+            if (this.sortByFiled == 'Property')
+                this.listenPropChange();
+        },
+        confirmSelect: function (val) {
+            this.listenPropChange();
         },
     }
 }

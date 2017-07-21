@@ -2,7 +2,7 @@
     <section class="cart_module">
         <section class="cart_button">
             <transition name="showReduce">
-                <span @click="removeOutCart(goods.Id, price)" v-if="goodsNum">
+                <span @click="removeOutCart(goods.GoodsId)" v-if="goodsNum">
                     <svg>
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-minus"></use>
                     </svg>
@@ -12,7 +12,7 @@
                 <span class="cart_num" v-if="goodsNum">{{goodsNum}}</span>
             </transition>
             <span>
-                <svg class="add_icon" @touchstart="addToCart(goods.Id, price, $event)">
+                <svg class="add_icon" @touchstart="addToCart($event)">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-add"></use>
                 </svg>
             </span>
@@ -41,8 +41,8 @@ export default {
         },
         // shopCart变化的时候重新计算当前商品的数量
         goodsNum: function () {
-            if (this.customerCart && this.customerCart.Items && this.customerCart.Items[this.goods.Id]) {
-                return this.customerCart.Items[this.goods.Id].num;
+            if (this.customerCart && this.customerCart.Items && this.customerCart.Items[this.goods.GoodsId]) {
+                return this.customerCart.Items[this.goods.GoodsId].num;
             } else {
                 return 0;
             }
@@ -61,23 +61,18 @@ export default {
             }
         },
         // 加入购物车，计算按钮位置。
-        addToCart(goodsId, price, event) {
-            this.ADD_CART({ customerId: this.curCustomer.Id, goodsId, info: this.goods, price });
+        addToCart(event) {
+            this.ADD_CART({ customer: this.curCustomer, goods: this.goods, price: this.goods.LevelPrice });
             let elLeft = event.target.getBoundingClientRect().left;
             let elBottom = event.target.getBoundingClientRect().bottom;
             this.showMoveDot.push(true);
             this.$emit('showMoveDot', this.showMoveDot, elLeft, elBottom);
 
         },
-        // 显示规格列表
-        showChooseList(foodScroll) {
-            this.$emit('showChooseList', foodScroll)
-        },
         // 点击多规格商品的减按钮，弹出提示
         showReduceTip() {
             this.$emit('showReduceTip')
         },
-
     },
 }
 </script>
@@ -101,29 +96,12 @@ export default {
         @include wh(.9rem, .9rem);
         fill: #3190e8;
     }
-    .specs_reduce_icon {
-        fill: #999;
-    }
     .cart_num {
         @include sc(.7rem, #666);
         min-width: 1rem;
         text-align: center;
         font-family: Helvetica Neue, Tahoma;
         padding-bottom: .3rem;
-    }
-    .choose_specification {
-        .choose_icon_container {
-            display: flex;
-            align-items: center;
-            .show_chooselist {
-                display: block;
-                @include sc(.55rem, #fff);
-                padding: .1rem .2rem;
-                background-color: $blue;
-                border-radius: 0.2rem;
-                border: 1px solid $blue;
-            }
-        }
     }
 }
 

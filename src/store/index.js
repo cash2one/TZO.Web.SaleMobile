@@ -13,6 +13,7 @@ const state = {
 	lastPositionTime: null,		// 位置更新时间
 	intervalId: '',				// 自动获取位置的定时句柄
 
+	orderStorage:{},			// 订单仓库
 	curCorp: {},				// 当前公司
 	curStorage: {}, 			// 当前仓库
 	curExpress: {}, 			// 当前物流

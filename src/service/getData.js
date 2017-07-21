@@ -61,15 +61,27 @@ export const apiGetGlobalProperty = () => fetch('/api/Goods/Goods/ListView');
 export const apiGetProperties = () => fetch('/api/Goods/Category/GetProperties/1');
 
 // 获取商品列表
-export const apiGetGoods = (keyword, offset) => {
+export const apiGetGoods = (customerId, storageId, categoryId, keyword, sortByFiled, sortByType, filters, offset) => {
 	let data = {
 		PageIndex: parseInt(offset / 20),
 		PageSize: 20,
 		GoodsTypes: [1, 3],
-		Keyword: keyword
+		Keyword: keyword,
+		CustomerId: customerId,
+		StorageId: storageId,
+		CategoryId: categoryId,
+		SortParam: {
+			FiledName: sortByFiled,
+			SortType: sortByType ? sortByType : 'asc'
+		},
+		AdvancedResult: {}
 	};
 
-	return fetch('/api/Storage/SubStock/GoodsSource', data, 'POST')
+	if (filters.LastSaleTime) data.LastSaleTime = filters.LastSaleTime;
+	if (filters.ZeroStock) data.UnContainsZeroStockNum = true;
+	if (filters.properties) data.AdvancedResult.Properties = filters.properties;
+
+	return fetch('/api/Goods/Goods/GetGoods4Mobile', data)
 };
 
 // 获取客户信用。。。可以考虑和客户信息合并

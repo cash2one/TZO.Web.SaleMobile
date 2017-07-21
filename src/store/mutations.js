@@ -17,8 +17,10 @@ import {
 	SAVE_CUR_EXPRESS,
 	SAVE_CUR_PRINTER,
 	SAVE_CUR_CUSTOMER,
+	SAVE_ORDER_STORAGE,
 	ADD_CART,
 	REDUCE_CART,
+	CLEAR_CART,
 	POSITION_INTERVAL,
 } from './mutation-types.js'
 
@@ -48,7 +50,7 @@ export default {
 		state.curCorp = corp;
 		setStore('curCorp', corp);
 	},
-	// 
+
 	[INIT_DATA](state) {
 		let initCorp = getStore('curCorp');
 		if (initCorp)
@@ -62,6 +64,11 @@ export default {
 
 	// 网页初始化时从本地缓存默认选项
 	[INIT_CORP_DATA](state, corpId) {
+		let initOrderStorage = getStore(corpId + '_curOrderStorage');
+		if (initOrderStorage) {
+			state.orderStorage = JSON.parse(initOrderStorage);
+		}
+
 		let initStorage = getStore(corpId + '_curStorage');
 		if (initStorage) {
 			state.curStorage = JSON.parse(initStorage);
@@ -106,6 +113,11 @@ export default {
 		});
 	},
 
+	// 订单仓库
+	[SAVE_ORDER_STORAGE](state, storage) {
+		state.orderStorage = storage;
+		setStore(state.curCorp.CorpId + '_curOrderStorage', storage);
+	},
 	// 选择默认仓库
 	[SAVE_CUR_STORAGE](state, storage) {
 		state.curStorage = storage;
@@ -149,22 +161,22 @@ export default {
 
 	// 加入购物车
 	[ADD_CART](state, {
-		customerId,
-		goodsId,
-		info,
+		customer,
+		goods,
 		price
 	}) {
 		let cart = state.cartList;
-		let customerCart = cart[customerId] = (cart[customerId] || {});
+		let customerCart = cart[customer.Id] = (cart[customer.Id] || {});
+		customerCart.customerInfo = customer;
 		let items = customerCart.Items = (customerCart.Items || {});
-		if (items[goodsId]) {
-			items[goodsId]['num']++;
+		if (items[goods.GoodsId]) {
+			items[goods.GoodsId]['num']++;
 		} else {
-			items[goodsId] = {
+			items[goods.GoodsId] = {
 				"num": 1,
-				"id": goodsId,
-				"info": info,
-				"price": (price || 1)
+				"id": goods.GoodsId,
+				"info": goods,
+				"price": price
 			};
 		}
 		state.cartList = { ...cart };
@@ -187,10 +199,17 @@ export default {
 				setStore('buyCart', state.cartList);
 			} else {
 				//商品数量为0，则清空当前商品的信息
-				items[goodsId] = null;
+				delete items[goodsId];
 			}
 		}
 	},
+	// 清空当前商品的购物车信息
+	[CLEAR_CART](state, customerId) {
+		state.cartList[customerId] = null;
+		state.cartList = { ...state.cartList };
+		setStore('buyCart', state.cartList);
+	},
+
 	//网页初始化时从本地缓存获取购物车数据
 	// [INIT_BUYCART](state) {
 	// 	let initCart = getStore('buyCart');
@@ -198,12 +217,7 @@ export default {
 	// 		state.cartList = JSON.parse(initCart);
 	// 	}
 	// },
-	//清空当前商品的购物车信息
-	// [CLEAR_CART](state, shopid) {
-	// 	state.cartList[shopid] = null;
-	// 	state.cartList = { ...state.cartList };
-	// 	setStore('buyCart', state.cartList);
-	// },
+
 	//保存geohash
 	// [SAVE_GEOHASH](state, geohash) {
 	// 	state.geohash = geohash;
