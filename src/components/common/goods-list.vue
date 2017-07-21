@@ -285,7 +285,6 @@ export default {
         },
         // 控制购物列表是否显示
         toggleCartList() {
-            console.log(this.customerCart);
             this.customerCartCount ? this.showCartList = !this.showCartList : true;
         },
         // 清除购物车
@@ -305,7 +304,7 @@ export default {
                 })
             }
         },
-        //显示下落圆球
+        // 显示下落圆球
         showMoveDotFun(showMoveDot, elLeft, elBottom) {
             this.showMoveDot = [...this.showMoveDot, ...showMoveDot];
             this.elLeft = elLeft;

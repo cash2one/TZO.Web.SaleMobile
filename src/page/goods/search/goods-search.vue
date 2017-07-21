@@ -215,7 +215,11 @@ export default {
             confirmStatus: false,           // 确认选择
         }
     },
+    created() {
+        if (!this.curCustomer || !this.curCustomer.CustomerId) this.$router.push('/customer/search');
+    },
     mounted() {
+
         this.initData();
     },
     components: {
@@ -301,7 +305,8 @@ export default {
             'globalPropertyList',
             'propertyList',
             'categoryList',
-            'categoryDetailList'
+            'categoryDetailList',
+            'curCustomer'
         ]),
     }
 }
