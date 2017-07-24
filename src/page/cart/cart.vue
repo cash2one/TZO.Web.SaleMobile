@@ -3,7 +3,10 @@
         <header-title header-title="购物车"></header-title>
         <section class="cart_container">
             <section v-for="(cart,index) in cartList" :key="index" class="m-list">
-                <header>{{cart.customerInfo.BizObj.Name}}</header>
+                <header>
+                    <span>{{cart.customerInfo.BizObj.Name}}</span>
+                    <a>下单</a>
+                </header>
                 <section v-for="(item,index) in cart.Items" :key="index" class="item">
                     <section class="title ellipsis">
                         <strong class="name">{{item.info.GoodsName}}</strong>
@@ -16,7 +19,7 @@
                     </section>
                     <div class="number">
                         <span>价格:</span>
-                        <span>{{item.price}}</span>
+                        <input v-model="item.price" type="number" />
                         <span>¥</span>
                     </div>
                     <buy-cart :goods="item.info"></buy-cart>
@@ -66,6 +69,25 @@ export default {
     .m-list {
         header {
             @include sc(.8rem, $font-color);
+            position: relative;
+            a {
+                @include sc(.6rem, $blue);
+                position: absolute;
+                top: .4rem;
+                right: .4rem;
+            }
+        }
+        .item {
+            .number {
+                position: absolute;
+                top: 4rem;
+                right: .8rem;
+                input {
+                    @include sc(.8rem, $blue);
+                    width: 1.5rem;
+                    text-align: right;
+                }
+            }
         }
     }
 }

@@ -97,7 +97,7 @@ export default {
         fill: #3190e8;
     }
     .cart_num {
-        @include sc(.7rem, #666);
+        @include sc(.8rem, #666);
         min-width: 1rem;
         text-align: center;
         font-family: Helvetica Neue, Tahoma;
