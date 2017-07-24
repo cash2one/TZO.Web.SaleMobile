@@ -5,7 +5,9 @@
             <section v-for="(cart,index) in cartList" :key="index" class="m-list">
                 <header>
                     <span>{{cart.customerInfo.BizObj.Name}}</span>
-                    <a>下单</a>
+                    <router-link :to="'/order/confirm/'+cart.customerInfo.CustomerId" tag="a">
+                        下单
+                    </router-link>
                 </header>
                 <section v-for="(item,index) in cart.Items" :key="index" class="item">
                     <section class="title ellipsis">

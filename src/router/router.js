@@ -55,7 +55,7 @@ const settings = r => require.ensure([], () => r(require('../page/profile/settin
 const shopBack = r => require.ensure([], () => r(require('../page/shop/back/shop-back')), 'shop')
 const shopGo = r => require.ensure([], () => r(require('../page/shop/go/shop-go')), 'shop')
 
-const cart = r => require.ensure([],()=>r(require('../page/cart/cart')),'cart')
+const cart = r => require.ensure([], () => r(require('../page/cart/cart')), 'cart')
 
 export default [{
     path: '/',
@@ -203,7 +203,7 @@ export default [{
                     component: orderDetail
                 },
                 {
-                    path: 'confirm', // 确认订单页
+                    path: 'confirm/:customerId', // 确认订单页
                     component: orderConfirm,
                     children: [{
                         path: 'remark', // 订单备注
