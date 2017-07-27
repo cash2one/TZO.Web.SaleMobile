@@ -31,6 +31,7 @@ const state = {
 	categoryDetailList: [],		// 二级类目
 
 	cartList: {}, 				// 购物车的商品列表
+	curGoods:{},				//当前商品
 }
 
 export default new Vuex.Store({
