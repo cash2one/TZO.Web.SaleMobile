@@ -2,7 +2,7 @@
     <section class="goods_container">
         <div v-load-more="loaderMore" v-if="goodsList.length" class="m-list">
             <section v-for="item in goodsList" :key="item.Id" class="item">
-                <router-link :to="'goods/detail/' + item.Id" class="item-left">
+                <router-link :to="'detail/' + item.GoodsId" @click.native="selectGoods(item)" class="item-left">
                     <!-- <img :src="imgBaseUrl + item.image_path"> -->
                     <svg class="icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#goods"></use>
@@ -177,7 +177,8 @@ export default {
             'propertyList',
             'orderStorage',
             'curCustomer',
-            'cartList'
+            'cartList',
+            'curGoods'
         ]),
         customerCart: function () {
             return Object.assign({}, this.cartList[this.curCustomer.Id]);
@@ -219,6 +220,7 @@ export default {
             }
             return num;
         },
+       
     },
     methods: {
         ...mapMutations([
@@ -336,6 +338,10 @@ export default {
         // 加入购物车，计算按钮位置。
         addToCart(goods) {
             this.ADD_CART({ customer: this.curCustomer, goods, price: goods.LevelPrice });
+        },
+         //选中商品查看明细
+        selectGoods:function(data){
+            this.$store.state.curGoods = data;
         },
     },
     watch: {

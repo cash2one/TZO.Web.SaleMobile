@@ -22,6 +22,7 @@ const expressDetail = r => require.ensure([], () => r(require('../page/express/d
 const goods = r => require.ensure([], () => r(require('../page/goods/goods')), 'goods')
 const goodsDetail = r => require.ensure([], () => r(require('../page/goods/detail/goods-detail')), 'goods')
 const goodsDetailStocks = r => require.ensure([], () => r(require('../page/goods/detail/goods-detail-stocks')), 'goods')
+const goodsDetailPrices = r => require.ensure([], () => r(require('../page/goods/detail/goods-detail-prices')), 'goods')
 const goodsSearch = r => require.ensure([], () => r(require('../page/goods/search/goods-search')), 'goods')
 const goodsStock = r => require.ensure([], () => r(require('../page/goods/stock/goods-stock')), 'goods')
 
@@ -152,12 +153,16 @@ export default [{
                     component: goodsSearch
                 },
                 {
-                    path: 'detail', // 商品详情
+                    path: 'detail/:goodsId', // 商品详情
                     component: goodsDetail,
                     children: [
                         {
-                            path: 'stocks',
+                            path: 'stocks/:goodsId',
                             component: goodsDetailStocks
+                        },
+                        {
+                            path: 'prices/:goodsId',
+                            component: goodsDetailPrices
                         }
                     ]
                 },

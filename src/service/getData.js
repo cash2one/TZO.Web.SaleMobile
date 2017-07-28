@@ -213,3 +213,12 @@ export const apiGetOrderDetail = (bizType,orderId) => {
 // 提交订单
 
 // 修改订单
+
+//获取某商品在本公司各仓库的可用库存
+export const apiGetAllStorageStocks = goodsId => fetch('/api/Storage/SubStock/GetAllStorageByGoodsId?SubStockType=2&GoodsIds=' + goodsId);
+
+//获取某商品在所有公司的可用库存
+export const apiGetAllCorpsGoodsStocks = goodsId => fetch('/api/Storage/Report/AllCorpsGoodsStock?GoodsId=' + goodsId);
+
+//获取某商品的等级价格、销售价格
+export const apiGoodsSaleRefPrice = (goodsId, customerId) => fetch('/api/Sale/SaleRefPrice/' + goodsId + "/" + customerId);
