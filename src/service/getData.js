@@ -73,7 +73,8 @@ export const apiSetVisitingAndSigningIn = (customerId,latitude,longitude) => {
 
 // 新增客户
 // 参数：
-//		bizObjInfo:{
+//		userId:								当前用户标识		long,必填非0
+//		bizObjInfo:{						
 //			Code:							编码				string,
 //			DistrictId:						行政区划标识		 long，默认0
 //			Name:							名称				string，必填
@@ -82,31 +83,35 @@ export const apiSetVisitingAndSigningIn = (customerId,latitude,longitude) => {
 //			Longitude:						经度				decimal，默认0
 //			Latitude						纬度				decimal，默认0
 //		}
-//		customerInfo:{
+//		customerInfo:{						客户
 //			CustomerLevelId:				客户等级标识		 long，必填非0
 //			BizAreaId:						业务区域标识		 long，必填非0
 //			SendStorageId:					发货仓库标识		 long，必填非0			
 //		}
-//		contactArr,数组，内部结构:
-//			Addr:							地址				string，默认空
-//			IsPrimaryAddr:					是否主地址		  boolean,默认false
-//			IsInvoiceAddr:					是否开票地址		 boolean,默认false
-//			PostCode:						邮编				string,默认空
-//		
-//		addrArr,数组，内部结构:
-//			Contact:						联系人			    string，默认空
-//			IsPrimaryPhone:					是否主电话		   boolean,默认false
-//			PhoneNum：					   电话号码			  string，默认空
-//			WeixinOpenId:					微信号				string,默认空
+//		contactArr：						   联系人			   Array,
+//			contactArr元素属性:
+//				Contact:					联系人			    string，默认空
+//				IsPrimaryPhone:				是否主电话		   boolean,默认false
+//				PhoneNum：				   电话号码			  string，默认空
+//				WeixinOpenId:				微信号				string,默认空
+//		addrArr：						   联系地址		  	   Array，
+//			addrArr元素属性:
+//				Addr:						地址				string，默认空
+//				IsPrimaryAddr:				是否主地址		  boolean,默认false
+//				IsInvoiceAddr:				是否开票地址		 boolean,默认false
+//				PostCode:					邮编				string,默认空
 // 返回值:
 //	
-export const apiCreateCustomer =(bizObjInfo,customerInfo,contactArr,addrArr) =>{
+export const apiCreateCustomer =(userId,bizObjInfo,customerInfo,contactArr,addrArr) =>{
 	let data= {
 			CustomerLevelId:customerInfo.CustomerLevelId,
 			BizAreaId:customerInfo.BizAreaId,
-			SendStorageId:customerInfo.SendStorageId
+			SendStorageId:customerInfo.SendStorageId,
+			EmployeeId:userId
 	};
 	data.BizObj = bizObjInfo;
+	data.BizObj.IsValid = true;
+	data.BizObj.Type = 2;
 	data.BizObj.Addrs=[];
 	addrArr.forEach(item=>{
 		data.BizObj.Addrs.push(item);
@@ -161,8 +166,7 @@ export const apiGetGoods = (customerId, storageId, categoryId, keyword, sortByFi
 // 获取客户信用。。。可以考虑和客户信息合并
 export const apiGetCustomerCredit = customerId => fetch('/api/Finance/CustCredit/' + customerId);
 
-// 获取订单列表
-export const apiGetOrderList = (salerId,customerId,bizType, keyword, sortByFiled, sortByType, filters, offset) => {
+var _createQueryModel=(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
 	let data = {
 		CustomerId: customerId,
 		SalerId:salerId,
@@ -186,29 +190,44 @@ export const apiGetOrderList = (salerId,customerId,bizType, keyword, sortByFiled
 	// 以下参数需要接口支持
 	if (filters.OrderTime) data.OrderTime = filters.OrderTime;
 
-	// 根据业务类型调用不同的api函数
-	if(bizType == 12012)
-		return fetch('/api/Sale/ForeignSale/', data);
-	else if(bizType== 1) // 销售出库 具体biztype需要调整
-		return fetch('/api/Sale/ForeignSale/', data);
-	else if(bizType== 2) // 预收款单
-		return fetch('/api/Sale/ForeignSale/', data);
+	return data;
+}
 
-	// 默认 
+// 外销订单
+export const apiGetForeignSaleOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
+	let data = _createQueryModel(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset);
 	return fetch('/api/Sale/ForeignSale/', data);
 }
 
-// 获取订单详情
-export const apiGetOrderDetail = (bizType,orderId) => {
-	if(bizType == 12012){
-		return fetch('/api/Sale/ForeignSale/', orderId);
-	}else if(bizType == -12012){
-		return fetch('/api/Sale/ForeignSaleReturn/', orderId);
-	} 
+// 外销订单详情
+export const apiGetForeignSaleOrderDetail = orderId => { return fetch('/api/Sale/ForeignSale/', orderId); }
 
-	// 默认
-	return fetch('/api/Sale/ForeignSale/', orderId);
+// 外销退回
+export const apiGetForeignReturnOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
+	let data = _createQueryModel(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset);
+	return fetch('/api/Sale/ForeignSaleReturn/', data);
 }
+
+// 外销退回详情
+export const apiGetForeignSaleReturnOrderDetail = orderId => {	return fetch('/api/Sale/ForeignSaleReturn/', orderId); }
+
+// 销售出库
+export const apiGetRetailOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
+	let data = _createQueryModel(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset);
+	return fetch('/api/Sale/Retail/', data);
+}
+
+// 销售出库详情
+export const apiGetRetailOrderDetail = orderId => {	return fetch('/api/Sale/Retail/', orderId); }
+
+// 销售出库退回
+export const apiGetRetailReturnOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
+	let data = _createQueryModel(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset);
+	return fetch('/api/Sale/RetailReturn/', data);
+}
+
+// 销售出库详情
+export const apiGetRetailReturnOrderDetail = orderId => {	return fetch('/api/Sale/RetailReturn/', orderId); }
 
 // 提交订单
 

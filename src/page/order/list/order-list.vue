@@ -35,6 +35,18 @@
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
                                 </li>
+                                <li class="category_right_li" @click="selectBizType(-12012)"  :class="{category_right_choosed: hasSelectedBizType(-12012)}" >
+                                    <span>订单退回</span>
+                                    <svg v-if="hasSelectedBizType(-12012)">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                    </svg>
+                                </li>
+                                <li class="category_right_li" @click="selectBizType(12032)"  :class="{category_right_choosed: hasSelectedBizType(12032)}" >
+                                    <span>销售出库</span>
+                                    <svg v-if="hasSelectedBizType(12032)">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                    </svg>
+                                </li>
                             </ul>
                         </section>
                     </section>
@@ -203,7 +215,6 @@
                     <section class="item-right">
                         <section class="title">
                             <div class="name ellipsis">
-                                <!-- <div @click="testsign()">aaaaaaaaaaaa</div> -->
                                 <strong>{{item.CustomerName}}</strong>
                             </div>
                         </section>
@@ -245,15 +256,19 @@
 import { mapState, mapMutations } from 'vuex'
 import { loadMore } from 'src/components/common/mixin'
 import { showBack, animate } from 'src/config/mUtils'
-import { apiGetOrderList,apiCreateCustomer } from 'src/service/getData'
+import { apiGetForeignSaleOrderList,
+         apiGetForeignReturnOrderList, 
+         apiGetRetailOrderList,
+         apiGetRetailReturnOrderList,
+} from 'src/service/getData'
 import footGuide from 'src/components/footer/foot-guide'
 
 export default {
     data() {
         return {
-            sortBy: '',                         // 选项卡控制
+            sortBy: '',                                             // 选项卡控制
             keyword: '',
-            bizType: 12012,                     // 业务类型
+            bizType: 12012,                                         // 业务类型
             sort: {
                 sortByFiled: 'SubmitTime',
                 sortByType: 'desc',
@@ -261,16 +276,16 @@ export default {
             filters: {
 
             },
-            filterNum: 0,                       // 所选中的所有样式的集合
-            confirmStatus: false,               // 确认选择
-            // -------- 以下为显示模型
+            filterNum: 0,                                           // 所选中的所有样式的集合
+            confirmStatus: false,                                   // 确认选择
+            //  -------- 以下为显示模型
             offset: 0,
-            orderList: [],      // 订单列表
+            orderList: [], // 订单列表
 
-            preventRepeatReuqest: false, //到达底部加载数据，防止重复加载
-            showBackStatus: false, //显示返回顶部按钮
-            showLoading: true, //显示加载动画
-            touchend: false, //没有更多数据
+            preventRepeatReuqest: false,                            //到达底部加载数据，防止重复加载
+            showBackStatus: false,                                  //显示返回顶部按钮
+            showLoading: true,                                      //显示加载动画
+            touchend: false,                                        //没有更多数据
         }
     },
     components: {
@@ -280,8 +295,6 @@ export default {
         this.initData();
     },
     methods: {
-        async testsign(){
-        },
         // 点击顶部三个选项，展示不同的列表，选中当前选项进行展示，同时收回其他选项
         async chooseType(type) {
             if (this.sortBy !== type) {
@@ -324,11 +337,9 @@ export default {
         },
         // 只有点击清空按钮才清空数据，否则一直保持原有状态
         clearSelect() {
-            this.filters = {
-            };
+            this.filters = {};
             this.filterNum = 0;
-
-            this.listenPropChange();
+            this.queryModelChange();
         },
         confirmSelectFun() {
             this.initData();
@@ -347,7 +358,7 @@ export default {
                 this.showBackStatus = status;
             });
         },
-        async listenPropChange() {
+        async queryModelChange() {
             this.showLoading = true;
             this.offset = 0;
             let res = await this.getOrders();;
@@ -356,7 +367,24 @@ export default {
             this.orderList = [...res.Items];
         },
         async getOrders() {
-            return await apiGetOrderList(0, 0, this.bizType, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
+            if(this.bizType == 12012){
+                // 销售订单
+                return await apiGetForeignSaleOrderList(this.userInfo.Id, this.curCustomer.Id, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
+            }else if(this.bizType== (0-12012)){
+                // 订单退回
+                return await apiGetForeignReturnOrderList(this.userInfo.Id, this.curCustomer.Id, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
+            }else if(this.bizType == 12032){
+                // 销售出库
+                return await apiGetRetailOrderList(this.userInfo.Id, this.curCustomer.Id, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
+            }else if(this.bizType == (0-12032)){
+                // 销售出库退回
+                return await apiGetRetailReturnOrderList(this.userInfo.Id, this.curCustomer.Id, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
+            }else if(this.bizType == 22022){
+                // 预收款
+                // 需要补充api
+                return [];
+            }
+            return [];
         },
         // 到达底部加载更多数据
         async loaderMore() {
@@ -393,21 +421,22 @@ export default {
     },
     watch: {
         keyword: function (val) {
-            this.listenPropChange();
+            this.queryModelChange();
         },
         bizType: function (val) {
-            this.listenPropChange();
+            this.queryModelChange();
         },
         sortByFiled: function (val) {
-            this.listenPropChange();
+            this.queryModelChange();
         },
         confirmSelect: function (val) {
-            this.listenPropChange();
+            this.queryModelChange();
         }
     },
     computed: {
         ...mapState([
-            'curCustomer'
+            'curCustomer',
+            'userInfo',
         ]),
     }
 }
