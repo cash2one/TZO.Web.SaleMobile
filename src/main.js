@@ -29,12 +29,16 @@ Vue.filter('time', function (value) {//value为13位的时间戳
     function add0(m) {
         return m < 10 ? '0' + m : m
     }
-    var time = new Date(parseInt(value));
+    var time = new Date(value);
     var y = time.getFullYear();
     var m = time.getMonth() + 1;
-    var d = time.getDate();
+	var d = time.getDate();
+	
+	var hh = time.getHours();
+	var mm = time.getMinutes();
+	var ss = time.getSeconds();
 
-    return y + '.' + add0(m) + '.' + add0(d);
+    return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(hh) + ':' + add0(mm) + ':' + add0(ss);
 });
 
 const router = new VueRouter({
