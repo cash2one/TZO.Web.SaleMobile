@@ -7,11 +7,11 @@ import { routerMode, setToken, debug } from 'src/config/env'
 import FastClick from 'fastclick'
 import { apiGetToken } from 'src/service/getData'
 
-if ('addEventListener' in document) {
-	document.addEventListener('DOMContentLoaded', function () {
-		FastClick.attach(document.body);
-	}, false);
-}
+// if ('addEventListener' in document) {
+// 	document.addEventListener('DOMContentLoaded', function () {
+// 		FastClick.attach(document.body);
+// 	}, false);
+// }
 
 function GetQueryString(name) {
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

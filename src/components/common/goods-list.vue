@@ -95,7 +95,7 @@
                 </header>
                 <section class="cart_food_details" id="cartFood">
                     <ul>
-                        <li v-for="(item, index) in customerCart.Items" :key="index" class="cart_food_li">
+                        <li v-for="(item, index) in customerCart.items" :key="index" class="cart_food_li">
                             <div class="cart_list_num">
                                 <p class="ellipsis">{{item.info.GoodsName}}</p>
                             </div>
@@ -181,13 +181,14 @@ export default {
             'curGoods'
         ]),
         customerCart: function () {
-            return Object.assign({}, this.cartList[this.curCustomer.Id]);
+            return Object.assign({}, this.cartList[this.curCustomer.CustomerId]);
         },
         customerCartCount: function () {
             var count = 0;
-            for (var i in this.customerCart.Items) if (this.customerCart.Items.hasOwnProperty(i)) {
-                count++;
-            }
+            for (var i in this.customerCart.items)
+                if (this.customerCart.items.hasOwnProperty(i)) {
+                    count++;
+                }
             return count;
         },
         // 检查额度 TODO:
@@ -201,9 +202,9 @@ export default {
         // 总共价格
         totalPrice: function () {
             let num = 0;
-            for (var key in this.customerCart.Items) {
-                if (this.customerCart.Items.hasOwnProperty(key)) {
-                    var element = this.customerCart.Items[key];
+            for (var key in this.customerCart.items) {
+                if (this.customerCart.items.hasOwnProperty(key)) {
+                    var element = this.customerCart.items[key];
                     num += element.num * element.price;
                 }
             }
@@ -212,15 +213,15 @@ export default {
         // 购物车中总共商品的数量
         totalNum: function () {
             let num = 0;
-            for (var key in this.customerCart.Items) {
-                if (this.customerCart.Items.hasOwnProperty(key)) {
-                    var element = this.customerCart.Items[key];
+            for (var key in this.customerCart.items) {
+                if (this.customerCart.items.hasOwnProperty(key)) {
+                    var element = this.customerCart.items[key];
                     num += element.num
                 }
             }
             return num;
         },
-       
+
     },
     methods: {
         ...mapMutations([
@@ -292,7 +293,7 @@ export default {
         // 清除购物车
         clearCart() {
             this.toggleCartList();
-            this.CLEAR_CART(this.curCustomer.Id);
+            this.CLEAR_CART(this.curCustomer.CustomerId);
         },
         // 监听圆点是否进入购物车
         listenInCart() {
@@ -333,14 +334,14 @@ export default {
         },
         // 移出购物车
         removeOutCart(goodsId) {
-            this.REDUCE_CART({ customerId: this.curCustomer.Id, goodsId });
+            this.REDUCE_CART({ customerId: this.curCustomer.CustomerId, goodsId });
         },
         // 加入购物车，计算按钮位置。
         addToCart(goods) {
             this.ADD_CART({ customer: this.curCustomer, goods, price: goods.LevelPrice });
         },
-         //选中商品查看明细
-        selectGoods:function(data){
+        //选中商品查看明细
+        selectGoods: function (data) {
             this.$store.state.curGoods = data;
         },
     },

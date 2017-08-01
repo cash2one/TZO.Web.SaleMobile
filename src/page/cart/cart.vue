@@ -4,12 +4,12 @@
         <section class="cart_container">
             <section v-for="(cart,index) in cartList" :key="index" class="m-list">
                 <header>
-                    <span>{{cart.customerInfo.BizObj.Name}}</span>
-                    <router-link :to="'/order/confirm/'+cart.customerInfo.CustomerId" tag="a">
+                    <span>{{cart.customer.BizObj.Name}}</span>
+                    <router-link :to="'/order/confirm/'+cart.customer.CustomerId" tag="a">
                         下单
                     </router-link>
                 </header>
-                <section v-for="(item,index) in cart.Items" :key="index" class="item">
+                <section v-for="(item,index) in cart.items" :key="index" class="item">
                     <section class="title ellipsis">
                         <strong class="name">{{item.info.GoodsName}}</strong>
                     </section>
@@ -47,13 +47,9 @@ import buyCart from 'src/components/common/buy-cart'
 import footGuide from 'src/components/footer/foot-guide'
 
 export default {
-    mounted() {
-        console.log(this.cartList);
-    },
     computed: {
         ...mapState([
             'propertyList',
-            'orderStorage',
             'cartList'
         ]),
     },

@@ -22,18 +22,18 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [x] 0.1.0 展示当前位置附近客户列表 customer-list -- 完成 李季
 - [x] 0.1.0 根据距离、业务区域等进行排序和筛选客户 customer-list -- 完成 李季
 - [x] 0.1.0 客户搜索 customer/search -- 完成 李季
-- [ ] 0.1.0 商家详情页 customer/detail -- 未完成 李光波
+- [x] 0.1.0 商家详情页 customer/detail -- 完成 李广波
 - [ ] 0.1.0 客户对账 customer/bill -- 未完成
-- [ ] 0.1.0 购物车功能 buy-cart -- 未完成
-- [ ] 0.1.0 商品列表 goods-list -- 未完成 李季
-- [ ] 0.1.0 根据商品分类、类目属性等进行排序和筛选商品 goods-list -- 未完成 李季
-- [ ] 0.1.0 商品搜索 goods/search -- 未完成 李季
-- [ ] 0.1.0 单个商品信息 goods/detail -- 未完成
-- [ ] 0.1.0 商品库存 goods/detail/stocks -- 未完成
-- [ ] 0.1.0 下单功能 订货\意向 confirm-order -- 未完成
-- [ ] 0.1.0 根据时间、单号等进行排序和筛选过滤订单 order/list -- 未完成
-- [ ] 0.1.0 订单列表 order/list -- 未完成
-- [ ] 0.1.0 订单详情 order/detail -- 未完成
+- [x] 0.1.0 购物车功能 buy-cart -- 完成 李季
+- [x] 0.1.0 商品列表 goods-list -- 完成 李季
+- [x] 0.1.0 根据商品分类、类目属性等进行排序和筛选商品 goods-list -- 完成 李季
+- [x] 0.1.0 商品搜索 goods/search -- 完成 李季
+- [x] 0.1.0 单个商品信息 goods/detail -- 完成 李广波
+- [x] 0.1.0 商品库存 goods/detail/stocks -- 完成 李广波
+- [x] 0.1.0 下单功能 订货\意向 confirm-order -- 完成 李季
+- [x] 0.1.0 根据时间、单号等进行排序和筛选过滤订单 order/list -- 完成 李海全
+- [x] 0.1.0 订单列表 order/list -- 完成 李海全
+- [x] 0.1.0 订单详情 order/detail -- 完成 李海全
 - [x] 0.1.0 个人中心 profile -- 完成 李季
 - [x] 0.1.0 设置 profile/settings -- 完成 李季
 

@@ -37,7 +37,8 @@ const path = r => require.ensure([], () => r(require('../page/path/path')), 'loc
 
 const order = r => require.ensure([], () => r(require('../page/order/order')), 'order')
 const orderConfirm = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm')), 'order')
-const orderConfirmChooseAddress = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-choose-address')), 'order')
+const orderConfirmContactAddress = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-contact-address')), 'order')
+const orderConfirmShipExpress = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-ship-express')), 'order')
 const orderConfirmRemark = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-remark')), 'order')
 const orderDetail = r => require.ensure([], () => r(require('../page/order/detail/order-detail')), 'order')
 const orderList = r => require.ensure([], () => r(require('../page/order/list/order-list')), 'order')
@@ -210,13 +211,21 @@ export default [{
                 {
                     path: 'confirm/:customerId', // 确认订单页
                     component: orderConfirm,
-                    children: [{
-                        path: 'remark', // 订单备注
-                        component: orderConfirmRemark
-                    }, {
-                        path: 'choose-address', // 选择地址
-                        component: orderConfirmChooseAddress
-                    },]
+                    children: [
+                        {
+                            path: 'remark', // 订单备注
+                            name: 'order-confirm-remark',
+                            component: orderConfirmRemark
+                        }, {
+                            path: 'choose-address', // 选择地址
+                            name: 'order-confirm-address',
+                            component: orderConfirmContactAddress
+                        }, {
+                            path: 'ship-express',
+                            name: 'order-confirm-ship-express',
+                            component: orderConfirmShipExpress
+                        }
+                    ]
                 },
                 {
                     path: 'retail', // 销售出库

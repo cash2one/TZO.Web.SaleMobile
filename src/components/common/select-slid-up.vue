@@ -1,18 +1,18 @@
 <template>
     <div class="select">
         <section class="m-form-list">
-                <section class="item start end" @click="showItems">
-                    <h2>
-                       {{title}}
-                    </h2>
-                    <div class="content">
-                        <p>{{model.Name}}</p>
-                        <svg class="icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
-                        </svg>
-                    </div>
-                </section>
+            <section class="item start end" @click="showItems">
+                <h2>
+                    {{title}}
+                </h2>
+                <div class="content">
+                    <p>{{model.Name}}</p>
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
+                    </svg>
+                </div>
             </section>
+        </section>
         <transition name="fade">
             <div class="cover" v-if="show" @click="showItems"></div>
         </transition>

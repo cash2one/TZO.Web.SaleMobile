@@ -326,13 +326,12 @@ html,body{
             }
             span:nth-of-type(1) {
                 @include sc(.7rem, #f60);
-                font-weight: bold;
             }
             span:nth-of-type(2) {
-                @include sc(.6rem, #666);
+                @include sc(.7rem, #666);
             }
             span:nth-of-type(3) {
-                @include sc(.6rem, #666);
+                @include sc(.7rem, #666);
             }
         }
     }

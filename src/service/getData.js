@@ -16,7 +16,13 @@ export const apiGetUserInfo = () => fetch('/api/Account/UserInfo');
 export const apiGetStorages = () => fetch('/api/Storage/Storage/IsValid');
 
 // 获取物流公司信息
-export const apiGetExpressCorps = () => fetch('/api/Logistics/LogisticsCorp');
+export const apiGetExpressCorps = (isCollects) => {
+	let data = {
+		QuickResult: { "IsEnableds": [true] }
+	};
+	if (isCollects) data.QuickResult.IsCollects = [true];
+	return fetch('/api/Logistics/LogisticsCorp', data);
+};
 
 // 获取客户列表
 export const apiGetCustomers = (longitude, latitude, areaId, keyword, sortByFiled, sortByType, filters, offset) => {
@@ -62,13 +68,13 @@ export const apiGetCustomers = (longitude, latitude, areaId, keyword, sortByFile
 //			"Longitude":100.001,
 //			"Time":"2017-07-27T14:57:41.9233324+08:00"
 //			}
-export const apiSetVisitingAndSigningIn = (customerId,latitude,longitude) => {
-	let data={
-		BizObjId:customerId,
-		Latitude:latitude,
-		Longitude:longitude
+export const apiSetVisitingAndSigningIn = (customerId, latitude, longitude) => {
+	let data = {
+		BizObjId: customerId,
+		Latitude: latitude,
+		Longitude: longitude
 	};
-	return fetch('/api/CRM/SignLog/', data,'POST','fetch');
+	return fetch('/api/CRM/SignLog/', data, 'POST', 'fetch');
 }
 
 // 新增客户
@@ -102,26 +108,26 @@ export const apiSetVisitingAndSigningIn = (customerId,latitude,longitude) => {
 //				PostCode:					邮编				string,默认空
 // 返回值:
 //	
-export const apiCreateCustomer =(userId,bizObjInfo,customerInfo,contactArr,addrArr) =>{
-	let data= {
-			CustomerLevelId:customerInfo.CustomerLevelId,
-			BizAreaId:customerInfo.BizAreaId,
-			SendStorageId:customerInfo.SendStorageId,
-			EmployeeId:userId
+export const apiCreateCustomer = (userId, bizObjInfo, customerInfo, contactArr, addrArr) => {
+	let data = {
+		CustomerLevelId: customerInfo.CustomerLevelId,
+		BizAreaId: customerInfo.BizAreaId,
+		SendStorageId: customerInfo.SendStorageId,
+		EmployeeId: userId
 	};
 	data.BizObj = bizObjInfo;
 	data.BizObj.IsValid = true;
 	data.BizObj.Type = 2;
-	data.BizObj.Addrs=[];
-	addrArr.forEach(item=>{
+	data.BizObj.Addrs = [];
+	addrArr.forEach(item => {
 		data.BizObj.Addrs.push(item);
 	});
-	data.BizObj.Phones=[];
-	contactArr.forEach(item=>{
+	data.BizObj.Phones = [];
+	contactArr.forEach(item => {
 		data.BizObj.Phones.push(item);
 	});
 
-	return fetch('/api/CRM/Customer/', data,'POST','fetch');
+	return fetch('/api/CRM/Customer/', data, 'POST', 'fetch');
 }
 
 // 获取客户详细信息
@@ -166,27 +172,27 @@ export const apiGetGoods = (customerId, storageId, categoryId, keyword, sortByFi
 // 获取客户信用。。。可以考虑和客户信息合并
 export const apiGetCustomerCredit = customerId => fetch('/api/Finance/CustCredit/' + customerId);
 
-var _createQueryModel=(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
+var _createQueryModel = (salerId, customerId, keyword, sortByFiled, sortByType, filters, offset) => {
 	let data = {
 		CustomerId: customerId,
-		SalerId:salerId,
+		SalerId: salerId,
 		PageIndex: parseInt(offset / 20),
 		PageSize: 20,
 		SortParam: {
 			FiledName: sortByFiled,
 			SortType: sortByType ? sortByType : 'asc'
 		},
-		AdvancedResult: {"Properties":{}}
+		AdvancedResult: { "Properties": {} }
 	};
 
 	if (keyword) data.KeyWord = keyword;
 	if (filters.OnlyPayedShip) data.OnlyPayedShip = filters.OnlyPayedShip;
 	if (filters.orderState) {
-		data.quickResult={};
-		data.quickResult.Status=[];
+		data.quickResult = {};
+		data.quickResult.Status = [];
 		data.quickResult.Status.push(filters.orderState);
 	};
-	
+
 	// 以下参数需要接口支持
 	if (filters.OrderTime) data.TimeInterval = filters.OrderTime;
 
@@ -194,17 +200,17 @@ var _createQueryModel=(salerId,customerId, keyword, sortByFiled, sortByType, fil
 }
 
 // 外销订单
-export const apiGetForeignSaleOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
-	let data = _createQueryModel(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset);
+export const apiGetForeignSaleOrderList = (salerId, customerId, keyword, sortByFiled, sortByType, filters, offset) => {
+	let data = _createQueryModel(salerId, customerId, keyword, sortByFiled, sortByType, filters, offset);
 	return fetch('/api/Sale/ForeignSale/', data);
 }
 
 // 外销订单详情
-export const apiGetForeignSaleOrderDetail = orderId =>  fetch('/api/Sale/ForeignSale/' + orderId);
+export const apiGetForeignSaleOrderDetail = orderId => fetch('/api/Sale/ForeignSale/' + orderId);
 
 // 外销退回
-export const apiGetForeignSaleReturnOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
-	let data = _createQueryModel(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset);
+export const apiGetForeignSaleReturnOrderList = (salerId, customerId, keyword, sortByFiled, sortByType, filters, offset) => {
+	let data = _createQueryModel(salerId, customerId, keyword, sortByFiled, sortByType, filters, offset);
 	return fetch('/api/Sale/ForeignSaleReturn/', data);
 }
 
@@ -212,17 +218,17 @@ export const apiGetForeignSaleReturnOrderList = (salerId,customerId, keyword, so
 export const apiGetForeignSaleReturnOrderDetail = orderId => fetch('/api/Sale/ForeignSaleReturn/' + orderId);
 
 // 销售出库
-export const apiGetRetailOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
-	let data = _createQueryModel(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset);
+export const apiGetRetailOrderList = (salerId, customerId, keyword, sortByFiled, sortByType, filters, offset) => {
+	let data = _createQueryModel(salerId, customerId, keyword, sortByFiled, sortByType, filters, offset);
 	return fetch('/api/Sale/Retail/', data);
 }
 
 // 销售出库详情
-export const apiGetRetailOrderDetail = orderId =>  fetch('/api/Sale/Retail/'+ orderId);
+export const apiGetRetailOrderDetail = orderId => fetch('/api/Sale/Retail/' + orderId);
 
 // 销售出库退回
-export const apiGetRetailReturnOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
-	let data = _createQueryModel(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset);
+export const apiGetRetailReturnOrderList = (salerId, customerId, keyword, sortByFiled, sortByType, filters, offset) => {
+	let data = _createQueryModel(salerId, customerId, keyword, sortByFiled, sortByType, filters, offset);
 	return fetch('/api/Sale/RetailReturn/', data);
 }
 
@@ -230,13 +236,49 @@ export const apiGetRetailReturnOrderList = (salerId,customerId, keyword, sortByF
 export const apiGetRetailReturnOrderDetail = orderId => fetch('/api/Sale/RetailReturn/' + orderId);
 
 // 提交订单
+export const apiConfirmOrder = (userInfo, cart) => {
+	let data = {
+		Address: {
+			RecAddress: cart.addr.Addr,
+			Contacts: cart.phone.Contact,
+			Phone: cart.phone.PhoneNum
+		},											// 地址
+		SendStorageId: cart.storage.Id,				// 发货仓库
+		CustomerId: cart.customer.CustomerId,		// 客户Id
+		HanderId: userInfo.UserId,					// 经办人
+		Note: cart.remark,							// 备注
+		Items: [],									// 明细
+		OperatorId: userInfo.UserId,				// 操作人
+		SupplierId: userInfo.CorpId,				// 供应商
+		SalerId: userInfo.UserId,					// 业务员
+		ChargeType: cart.charge.Id,					// 应收应付类别
+		ShipType: cart.ship.TypeCode,						// 配送方式
+		LogisticsCorpId: cart.express.Id,			// 物流公司Id
+		CreateUserId: userInfo.UserId,				// 创建人
 
+	};
+
+	for (var key in cart.items) {
+		if (cart.items.hasOwnProperty(key)) {
+			var ele = cart.items[key];
+			data.Items.push({
+				GoodsId: ele.id,
+				GoodsNum: ele.num,
+				Price: ele.price,
+				Units: ele.info.Goods.Units,
+				IsVirtual: ele.info.Goods.GoodsType != 1
+			});
+		}
+	}
+
+	return fetch('/api/Sale/ForeignSale', data, 'POST')
+};
 // 修改订单
 
-//获取某商品在本公司各仓库的可用库存
+// 获取某商品在本公司各仓库的可用库存
 export const apiGetAllStorageStocks = goodsId => fetch('/api/Storage/SubStock/GetAllStorageByGoodsId?SubStockType=2&GoodsIds=' + goodsId);
 
-//获取某商品在所有公司的可用库存
+// 获取某商品在所有公司的可用库存
 export const apiGetAllCorpsGoodsStocks = goodsId => fetch('/api/Storage/Report/AllCorpsGoodsStock?GoodsId=' + goodsId);
 
 //获取某商品的等级价格、销售价格
@@ -248,16 +290,22 @@ export const apiGetOughtRecs = (customerId, keyword, sortByFiled, sortByType, qu
 		// PageIndex: parseInt(offset / 20),
 		// PageSize: 20,
 		PageIndex: 0,
-		PageSize: 0,		
+		PageSize: 0,
 		Keyword: keyword,
-		CustomerId: customerId,	
+		CustomerId: customerId,
 		SortParam: {
 			FiledName: sortByFiled,
 			SortType: sortByType ? sortByType : 'asc'
 		},
 		AdvancedResult: {},
-		QuickResult:quickResult
+		QuickResult: quickResult
 	};
 
 	return fetch('/api/Finance/OughtRec/', data)
 };
+
+// 获取支付方式
+export const apiGetChargeType = () => fetch('/api/Finance/ChargeType', { QuickResult: { "IsEnabled": [true] } });
+
+// 获取配送方式
+export const apiGetShipType = () => fetch('/api/Logistics/ShipType', { QuickResult: { "IsEnabled": [true] } });

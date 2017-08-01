@@ -29,9 +29,11 @@ const state = {
 	propertyList: [],			// 商品属性
 	categoryList: [],			// 商品类目
 	categoryDetailList: [],		// 二级类目
+	shipTypeList:[],			// 配送方式
+	chargeTypeList:[],			// 支付方式
 
 	cartList: {}, 				// 购物车的商品列表
-	curGoods:{},				//当前商品
+	curGoods:{},				// 当前商品
 }
 
 export default new Vuex.Store({
