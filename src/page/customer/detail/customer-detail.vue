@@ -1,6 +1,6 @@
 <template>
     <div class="rating_page">
-        <header-title header-title="客户资料" go-back='true'>
+        <header-title header-title="客户资料" goback='true'>
         </header-title>
         <section class="shop_status_info">
             <header>{{customer.BizObj.Name}}</header>

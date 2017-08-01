@@ -19,7 +19,7 @@
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#customer"></use>
                     </svg>
                 </section>
-                <router-link to="/customer/detail/1" class="description_right">
+                <router-link :to="'/customer/detail/'+curCustomer.CustomerId" class="description_right">
                     <h4 class="description_title ellipsis">{{curCustomer.BizObj.Name}}</h4>
                     <p class="description_text">{{curCustomer.CustomerLevelName}}</p>
                     <p v-for="item in curCustomer.BizObj.Phones" :key="item.Id" class="description_text">{{item.Contact}}:{{item.PhoneNum}}</p>
@@ -67,7 +67,7 @@
             </router-link>
             <section class="info-data">
                 <ul class="clear">
-                    <router-link to="/customer/bill/1" tag="li" class="info-data-link">
+                    <router-link :to="'/customer/oughtrec/'+curCustomer.CustomerId" tag="li" class="info-data-link">
                         <span class="info-data-top">
                             <b>{{curCustomer.OughtRecMoney}}</b> 元</span>
                         <span class="info-data-bottom">欠款金额</span>

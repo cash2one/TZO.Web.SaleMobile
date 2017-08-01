@@ -101,3 +101,23 @@ export const apiGetAllCorpsGoodsStocks = goodsId => fetch('/api/Storage/Report/A
 
 //获取某商品的等级价格、销售价格
 export const apiGoodsSaleRefPrice = (goodsId, customerId) => fetch('/api/Sale/SaleRefPrice/' + goodsId + "/" + customerId);
+
+// 获取客户应收款列表
+export const apiGetOughtRecs = (customerId, keyword, sortByFiled, sortByType, quickResult, offset) => {
+	let data = {
+		// PageIndex: parseInt(offset / 20),
+		// PageSize: 20,
+		PageIndex: 0,
+		PageSize: 0,		
+		Keyword: keyword,
+		CustomerId: customerId,	
+		SortParam: {
+			FiledName: sortByFiled,
+			SortType: sortByType ? sortByType : 'asc'
+		},
+		AdvancedResult: {},
+		QuickResult:quickResult
+	};
+
+	return fetch('/api/Finance/OughtRec/', data)
+};

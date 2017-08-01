@@ -6,7 +6,7 @@ const corpList = r => require.ensure([], () => r(require('../page/corp-list/corp
 const index = r => require.ensure([], () => r(require('../page/index/index')), 'index')
 
 const customer = r => require.ensure([], () => r(require('../page/customer/customer')), 'customer')
-const customerBill = r => require.ensure([], () => r(require('../page/customer/bill/customer-bill')), 'customer')
+const customerOughtrec = r => require.ensure([], () => r(require('../page/customer/bill/customer-oughtrec')), 'customer')
 const customerDetail = r => require.ensure([], () => r(require('../page/customer/detail/customer-detail')), 'customer')
 const customerDetailWeChat = r => require.ensure([], () => r(require('../page/customer/detail/customer-detail-we-chat')), 'customer')
 const customerNew = r => require.ensure([], () => r(require('../page/customer/new/customer-new')), 'customer')
@@ -119,8 +119,8 @@ export default [{
                     component: customerSignIn
                 },
                 {
-                    path: 'bill/:customerId', // 客户账单
-                    component: customerBill
+                    path: 'oughtrec/:customerId', // 客户账单
+                    component: customerOughtrec
                 },
             ]
         },
