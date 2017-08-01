@@ -188,7 +188,7 @@ var _createQueryModel=(salerId,customerId, keyword, sortByFiled, sortByType, fil
 	};
 	
 	// 以下参数需要接口支持
-	if (filters.OrderTime) data.OrderTime = filters.OrderTime;
+	if (filters.OrderTime) data.TimeInterval = filters.OrderTime;
 
 	return data;
 }
@@ -200,16 +200,16 @@ export const apiGetForeignSaleOrderList = (salerId,customerId, keyword, sortByFi
 }
 
 // 外销订单详情
-export const apiGetForeignSaleOrderDetail = orderId => { return fetch('/api/Sale/ForeignSale/', orderId); }
+export const apiGetForeignSaleOrderDetail = orderId =>  fetch('/api/Sale/ForeignSale/' + orderId);
 
 // 外销退回
-export const apiGetForeignReturnOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
+export const apiGetForeignSaleReturnOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
 	let data = _createQueryModel(salerId,customerId, keyword, sortByFiled, sortByType, filters, offset);
 	return fetch('/api/Sale/ForeignSaleReturn/', data);
 }
 
 // 外销退回详情
-export const apiGetForeignSaleReturnOrderDetail = orderId => {	return fetch('/api/Sale/ForeignSaleReturn/', orderId); }
+export const apiGetForeignSaleReturnOrderDetail = orderId => fetch('/api/Sale/ForeignSaleReturn/' + orderId);
 
 // 销售出库
 export const apiGetRetailOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
@@ -218,7 +218,7 @@ export const apiGetRetailOrderList = (salerId,customerId, keyword, sortByFiled, 
 }
 
 // 销售出库详情
-export const apiGetRetailOrderDetail = orderId => {	return fetch('/api/Sale/Retail/', orderId); }
+export const apiGetRetailOrderDetail = orderId =>  fetch('/api/Sale/Retail/'+ orderId);
 
 // 销售出库退回
 export const apiGetRetailReturnOrderList = (salerId,customerId, keyword, sortByFiled, sortByType, filters, offset)=>{
@@ -227,7 +227,7 @@ export const apiGetRetailReturnOrderList = (salerId,customerId, keyword, sortByF
 }
 
 // 销售出库详情
-export const apiGetRetailReturnOrderDetail = orderId => {	return fetch('/api/Sale/RetailReturn/', orderId); }
+export const apiGetRetailReturnOrderDetail = orderId => fetch('/api/Sale/RetailReturn/' + orderId);
 
 // 提交订单
 

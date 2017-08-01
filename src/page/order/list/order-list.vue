@@ -12,7 +12,7 @@
                 </svg>
             </section>
             <section class="search_keyword">
-                <input v-model="keyword" type="text" placeholder="请输关键字或拼音码" class="search_text" />
+                <input v-model="keyword" type="number" placeholder="请输入单号..." class="search_text" />
             </section>
         </header>
         <section class="m-sort">
@@ -44,6 +44,12 @@
                                 <li class="category_right_li" @click="selectBizType(12032)"  :class="{category_right_choosed: hasSelectedBizType(12032)}" >
                                     <span>销售出库</span>
                                     <svg v-if="hasSelectedBizType(12032)">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                    </svg>
+                                </li>
+                                <li class="category_right_li" @click="selectBizType(-12032)"  :class="{category_right_choosed: hasSelectedBizType(-12032)}" >
+                                    <span>出库退回</span>
+                                    <svg v-if="hasSelectedBizType(-12032)">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
                                 </li>
@@ -205,7 +211,7 @@
         </transition>
         <div class="orderList_container">
             <div v-load-more="loaderMore" v-if="orderList.length" class="m-list">
-                <section v-for="item in orderList" :key="item.Id" class="item">
+                <section v-for="item in orderList" :key="item.Id" class="item" @click="selectOrder(item.Id)">
                     <a href="/goods/goods/detail/undefined" class="item-left">
                         <svg class="icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#goods">
@@ -238,7 +244,7 @@
             </div>
             <ul v-else class="animation_opactiy">
                 <li class="list_back_li" v-for="item in 10" :key="item">
-                    <img src="/images/voucher.png" class="list_back_svg">
+                    <img src="../../../images/shop_back_svg.svg"  class="list_back_svg">
                 </li>
             </ul>
             <p v-if="touchend" class="empty_data">没有更多了</p>
@@ -247,20 +253,24 @@
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
                 </svg>
             </aside>
+            <transition name="loading">
+                <loading v-show="showLoading"></loading>
+            </transition>
         </div>
         <foot-guide></foot-guide>
     </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState,mapActions, mapMutations } from 'vuex'
 import { loadMore } from 'src/components/common/mixin'
 import { showBack, animate } from 'src/config/mUtils'
 import { apiGetForeignSaleOrderList,
-         apiGetForeignReturnOrderList, 
+         apiGetForeignSaleReturnOrderList, 
          apiGetRetailOrderList,
          apiGetRetailReturnOrderList,
 } from 'src/service/getData'
+import loading from '../../../components/common/loading'
 import footGuide from 'src/components/footer/foot-guide'
 
 export default {
@@ -289,10 +299,17 @@ export default {
         }
     },
     components: {
-        footGuide
+        loading,
+        footGuide,
     },
     mounted() {
         this.initData();
+    },
+    computed: {
+        ...mapState([
+            'curCustomer',
+            'userInfo',
+        ]),
     },
     methods: {
         // 点击顶部三个选项，展示不同的列表，选中当前选项进行展示，同时收回其他选项
@@ -305,6 +322,7 @@ export default {
             }
         },
         selectBizType(bizType) {
+            this.clearSelect();
             this.bizType = bizType;
         },
         hasSelectedBizType(bizType) {
@@ -369,20 +387,20 @@ export default {
         async getOrders() {
             if(this.bizType == 12012){
                 // 销售订单
-                return await apiGetForeignSaleOrderList(this.userInfo.Id, this.curCustomer.Id, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
+                return await apiGetForeignSaleOrderList(this.userInfo.UserId, 0, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
             }else if(this.bizType== (0-12012)){
                 // 订单退回
-                return await apiGetForeignReturnOrderList(this.userInfo.Id, this.curCustomer.Id, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
+                return await apiGetForeignSaleReturnOrderList(this.userInfo.UserId, 0, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
             }else if(this.bizType == 12032){
                 // 销售出库
-                return await apiGetRetailOrderList(this.userInfo.Id, this.curCustomer.Id, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
+                return await apiGetRetailOrderList(this.userInfo.UserId, 0, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
             }else if(this.bizType == (0-12032)){
                 // 销售出库退回
-                return await apiGetRetailReturnOrderList(this.userInfo.Id, this.curCustomer.Id, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
+                return await apiGetRetailReturnOrderList(this.userInfo.UserId, 0, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
             }else if(this.bizType == 22022){
                 // 预收款
                 // 需要补充api
-                return [];
+                return []; 
             }
             return [];
         },
@@ -410,6 +428,10 @@ export default {
             }
             this.preventRepeatReuqest = false;
         },
+        // 选定某订单
+        selectOrder(orderId){
+            this.$router.push({path:'/order/detail/', query: { Id: orderId,bizType:this.bizType }});
+        },
         // 返回顶部
         backTop() {
             animate(document.body, { scrollTop: '0' }, 400, 'ease-out');
@@ -433,17 +455,12 @@ export default {
             this.queryModelChange();
         }
     },
-    computed: {
-        ...mapState([
-            'curCustomer',
-            'userInfo',
-        ]),
-    }
 }
 </script>
 <style lang="scss" scoped>
 @import 'src/style/mixin';
 .orderList_container {
+    padding-bottom: 2rem;
     margin-top: 3.7rem;
     .m-list {
         .item {
@@ -488,9 +505,6 @@ export default {
 
 .list_back_li {
     height: 4.85rem;
-    .list_back_svg {
-        @include wh(100%, 100%)
-    }
 }
 
 .loader_more {

@@ -1,16 +1,18 @@
  <template>
 	<div class="rating_page">
-        <head-top head-title="单据详情" go-back='true'></head-top>
+        <header-title header-title="订单详情" goback='true'>
+        </header-title>
          <section class="shop_status_info">
             <header>基本信息</header>
-            <p>{{detail.CustomerName}}</p>
-            <p>单号:{{detail.billNo}}</p>
-            <p>时间:{{detail.SubmitTime | time}}</p>
-            <p>品类:{{detail.CategoryNum}}</p>
-            <p>数量:{{detail.GoodsTotalNum}}</p>
-            <p>仓库:{{detail.SentStorageName}}</p>
-            <p>结算:{{detail.ChargeTypeName}}</p>
-            <p>配送:{{detail.ShipTypeName}}</p>
+            <p>客户:{{orderDetail.CustomerName}}</p>
+            <p>单号:{{orderDetail.BillNo}}</p>
+            <p>时间:{{orderDetail.SubmitTime | time}}</p>
+            <p>品类:{{orderDetail.CategoryNum}}</p>
+            <p>数量:{{orderDetail.GoodsTotalNum}}</p>
+            <p>仓库:{{orderDetail.SendStorageName}}</p>
+            <p>结算:{{orderDetail.ChargeTypeName}}</p>
+            <p>配送:{{orderDetail.ShipTypeName}}</p>
+            <p>备注:{{orderDetail.Note}}</p>
             <!-- <p @click="showLicenseImg(shopDetail.license.catering_service_license_image)">
                 <span>餐饮服务许可证</span>
                 <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow" >
@@ -18,108 +20,143 @@
                 </svg>
             </p> -->
         </section>
-        <section class="activities_container">
-            <header>商品列表</header>
-            <ul class="actibities_ul">
-                <li v-for="item in detail.Items" :key="item.id">
-                    <span>{{item.Goods.Name}}</span>
-                    <section v-for="prop in propertyList" :key="prop.Id">
-                            <span>{{prop.PropertyName}}</span>:
-                            <span>{{item.Goods.Properties['p'+prop.PropertyId]}}</span>
-                    </section>
-                    <span>价格:￥{{item.Price}}</span>
-                    <span>数量:{{item.Price}}</span>
-                </li>
-            </ul>
-            <!-- <ul class="actibities_ul">
-                <li v-for="item in shopDetail.supports" :key="item.id">
-                    <span :style='{backgroundColor: "#" + item.icon_color}'>{{item.icon_name}}</span>
-                    <span>{{item.description}}(APP专享)</span>
-                </li>
-            </ul> -->
-        </section>
-        <section class="shop_status_container">
-            <router-link to="/shop/shopDetail/shopSafe" class="shop_status_header">
-                <span class="shop_detail_title">物流信息</span>
-                <!-- <div>
-                    <span class="identification_detail">企业认证详情</span>
-                    <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow" >
-                        <path d="M0 0 L8 7 L0 14"  stroke="#bbb" stroke-width="1.5" fill="none"/>
-                    </svg>
-                </div> -->
-            </router-link>
-            <section class="shop_statu_detail">
-                <div>
-                    <svg class="shop_status" v-if="shopDetail.status == 1">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#res-well"></use>
-                    </svg>
-                    <svg class="res-well" v-else>
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#res-bad"></use>
-                    </svg>
-                </div>
-                <div class="check_date">
-                    <p>
-                        <span>监督检查结果：</span>
-                        <span class="shop_status_well" v-if="shopDetail.status == 1">良好</span>
-                        <span class="shop_status_bad" v-else>差</span>
-                    </p>
-                    <p>
-                        <span>检查日期：</span>
-                        <span>{{shopDetail.identification.identificate_date && shopDetail.identification.identificate_date.split('T')[0]}}</span>
-                    </p>
-                </div>
+        <section class="shop_status_info">
+            <header>商品列表(品类:{{orderDetail.CategoryNum}},数量:{{orderDetail.GoodsTotalNum}},总计:￥{{orderDetail.TotalMoney}})</header>
+            <section class="content" v-for="item in orderDetail.Items" :key="item.id">
+                <p class="shop_statu_detail">
+                    <span class="gt">{{item.Goods.Name}}</span>
+                    <br/><br/>
+                    <span v-for="prop in globalPropertyList" :key="prop.Id">
+                        <span>{{prop.Name}}</span>:
+                        <span>{{item.Goods.Properties['p'+prop.Id]}}</span>
+                        <br/>
+                    </span>
+                    <br/>
+                    <span class="gp">
+                        <span>价格:￥<span class="price">{{item.Price}}</span></span>
+                        <span>数量:<span class="price">{{item.GoodsNum}}</span></span>
+                        <span>小计:￥<span class="money">{{item.Price * item.GoodsNum}}</span></span>
+                    </span>
+                    <!-- <br/>
+                    <span>已执行:{{item.ExecNum}}</span> -->
+                </p>
             </section>
         </section>
-       
-        <transition name="fade">
-            <section class="license_container" v-if="showlicenseImg" @click="showlicenseImg = false">
-                <img :src="imgBaseUrl + licenseImg">
-            </section>
-        </transition>
-        <transition name="router-slid" mode="out-in">
-            <router-view></router-view>
-        </transition>
+        <section  class="shop_status_info">
+            <header>历史记录</header>
+            <div v-for="item in orderDetail.Histories" :key="item.id">
+                <p>
+                    <span>{{item.StatusName}}</span>
+                    <span>{{item.OperatorName}}</span>
+                    <span>{{item.OperateTime | time}}</span>
+                </p>      
+            </div>
+        </section> 
     </div>
 </template>
 
 <script>
-    import {mapState} from 'vuex'
-    import {getImgPath} from 'src/components/common/mixin'
-    import {imgBaseUrl} from 'src/config/env'
+import { mapState, mapActions } from 'vuex'
+import headerTitle from 'src/components/header/header-title'
+import { apiGetForeignSaleOrderDetail,
+         apiGetForeignSaleReturnOrderDetail,
+         apiGetRetailOrderDetail,
+         apiGetRetailReturnOrderDetail
+} from 'src/service/getData'
 
-    export default {
-    	data(){
+export default {
+    data(){
             return{
-               licenseImg: null,
-               showlicenseImg: false,
-               imgBaseUrl
+                orderDetail:{},
             }
         },
         mounted(){
-        	
+        	this.initData();
+        },
+        methods: {
+             ...mapActions([
+                'getGlobalProperty',
+                'getPorpertyList',
+            ]),
+            async initData(){
+
+                await this.getGlobalProperty();
+                await this.getPorpertyList();
+                
+                if(this.$route.query.bizType==12012){
+                    apiGetForeignSaleOrderDetail(this.$route.query.Id).then( val =>{
+                        this.orderDetail=val;
+                    });
+                }else if(this.$route.query.bizType==(0-12012)){
+                    apiGetForeignSaleReturnOrderDetail(this.$route.query.Id).then( val =>{
+                        this.orderDetail=val;
+                    });
+                }else if(this.$route.query.bizType==12032){
+                    apiGetRetailOrderDetail(this.$route.query.Id).then( val =>{
+                        this.orderDetail=val;
+                    });
+                }else if(this.$route.query.bizType==(0-12032)){
+                    apiGetRetailReturnOrderDetail(this.$route.query.Id).then( val =>{
+                        this.orderDetail=val;
+                    });
+                }
+            },
         },
         computed: {
             ...mapState([
-                'shopDetail'
-            ]),
+                'globalPropertyList',
+                'propertyList',
+            ])
         },
         components: {
-        	headTop,
+            headerTitle
         },
-        mixins:[getImgPath],
-        methods: {
-            showLicenseImg(img){
-                this.licenseImg = img;
-                this.showlicenseImg = true;
-            },
-        }
     }
 </script>
-	
+
 <style lang="scss" scoped>
     @import 'src/style/mixin';
 	
-	.rating_page{
+    .gt{
+        font-size:1.2em;
+        color:#f90 !important;
+    }
+
+    .gp{
+        font-size:1em;
+    }
+
+    .gp .price,.num{
+        font-size:1.5em;
+        color:#6ac20b !important;
+    }
+
+    .gp .money{
+        font-size:1.5em;
+        color:red  !important;
+    }
+
+    #head_top{
+        background-color: #3190e8;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 1.95rem;
+    }
+    .title_head{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+        width: 50%;
+        color: #fff;
+        text-align: center;
+    }
+
+	 .rating_page{
 		position: absolute;
 		top: 0;
 		left: 0;
