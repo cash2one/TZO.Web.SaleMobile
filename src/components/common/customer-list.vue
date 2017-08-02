@@ -5,7 +5,7 @@
 				<section class="item-left" :to="'customer/detail/' + item.Id">
 					<!-- <img :src="imgBaseUrl + item.image_path" class="customer_img"> -->
 					<svg class="icon">
-						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#customer"></use>
+						<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#customerAvatar"></use>
 					</svg>
 					<div class="distance">
 						<span v-if="item.Distance">{{item.Distance > 1000? (item.Distance/1000).toFixed(2) + 'km': item.Distance + 'm'}}

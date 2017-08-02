@@ -37,12 +37,12 @@ export default {
          * 监听cartList变化，更新当前商铺的购物车信息customerCart，同时返回一个新的对象
          */
         customerCart: function () {
-            return Object.assign({}, this.cartList[this.curCustomer.Id]);
+            return Object.assign({}, this.cartList[this.curCustomer.CustomerId]);
         },
         // shopCart变化的时候重新计算当前商品的数量
         goodsNum: function () {
-            if (this.customerCart && this.customerCart.Items && this.customerCart.Items[this.goods.GoodsId]) {
-                return this.customerCart.Items[this.goods.GoodsId].num;
+            if (this.customerCart.items && this.customerCart.items[this.goods.GoodsId]) {
+                return this.customerCart.items[this.goods.GoodsId].num;
             } else {
                 return 0;
             }
@@ -57,7 +57,7 @@ export default {
         // 移出购物车
         removeOutCart(goodsId) {
             if (this.goodsNum > 0) {
-                this.REDUCE_CART({ customerId: this.curCustomer.Id, goodsId });
+                this.REDUCE_CART({ customerId: this.curCustomer.CustomerId, goodsId });
             }
         },
         // 加入购物车，计算按钮位置。

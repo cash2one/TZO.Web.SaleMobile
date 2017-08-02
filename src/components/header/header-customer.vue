@@ -16,7 +16,7 @@
                 <section class="description_left">
                     <!-- <img :src="imgBaseUrl+'/images/customer/'+ curCustomer.CoustomerId +'.jpg'" onerror="this.onerror=null;this.src='/images/account-card-details.svg'"> -->
                     <svg class="icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#customer"></use>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#customerAvatar"></use>
                     </svg>
                 </section>
                 <router-link :to="'/customer/detail/'+curCustomer.CustomerId" class="description_right">

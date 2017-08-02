@@ -6,7 +6,9 @@ import {
 	apiGetBizAreas,
 	apiGetCategories,
 	apiGetGlobalProperty,
-	apiGetProperties
+	apiGetProperties,
+	apiGetChargeType,
+	apiGetShipType
 } from 'src/service/getData'
 import {
 	REFRESH_TOKEN,
@@ -20,6 +22,8 @@ import {
 	GET_PROPERTY_LIST,
 	GET_CATEGORY_LIST,
 	GET_CATEGORY_DETAIL_LIST,
+	GET_CHARGE_TYPE,
+	GET_SHIP_TYPE,
 	SAVE_CUR_CORP,
 	POSITION_INTERVAL,
 	SAVE_ADDRESS,
@@ -61,6 +65,7 @@ export default {
 			commit(GET_EXPRESS_LIST, res.Items);
 		}
 	},
+
 	async getPrinterList({ commit, state }) { },
 
 	async getBizAreaList({ commit, state }) {
@@ -88,6 +93,24 @@ export default {
 			let res = await apiGetCategories();
 
 			commit(GET_CATEGORY_LIST, res.Items);
+		}
+	},
+
+	async getChargeType({ commit, state }) {
+		if (!state.chargeTypeList.length > 0) {
+			let res = await apiGetChargeType();
+
+			commit(GET_CHARGE_TYPE, res.Items.map(item => {
+				return { Id: item.TypeCode, Name: item.Name };
+			}));
+		}
+	},
+
+	async getShipType({ commit, state }) {
+		if (!state.shipTypeList.length > 0) {
+			let res = await apiGetShipType();
+
+			commit(GET_SHIP_TYPE, res.Items)
 		}
 	},
 
