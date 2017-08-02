@@ -2,7 +2,7 @@
     <div class="page">
         <header-title header-title="购物车"></header-title>
         <section class="cart_container">
-            <section v-for="(cart,index) in cartList" :key="index" class="m-list">
+            <section v-if="cart" v-for="(cart,index) in cartList" :key="index" class="m-list">
                 <header>
                     <span>{{cart.customer.BizObj.Name}}</span>
                     <router-link :to="'/order/confirm/'+cart.customer.CustomerId" tag="a">
