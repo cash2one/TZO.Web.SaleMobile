@@ -75,17 +75,20 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 ├── src                                         // 源码目录
 │   ├── components                              // 组件
 │   │   ├── common                              // 公共组件
-│   │   │   ├── alertTip.vue                    // 弹出框组件
-│   │   │   ├── buyCart.vue                     // 购物车组件
-│   │   │   ├── computeTime.vue                 // 倒计时组件
+│   │   │   ├── alert-tip.vue                   // 弹出框组件
+│   │   │   ├── buy-cart.vue                    // 购物车组件
+│   │   │   ├── compute-time.vue                // 倒计时组件
+│   │   │   ├── customer-list.vue               // 客户列表组件
+│   │   │   ├── goods-list.vue                  // 商品列表组件
 │   │   │   ├── loading.vue                     // 页面初始化加载数据的动画组件
 │   │   │   ├── mixin.js                        // 组件混合(包括：指令-下拉加载更多，处理图片地址)
-│   │   │   ├── ratingStar.vue                  // 评论的五颗星组件
-│   │   │   └── shoplist.vue                    // msite和shop页面的餐馆列表公共组件
+│   │   │   └── select-slid-up.vue              // 浮动选择组件
 │   │   ├── footer
-│   │   │   └── footGuide.vue                   // 底部公共组件
+│   │   │   └── foot-guide.vue                  // 底部公共组件
 │   │   └── header
-│   │       └── head.vue                        // 头部公共组件
+│   │       ├── header-customer.vue             // 头部客户信息组件
+│   │       ├── header-search.vue               // 头部搜索组件
+│   │       └── header-title.vue                // 头部标题组件
 │   ├── config                                  // 基本配置
 │   │   ├── env.js                              // 环境切换配置
 │   │   ├── fetch.js                            // 获取数据
@@ -93,85 +96,60 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 │   │   └── rem.js                              // px转换rem
 │   ├── images                                  // 公共图片
 │   ├── page
-│   │   ├── bill                                // 客户对帐
-│   │   ├── balance
-│   │   │   ├── balance.vue                     // 余额页
-│   │   │   └── children
-│   │   │       └── detail.vue                  // 余额说明
-│   │   ├── benefit
-│   │   │   ├── benefit.vue                     // 红包页
-│   │   │   └── children
-│   │   │       ├── commend.vue                 // 推荐有奖
-│   │   │       ├── coupon.vue                  // 代金券说明
-│   │   │       ├── exchange.vue                // 兑换红包
-│   │   │       ├── hbDescription.vue           // 红包说明
-│   │   │       └── hbHistory.vue               // 历史红包
-│   │   ├── city                 
-│   │   │   └── city.vue                        // 当前城市页
-│   │   ├── confirmOrder
-│   │   │   ├── children
-│   │   │   │   ├── children
-│   │   │   │   │   ├── addAddress.vue          // 添加地址页
-│   │   │   │   │   └── children
-│   │   │   │   │       └── searchAddress.vue   // 搜索地址页
-│   │   │   │   ├── chooseAddress.vue           // 选择地址页
-│   │   │   │   ├── invoice.vue                 // 选择发票页
-│   │   │   │   ├── payment.vue                 // 付款页
-│   │   │   │   ├── remark.vue                  // 订单备注页 
-│   │   │   │   └── userValidation.vue          // 用户验证页
-│   │   │   └── confirmOrder.vue                // 确认订单页
-│   │   ├── download
-│   │   │   └── download.vue                    // 下载App
-│   │   ├── find
-│   │   │   └── find.vue                        // 发现页
-│   │   ├── food
-│   │   │   └── food.vue                        // 食品筛选排序页
-│   │   ├── forget
-│   │   │   └── forget.vue                      // 忘记密码，修改密码页
+│   │   ├── cart
+│   │   │   └── cart.vue                        // 购物车
+│   │   ├── corp-list
+│   │   │   └── corp-list.vue                   // 公司身份选择
+│   │   ├── customer
+│   │   │   ├── bill
+│   │   │   ├── detail
+│   │   │   ├── new
+│   │   │   ├── search
+│   │   │   ├── sign-in
+│   │   │   └── customer.vue
+│   │   ├── delivery
+│   │   │   ├── detail
+│   │   │   └── list
+│   │   ├── express
+│   │   │   ├── detail
+│   │   │   └── list
+│   │   ├── goods
+│   │   │   ├── detail
+│   │   │   ├── search
+│   │   │   ├── stock
+│   │   │   └── goods.vue
 │   │   ├── home
 │   │   │   └── home.vue                        // 首页
-│   │   ├── login
-│   │   │   └── login.vue                       // 登录注册页
-│   │   ├── msite
-│   │   │   └── msite.vue                       // 商铺列表页
+│   │   ├── index
+│   │   │   └── index.vue  
+│   │   ├── knowledge
+│   │   │   ├── detail
+│   │   │   ├── search
+│   │   │   └── knowledge.vue
+│   │   ├── location
+│   │   │   └── location.vue 
 │   │   ├── order
-│   │   │   ├── children
-│   │   │   │   └── orderDetail.vue             // 订单详情页
-│   │   │   └── order.vue                       // 订单列表页
-│   │   ├── points
-│   │   │   ├── children
-│   │   │   │   └── detail.vue                  // 积分说明
-│   │   │   └── points.vue                      // 积分页
+│   │   │   ├── confirm
+│   │   │   ├── detail
+│   │   │   ├── list
+│   │   │   ├── retail
+│   │   │   ├── return
+│   │   │   ├── order.scss
+│   │   │   └── order.vue
+│   │   ├── path
+│   │   │   └── path.vue 
+│   │   ├── payment
+│   │   │   ├── detail
+│   │   │   ├── list
+│   │   │   ├── new
+│   │   │   └── payment.vue
 │   │   ├── profile
-│   │   │   ├── children
-│   │   │   │   ├── children
-│   │   │   │   │   ├── address.vue             // 添加地址
-│   │   │   │   │   └── children
-│   │   │   │   │       ├── add.vue             // 新增地址
-│   │   │   │   │       └── children
-│   │   │   │   │           └── addDetail.vue   // 搜索地址
-│   │   │   │   ├── info.vue                    // 帐户信息
-│   │   │   │   └── setusername.vue             // 重置用户名
-│   │   │   └── profile.vue                     // 个人中心
-│   │   ├── search
-│   │   │   └── search.vue                      // 搜索页
-│   │   ├── service
-│   │   │   ├── children
-│   │   │   │   └── questionDetail.vue          // 问题详情
-│   │   │   └── service.vue                     // 服务中心
-│   │   ├── shop
-│   │   │   ├── children
-│   │   │   │   ├── children
-│   │   │   │   │   └── shopSafe.vue            // 商铺认证信息页
-│   │   │   │   ├── foodDetail.vue              // 商铺信息页
-│   │   │   │   └── shopDetail.vue              // 单个商铺信息页
-│   │   │   └── shop.vue                        // 商铺筛选页
-│   │   └── vipcard
-│   │       ├── children
-│   │       │   ├── invoiceRecord.vue           // 购买记录
-│   │       │   ├── useCart.vue                 // 使用卡号购买
-│   │       │   └── vipDescription.vue          // 会员说明
-│   │       └── vipcard.vue                     // 会员卡办理页
+│   │   │   ├── settings
+│   │   │   ├── profile-info.vue
+│   │   │   └── profile.vue
+│   │   └── shop
+│   │       ├── back
+│   │       └── go
 │   ├── plugins                                 // 引用的插件
 │   ├── router
 │   │   └── router.js                           // 路由配置
