@@ -26,11 +26,11 @@
                                     <text x="3.5" y="9" style="fill:#FF6000;font-size:10;font-weight:bold;">{{item.SettlementStateName}}</text>
                                 </svg>
                             </p>
-                            <p>余额: {{item.Balance}} </p>
+                            <p>余额: <span style="color:#FF7F00">{{item.Balance}} </span></p>
                             <br>
                            <p>
-                               <span>业务时间: {{item.CreateTime | time}}</span> 
-                               <span class="item-flex-right">到期时间: {{item.FirstExpireTime | time}}</span>
+                               <span>{{item.CreateTime | time}}</span> 
+                               <span class="item-flex-right">到期: {{item.FirstExpireTime | time}}</span>
                                </p>
                         </div>
                         <ul class="item_right_detail">
@@ -74,7 +74,7 @@ export default {
     },
     mounted() {
         var customerId = this.curCustomer.CustomerId;
-        apiGetOughtRecs(customerId, "", "FirstExpireTime", "desc", { "Status": [1, 2] }, 0).then(res => {
+        apiGetOughtRecs(customerId, "", "FirstExpireTime", "asc", { "Status": [1, 2] }, 0).then(res => {
             this.oughtrecs = res.Items;
             console.log(res);
         })
@@ -131,10 +131,10 @@ export default {
                     line-height: .9rem;
                 }
                 .pay_icon {
-                    margin-bottom: -0.08rem;                
+                    margin-bottom: -0.08rem;                             
                 }
                 .item-flex-right{
-                    margin-left: 3rem;
+                    margin-left: 2rem;
                 }
             }
             .item_right_detail {
