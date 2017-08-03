@@ -457,7 +457,7 @@ export default {
                 flex: auto;
                 .detail {
                     padding-top: 0.275rem;
-                    border-top: 0.025rem solid #f1f1f1;
+                    border-top: 0.025rem solid $border-color;
                     li {
                         span {
                             @include sc(.45rem, $font-color1);
@@ -468,16 +468,6 @@ export default {
         }
     }
 }
-
-.return_top {
-    position: fixed;
-    bottom: 3rem;
-    right: 1rem;
-    .back_top_svg {
-        @include wh(2rem, 2rem);
-    }
-}
-
 
 .buy_cart_container {
     position: fixed;

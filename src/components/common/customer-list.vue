@@ -14,9 +14,9 @@
 				</section>
 				<section class="item-right" @click="chooseCustomer(item)">
 					<section class="title">
-						<div class="name ellipsis">
+						<h3 class="name ellipsis">
 							<strong>{{item.BizObj.Name}}</strong>
-						</div>
+						</h3>
 						<div class="level">
 							{{item.CustomerLevelName}}
 						</div>
@@ -28,17 +28,17 @@
 							账龄 {{item.OughtRecAge}} 天
 						</div>
 					</section>
-					<div class="number">
-						<span>出账金额：{{item.ChargeOffMoney}}</span>
+					<div>
+						<span>出账金额：</span>
 						<span>¥</span>
-					</div>
-					<div class="number">
-						<span>应收款: {{item.OughtRecMoney}}</span>
+						<span class="money">{{item.ChargeOffMoney}}</span>
+						<span>应收款: </span>
 						<span>¥</span>
+						<span class="count">{{item.OughtRecMoney}}</span>
 					</div>
 					<ul class="detail">
 						<li v-for="phone in item.BizObj.Phones" :key="phone.Id">
-							<span>{{phone.Contact}}</span>
+							{{phone.Contact}}
 							<span>
 								: {{phone.PhoneNum}}
 							</span>
@@ -207,29 +207,28 @@ export default {
 		.item {
 			@include fj();
 			.item-left {
-				margin: .2rem;
 				.icon {
 					@include wh(2.7rem, 2.7rem);
 					display: block;
 				}
 			}
 			.item-right {
+				margin-left: .55rem;
 				flex: auto;
 				.title {
+					.name {
+						width: 8rem;
+					}
 					.level {
-						@include sc(.6rem, $font-color1);
+						color: $font-color1;
 					}
 				}
 				.detail {
-					padding-top: 0.25rem;
-					border-top: 0.025rem solid #f1f1f1;
+					padding-top: 0.275rem;
+					border-top: 1px solid $border-color;
 					li {
-						font-size: 0;
 						span {
-							font-size: .5rem;
-							vertical-align: middle;
-							display: inline-block;
-							margin-bottom: 0.2rem;
+							@include sc(.45rem, $font-color1);
 						}
 					}
 				}
@@ -238,47 +237,10 @@ export default {
 			.distance {
 				margin-top: 1rem;
 				text-align: center;
-				@include sc(.6rem, $font-color1);
+				color: $font-color1;
 			}
 		}
 	}
 }
 
-.list_back_li {
-	height: 4.85rem;
-	.list_back_svg {
-		@include wh(100%, 100%)
-	}
-}
-
-.loader_more {
-	@include font(0.6rem, 3);
-	text-align: center;
-	color: #999;
-}
-
-.empty_data {
-	@include sc(0.5rem, #666);
-	text-align: center;
-	line-height: 2rem;
-}
-
-.return_top {
-	position: fixed;
-	bottom: 3rem;
-	right: 1rem;
-	.back_top_svg {
-		@include wh(2rem, 2rem);
-	}
-}
-
-.loading-enter-active,
-.loading-leave-active {
-	transition: opacity 1s
-}
-
-.loading-enter,
-.loading-leave-active {
-	opacity: 0
-}
 </style>

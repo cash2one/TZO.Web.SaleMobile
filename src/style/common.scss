@@ -414,6 +414,13 @@ small{
     }
 }
 
+.list_back_li {
+	height: 4.85rem;
+	.list_back_svg {
+		@include wh(100%, 100%)
+	}
+}
+
 .m-sort{
     background-color: $background-light-color;
     border-bottom: 1px solid $border-color;
@@ -636,7 +643,26 @@ small{
     }
 }
 
+.loader_more {
+	@include font(0.6rem, 3);
+	text-align: center;
+	color: #999;
+}
 
+.empty_data {
+	@include sc(0.5rem, #666);
+	text-align: center;
+	line-height: 2rem;
+}
+
+.return_top {
+	position: fixed;
+	bottom: 3rem;
+	right: 1rem;
+	.back_top_svg {
+		@include wh(2rem, 2rem);
+	}
+}
 
 // 页面切换动画
 .router-fade-enter-active {
@@ -657,4 +683,14 @@ small{
 .router-slid-leave-active {
     transform: translate3d(2rem, 0, 0);
     opacity: 0;
+}
+
+.loading-enter-active,
+.loading-leave-active {
+	transition: opacity 1s
+}
+
+.loading-enter,
+.loading-leave-active {
+	opacity: 0
 }
