@@ -333,7 +333,7 @@ small{
     }
     .title {
         padding: .4rem .4rem;
-        @include sc(.5rem, $font-color1);
+        @include sc(.55rem, $font-color1);
     }
 }
 
@@ -402,11 +402,14 @@ small{
         overflow: hidden;
         .title{
             @include fj();
-            margin: .2rem 0;
+            margin: .275rem 0;
         }
         .content {
-            color: $font-color2;
-            margin:.2rem 0;
+            color: $font-color1;
+            margin:.275rem 0;
+            span {
+                color: $font-color1;
+            }
         }
     }
 }
