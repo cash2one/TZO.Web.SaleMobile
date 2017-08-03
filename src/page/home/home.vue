@@ -1,5 +1,5 @@
 <template>
-	<section class="home_container">
+	<section class="page">
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
 			<defs>
 				<symbol viewBox="0 0 1024 1024" id="home_order">
@@ -113,13 +113,6 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-.home_container {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-}
 
 .msite_nav {
 	padding-top: .5rem;

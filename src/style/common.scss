@@ -65,8 +65,8 @@ h2 {
 }
 
 h3 {
-    font-size: .7rem;
-    line-height: 1.04rem;
+    font-size: .65rem;
+    line-height: .975rem;
 }
 
 body{
@@ -168,10 +168,20 @@ small{
 
 .number {
     display: inline-block;
-    span {
-        font-family: 'Helvetica Neue', Tahoma, Arial;
-        color: $red;
-    }
+    font-family: 'Helvetica Neue', Tahoma, Arial;
+    @include sc(.8rem, $green);
+}
+
+.count {
+    display: inline-block;
+    font-family: 'Helvetica Neue', Tahoma, Arial;
+    @include sc(.8rem, $orange);
+}
+
+.money {
+    display: inline-block;
+    font-family: 'Helvetica Neue', Tahoma, Arial;
+    @include sc(.8rem, $red);
 }
 
 #header_title {
@@ -255,38 +265,18 @@ small{
                 display: block;
                 width: 100%;
                 text-align: center;
+                color: $font-color1;
             }
             .info-data-top {
-                @include sc(.55rem, $font-color);
                 padding: .853333rem 0 .453333rem;
-                b {
-                    display: inline-block;
-                    @include sc(.8rem, #f90);
-                    font-weight: 700;
-                    line-height: 1rem;
-                    font-family: Helvetica Neue, Tahoma;
-                }
             }
             .info-data-bottom {
-                @include sc(.57333rem, $font-color1);
-                font-weight: 400;
+                color: $font-color1;
                 padding-bottom: .453333rem;
-            }
-        }
-        .info-data-link:nth-of-type(2) {
-            .info-data-top {
-                b {
-                    color: #ff5f3e;
-                }
             }
         }
         .info-data-link:nth-of-type(3) {
             border: 0;
-            .info-data-top {
-                b {
-                    color: #6ac20b;
-                }
-            }
         }
     }
 }
