@@ -115,10 +115,10 @@ export default {
 @import 'src/style/mixin';
 
 .msite_nav {
-	padding-top: .5rem;
-	background-color: #fff;
-	border-bottom: 0.025rem solid $bc;
-	height: 9.4rem;
+	padding-top: .55rem;
+	background-color: $background-light-color;
+	border-bottom: 1px solid $bc;
+	height: 9rem;
 	.swiper-container {
 		@include wh(100%, auto);
 		padding-bottom: 1.2rem;
@@ -136,17 +136,17 @@ export default {
 	flex-wrap: wrap;
 	.link {
 		width: 25%;
-		padding: 0.3rem 0rem;
+		padding: 0.275rem 0rem;
 		@include fj(center);
 		figure {
 			text-align: center;
 			svg {
-				margin-bottom: 0.3rem;
+				margin-bottom: 0.275rem;
 				@include wh(1.5rem, 1.5rem);
 			}
 			figcaption {
 				text-align: center;
-				@include sc(0.55rem, #666);
+				color: $font-color1;
 			}
 		}
 	}

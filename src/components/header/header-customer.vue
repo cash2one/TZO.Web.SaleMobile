@@ -191,6 +191,9 @@ export default {
         line-height: 1.5rem;
         padding: 0 .55rem;
         border-bottom: 1px solid $border-color;
+        h3 {
+            color: $font-color1;
+        }
         .detail {
             color: $font-color2;
             vertical-align: middle;
