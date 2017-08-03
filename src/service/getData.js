@@ -309,3 +309,19 @@ export const apiGetChargeType = () => fetch('/api/Finance/ChargeType', { QuickRe
 
 // 获取配送方式
 export const apiGetShipType = () => fetch('/api/Logistics/ShipType', { QuickResult: { "IsEnabled": [true] } });
+
+// 获取客户对账列表（S弯）
+export const apiGetCustomerReconciliation = (customerId, keyword, timeSpan, offset) => {
+	let data = {
+		// PageIndex: parseInt(offset / 20),
+		// PageSize: 20,
+		PageIndex: 0,
+		PageSize: 0,
+		Keyword: keyword,
+		CustomerId: customerId,
+		timeSpan:timeSpan,
+		AdvancedResult: {},		
+	};
+
+	return fetch('/api/Finance/Query/CustReconciliation', data)
+};

@@ -72,7 +72,7 @@
                             <b>{{curCustomer.OughtRecMoney}}</b> 元</span>
                         <span class="info-data-bottom">欠款金额</span>
                     </router-link>
-                    <router-link to="/order/list" tag="li" class="info-data-link">
+                    <router-link :to="'/customer/reconciliation/'+curCustomer.CustomerId" tag="li" class="info-data-link">
                         <span class="info-data-top">
                             <b>{{curCustomer.ChargeOffMoney}}</b> 元</span>
                         <span class="info-data-bottom">出账金额</span>

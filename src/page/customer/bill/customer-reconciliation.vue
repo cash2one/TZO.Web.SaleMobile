@@ -1,21 +1,15 @@
 <template>
     <div class="rating_page">
-        <header-title header-title="客户欠款" goback='true'>
+        <header-title header-title="客户对账" goback='true'>
         </header-title>
-        <section class="m-sort">
+        <!--<section class="m-sort">
             <div class="sort_item">
-                <span style="color:red"> 欠款金额:{{curCustomer.OughtRecMoney}}</span>
+                <span style="color:red"> 时间区间</span>
             </div>
-            <div class="sort_item">
-                出账金额:{{curCustomer.ChargeOffMoney}}
-            </div>
-            <div class="sort_item">
-                结算金额:暂无
-            </div>
-        </section>
-        <section class="ougthrec_container" v-if="oughtrecs.length">
+        </section>-->
+        <section class="ougthrec_container" v-if="custreconciliations.length">
             <ul class="list_container">
-                <router-link to="" tag="li" v-for="item in oughtrecs" :key="item.Id" class="list_li">
+                <router-link to="" tag="li" v-for="item in custreconciliations" :key="item.Id" class="list_li">
                     <section class="item_right">
                         <div class="item_right_text">
                             <p class="item-flex">
@@ -23,17 +17,18 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="50" height="14" class="pay_icon">
                                         <polygon points="0,14 4,0 44,0 40,14" style="fill:none;stroke:#FF6000;stroke-width:1" />
                                         <line x1="1.5" y1="12" x2="40" y2="12" style="stroke:#FF6000;stroke-width:1.5" />
-                                        <text x="3.5" y="9" style="fill:#FF6000;font-size:10;font-weight:bold;">{{item.SettlementStateName}}</text>
+                                        <text x="3.5" y="9" style="fill:#FF6000;font-size:10;font-weight:bold;">{{item.BizTypeName}}</text>
                                     </svg>
                                 </span>
-                                <span>业务: {{item.CreateTime | time}}</span>
-                            </p>
-                            <p>余额:
-                                <span style="color:#FF7F00">{{item.Balance}} </span>
+                                <span>{{item.CreateTime | time}}</span>
                             </p>
                             <p class="item-flex">
-                                <span>{{item.BizTypeName}}</span>
-                                <span class="item-flex-right">到期: {{item.FirstExpireTime | time}}</span>
+                                <span>期初:{{item.BegainMoneyItem}} </span>
+                                <span>新增:{{item.OughtRecPayMoney}} </span>
+                            </p>
+                            <p class="item-flex">
+                                <span>实收:{{item.Money}} </span>
+                                <span>期末:{{item.EndMoney}} </span>
                             </p>
                         </div>
                     </section>
@@ -41,37 +36,42 @@
             </ul>
         </section>
         <!--<ul v-else class="animation_opactiy">
-            <li class="list_back_li" v-for="item in 10" :key="item">
-                <img src="../../../images/shopback.svg" class="list_back_svg">
-            </li>
-        </ul>
-        <p v-if="touchend" class="empty_data">没有更多了</p>
-        <aside class="return_top" @click="backTop" v-if="showBackStatus">
-            <svg class="back_top_svg">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
-            </svg>
-        </aside>
-        <transition name="loading">
-            <loading v-show="showLoading"></loading>
-        </transition>-->
+                <li class="list_back_li" v-for="item in 10" :key="item">
+                    <img src="../../../images/shopback.svg" class="list_back_svg">
+                </li>
+            </ul>
+            <p v-if="touchend" class="empty_data">没有更多了</p>
+            <aside class="return_top" @click="backTop" v-if="showBackStatus">
+                <svg class="back_top_svg">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
+                </svg>
+            </aside>
+            <transition name="loading">
+                <loading v-show="showLoading"></loading>
+            </transition>-->
     </div>
 </template>
 
 <script>
 import { mapState } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
-import { apiGetOughtRecs } from 'src/service/getData'
+import { apiGetCustomerReconciliation } from 'src/service/getData'
 
 export default {
     data() {
         return {
-            oughtrecs: []        //客户应收款列表
+            custreconciliations: []        //客户对账列表
         }
     },
     mounted() {
         var customerId = this.curCustomer.CustomerId;
-        apiGetOughtRecs(customerId, "", "FirstExpireTime", "asc", { "Status": [1, 2] }, 0).then(res => {
-            this.oughtrecs = res.Items;
+       
+        //JS计算当前月
+        let _now=new Date();
+        let endTime = _now;
+        let startTime = new Date(_now.getFullYear(), _now.getMonth(), 1);
+        apiGetCustomerReconciliation(customerId, "", { "startDate": startTime, "endDate": endTime }, 0).then(res => {
+            this.custreconciliations = res.Items;
         })
     },
     components: {
@@ -100,7 +100,7 @@ export default {
 
 .ougthrec_container {
     padding-bottom: 2rem;
-    margin-top: 1.7rem;
+    //margin-top: 1.7rem;
     .list_container {
         background-color: #fff;
     }
