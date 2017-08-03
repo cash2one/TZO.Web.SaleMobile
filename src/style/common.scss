@@ -283,8 +283,7 @@ small{
 
 .m-form-list{
     .item {
-        margin-top: 0;
-        padding: .3rem .4rem .3rem .7rem;
+        @include indent10();
         @include fj();
         align-items: center;
         border-top: 1px solid $border-color;
@@ -305,7 +304,7 @@ small{
             line-height: 1.5rem;
             p {
                 text-align: left;
-                padding-right: .3rem;
+                padding-right: .275rem;
                 @include sc(.6rem, $font-color1);
                 font-weight: 400;
                 font-family: Arial;
@@ -388,7 +387,7 @@ small{
 .m-list {
     header{
         @include indent05();
-        color: $font-color1;
+        @include sc(.65rem, $font-color1);
     }
     header + .item{
         border-top: 1px solid $border-color;

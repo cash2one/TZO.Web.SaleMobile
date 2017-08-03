@@ -116,7 +116,7 @@ export default {
     z-index: 204;
     span {
         @include sc(.7rem, $blue);
-        margin-left: .3rem;
+        margin-left: .275rem;
     }
 }
 </style>

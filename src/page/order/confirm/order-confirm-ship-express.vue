@@ -1,7 +1,7 @@
 <template>
     <div class="page rating">
         <header-title header-title="配送方式" goback="true"></header-title>
-        <section v-if="!showLoading" class="scroll_container">
+        <section v-if="!showLoading">
             <section class="m-list">
                 <header>配送方式</header>
                 <section class="item" v-for="item in shipTypeList" :key="item.Id" @click="chooseShipType(item)">
@@ -13,7 +13,9 @@
                     <section v-else class="item-left"></section>
                     <section class="item-right">
                         <section class="title">
-                            <strong class="name">{{item.Name}}</strong>
+                            <h3 class="name">
+                                <strong>{{item.Name}}</strong>
+                            </h3>
                         </section>
                     </section>
                 </section>
@@ -30,10 +32,12 @@
                         <section v-else class="item-left"></section>
                         <section class="item-right">
                             <section class="title">
-                                <strong class="name">{{item.Name}}</strong>
-                                <div v-if="item.IsCollect" class="number">
-                                    <span v-if="!item.IsPrimaryAddr">可代收</span>
-                                </div>
+                                <h3 class="name">
+                                    <strong>{{item.Name}}</strong>
+                                </h3>
+                                <span v-if="item.IsCollect" class="number">
+                                    可代收
+                                </span>
                             </section>
                         </section>
                     </section>
@@ -110,8 +114,14 @@ export default {
 @import '../order';
 .m-list {
     header {
+        @include fj();
         .right {
-            @include sc(.65rem, $blue);
+            color: $blue;
+        }
+    }
+    .item-right {
+        .number {
+            font-size: .55rem;
         }
     }
 }
