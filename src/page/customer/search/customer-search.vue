@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="page">
         <header id='header_search'>
             <section class="header_title_goback" @click="$router.go(-1)">
                 <svg class="icon">
@@ -204,7 +204,6 @@
             <div class="back_cover" v-show="sortBy"></div>
         </transition>
         <customer-list :keyword='keyword' :bizAreaId='bizAreaId' :sortByFiled='sort.sortByFiled' :sortByType='sort.sortByType' :filters='filters' :confirmSelect="confirmStatus" @DidConfrim="clearSelect"></customer-list>
-        
     </div>
 </template>
 
