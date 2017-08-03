@@ -217,7 +217,7 @@ export default {
 				flex: auto;
 				.title {
 					.level {
-						@include sc(.6rem, $font-light-color);
+						@include sc(.6rem, $font-color1);
 					}
 				}
 				.detail {
@@ -238,7 +238,7 @@ export default {
 			.distance {
 				margin-top: 1rem;
 				text-align: center;
-				@include sc(.6rem, $font-light-color);
+				@include sc(.6rem, $font-color1);
 			}
 		}
 	}

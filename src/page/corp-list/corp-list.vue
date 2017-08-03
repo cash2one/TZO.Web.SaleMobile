@@ -1,28 +1,26 @@
 <template>
-    <div class="page">
+    <div class="page paddingTop">
         <header-title header-title="选择公司"></header-title>
-        <section class="corp_container">
-            <section class="m-list">
-                <header>最近用过的公司</header>
-                <section class="item" @click="chooseCorp(curCorp)">
-                    <section class="title">
+        <section class="m-list">
+            <header>最近用过的公司</header>
+            <section class="item" @click="chooseCorp(curCorp)">
+                <section class="title">
+                    <h3>
                         <strong class="name">{{curCorp.CorpName}}</strong>
-                        <div v-if="curCorp.Position" class="number">
-                            <span>{{curCorp.Position}}</span>
-                        </div>
-                    </section>
-                    <p class="content">{{curCorp.DeptName}}</p>
+                    </h3>
+                    <span class="red">{{curCorp.Position}}</span>
                 </section>
-                <header>选择公司</header>
-                <section class="item" v-for="item in corpList" :key="item.CorpId" @click="chooseCorp(item)">
-                    <section class="title">
+                <p class="content">{{curCorp.DeptName}}</p>
+            </section>
+            <header>选择公司</header>
+            <section class="item" v-for="item in corpList" :key="item.CorpId" @click="chooseCorp(item)">
+                <section class="title">
+                    <h3>
                         <strong class="name">{{item.CorpName}}</strong>
-                        <div class="number">
-                            <span>{{item.Position}}</span>
-                        </div>
-                    </section>
-                    <p class="content">{{item.DeptName}}</p>
+                    </h3>
+                    <span class="red">{{item.Position}}</span>
                 </section>
+                <p class="content">{{item.DeptName}}</p>
             </section>
         </section>
     </div>
@@ -77,12 +75,3 @@ export default {
     },
 }
 </script>
-<style lang="scss" scoped>
-@import 'src/style/mixin';
-.corp_container {
-    overflow-y: auto;
-    .title {
-        @include fj();
-    }
-}
-</style>

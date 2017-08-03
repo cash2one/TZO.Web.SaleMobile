@@ -87,7 +87,7 @@ export default {
                 line-height: 2.5rem;
                 align-items: center;
                 span {
-                    @include sc(.7rem, $font-light-color);
+                    @include sc(.7rem, $font-color1);
                 }
                 svg {
                     @include wh(.8rem, .8rem);

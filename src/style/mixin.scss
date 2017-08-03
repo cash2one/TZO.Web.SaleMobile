@@ -2,10 +2,12 @@ $background-color:#F5F5F5; // 背景颜色
 $background-light-color:#fff; // 亮背景色
 $background-darklight-color:#fafafa; // 暗亮色背景
 $blue: #3190e8; // 蓝色 
+$red:#f60; // 红色
 $blue-font-color:#fff; // 蓝色底字体颜色
 $border-color: #e4e4e4; // 边框颜色
 $font-color: #333; // 字体颜色
-$font-light-color:#666; // 字体亮色
+$font-color1:#666; // 字体亮色
+$font-color2:#999; // 字体亮色
 $icon-color:#bbb; // 图标颜色
 $icon-light-color:#fff; // 图标亮色
 $icon-color-active:#4aa5f0;
@@ -76,4 +78,14 @@ $fc:#fff;
 @mixin fj($type: space-between) {
     display: flex;
     justify-content: $type;
+}
+
+// 缩进半字
+@mixin indent05(){
+    padding: .1375rem .275rem;
+}
+
+// 缩进一字
+@mixin indent10(){
+    padding: .275rem .55rem;
 }

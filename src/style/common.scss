@@ -54,6 +54,30 @@ html,body{
     background-color: $background-color;
 }
 
+h1 {
+    font-size: 1.3rem;
+    line-height: 2rem;
+}
+
+h2 {
+    font-size: .8rem;
+    line-height: 1.2rem;
+}
+
+h3 {
+    font-size: .7rem;
+    line-height: 1.04rem;
+}
+
+body{
+    font-size: .55rem;
+    line-height: .825rem;
+}
+
+small{
+    font-size: .45rem;
+    line-height: .675rem;
+}
 
 .clear:after{
     content: '';
@@ -65,30 +89,33 @@ html,body{
     zoom:1;
 }
 
-.back_img{
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+.red {
+    color:$red;
 }
+// .back_img{
+//     background-repeat: no-repeat;
+//     background-size: 100% 100%;
+// }
 
-.margin{
-    margin: 0 auto;
-}
+// .margin{
+//     margin: 0 auto;
+// }
 
-.left{
-    float: left;
-}
+// .left{
+//     float: left;
+// }
 
-.right{
-    float: right;
-}
+// .right{
+//     float: right;
+// }
 
-.hide{
-    display: none;
-}
+// .hide{
+//     display: none;
+// }
 
-.show{
-    display: block;
-}
+// .show{
+//     display: block;
+// }
 
 .ellipsis{
     overflow: hidden;
@@ -113,13 +140,7 @@ html,body{
 }
 
 .page{
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding-top: 1.95rem;
-    z-index: 203;
+    z-index: 200;
     background-color: $background-color;
     p, span{
         font-family: Helvetica Neue,Tahoma,Arial;
@@ -129,6 +150,10 @@ html,body{
     }
     .rating{
         position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
         z-index: 202;
     }
 }
@@ -138,6 +163,80 @@ html,body{
     fill: $icon-color;
     .light{
         fill: $icon-light-color;
+    }
+}
+
+.number {
+    display: inline-block;
+    span {
+        font-family: 'Helvetica Neue', Tahoma, Arial;
+        color: $red;
+    }
+}
+
+#header_title {
+    background-color: $blue;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    @include wh(100%, 1.95rem);
+}
+.header_title_goback {
+    display: inline-block;
+    margin-top: .35rem;
+    margin-left: .275rem;
+    @include wh(.8rem, .8rem);
+    .icon {
+        fill: $icon-light-color;
+    }
+}
+.title_head {
+    @include center;
+    width: 50%;
+    color: $blue-font-color;
+    text-align: center;
+    h2 {
+        color: $blue-font-color;
+    }
+}
+
+#header_search {
+    background-color: $blue;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    @include wh(100%, 1.95rem);
+}
+
+.header_search_icon {
+    display: inline-block;
+    margin-left: .1rem;
+}
+
+.header_search_icon .icon {
+    @include wh(1.2rem, 1.2rem);
+    fill: $icon-light-color;
+}
+
+.search_keyword {
+    @include ct();
+    position: absolute;
+    left: 1.5rem;
+    right: 0.7rem;
+    .search_text {
+        @include sc(0.7rem, $blue-font-color);
+        width: 100%;
+        background-color: transparent;
+        border-bottom: #fff 2px solid;
+        padding-left: 1rem;
+        font-weight: bold;
+    }
+    .search_text::-webkit-input-placeholder {
+        @include sc(0.65rem, #ddd);
+        font-weight: normal;
+        font-style: italic;
     }
 }
 
@@ -169,7 +268,7 @@ html,body{
                 }
             }
             .info-data-bottom {
-                @include sc(.57333rem, $font-light-color);
+                @include sc(.57333rem, $font-color1);
                 font-weight: 400;
                 padding-bottom: .453333rem;
             }
@@ -217,7 +316,7 @@ html,body{
             p {
                 text-align: left;
                 padding-right: .3rem;
-                @include sc(.6rem, $font-light-color);
+                @include sc(.6rem, $font-color1);
                 font-weight: 400;
                 font-family: Arial;
                 display: inline-block;
@@ -244,7 +343,7 @@ html,body{
     }
     .title {
         padding: .4rem .4rem;
-        @include sc(.5rem, $font-light-color);
+        @include sc(.5rem, $font-color1);
     }
 }
 
@@ -298,41 +397,26 @@ html,body{
 
 .m-list {
     header{
-        @include sc(.5rem, #999);
-        padding: .2rem .4rem;
+        @include indent05();
+        color: $font-color1;
+    }
+    header + .item{
+        border-top: 1px solid $border-color;
     }
     .item {
         width: 100%;
         background-color: $background-light-color;
-        padding: .6rem .4rem;
+        @include indent10();
         border-bottom: 1px solid $border-color;
         position: relative;
         overflow: hidden;
-        display: block;
         .title{
             @include fj();
-            margin:.2rem;
-            @include sc(.7rem, #333);
+            margin: .2rem 0;
         }
         .content {
-            @include sc(.5rem, #999);
-            margin:.2rem;
-            line-height: .8rem;
-        }
-        .number {
-            display: inline-block;
-            span {
-                font-family: 'Helvetica Neue', Tahoma, Arial;
-            }
-            span:nth-of-type(1) {
-                @include sc(.7rem, #f60);
-            }
-            span:nth-of-type(2) {
-                @include sc(.7rem, #666);
-            }
-            span:nth-of-type(3) {
-                @include sc(.7rem, #666);
-            }
+            color: $font-color2;
+            margin:.2rem 0;
         }
     }
 }
@@ -572,58 +656,7 @@ html,body{
     }
 }
 
-#header_search {
-    background-color: $blue;
-    position: fixed;
-    z-index: 100;
-    left: 0;
-    top: 0;
-    @include wh(100%, 1.95rem);
-}
 
-.header_title_goback {
-    display: inline-block;
-    left: .4rem;
-    margin-top: .35rem;
-    margin-left: .4rem;
-    @include wh(1rem, 1rem);
-    .icon {
-        fill: $icon-light-color;
-    }
-}
-
-.header_search_icon {
-    display: inline-block;
-    left: .4rem;
-    margin-top: .35rem;
-}
-
-.header_search_icon .icon {
-    margin-top: .2rem;
-    @include wh(1.1rem, 1.1rem);
-    fill: $icon-light-color;
-}
-
-.search_keyword {
-    @include ct();
-    position: absolute;
-    left: 1.7rem;
-    right: 0.7rem;
-    .search_text {
-        @include sc(0.8rem, #fff);
-        width: 100%;
-        background-color: transparent;
-        border-bottom: #fff 2px solid;
-        padding-left: 1.1rem;
-        font-weight: bold;
-    }
-    .search_text::-webkit-input-placeholder {
-        color: #ddd;
-        font-weight: normal;
-        font-style: italic;
-        font-size: 0.8rem;
-    }
-}
 
 // 页面切换动画
 .router-fade-enter-active {
