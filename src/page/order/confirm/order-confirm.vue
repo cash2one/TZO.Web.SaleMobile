@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <header-title header-title="订单确认" go-back='true'></header-title>
+        <header-title header-title="订单确认" goback='true'></header-title>
         <section v-if="!showLoading">
             <router-link :to="{name:'order-confirm-address'}" class="address_container">
                 <div class="address_empty_left">
