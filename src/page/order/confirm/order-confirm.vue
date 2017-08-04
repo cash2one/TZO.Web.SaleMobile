@@ -281,27 +281,6 @@ export default {
     }
 }
 
-.container_style {
-    background-color: #fff;
-    margin-top: .4rem;
-    padding: 0 .7rem;
-    .header_style {
-        @include fj;
-        line-height: 2rem;
-        span:nth-of-type(1) {
-            @include sc(.7rem, #666);
-        }
-        .more_type {
-            span:nth-of-type(1) {
-                @include sc(.6rem, #aaa);
-                width: 10rem;
-                display: inline-block;
-                text-align: right;
-                vertical-align: middle;
-            }
-        }
-    }
-}
 
 .address_empty_right {
     @include wh(.6rem, .6rem);
@@ -327,31 +306,6 @@ export default {
         flex: 2;
         background-color: #56d176;
         text-align: center;
-    }
-}
-
-.delivery_model {
-    border-left: .2rem solid $blue;
-    @include indent10;
-    min-height: 4rem;
-    @include fj;
-    align-items: center;
-    .deliver_time {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        p:nth-of-type(1) {
-            @include sc(.7rem, $blue);
-        }
-        p:nth-of-type(2) {
-            @include sc(.55rem, #fff);
-            background-color: $blue;
-            width: 2.4rem;
-            margin-top: .5rem;
-            text-align: center;
-            border-radius: 0.12rem;
-            padding: .1rem;
-        }
     }
 }
 

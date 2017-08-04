@@ -1,7 +1,7 @@
 <template>
-    <div class="search_container">
+    <div class="page paddingTop">
         <header id='header_search'>
-            <section class="header_title_goback" @click="$router.go(-1)">
+            <section class="header_title_goback" @click="$router.go(-1)" v-show="false">
                 <svg class="icon">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>
                 </svg>
@@ -29,25 +29,25 @@
                     <section v-show="sortBy == 'bizType'" class="category_container sort_detail_type">
                         <section class="category_right">
                             <ul>
-                                <li class="category_right_li" @click="selectBizType(12012)"  :class="{category_right_choosed: hasSelectedBizType(12012)}" >
+                                <li class="category_right_li" @click="selectBizType(12012)" :class="{category_right_choosed: hasSelectedBizType(12012)}">
                                     <span>销售订单</span>
                                     <svg v-if="hasSelectedBizType(12012)">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
                                 </li>
-                                <li class="category_right_li" @click="selectBizType(-12012)"  :class="{category_right_choosed: hasSelectedBizType(-12012)}" >
+                                <li class="category_right_li" @click="selectBizType(-12012)" :class="{category_right_choosed: hasSelectedBizType(-12012)}">
                                     <span>订单退回</span>
                                     <svg v-if="hasSelectedBizType(-12012)">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
                                 </li>
-                                <li class="category_right_li" @click="selectBizType(12032)"  :class="{category_right_choosed: hasSelectedBizType(12032)}" >
+                                <li class="category_right_li" @click="selectBizType(12032)" :class="{category_right_choosed: hasSelectedBizType(12032)}">
                                     <span>销售出库</span>
                                     <svg v-if="hasSelectedBizType(12032)">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                     </svg>
                                 </li>
-                                <li class="category_right_li" @click="selectBizType(-12032)"  :class="{category_right_choosed: hasSelectedBizType(-12032)}" >
+                                <li class="category_right_li" @click="selectBizType(-12032)" :class="{category_right_choosed: hasSelectedBizType(-12032)}">
                                     <span>出库退回</span>
                                     <svg v-if="hasSelectedBizType(-12032)">
                                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
@@ -209,69 +209,73 @@
         <transition name="showcover">
             <div class="back_cover" v-show="sortBy"></div>
         </transition>
-        <div class="orderList_container">
-            <div v-load-more="loaderMore" v-if="orderList.length" class="m-list">
-                <section v-for="item in orderList" :key="item.Id" class="item" @click="selectOrder(item.Id)">
-                    <a href="/goods/goods/detail/undefined" class="item-left">
-                        <svg class="icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#goods">
-                            </use>
-                        </svg>
-                    </a>
-                    <section class="item-right">
-                        <section class="title">
-                            <div class="name ellipsis">
-                                <strong>{{item.CustomerName}}</strong>
-                            </div>
+        <section class="m-list" v-load-more="loaderMore" v-if="orderList.length">
+            <div v-for="item in orderList" :key="item.Id" @click="selectOrder(item.Id)">
+                <section class="item">
+                    <section class="title">
+                        <h3 class="name ellipsis">
+                            <strong>{{item.CustomerName}}</strong>
+                        </h3>
+                        <section class="time">
+                            {{item.SubmitTime | time}}
                         </section>
                         <section class="content">
-                            <div>时间:{{item.SubmitTime | time}}</div>
+                            <span>单号:</span>
+                            <span>{{item.BillNo}}</span>
                         </section>
                         <section class="content">
-                            <div>单号:{{item.BillNo}}</div>
+                            <span>状态:</span>
+                            <span>{{item.StatusName}}</span>
                         </section>
                         <section class="content">
-                            <div>金额:{{item.TotalMoney}}</div>
+                            <span>仓库:</span>
+                            <span>{{item.SendStorageName}}</span>
                         </section>
                         <section class="content">
-                            <div>品类:{{item.CategoryNum}}</div>
-                        </section>
-                        <section class="content">
-                            <div>数量:{{item.GoodsTotalNum}}</div>
+                            <span>品类:</span>
+                            <span>
+                                <b class="count">{{item.CategoryNum}}</b>, 数量:
+                                <b class="number">{{item.GoodsTotalNum}}</b>
+                                <span class="total">总计:￥<b class="money">{{item.TotalMoney}}</b></span>
+                            </span>
                         </section>
                     </section>
                 </section>
             </div>
-            <ul v-else class="animation_opactiy">
-                <li class="list_back_li" v-for="item in 10" :key="item">
-                    <img src="../../../images/shop_back_svg.svg"  class="list_back_svg">
-                </li>
-            </ul>
-            <p v-if="touchend" class="empty_data">没有更多了</p>
-            <aside class="return_top" @click="backTop" v-if="showBackStatus">
-                <svg class="back_top_svg">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
-                </svg>
-            </aside>
-            <transition name="loading">
-                <loading v-show="showLoading"></loading>
-            </transition>
-        </div>
+        </section>
+    
+        <ul v-else class="animation_opactiy">
+            <li class="list_back_li" v-for="item in 10" :key="item">
+                <img src="../../../images/shop_back_svg.svg" class="list_back_svg">
+            </li>
+        </ul>
+        <p v-if="touchend" class="empty_data">没有更多了</p>
+        <aside class="return_top" @click="backTop" v-if="showBackStatus">
+            <svg class="back_top_svg">
+                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
+            </svg>
+        </aside>
+        <transition name="loading">
+            <loading v-show="showLoading"></loading>
+        </transition>
         <foot-guide></foot-guide>
     </div>
 </template>
 
 <script>
-import { mapState,mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import { loadMore } from 'src/components/common/mixin'
 import { showBack, animate } from 'src/config/mUtils'
-import { apiGetForeignSaleOrderList,
-         apiGetForeignSaleReturnOrderList, 
-         apiGetRetailOrderList,
-         apiGetRetailReturnOrderList,
-} from 'src/service/getData'
-import loading from '../../../components/common/loading'
+import loading from 'src/components/common/loading'
 import footGuide from 'src/components/footer/foot-guide'
+
+import {
+    apiGetForeignSaleOrderList,
+    apiGetForeignSaleReturnOrderList,
+    apiGetRetailOrderList,
+    apiGetRetailReturnOrderList,
+} from 'src/service/getData'
+
 
 export default {
     data() {
@@ -298,13 +302,15 @@ export default {
             touchend: false,                                        //没有更多数据
         }
     },
+
+    mounted() {
+        this.initData();
+    },
     components: {
         loading,
         footGuide,
     },
-    mounted() {
-        this.initData();
-    },
+    mixins: [loadMore,],
     computed: {
         ...mapState([
             'curCustomer',
@@ -326,7 +332,7 @@ export default {
             this.bizType = bizType;
         },
         hasSelectedBizType(bizType) {
-            if(bizType == this.bizType) return true;
+            if (bizType == this.bizType) return true;
             return false;
         },
         // 点击某个排序方式，获取事件对象的data值，并根据获取的值重新获取数据渲染
@@ -385,22 +391,22 @@ export default {
             this.orderList = [...res.Items];
         },
         async getOrders() {
-            if(this.bizType == 12012){
+            if (this.bizType == 12012) {
                 // 销售订单
                 return await apiGetForeignSaleOrderList(this.userInfo.UserId, 0, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
-            }else if(this.bizType== (0-12012)){
+            } else if (this.bizType == (0 - 12012)) {
                 // 订单退回
                 return await apiGetForeignSaleReturnOrderList(this.userInfo.UserId, 0, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
-            }else if(this.bizType == 12032){
+            } else if (this.bizType == 12032) {
                 // 销售出库
                 return await apiGetRetailOrderList(this.userInfo.UserId, 0, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
-            }else if(this.bizType == (0-12032)){
+            } else if (this.bizType == (0 - 12032)) {
                 // 销售出库退回
                 return await apiGetRetailReturnOrderList(this.userInfo.UserId, 0, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
-            }else if(this.bizType == 22022){
+            } else if (this.bizType == 22022) {
                 // 预收款
                 // 需要补充api
-                return []; 
+                return [];
             }
             return [];
         },
@@ -429,8 +435,8 @@ export default {
             this.preventRepeatReuqest = false;
         },
         // 选定某订单
-        selectOrder(orderId){
-            this.$router.push({path:'/order/detail/', query: { Id: orderId,bizType:this.bizType }});
+        selectOrder(orderId) {
+            this.$router.push({ path: '/order/detail/', query: { Id: orderId, bizType: this.bizType } });
         },
         // 返回顶部
         backTop() {
@@ -459,82 +465,45 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-.orderList_container {
-    padding-bottom: 2rem;
-    margin-top: 3.7rem;
+@import '../order';
+
+.page {
+    margin-top: 1.275rem;
+    margin-bottom: 2.2rem;
+
+    #header_search .header_search_icon {
+        @include indent05;
+        margin-top: .275rem;
+    }
+
     .m-list {
+        margin-top: .4rem;
+        header {
+            background-color: $background-light-color;
+            @include indent10;
+            @include sc(.65rem, $font-color);
+        }
         .item {
-            @include fj();
-            .item-left {
-                margin: .2rem;
-                .icon {
-                    @include wh(2.7rem, 2.7rem);
-                    display: block;
+            @include indent10;
+            .title {
+                flex: auto;
+                display: block;
+               
+                .name{
+                     width: 9rem;
                 }
             }
-            .item-right {
-                flex: auto;
-                .title {
-                    .level {
-                        @include sc(.6rem, $font-color1);
-                    }
-                }
-                .detail {
-                    padding-top: 0.25rem;
-                    border-top: 0.025rem solid #f1f1f1;
-                    li {
-                        font-size: 0;
-                        span {
-                            font-size: .5rem;
-                            vertical-align: middle;
-                            display: inline-block;
-                            margin-bottom: 0.2rem;
-                        }
-                    }
-                }
+            .time {
+                position: absolute;
+                right: 0.55rem;
+                top: 0.65rem;
             }
 
-            .distance {
-                margin-top: 1rem;
-                text-align: center;
-                @include sc(.6rem, $font-color1);
+            .total{
+                position: absolute;
+                right: 0.55rem;
             }
         }
     }
-}
-
-.list_back_li {
-    height: 4.85rem;
-}
-
-.loader_more {
-    @include font(0.6rem, 3);
-    text-align: center;
-    color: #999;
-}
-
-.empty_data {
-    @include sc(0.5rem, #666);
-    text-align: center;
-    line-height: 2rem;
-}
-
-.return_top {
-    position: fixed;
-    bottom: 3rem;
-    right: 1rem;
-    .back_top_svg {
-        @include wh(2rem, 2rem);
-    }
-}
-
-.loading-enter-active,
-.loading-leave-active {
-    transition: opacity 1s
-}
-
-.loading-enter,
-.loading-leave-active {
-    opacity: 0
 }
 </style>
