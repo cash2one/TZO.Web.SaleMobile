@@ -1,5 +1,5 @@
  <template>
-    <div class="page rating">
+    <div class="page rating paddingTop">
         <header-title header-title="我的资料" goback="true"></header-title>
         <section class="m-form-list">
             <section class="item start">

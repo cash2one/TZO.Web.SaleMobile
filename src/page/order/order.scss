@@ -1,11 +1,16 @@
 @import 'src/style/mixin';
+
+.page {
+    padding-top: 1.95rem;
+}
+
 .address_container {
     min-height: 3.5rem;
     @include fj;
     align-items: center;
-    padding: 0 0.7rem;
+    @include indent10;
     background: url(../../../images/address_bottom.png) left bottom repeat-x;
-    background-color: #fff;
+    background-color: $background-light-color;
     background-size: auto .12rem;
     .address_empty_left {
         display: flex;
@@ -13,15 +18,15 @@
         .location_icon {
             @include wh(.8rem, .8rem);
             fill: $blue;
-            margin-right: .2rem;
+            margin-right: .275rem;
         }
         .add_address {
-            @include sc(.7rem, #333);
+            @include sc(.7rem, $font-color);
         }
         .address_detail_container {
-            margin-left: .2rem;
+            margin-left: .275rem;
             header {
-                @include sc(.65rem, #333);
+                @include sc(.65rem, $font-color);
                 span:nth-of-type(1) {
                     font-size: .8rem;
                     font-weight: bold;
@@ -41,40 +46,27 @@
                     margin-right: .3rem;
                 }
                 p {
-                    @include sc(.55rem, #777);
+                    color:$font-color1;
                 }
             }
         }
     }
 }
 
-.scroll_container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding-top: 1.95rem;
-    overflow-y: auto;
-}
-
 .m-list {
-    header {
-        @include sc(.65rem, #999);
-    }
     .item {
         @include fj();
         .item-left {
-            margin: .2rem;
-            @include wh(.8rem, .8rem);
+            width: .8rem;
             .icon {
                 @include wh(.8rem, .8rem);
-                @include ct();
                 fill: #4cd964;
+                @include ct;
             }
         }
         .item-right {
             flex: auto;
+            padding-left: .275rem;
         }
     }
 }

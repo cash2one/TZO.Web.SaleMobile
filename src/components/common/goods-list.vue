@@ -10,9 +10,9 @@
                 </router-link>
                 <section class="item-right">
                     <section class="title">
-                        <div class="name ellipsis">
+                        <h3 class="name ellipsis">
                             <strong>{{item.GoodsName}}</strong>
-                        </div>
+                        </h3>
                     </section>
                     <section class="content">
                         <section v-for="prop in propertyList" :key="prop.Id">
@@ -20,28 +20,26 @@
                             <span>{{item.Goods.Properties['p'+prop.PropertyId]}}</span>
                         </section>
                     </section>
-                    <div class="number">
+                    <section>
                         <span>价格:</span>
-                        <span>{{item.LevelPrice}}</span>
                         <span>¥</span>
-                    </div>
+                        <span class="money">{{item.LevelPrice}}</span>
+                    </section>
                     <buy-cart :goods="item" @showMoveDot="showMoveDotFun"></buy-cart>
                     <ul class="detail">
                         <li>
                             <span>库存:</span>
-                            <span>
-                                {{item.StockNum}}
-                            </span>
+                            <b class="number">{{item.StockNum}}</b>
                             <span>{{item.Goods.Units}}</span>
                         </li>
-                        <li>
+                        <li v-if="item.RangeSaleNum">
                             <span>近{{filters.LastSaleTime}}天:</span>
-                            <span>{{item.RangeSaleNum}}</span>
+                            <b class="count">{{item.RangeSaleNum}}</b>
                             <span>{{item.Goods.Units}}</span>
                         </li>
-                        <li>
+                        <li v-if="item.LastSaleNum">
                             <span>上次销售:</span>
-                            <span>{{item.LastSaleNum}}</span>
+                            <b class="count">{{item.LastSaleNum}}</b>
                             <span>{{item.Goods.Units}}</span>
                         </li>
                     </ul>
@@ -85,7 +83,7 @@
         <transition name="toggle-cart">
             <section class="cart_food_list" v-show="showCartList&&customerCartCount">
                 <header>
-                    <h4>购物车</h4>
+                    <h3>购物车</h3>
                     <div @click="clearCart">
                         <svg>
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-remove"></use>
@@ -99,9 +97,9 @@
                             <div class="cart_list_num">
                                 <p class="ellipsis">{{item.info.GoodsName}}</p>
                             </div>
-                            <div class="cart_list_price">
+                            <div>
                                 <span>¥</span>
-                                <span>{{item.price}}</span>
+                                <span class="money">{{item.price}}</span>
                             </div>
                             <section class="cart_list_control">
                                 <span @click="removeOutCart(index)">
@@ -446,28 +444,23 @@ export default {
     padding-bottom: 2rem;
     margin-top: 3.7rem;
     .m-list {
-        flex: 1;
         .item {
             @include fj();
             .item-left {
-                margin: .2rem;
                 .icon {
                     @include wh(2.7rem, 2.7rem);
                     display: block;
                 }
             }
             .item-right {
+                margin-left: .55rem;
                 flex: auto;
                 .detail {
-                    padding-top: 0.25rem;
-                    border-top: 0.025rem solid #f1f1f1;
+                    padding-top: 0.275rem;
+                    border-top: 0.025rem solid $border-color;
                     li {
-                        font-size: 0;
                         span {
-                            font-size: .5rem;
-                            vertical-align: middle;
-                            display: inline-block;
-                            margin-bottom: 0.2rem;
+                            @include sc(.45rem, $font-color1);
                         }
                     }
                 }
@@ -475,16 +468,6 @@ export default {
         }
     }
 }
-
-.return_top {
-    position: fixed;
-    bottom: 3rem;
-    right: 1rem;
-    .back_top_svg {
-        @include wh(2rem, 2rem);
-    }
-}
-
 
 .buy_cart_container {
     position: fixed;
@@ -503,10 +486,10 @@ export default {
             padding: .4rem;
             border: 0.18rem solid #444;
             border-radius: 50%;
-            left: .5rem;
+            left: .55rem;
             top: -.7rem;
             .cart_icon {
-                @include wh(1.2rem, 1.2rem);
+                @include wh(1.3rem, 1.3rem);
             }
             .cart_list_length {
                 position: absolute;
@@ -532,17 +515,16 @@ export default {
         .cart_num {
             @include ct;
             left: 3.5rem;
-
             div {
                 color: #fff;
             }
             div:nth-of-type(1) {
+                font-family: 'Helvetica Neue', Tahoma, Arial;
                 font-size: .8rem;
                 font-weight: bold;
-                margin-bottom: .1rem;
             }
             div:nth-of-type(2) {
-                font-size: .4rem;
+                font-size: .45rem;
             }
         }
     }
@@ -556,7 +538,7 @@ export default {
         align-items: center;
         justify-content: center;
         .gotopay_button_style {
-            @include sc(.7rem, #fff);
+            @include sc(.8rem, #fff);
             font-weight: bold;
         }
     }
@@ -572,49 +554,34 @@ export default {
     z-index: 12;
     bottom: 0;
     left: 0;
-    background-color: #fff;
+    background-color: $background-light-color;
     header {
         @include fj;
         align-items: center;
-        padding: .3rem .6rem;
+        @include indent10;
         background-color: #eceff1;
         svg {
-            @include wh(.6rem, .6rem);
+            @include wh(.55rem, .55rem);
             vertical-align: middle;
         }
-        h4 {
-            @include sc(.7rem, #666);
+        h3 {
+            color: $font-color1;
         }
         .clear_cart {
-            @include sc(.6rem, #666);
+            color: $font-color1;
         }
     }
     .cart_food_details {
-        background-color: #fff;
+        background-color: $background-light-color;
         max-height: 20rem;
         overflow-y: auto;
         .cart_food_li {
             @include fj;
-            padding: .6rem .5rem;
+            padding: .55rem .55rem;
             .cart_list_num {
                 width: 55%;
                 p:nth-of-type(1) {
-                    @include sc(.7rem, #666);
-                    font-weight: bold;
-                }
-                p:nth-of-type(2) {
-                    @include sc(.4rem, #666);
-                }
-            }
-            .cart_list_price {
-                font-size: 0;
-                span:nth-of-type(1) {
-                    @include sc(.6rem, #f60);
-                    font-family: Helvetica Neue, Tahoma;
-                }
-                span:nth-of-type(2) {
-                    @include sc(.7rem, #f60);
-                    font-family: Helvetica Neue, Tahoma;
+                    @include sc(.65rem, $font-color1);
                     font-weight: bold;
                 }
             }

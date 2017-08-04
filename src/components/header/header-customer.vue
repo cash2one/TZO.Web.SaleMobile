@@ -20,9 +20,11 @@
                     </svg>
                 </section>
                 <router-link :to="'/customer/detail/'+curCustomer.CustomerId" class="description_right">
-                    <h4 class="description_title ellipsis">{{curCustomer.BizObj.Name}}</h4>
-                    <p class="description_text">{{curCustomer.CustomerLevelName}}</p>
-                    <p v-for="item in curCustomer.BizObj.Phones" :key="item.Id" class="description_text">{{item.Contact}}:{{item.PhoneNum}}</p>
+                    <h2 class="description_title ellipsis">
+                        <strong>{{curCustomer.BizObj.Name}}</strong>
+                    </h2>
+                    <p>{{curCustomer.CustomerLevelName}}</p>
+                    <p v-for="item in curCustomer.BizObj.Phones" :key="item.Id">{{item.Contact}}:{{item.PhoneNum}}</p>
                 </router-link>
                 <router-link to="/customer/sgin-in">
                     <svg class="sign_in">
@@ -40,24 +42,24 @@
             </footer>
         </section>
         <!-- <section class="shop_status_container">
-    					<div class="shop_status_header">
-    						<router-link to="/path">
-    							<span class="shop_detail_title">路线</span>
-    						</router-link>
-    						<svg style="width:24px;height:24px">
-    							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
-    						</svg>
-    						<router-link to="location">
-    							<span class="identification_detail">定位</span>
-    							<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-    								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
-    							</svg>
-    						</router-link>
-    					</div>
-    				</section> -->
+        					<div class="shop_status_header">
+        						<router-link to="/path">
+        							<span class="shop_detail_title">路线</span>
+        						</router-link>
+        						<svg style="width:24px;height:24px">
+        							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
+        						</svg>
+        						<router-link to="location">
+        							<span class="identification_detail">定位</span>
+        							<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
+        								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
+        							</svg>
+        						</router-link>
+        					</div>
+        				</section> -->
         <section class="status_container">
             <router-link to="/shop/shopDetail/shopSafe" class="header">
-                <span class="title">业务情况</span>
+                <h3>业务情况</h3>
                 <div>
                     <span class="detail">详情</span>
                     <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
@@ -69,17 +71,17 @@
                 <ul class="clear">
                     <router-link :to="'/customer/oughtrec/'+curCustomer.CustomerId" tag="li" class="info-data-link">
                         <span class="info-data-top">
-                            <b>{{curCustomer.OughtRecMoney}}</b> 元</span>
+                            <strong class="count">{{curCustomer.OughtRecMoney}}</strong> 元</span>
                         <span class="info-data-bottom">欠款金额</span>
                     </router-link>
                     <router-link :to="'/customer/reconciliation/'+curCustomer.CustomerId" tag="li" class="info-data-link">
                         <span class="info-data-top">
-                            <b>{{curCustomer.ChargeOffMoney}}</b> 元</span>
+                            <strong class="money">{{curCustomer.ChargeOffMoney}}</strong> 元</span>
                         <span class="info-data-bottom">出账金额</span>
                     </router-link>
                     <router-link to="/order/detail" tag="li" class="info-data-link">
                         <span class="info-data-top">
-                            <b>{{curCustomer.SaleCount}}</b> 个</span>
+                            <strong class="number">{{curCustomer.SaleCount}}</strong> 个</span>
                         <span class="info-data-bottom">订单数量</span>
                     </router-link>
                 </ul>
@@ -115,9 +117,10 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-.customer_header{
-    padding-bottom: 1.95rem;
+.customer_header {
+    height: 1.95rem;
 }
+
 .customer_detail_header {
     overflow: hidden;
     position: relative;
@@ -133,13 +136,12 @@ export default {
         position: relative;
         z-index: 10;
         background-color: rgba(119, 103, 137, .43);
-        padding: 0.4rem 0 0.4rem 0.4rem;
-        width: 100%;
-        overflow: hidden;
+        @include indent10;
         .description_top {
+            margin-top: .275rem;
             display: flex;
             .description_left {
-                margin-right: 0.3rem;
+                margin-right: 0.275rem;
                 .icon,
                 img {
                     @include wh(2.9rem, 2.9rem);
@@ -150,35 +152,27 @@ export default {
             .description_right {
                 flex: 1;
                 .description_title {
-                    @include sc(.8rem, #fff);
-                    font-weight: bold;
-                    width: 100%;
-                    margin-bottom: 0.3rem;
+                    margin-bottom: 0.275rem;
+                    color: $blue-font-color;
                 }
-                .description_text {
-                    @include sc(.5rem, #fff);
-                    margin-bottom: 0.3rem;
+                p {
+                    color: $blue-font-color;
                 }
             }
             .sign_in {
                 position: absolute;
-                top: 1rem;
+                top: 2rem;
                 right: .8rem;
                 z-index: 11;
                 width: 2rem;
                 height: 2rem;
-                color: #fff;
             }
         }
         .description_footer {
             @include fj;
-            margin-top: 0.5rem;
-            padding-right: 1.3rem;
+            margin-top: 0.275rem;
             p {
-                @include sc(.5rem, #fff);
-                span {
-                    color: #fff;
-                }
+                color: $blue-font-color;
             }
             .ellipsis {
                 width: 84%;
@@ -188,24 +182,25 @@ export default {
 }
 
 .status_container {
-    background-color: #fff;
-    margin-bottom: .4rem;
+    background-color: $background-light-color;
+    margin-bottom: .275rem;
     .header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        line-height: 1.8rem;
-        padding: 0 .6rem;
-        border-bottom: 0.025rem solid #f1f1f1;
-        .title {
-            @include sc(.75rem, #333);
+        line-height: 1.5rem;
+        padding: 0 .55rem;
+        border-bottom: 1px solid $border-color;
+        h3 {
+            color: $font-color1;
         }
         .detail {
-            @include sc(.7rem, #bbb);
+            color: $font-color2;
             vertical-align: middle;
+            padding-right: .275rem;
         }
         svg {
-            @include wh(.6rem, .6rem);
+            @include wh(.45rem, .45rem);
             vertical-align: middle;
         }
     }

@@ -65,8 +65,8 @@ h2 {
 }
 
 h3 {
-    font-size: .7rem;
-    line-height: 1.04rem;
+    font-size: .65rem;
+    line-height: .975rem;
 }
 
 body{
@@ -168,10 +168,20 @@ small{
 
 .number {
     display: inline-block;
-    span {
-        font-family: 'Helvetica Neue', Tahoma, Arial;
-        color: $red;
-    }
+    font-family: 'Helvetica Neue', Tahoma, Arial;
+    @include sc(.8rem, $green);
+}
+
+.count {
+    display: inline-block;
+    font-family: 'Helvetica Neue', Tahoma, Arial;
+    @include sc(.8rem, $orange);
+}
+
+.money {
+    display: inline-block;
+    font-family: 'Helvetica Neue', Tahoma, Arial;
+    @include sc(.8rem, $red);
 }
 
 #header_title {
@@ -255,46 +265,25 @@ small{
                 display: block;
                 width: 100%;
                 text-align: center;
+                color: $font-color1;
             }
             .info-data-top {
-                @include sc(.55rem, $font-color);
                 padding: .853333rem 0 .453333rem;
-                b {
-                    display: inline-block;
-                    @include sc(.8rem, #f90);
-                    font-weight: 700;
-                    line-height: 1rem;
-                    font-family: Helvetica Neue, Tahoma;
-                }
             }
             .info-data-bottom {
-                @include sc(.57333rem, $font-color1);
-                font-weight: 400;
+                color: $font-color1;
                 padding-bottom: .453333rem;
-            }
-        }
-        .info-data-link:nth-of-type(2) {
-            .info-data-top {
-                b {
-                    color: #ff5f3e;
-                }
             }
         }
         .info-data-link:nth-of-type(3) {
             border: 0;
-            .info-data-top {
-                b {
-                    color: #6ac20b;
-                }
-            }
         }
     }
 }
 
 .m-form-list{
     .item {
-        margin-top: 0;
-        padding: .3rem .4rem .3rem .7rem;
+        @include indent10();
         @include fj();
         align-items: center;
         border-top: 1px solid $border-color;
@@ -315,7 +304,7 @@ small{
             line-height: 1.5rem;
             p {
                 text-align: left;
-                padding-right: .3rem;
+                padding-right: .275rem;
                 @include sc(.6rem, $font-color1);
                 font-weight: 400;
                 font-family: Arial;
@@ -343,7 +332,7 @@ small{
     }
     .title {
         padding: .4rem .4rem;
-        @include sc(.5rem, $font-color1);
+        @include sc(.55rem, $font-color1);
     }
 }
 
@@ -398,7 +387,7 @@ small{
 .m-list {
     header{
         @include indent05();
-        color: $font-color1;
+        @include sc(.65rem, $font-color1);
     }
     header + .item{
         border-top: 1px solid $border-color;
@@ -412,18 +401,28 @@ small{
         overflow: hidden;
         .title{
             @include fj();
-            margin: .2rem 0;
+            margin: .275rem 0;
         }
         .content {
-            color: $font-color2;
-            margin:.2rem 0;
+            color: $font-color1;
+            margin:.275rem 0;
+            span {
+                color: $font-color1;
+            }
         }
     }
 }
 
+.list_back_li {
+	height: 4.85rem;
+	.list_back_svg {
+		@include wh(100%, 100%)
+	}
+}
+
 .m-sort{
-    background-color: #fff;
-    border-bottom: 0.025rem solid #f1f1f1;
+    background-color: $background-light-color;
+    border-bottom: 1px solid $border-color;
     position: fixed;
     top: 1.95rem;
     right: 0;
@@ -432,7 +431,6 @@ small{
     z-index: 13;
     box-sizing: border-box;
     .sort_item {
-        @include sc(0.55rem, #444);
         @include wh(33.3%, 1.6rem);
         text-align: center;
         line-height: 1rem;
@@ -440,18 +438,18 @@ small{
             @include wh(100%, 100%);
             position: relative;
             z-index: 14;
-            background-color: #fff;
+            background-color: $background-light-color;
             box-sizing: border-box;
-            padding-top: .3rem;
+            padding-top: .275rem;
             .sort_item_border {
-                height: 1rem;
-                border-right: 0.025rem solid $bc;
+                height: 1.05rem;
+                border-right: 0.025rem solid $border-color;
             }
         }
         .sort_icon {
             vertical-align: middle;
             transition: all .3s;
-            fill: #666;
+            fill: $font-color1;
         }
     }
     .choose_type {
@@ -482,38 +480,38 @@ small{
         display: flex;
         top: 1.6rem;
         left: 0;
-        border-top: 0.025rem solid $bc;
-        background-color: #fff;
+        border-top: 1px solid $border-color;
+        background-color: $background-light-color;
     }
     .category_container {
         .category_left {
             flex: 1;
-            background-color: #f1f1f1;
+            background-color: $background-color;
             height: 16rem;
             overflow-y: auto;
             span {
-                @include sc(0.5rem, #666);
+                @include sc(0.55rem, $font-color1);
                 line-height: 1.8rem;
             }
             .category_left_li {
                 @include fj;
-                padding: 0 0.5rem;
+                padding: 0 0.55rem;
                 .category_icon {
                     @include wh(.8rem, .8rem);
                     vertical-align: middle;
-                    margin-right: .2rem;
+                    margin-right: .275rem;
                 }
                 .category_count {
                     background-color: #ccc;
-                    @include sc(.4rem, #fff);
+                    @include sc(.45rem, #fff);
                     padding: 0 .1rem;
-                    border: 0.025rem solid #ccc;
                     border-radius: 0.8rem;
                     vertical-align: middle;
-                    margin-right: 0.25rem;
+                    margin-right: 0.275rem;
                 }
                 .category_arrow {
-                    vertical-align: middle;
+                    margin-top: .5rem;
+                    @include wh(.8rem, .8rem);
                 }
             }
             .category_active {
@@ -522,23 +520,24 @@ small{
         }
         .category_right {
             flex: 1;
-            background-color: #fff;
-            padding-left: 0.5rem;
+            background-color: $background-light-color;
+            padding-left: .55rem;
+            padding-right: .55rem;
             height: 16rem;
             overflow-y: auto;
             .category_right_li {
                 @include fj;
                 height: 1.8rem;
                 line-height: 1.8rem;
-                padding-right: 0.5rem;
-                border-bottom: 0.025rem solid $bc;
+                padding-right: 0.55rem;
+                border-bottom: 1px solid $border-color;
                 display: flex;
                 align-items: center;
                 span {
-                    color: #666;
+                    color: $font-color1;
                 }
                 svg {
-                    @include wh(0.6rem, 0.6rem);
+                    @include wh(0.55rem, 0.55rem);
                 }
             }
             .category_right_choosed {
@@ -555,19 +554,20 @@ small{
             display: flex;
             align-items: center;
             svg {
-                @include wh(0.7rem, 0.7rem);
-                margin: 0 .3rem 0 .8rem;
+                @include wh(0.65rem, 0.65rem);
+                margin: 0 .55rem 0 .55rem;
             }
             p {
                 line-height: 2.5rem;
                 flex: auto;
+                margin-left: -.275rem;
                 text-align: left;
-                text-indent: 0.25rem;
-                border-bottom: 0.025rem solid $bc;
+                text-indent: 0.275rem;
+                border-bottom: 1px solid $border-color;
                 @include fj;
                 align-items: center;
                 span {
-                    color: #666;
+                    color: $font-color1;
                 }
             }
             .sort_select {
@@ -580,48 +580,36 @@ small{
     .filter_container {
         flex-direction: column;
         align-items: flex-start;
-        min-height: 10.6rem;
-        background-color: #f1f1f1;
+        background-color: $background-color;
         .filter_header_style {
-            @include sc(0.4rem, #333);
-            line-height: 1.5rem;
-            height: 1.5rem;
+            @include indent10();
+            @include sc(.45rem, $font-color1);
             text-align: left;
-            padding-left: .5rem;
-            background-color: #fff;
+            background-color: $background-light-color;
         }
         .filter_ul {
             display: flex;
             flex-wrap: wrap;
-            padding: 0 0.5rem;
-            background-color: #fff;
+            padding: 0 .55rem;
+            background-color: $background-light-color;
             .filter_li {
                 display: flex;
                 align-items: center;
-                border: 0.025rem solid #eee;
+                border: 1px solid $border-color;
                 @include wh(4.7rem, 1.4rem);
-                margin-right: 0.25rem;
+                margin-right: 0.275rem;
                 border-radius: 0.125rem;
-                padding: 0 0.25rem;
-                margin-bottom: 0.25rem;
+                padding: 0 0.275rem;
+                margin-bottom: 0.275rem;
                 svg {
                     @include wh(.8rem, .8rem);
                     margin-right: 0.125rem;
                 }
                 span {
-                    @include sc(0.4rem, #333);
-                }
-                .filter_icon {
-                    @include wh(.8rem, .8rem);
-                    font-size: 0.5rem;
-                    border: 0.025rem solid $bc;
-                    border-radius: 0.15rem;
-                    margin-right: 0.25rem;
-                    line-height: .8rem;
-                    text-align: center;
+                    @include sc(0.45rem, $font-color);
                 }
                 .activity_svg {
-                    margin-right: .25rem;
+                    margin-right: .275rem;
                 }
                 .selected_filter {
                     color: $blue;
@@ -630,9 +618,9 @@ small{
         }
         .confirm_filter {
             display: flex;
-            background-color: #f1f1f1;
+            background-color: $background-color;
             width: 100%;
-            padding: .3rem .2rem;
+            padding: .55rem;
             .filter_button_style {
                 @include wh(50%, 1.8rem);
                 font-size: 0.8rem;
@@ -640,23 +628,40 @@ small{
                 border-radius: 0.2rem;
             }
             .clear_all {
-                background-color: #fff;
+                background-color: $background-light-color;
                 margin-right: .5rem;
-                border: 0.025rem solid #fff;
             }
             .confirm_select {
                 background-color: #56d176;
-                color: #fff;
-                border: 0.025rem solid #56d176;
+                color: $blue-font-color;
                 span {
-                    color: #fff;
+                    color: $blue-font-color;
                 }
             }
         }
     }
 }
 
+.loader_more {
+	@include font(0.6rem, 3);
+	text-align: center;
+	color: #999;
+}
 
+.empty_data {
+	@include sc(0.5rem, #666);
+	text-align: center;
+	line-height: 2rem;
+}
+
+.return_top {
+	position: fixed;
+	bottom: 3rem;
+	right: 1rem;
+	.back_top_svg {
+		@include wh(2rem, 2rem);
+	}
+}
 
 // 页面切换动画
 .router-fade-enter-active {
@@ -677,4 +682,14 @@ small{
 .router-slid-leave-active {
     transform: translate3d(2rem, 0, 0);
     opacity: 0;
+}
+
+.loading-enter-active,
+.loading-leave-active {
+	transition: opacity 1s
+}
+
+.loading-enter,
+.loading-leave-active {
+	opacity: 0
 }

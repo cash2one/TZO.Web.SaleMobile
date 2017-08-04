@@ -1,5 +1,5 @@
 <template>
-	<section class="home_container">
+	<section class="page">
 		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="position:absolute;width:0;height:0">
 			<defs>
 				<symbol viewBox="0 0 1024 1024" id="home_order">
@@ -113,19 +113,12 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-.home_container {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-}
 
 .msite_nav {
-	padding-top: .5rem;
-	background-color: #fff;
-	border-bottom: 0.025rem solid $bc;
-	height: 9.4rem;
+	padding-top: .55rem;
+	background-color: $background-light-color;
+	border-bottom: 1px solid $bc;
+	height: 9rem;
 	.swiper-container {
 		@include wh(100%, auto);
 		padding-bottom: 1.2rem;
@@ -143,17 +136,17 @@ export default {
 	flex-wrap: wrap;
 	.link {
 		width: 25%;
-		padding: 0.3rem 0rem;
+		padding: 0.275rem 0rem;
 		@include fj(center);
 		figure {
 			text-align: center;
 			svg {
-				margin-bottom: 0.3rem;
+				margin-bottom: 0.275rem;
 				@include wh(1.5rem, 1.5rem);
 			}
 			figcaption {
 				text-align: center;
-				@include sc(0.55rem, #666);
+				color: $font-color1;
 			}
 		}
 	}

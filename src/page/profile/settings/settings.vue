@@ -1,5 +1,5 @@
 <template>
-    <div class="page rating">
+    <div class="page rating paddingTop">
         <header-title header-title="设置" goback="true"></header-title>
         <select-slid-up title="订单仓库" :model="orderStorage" :selected="chooseOrderStorage" :items="storageList"></select-slid-up>
         <select-slid-up title="移动仓库" :model="curStorage" :selected="chooseStorage" :items="storageList"></select-slid-up>

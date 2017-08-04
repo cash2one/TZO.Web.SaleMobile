@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <header-title header-title="订单确认" go-back='true'></header-title>
-        <section v-if="!showLoading" class="scroll_container">
+        <section v-if="!showLoading">
             <router-link :to="{name:'order-confirm-address'}" class="address_container">
                 <div class="address_empty_left">
                     <svg class="location_icon">
@@ -25,7 +25,9 @@
             </router-link>
             <select-slid-up title="支付方式" :model="charge" :selected="chooseChargeType" :items="chargeTypeList"></select-slid-up>
             <router-link :to="{name:'order-confirm-ship-express'}" class="delivery_model container_style">
-                <p class="deliver_text">{{cart.storage.Name}}</p>
+                <h2>
+                    <strong>{{cart.storage.Name}}</strong>
+                </h2>
                 <section class="deliver_time">
                     <p>配送方式 | {{cart.ship.Name}} </p>
                     <p v-if="cart.ship.TypeCode==1 && cart.express.Name">{{cart.express.Name}}</p>
@@ -34,10 +36,10 @@
             <section class="m-list">
                 <header>{{bizObj.Name}}</header>
                 <section v-for="(item,index) in cart.items" :key="index" class="item" @click="showEditItem(item)">
-                    <section class="title ellipsis">
-                        <section class="name">
+                    <section class="title">
+                        <h3 class="name ellipsis">
                             <strong>{{item.info.GoodsName}}</strong>
-                        </section>
+                        </h3>
                         <section class="content">
                             <section v-for="prop in propertyList" :key="prop.Id">
                                 <span>{{prop.PropertyName}}</span>:
@@ -45,17 +47,26 @@
                             </section>
                         </section>
                     </section>
-                    <div class="number">
-                        <span>x {{item.num}}</span>
-                        <span>¥{{item.price}}</span>
+                    <div class="detail">
+                        <div>
+                            <span>x</span>
+                            <span class="number">{{item.num}}</span>
+                        </div>
+                        <div>
+                            <span>¥</span>
+                            <span class="money">{{item.price}}</span>
+                        </div>
                     </div>
                 </section>
             </section>
-            <section class="container_style">
-                <router-link :to="{name:'order-confirm-remark'}" class="header_style">
-                    <span>订单备注</span>
-                    <div class="more_type">
-                        <span class="ellipsis">{{cart.remark}}</span>
+            <section class="m-form-list">
+                <router-link :to="{name:'order-confirm-remark'}" class="item start end">
+                    <h2>订单备注</h2>
+                    <div class="content">
+                        <p class="ellipsis">{{cart.remark}}</p>
+                        <svg class="icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
+                        </svg>
                     </div>
                 </router-link>
             </section>
@@ -88,9 +99,9 @@
                         <span> ¥ </span>
                     </section>
                     <footer class="footer">
-                        <div class="price">
+                        <div>
                             <span>¥ </span>
-                            <span>{{editItem.num*editItem.price}}</span>
+                            <span class="money">{{editItem.num*editItem.price}}</span>
                         </div>
                         <div class="addto_cart" @click="savePrice">修改</div>
                     </footer>
@@ -251,25 +262,21 @@ export default {
 .m-list {
     margin-top: .4rem;
     header {
-        background-color: #fff;
-        padding: .7rem;
-        border-bottom: 0.025rem solid #f5f5f5;
+        background-color: $background-light-color;
+        padding: .55rem;
         @include sc(.8rem, $font-color);
     }
     .item {
-        padding: .4rem .5rem;
-        line-height: 1.8rem;
+        @include indent10;
         .title {
             flex: auto;
             display: block;
-            .content {
-                margin: 0;
-            }
+            width: 8rem;
         }
-        .number {
+        .detail {
             flex: 1;
             @include fj();
-            margin: .2rem;
+            line-height: 1.5rem;
         }
     }
 }
@@ -325,14 +332,10 @@ export default {
 
 .delivery_model {
     border-left: .2rem solid $blue;
-    padding-left: .5rem;
+    @include indent10;
     min-height: 4rem;
     @include fj;
     align-items: center;
-    .deliver_text {
-        @include sc(.8rem, #333);
-        font-weight: bold;
-    }
     .deliver_time {
         display: flex;
         flex-direction: column;
@@ -341,7 +344,7 @@ export default {
             @include sc(.7rem, $blue);
         }
         p:nth-of-type(2) {
-            @include sc(.5rem, #fff);
+            @include sc(.55rem, #fff);
             background-color: $blue;
             width: 2.4rem;
             margin-top: .5rem;
@@ -405,25 +408,11 @@ export default {
         border: 1px;
         border-bottom-left-radius: .2rem;
         border-bottom-right-radius: .2rem;
-        .price {
-            span {
-                color: #ff6000;
-            }
-            span:nth-of-type(1) {
-                font-size: .5rem;
-            }
-            span:nth-of-type(2) {
-                font-size: .8rem;
-                font-weight: bold;
-                font-family: Helvetica Neue, Tahoma;
-            }
-        }
         .addto_cart {
             @include wh(4rem, 1.3rem);
-            background-color: #3199e8;
-            border: 1px;
+            background-color: $blue;
             border-radius: 0.15rem;
-            @include sc(.6rem, #fff);
+            @include sc(.6rem, $blue-font-color);
             text-align: center;
             line-height: 1.3rem;
         }

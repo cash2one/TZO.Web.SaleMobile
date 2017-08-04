@@ -64,7 +64,7 @@ export default {
 @import 'src/style/mixin';
 
 #foot_guide {
-    background-color: #fff;
+    background-color: $background-light-color;
     position: fixed;
     z-index: 100;
     left: 0;
@@ -84,11 +84,11 @@ export default {
     .icon_style {
         @include wh(1rem, 1rem);
         margin-bottom: .1rem;
-        margin-top: .2rem;
+        margin-top: .275rem;
         fill: #ccc;
     }
     span {
-        @include sc(.45rem, #666);
+        @include sc(.45rem, $font-color1);
     }
 }
 </style>

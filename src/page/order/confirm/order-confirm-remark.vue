@@ -3,7 +3,7 @@
         <header-title header-title="订单备注" goback="true"></header-title>
         <section v-if="!showLoading">
             <section class="input_remark quick_remark">
-                <header class="header_style">其他备注</header>
+                <h3>其他备注</h3>
                 <textarea class="input_text" v-model="inputText" placeholder="请输入备注内容(可不填)"></textarea>
             </section>
             <div class="determine" @click="confirmRemark">确定</div>
@@ -60,29 +60,24 @@ export default {
 @import 'src/style/mixin';
 @import '../order';
 
-.header_style {
-    @include sc(.65rem, #333);
-    line-height: 2rem;
-}
-
 .input_remark {
-    background-color: #fff;
+    background-color: $background-light-color;
     .input_text {
         width: 100%;
-        background-color: #f9f9f9;
-        border: 0.025rem solid #eee;
+        background-color: $background-color;
+        border: 1px solid $border-color;
         resize: none;
         min-height: 4.5rem;
         border-radius: .2rem;
-        @include sc(.6rem, #666);
-        padding: .5rem;
+        @include sc(.55rem, $font-color);
+        @include indent10;
     }
 }
 
 .quick_remark {
     background-color: #fff;
     margin-top: .4rem;
-    padding: 0 .6rem 1rem;
+    padding: 0 .55rem 1rem;
 }
 
 
