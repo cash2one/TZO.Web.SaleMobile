@@ -1,63 +1,65 @@
 <template>
     <section class="page">
-        <router-link to="/profile/info" class="profile-link">
-            <!--<img :src="imgBaseUrl + userInfo.avatar" class="privateImage" v-if="userInfo&&userInfo.user_id" />-->
-            <span class="privateImage">
-                <svg class="privateImage-svg">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#avatar-default"></use>
-                </svg>
-            </span>
-            <div class="user-info">
-                <p>{{userInfo.UserName}}</p>
-                <p>
-                    <span class="user-icon">
-                        <svg class="icon-mobile" fill="#fff">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
-                        </svg>
-                    </span>
-                    <span class="icon-mobile-number">{{userInfo.Telephone}}</span>
-                </p>
-            </div>
-            <span class="arrow">
-                <svg class="arrow-svg" fill="#fff">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
-                </svg>
-            </span>
-        </router-link>
-        <section class="info-data">
-            <ul class="clear">
-                <router-link to="/balance" tag="li" class="info-data-link">
-                    <span class="info-data-top">
-                        <strong class="count">11.00</strong>元</span>
-                    <span class="info-data-bottom">销售</span>
-                </router-link>
-                <router-link to="/benefit" tag="li" class="info-data-link">
-                    <span class="info-data-top">
-                        <strong class="money">111.00</strong>元</span>
-                    <span class="info-data-bottom">退货</span>
-                </router-link>
-                <router-link to="/points" tag="li" class="info-data-link">
-                    <span class="info-data-top">
-                        <strong class="number">222.00</strong>元</span>
-                    <span class="info-data-bottom">收款</span>
-                </router-link>
-            </ul>
-        </section>
-        <section class="m-form-list">
-            <router-link to='/profile/settings' class="item start end">
-                <h2>
-                    <svg class="icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#settings"></use>
+        <section class="scroll_container">
+            <router-link to="/profile/info" class="profile-link">
+                <!--<img :src="imgBaseUrl + userInfo.avatar" class="privateImage" v-if="userInfo&&userInfo.user_id" />-->
+                <span class="privateImage">
+                    <svg class="privateImage-svg">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#avatar-default"></use>
                     </svg>
-                    设置
-                </h2>
-                <div class="content">
-                    <p></p>
-                    <svg class="icon">
+                </span>
+                <div class="user-info">
+                    <p>{{userInfo.UserName}}</p>
+                    <p>
+                        <span class="user-icon">
+                            <svg class="icon-mobile" fill="#fff">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#mobile"></use>
+                            </svg>
+                        </span>
+                        <span class="icon-mobile-number">{{userInfo.Telephone}}</span>
+                    </p>
+                </div>
+                <span class="arrow">
+                    <svg class="arrow-svg" fill="#fff">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
                     </svg>
-                </div>
+                </span>
             </router-link>
+            <section class="info-data">
+                <ul class="clear">
+                    <router-link to="/balance" tag="li" class="info-data-link">
+                        <span class="info-data-top">
+                            <strong class="count">11.00</strong>元</span>
+                        <span class="info-data-bottom">销售</span>
+                    </router-link>
+                    <router-link to="/benefit" tag="li" class="info-data-link">
+                        <span class="info-data-top">
+                            <strong class="money">111.00</strong>元</span>
+                        <span class="info-data-bottom">退货</span>
+                    </router-link>
+                    <router-link to="/points" tag="li" class="info-data-link">
+                        <span class="info-data-top">
+                            <strong class="number">222.00</strong>元</span>
+                        <span class="info-data-bottom">收款</span>
+                    </router-link>
+                </ul>
+            </section>
+            <section class="m-form-list">
+                <router-link to='/profile/settings' class="item start end">
+                    <h2>
+                        <svg class="icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#settings"></use>
+                        </svg>
+                        设置
+                    </h2>
+                    <div class="content">
+                        <p></p>
+                        <svg class="icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
+                        </svg>
+                    </div>
+                </router-link>
+            </section>
         </section>
         <transition name="router-slid" mode="out-in">
             <router-view></router-view>

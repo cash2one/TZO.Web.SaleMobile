@@ -158,6 +158,16 @@ small{
     }
 }
 
+.scroll_container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    background-color: $background-color
+}
+
 .icon{
     @include wh(1.3rem,1.3rem);
     fill: $icon-color;
