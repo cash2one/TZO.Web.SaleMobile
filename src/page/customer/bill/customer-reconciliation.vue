@@ -117,7 +117,6 @@ export default {
             }
         }
         .item_right {
-            font-size: 0.55rem;
             flex: 1;
             .item_right_text {
                 padding-bottom: 0.25rem;

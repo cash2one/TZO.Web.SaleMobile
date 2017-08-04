@@ -116,8 +116,7 @@ export default {
                 @include wh(1.7rem, 1.7rem);
             }
         }
-        .item_right {
-            font-size: 0.55rem;
+        .item_right {           
             flex: 1;
             .item_right_text {
                 padding-bottom: 0.25rem;
