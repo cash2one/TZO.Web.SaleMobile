@@ -155,6 +155,7 @@ export default {
             .description_right {
                 flex: 1;
                 .description_title {
+                    width: 9rem;
                     margin-bottom: 0.275rem;
                     color: $blue-font-color;
                 }
