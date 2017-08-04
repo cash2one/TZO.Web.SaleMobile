@@ -1,5 +1,5 @@
  <template>
-    <div class="page paddingTop">
+    <div class="page rating">
         <header-title header-title="订单详情" goback='true'>
         </header-title>
         <div v-if="!showLoading">

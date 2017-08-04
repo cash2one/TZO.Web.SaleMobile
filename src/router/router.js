@@ -207,7 +207,11 @@ export default [{
             children: [
                 {
                     path: 'list',// 订单列表
-                    component: orderList
+                    component: orderList,
+                    children: [{
+                        path: 'detail', // 订单详情
+                        component: orderDetail
+                    }],
                 },
                 {
                     path: 'detail', // 订单详情

@@ -243,12 +243,11 @@
                 </section>
             </div>
         </section>
-    
-        <ul v-else class="animation_opactiy">
-            <li class="list_back_li" v-for="item in 10" :key="item">
-                <img src="../../../images/shop_back_svg.svg" class="list_back_svg">
-            </li>
-        </ul>
+		<section v-else class="m-list">
+			<section class="list_back_li" v-for="item in 10" :key="item">
+				<img src="../../../images/shopback.svg" class="list_back_svg">
+			</section>
+		</section>
         <p v-if="touchend" class="empty_data">没有更多了</p>
         <aside class="return_top" @click="backTop" v-if="showBackStatus">
             <svg class="back_top_svg">
@@ -257,6 +256,9 @@
         </aside>
         <transition name="loading">
             <loading v-show="showLoading"></loading>
+        </transition>
+        <transition name="router-slid" mode="out-in">
+            <router-view></router-view>
         </transition>
         <foot-guide></foot-guide>
     </div>
@@ -436,7 +438,7 @@ export default {
         },
         // 选定某订单
         selectOrder(orderId) {
-            this.$router.push({ path: '/order/detail/', query: { Id: orderId, bizType: this.bizType } });
+            this.$router.push({ path: '/order/list/detail/', query: { Id: orderId, bizType: this.bizType } });
         },
         // 返回顶部
         backTop() {
