@@ -122,9 +122,6 @@ export default {
             .item_right_text {
                 padding-bottom: 0.25rem;
                 border-bottom: 0.025rem $bc;
-                p {
-                    line-height: .9rem;
-                }
                 .pay_icon {
                     margin-bottom: -0.08rem;
                 }
