@@ -3,7 +3,7 @@
         <header-title header-title="客户资料" goback='true'>
         </header-title>
         <section class="m-form-list">
-            <div class="item start">
+            <div class="item">
                 <h2>{{customer.BizObj.Name}}</h2>
             </div>
             <div v-for="item in customer.BizObj.Phones" :key="item.id">
@@ -13,7 +13,6 @@
                 <div class="item">
                     <p class="content">电话：{{item.PhoneNum}}</p>
                 </div>
-    
             </div>
             <div v-for="item in customer.BizObj.Addrs" :key="item.id">
                 <div class="item">

@@ -1,24 +1,44 @@
 <template>
-    <div class="rating_page">
+    <div class="page rating paddingTop">
         <header-title header-title="价格详情" goback='true'>
         </header-title>
-        <section class="shop_status_info">
-            <header>客户等级价格:</header>
-            <div v-for="levelPrice in custLevelPriceSys" :key="levelPrice.Id">
-                <p>{{levelPrice.CustomerLevelName}}：{{levelPrice.Price}}</p>
+        <section class="m-form-list">
+            <div class="item">
+                <h2>客户等级价格:</h2>
+            </div>
+            <div v-for="(levelPrice, index) in custLevelPriceSys" :key="levelPrice.Id">
+                <div class="item" :class="{'end':index==custLevelPriceSys.length-1}">
+                    <p class="content">{{levelPrice.CustomerLevelName}}：{{levelPrice.Price}}</p>
+                </div>
             </div>
         </section>
-        <section class="shop_status_info">
-            <header>客户最近价格:</header>
-            <p>最高价格：{{customerPriceView.MaxPrice}}</p>
-            <p>最低价格：{{customerPriceView.MinPrice}}</p>
-            <p>上次价格：{{customerPriceView.LastPrice}}</p>
+        <section class="m-form-list" style="margin-top:.4rem">
+            <div class="item">
+                <h2>客户最近价格:</h2>
+            </div>
+            <div class="item">
+                <p class="content">最高价格：{{customerPriceView.MaxPrice}}</p>
+            </div>
+            <div class="item">
+                <p class="content">最低价格：{{customerPriceView.MinPrice}}</p>
+            </div>
+            <div class="item end">
+                <p class="content">上次价格：{{customerPriceView.LastPrice}}</p>
+            </div>
         </section>
-        <section class="shop_status_info">
-            <header>商品最近价格:</header>
-            <p>最高价格：{{refPriceView.MaxPrice}}</p>
-            <p>最低价格：{{refPriceView.MinPrice}}</p>
-            <p>上次价格：{{refPriceView.LastPrice}}</p>
+        <section class="m-form-list" style="margin-top:.4rem">
+            <div class="item">
+                <h2>商品最近价格:</h2>
+            </div>
+            <div class="item">
+                <p class="content">最高价格：{{refPriceView.MaxPrice}}</p>
+            </div>
+            <div class="item">
+                <p class="content">最低价格：{{refPriceView.MinPrice}}</p>
+            </div>
+            <div class="item end">
+                <p class="content">上次价格：{{refPriceView.LastPrice}}</p>
+            </div>
         </section>
     </div>
 </template>
@@ -64,39 +84,4 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-.rating_page {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding-top: 1.95rem;
-    background-color: #ebebeb;
-    z-index: 18;
-}
-
-.shop_status_info {
-    background-color: #fff;
-    margin-bottom: .4rem;
-    header {
-        line-height: 1.8rem;
-        padding: 0 .6rem;
-        @include sc(.75rem, #333);
-        border-bottom: 0.025rem solid #f1f1f1;
-    }
-    p {
-        @include sc(.6rem, #666);
-        padding: .7rem .6rem .7rem 0;
-        margin-left: .6rem;
-        border-bottom: 0.025rem solid #f5f5f5;
-    }
-    span {
-        color: #666;
-    }
-    p:nth-of-type(4),
-    p:nth-of-type(5) {
-        display: flex;
-        justify-content: space-between;
-    }
-}
 </style>
