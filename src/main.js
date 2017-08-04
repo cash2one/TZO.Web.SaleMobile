@@ -26,6 +26,11 @@ if (!debug)
 
 Vue.use(VueRouter)
 Vue.filter('time', function (value) {//value为13位的时间戳
+	if(value=='0001-01-01T00:00:00+00:00') 
+	{
+		return "无";
+	}
+
     function add0(m) {
         return m < 10 ? '0' + m : m
     }

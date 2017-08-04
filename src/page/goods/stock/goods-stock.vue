@@ -1,18 +1,18 @@
 <template>
     <div>
-        <header-search></header-search>
+        <header-title></header-title>
         <goods-list></goods-list>
     </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import headerSearch from 'src/components/header/header-search'
+import headerTitle from 'src/components/header/header-title'
 import goodsList from 'src/components/common/goods-list'
 
 export default {
     components: {
-        headerSearch,
+        headerTitle,
         goodsList
     },
 }
