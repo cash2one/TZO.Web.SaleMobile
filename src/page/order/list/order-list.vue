@@ -375,7 +375,7 @@ export default {
             //获取数据
             let res = await this.getOrders();
             this.orderList = [...res.Items];
-            if (res.length < 20) {
+            if (res.Items.length < 20) {
                 this.touchend = true;
             }
             this.hideLoading();
@@ -430,7 +430,7 @@ export default {
             this.hideLoading();
             this.orderList = [...this.orderList, ...res.Items];
             // 当获取数据小于20，说明没有更多数据，不需要再次请求数据
-            if (res.length < 20) {
+            if (res.Items.length < 20) {
                 this.touchend = true;
                 return
             }
