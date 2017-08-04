@@ -1,17 +1,12 @@
 <template>
     <div class="page paddingTop">
-        <header id='header_search'>
-            <section class="header_title_goback" @click="$router.go(-1)" v-show="false">
-                <svg class="icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>
-                </svg>
-            </section>
-            <section class="header_search_icon">
-                <svg class="icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-                </svg>
-            </section>
+        <header class="header_search">
             <section class="search_keyword">
+                <section class="header_search_icon">
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+                    </svg>
+                </section>
                 <input v-model="keyword" type="number" placeholder="请输入单号..." class="search_text" />
             </section>
         </header>
@@ -236,18 +231,20 @@
                             <span>
                                 <b class="count">{{item.CategoryNum}}</b>, 数量:
                                 <b class="number">{{item.GoodsTotalNum}}</b>
-                                <span class="total">总计:￥<b class="money">{{item.TotalMoney}}</b></span>
+                                <span class="total">总计:￥
+                                    <b class="money">{{item.TotalMoney}}</b>
+                                </span>
                             </span>
                         </section>
                     </section>
                 </section>
             </div>
         </section>
-		<section v-else class="m-list">
-			<section class="list_back_li" v-for="item in 10" :key="item">
-				<img src="../../../images/shopback.svg" class="list_back_svg">
-			</section>
-		</section>
+        <section v-else class="m-list">
+            <section class="list_back_li" v-for="item in 10" :key="item">
+                <img src="../../../images/shopback.svg" class="list_back_svg">
+            </section>
+        </section>
         <p v-if="touchend" class="empty_data">没有更多了</p>
         <aside class="return_top" @click="backTop" v-if="showBackStatus">
             <svg class="back_top_svg">
@@ -490,9 +487,9 @@ export default {
             .title {
                 flex: auto;
                 display: block;
-               
-                .name{
-                     width: 9rem;
+
+                .name {
+                    width: 9rem;
                 }
             }
             .time {
@@ -501,7 +498,7 @@ export default {
                 top: 0.65rem;
             }
 
-            .total{
+            .total {
                 position: absolute;
                 right: 0.55rem;
             }

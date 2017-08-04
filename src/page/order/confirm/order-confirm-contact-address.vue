@@ -1,5 +1,5 @@
 <template>
-    <section class="page rating">
+    <section class="page rating paddingTop">
         <header-title header-title="选择地址" goback="true"></header-title>
         <section v-if="!showLoading">
             <router-link v-if="false" to="/confirmOrder/chooseAddress/addAddress" class="add_icon_footer">

@@ -1,5 +1,5 @@
 <template>
-    <header id='header_title'>
+    <header class="header_title">
         <section v-if="goback" class="header_title_goback" @click="$router.go(-1)">
             <svg class="icon">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>

@@ -1,5 +1,5 @@
 <template>
-    <section class="page rating">
+    <section class="page rating paddingTop">
         <header-title header-title="订单备注" goback="true"></header-title>
         <section v-if="!showLoading">
             <section class="input_remark quick_remark">
