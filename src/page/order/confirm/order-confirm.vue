@@ -271,6 +271,7 @@ export default {
         .title {
             flex: auto;
             display: block;
+            width: 8rem;
         }
         .detail {
             flex: 1;
