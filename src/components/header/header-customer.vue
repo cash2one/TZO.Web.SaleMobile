@@ -26,6 +26,9 @@
                     <p>{{curCustomer.CustomerLevelName}}</p>
                     <p v-for="item in curCustomer.BizObj.Phones" :key="item.Id">{{item.Contact}}:{{item.PhoneNum}}</p>
                 </router-link>
+                <router-link to="/customer/search" class="search">
+                    <strong>搜索</strong>
+                </router-link>
                 <router-link to="/customer/sgin-in">
                     <svg class="sign_in">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
@@ -42,21 +45,21 @@
             </footer>
         </section>
         <!-- <section class="shop_status_container">
-        					<div class="shop_status_header">
-        						<router-link to="/path">
-        							<span class="shop_detail_title">路线</span>
-        						</router-link>
-        						<svg style="width:24px;height:24px">
-        							<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
-        						</svg>
-        						<router-link to="location">
-        							<span class="identification_detail">定位</span>
-        							<svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-        								<use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
-        							</svg>
-        						</router-link>
-        					</div>
-        				</section> -->
+                        <div class="shop_status_header">
+                            <router-link to="/path">
+                                <span class="shop_detail_title">路线</span>
+                            </router-link>
+                            <svg style="width:24px;height:24px">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
+                            </svg>
+                            <router-link to="location">
+                                <span class="identification_detail">定位</span>
+                                <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
+                                </svg>
+                            </router-link>
+                        </div>
+                    </section> -->
         <section class="status_container">
             <router-link to="/shop/shopDetail/shopSafe" class="header">
                 <h3>业务情况</h3>
@@ -204,5 +207,11 @@ export default {
             vertical-align: middle;
         }
     }
+}
+
+.search {
+    @include indent05;
+    text-align: center;
+    @include sc(0.7rem, $blue-font-color);
 }
 </style>
