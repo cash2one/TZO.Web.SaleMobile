@@ -1,5 +1,5 @@
 <template>
-    <section class="profile_container">
+    <section class="page">
         <router-link to="/profile/info" class="profile-link">
             <!--<img :src="imgBaseUrl + userInfo.avatar" class="privateImage" v-if="userInfo&&userInfo.user_id" />-->
             <span class="privateImage">
@@ -28,17 +28,17 @@
             <ul class="clear">
                 <router-link to="/balance" tag="li" class="info-data-link">
                     <span class="info-data-top">
-                        <b>11.00</b>元</span>
+                        <strong class="count">11.00</strong>元</span>
                     <span class="info-data-bottom">销售</span>
                 </router-link>
                 <router-link to="/benefit" tag="li" class="info-data-link">
                     <span class="info-data-top">
-                        <b>111.00</b>元</span>
+                        <strong class="money">111.00</strong>元</span>
                     <span class="info-data-bottom">退货</span>
                 </router-link>
                 <router-link to="/points" tag="li" class="info-data-link">
                     <span class="info-data-top">
-                        <b>222.00</b>元</span>
+                        <strong class="number">222.00</strong>元</span>
                     <span class="info-data-bottom">收款</span>
                 </router-link>
             </ul>
@@ -95,13 +95,6 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-.profile_container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
 
 .profile-link {
     display: block;
@@ -111,7 +104,7 @@ export default {
     -ms-flex-align: center;
     align-items: center;
     background: $blue;
-    padding: .666667rem .6rem;
+    padding: .55rem;
     .privateImage {
         display: inline-block;
         @include wh(2.5rem, 2.5rem);
@@ -124,13 +117,13 @@ export default {
         }
     }
     .user-info {
-        margin-left: .48rem;
+        margin-left: .55rem;
         -webkit-box-flex: 1;
         -ms-flex-positive: 1;
         flex-grow: 1;
         p {
             font-weight: 700;
-            @include sc(.8rem, $fc);
+            @include sc(.8rem, $blue-font-color);
             .user-icon {
                 @include wh(0.5rem, 0.75rem);
                 display: inline-block;
@@ -142,7 +135,7 @@ export default {
             }
             .icon-mobile-number {
                 display: inline-block;
-                @include sc(.57333rem, $fc);
+                @include sc(.55rem, $blue-font-color);
             }
         }
     }
