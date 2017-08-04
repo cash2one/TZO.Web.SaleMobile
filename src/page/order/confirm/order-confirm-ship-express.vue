@@ -1,7 +1,7 @@
 <template>
-    <div class="page rating">
+    <div class="page rating paddingTop">
         <header-title header-title="配送方式" goback="true"></header-title>
-        <section v-if="!showLoading">
+        <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="m-list">
                 <header>配送方式</header>
                 <section class="item" v-for="item in shipTypeList" :key="item.Id" @click="chooseShipType(item)">

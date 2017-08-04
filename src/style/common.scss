@@ -158,6 +158,16 @@ small{
     }
 }
 
+.scroll_container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    background-color: $background-color
+}
+
 .icon{
     @include wh(1.3rem,1.3rem);
     fill: $icon-color;
@@ -184,69 +194,82 @@ small{
     @include sc(.8rem, $red);
 }
 
-#header_title {
+.header_title {
     background-color: $blue;
     position: fixed;
     z-index: 100;
     left: 0;
     top: 0;
     @include wh(100%, 1.95rem);
-}
-.header_title_goback {
-    display: inline-block;
-    margin-top: .35rem;
-    margin-left: .275rem;
-    @include wh(.8rem, .8rem);
-    .icon {
-        fill: $icon-light-color;
+    .header_title_goback {
+        display: inline-block;
+        margin-top: .35rem;
+        margin-left: .275rem;
+        @include wh(.8rem, .8rem);
+        .icon {
+            fill: $icon-light-color;
+        }
     }
-}
-.title_head {
-    @include center;
-    width: 50%;
-    color: $blue-font-color;
-    text-align: center;
-    h2 {
+    .title_head {
+        @include center;
+        width: 50%;
         color: $blue-font-color;
+        text-align: center;
+        h2 {
+            color: $blue-font-color;
+        }
     }
 }
 
-#header_search {
+.header_search {
     background-color: $blue;
     position: fixed;
     z-index: 100;
     left: 0;
     top: 0;
     @include wh(100%, 1.95rem);
-}
+    @include fj();
 
-.header_search_icon {
-    display: inline-block;
-    margin-left: .1rem;
-}
-
-.header_search_icon .icon {
-    @include wh(1.2rem, 1.2rem);
-    fill: $icon-light-color;
-}
-
-.search_keyword {
-    @include ct();
-    position: absolute;
-    left: 1.5rem;
-    right: 0.7rem;
-    .search_text {
-        @include sc(0.7rem, $blue-font-color);
-        width: 100%;
-        background-color: transparent;
-        border-bottom: #fff 2px solid;
-        padding-left: 1rem;
-        font-weight: bold;
+    .header_title_goback {
+        display: inline-block;
+        margin-top: .35rem;
+        margin-left: .275rem;
+        @include wh(.8rem, .8rem);
+        .icon {
+            fill: $icon-light-color;
+        }
     }
-    .search_text::-webkit-input-placeholder {
-        @include sc(0.65rem, #ddd);
-        font-weight: normal;
-        font-style: italic;
+    .search_keyword {
+        flex: auto;
+        display: inline-block;
+        margin-left: .55rem;
+        margin-right: .55rem;
+        margin-bottom: .35rem;
+        border-bottom: #fff 2px solid;
+        .header_search_icon {
+            display: inline-block;
+            vertical-align: middle;
+            margin-top: .4rem;
+        }
+
+        .header_search_icon .icon {
+            @include wh(1.2rem, 1.2rem);
+            fill: $icon-light-color;
+        }
+        .search_text {
+            @include sc(0.7rem, $blue-font-color);
+            background-color: transparent;
+            font-weight: bold;
+            margin-top: .4rem;
+            width: 12rem;
+            vertical-align: middle;
+        }
+
+        .search_text::-webkit-input-placeholder {
+            @include sc(0.65rem, #ddd);
+            font-weight: normal;
+            font-style: italic;
+        }
     }
 }
 

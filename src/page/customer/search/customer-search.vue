@@ -1,17 +1,17 @@
 <template>
     <div class="page">
-        <header id='header_search'>
+        <header class="header_search">
             <section class="header_title_goback" @click="$router.go(-1)">
                 <svg class="icon">
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>
                 </svg>
             </section>
-            <section class="header_search_icon">
-                <svg class="icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-                </svg>
-            </section>
             <section class="search_keyword">
+                <section class="header_search_icon">
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+                    </svg>
+                </section>
                 <input v-model="keyword" type="text" placeholder="请输关键字或拼音码" class="search_text" />
             </section>
         </header>

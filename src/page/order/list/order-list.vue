@@ -1,266 +1,265 @@
 <template>
-    <div class="page paddingTop">
-        <header id='header_search'>
-            <section class="header_title_goback" @click="$router.go(-1)" v-show="false">
-                <svg class="icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>
-                </svg>
-            </section>
-            <section class="header_search_icon">
-                <svg class="icon">
-                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-                </svg>
-            </section>
-            <section class="search_keyword">
-                <input v-model="keyword" type="number" placeholder="请输入单号..." class="search_text" />
-            </section>
-        </header>
-        <section class="m-sort">
-            <div class="sort_item" :class="{choose_type:sortBy == 'bizType'}">
-                <div class="sort_item_container" @click="chooseType('bizType')">
-                    <div class="sort_item_border">
-                        <span :class="{category_title: sortBy == 'bizType'}">业务类型</span>
-                        <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
-                            <polygon points="0,3 10,3 5,8" />
+    <div class="page">
+        <section class="scroll_container">
+            <header class="header_search">
+                <section class="search_keyword">
+                    <section class="header_search_icon">
+                        <svg class="icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
                         </svg>
-                    </div>
-                </div>
-                <transition name="showlist">
-                    <section v-show="sortBy == 'bizType'" class="category_container sort_detail_type">
-                        <section class="category_right">
-                            <ul>
-                                <li class="category_right_li" @click="selectBizType(12012)" :class="{category_right_choosed: hasSelectedBizType(12012)}">
-                                    <span>销售订单</span>
-                                    <svg v-if="hasSelectedBizType(12012)">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                </li>
-                                <li class="category_right_li" @click="selectBizType(-12012)" :class="{category_right_choosed: hasSelectedBizType(-12012)}">
-                                    <span>订单退回</span>
-                                    <svg v-if="hasSelectedBizType(-12012)">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                </li>
-                                <li class="category_right_li" @click="selectBizType(12032)" :class="{category_right_choosed: hasSelectedBizType(12032)}">
-                                    <span>销售出库</span>
-                                    <svg v-if="hasSelectedBizType(12032)">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                </li>
-                                <li class="category_right_li" @click="selectBizType(-12032)" :class="{category_right_choosed: hasSelectedBizType(-12032)}">
-                                    <span>出库退回</span>
-                                    <svg v-if="hasSelectedBizType(-12032)">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                </li>
-                            </ul>
-                        </section>
                     </section>
-                </transition>
-            </div>
-            <div class="sort_item" :class="{choose_type:sortBy == 'sort'}">
-                <div class="sort_item_container" @click="chooseType('sort')">
-                    <div class="sort_item_border">
-                        <span :class="{category_title: sortBy == 'sort'}">排序</span>
-                        <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
-                            <polygon points="0,3 10,3 5,8" />
-                        </svg>
-                    </div>
-                </div>
-                <transition name="showlist">
-                    <section v-show="sortBy == 'sort'" class="sort_detail_type">
-                        <ul class="sort_list_container">
-                            <li class="sort_list_li" @click="selectSort('SubmitTime','desc')">
-                                <svg>
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#default"></use>
-                                </svg>
-                                <p data="0" :class="{sort_select: sort.sortByFiled == 'SubmitTime'}">
-                                    <span>订单时间</span>
-                                    <svg v-if="sort.sortByFiled == 'SubmitTime'">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                </p>
-                            </li>
-                            <li class="sort_list_li" @click="selectSort('TotalMoney','desc')">
-                                <svg>
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hot"></use>
-                                </svg>
-                                <p data="1" :class="{sort_select: sort.sortByFiled == 'TotalMoney'}">
-                                    <span>订单金额</span>
-                                    <svg v-if="sort.sortByFiled == 'TotalMoney'">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                </p>
-                            </li>
-                            <li class="sort_list_li" @click="selectSort('GoodsTotalNum','desc')">
-                                <svg>
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#speed"></use>
-                                </svg>
-                                <p data="2" :class="{sort_select: sort.sortByFiled == 'GoodsTotalNum'}">
-                                    <span>商品数量</span>
-                                    <svg v-if="sort.sortByFiled == 'GoodsTotalNum'">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                </p>
-                            </li>
-                            <li class="sort_list_li" @click="selectSort('CategoryNum','desc')">
-                                <svg>
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#speed"></use>
-                                </svg>
-                                <p data="3" :class="{sort_select: sort.sortByFiled == 'CategoryNum'}">
-                                    <span>品类</span>
-                                    <svg v-if="sort.sortByFiled == 'CategoryNum'">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                </p>
-                            </li>
-                        </ul>
-                    </section>
-                </transition>
-            </div>
-            <div class="sort_item" :class="{choose_type:sortBy == 'activity'}">
-                <div class="sort_item_container" @click="chooseType('activity')">
-                    <span :class="{category_title: sortBy == 'activity'}">筛选</span>
-                    <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
-                        <polygon points="0,3 10,3 5,8" />
-                    </svg>
-                </div>
-                <transition name="showlist">
-                    <section v-show="sortBy == 'activity'" class="sort_detail_type filter_container">
-                        <section style="width: 100%;">
-                            <header class="filter_header_style">状态</header>
-                            <ul class="filter_ul">
-                                <li class="filter_li" @click="selectFilter('orderState',1)">
-                                    <svg v-show="filters.orderState == 1" class="activity_svg">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                    <span :class="{selected_filter: filters.orderState == 1}">草稿</span>
-                                </li>
-                                <li class="filter_li" @click="selectFilter('orderState',2)">
-                                    <svg v-show="filters.orderState == 2" class="activity_svg">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                    <span :class="{selected_filter: filters.orderState == 2}">已确认</span>
-                                </li>
-                                <li class="filter_li" @click="selectFilter('orderState',5)">
-                                    <svg v-show="filters.orderState == 5" class="activity_svg">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                    <span :class="{selected_filter: filters.orderState == 5}">已审核</span>
-                                </li>
-                                <li class="filter_li" @click="selectFilter('orderState',7)">
-                                    <svg v-show="filters.orderState == 7" class="activity_svg">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                    <span :class="{selected_filter: filters.orderState == 7}">已完成</span>
-                                </li>
-                            </ul>
-                        </section>
-                        <section style="width: 100%;">
-                            <header class="filter_header_style">销售</header>
-                            <ul class="filter_ul">
-                                <li class="filter_li" @click="selectFilter('OrderTime',1)">
-                                    <svg v-show="filters.OrderTime == 1" class="activity_svg">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                    <span :class="{selected_filter: filters.OrderTime == 1}">今天</span>
-                                </li>
-                                <li class="filter_li" @click="selectFilter('OrderTime',7)">
-                                    <svg v-show="filters.OrderTime == 7" class="activity_svg">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                    <span :class="{selected_filter: filters.OrderTime == 7}">一周</span>
-                                </li>
-                                <li class="filter_li" @click="selectFilter('OrderTime',30)">
-                                    <svg v-show="filters.OrderTime == 30" class="activity_svg">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                    <span :class="{selected_filter: filters.OrderTime == 30}">一月</span>
-                                </li>
-                                <li class="filter_li" @click="selectFilter('OrderTime',365)">
-                                    <svg v-show="filters.OrderTime == 365" class="activity_svg">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                    <span :class="{selected_filter: filters.OrderTime == 365}">一年</span>
-                                </li>
-                            </ul>
-                        </section>
-                        <section style="width: 100%;">
-                            <header class="filter_header_style">物流代收</header>
-                            <ul class="filter_ul">
-                                <li class="filter_li" @click="selectFilter('OnlyPayedShip')">
-                                    <svg v-show="filters.OnlyPayedShip" class="activity_svg">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                    </svg>
-                                    <span :class="{selected_filter: filters.OnlyPayedShip}">仅物流代收</span>
-                                </li>
-                            </ul>
-                        </section>
-                        <footer class="confirm_filter">
-                            <div class="clear_all filter_button_style" @click="clearSelect">清空</div>
-                            <div class="confirm_select filter_button_style" @click="confirmSelectFun">确定
-                                <span v-show="filterNum">({{filterNum}})</span>
-                            </div>
-                        </footer>
-                    </section>
-                </transition>
-            </div>
-        </section>
-        <transition name="showcover">
-            <div class="back_cover" v-show="sortBy"></div>
-        </transition>
-        <section class="m-list" v-load-more="loaderMore" v-if="orderList.length">
-            <div v-for="item in orderList" :key="item.Id" @click="selectOrder(item.Id)">
-                <section class="item">
-                    <section class="title">
-                        <h3 class="name ellipsis">
-                            <strong>{{item.CustomerName}}</strong>
-                        </h3>
-                        <section class="time">
-                            {{item.SubmitTime | time}}
-                        </section>
-                        <section class="content">
-                            <span>单号:</span>
-                            <span>{{item.BillNo}}</span>
-                        </section>
-                        <section class="content">
-                            <span>状态:</span>
-                            <span>{{item.StatusName}}</span>
-                        </section>
-                        <section class="content">
-                            <span>仓库:</span>
-                            <span>{{item.SendStorageName}}</span>
-                        </section>
-                        <section class="content">
-                            <span>品类:</span>
-                            <span>
-                                <b class="count">{{item.CategoryNum}}</b>, 数量:
-                                <b class="number">{{item.GoodsTotalNum}}</b>
-                                <span class="total">总计:￥<b class="money">{{item.TotalMoney}}</b></span>
-                            </span>
-                        </section>
-                    </section>
+                    <input v-model="keyword" type="number" placeholder="请输入单号..." class="search_text" />
                 </section>
-            </div>
+            </header>
+            <section class="m-sort">
+                <div class="sort_item" :class="{choose_type:sortBy == 'bizType'}">
+                    <div class="sort_item_container" @click="chooseType('bizType')">
+                        <div class="sort_item_border">
+                            <span :class="{category_title: sortBy == 'bizType'}">业务类型</span>
+                            <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
+                                <polygon points="0,3 10,3 5,8" />
+                            </svg>
+                        </div>
+                    </div>
+                    <transition name="showlist">
+                        <section v-show="sortBy == 'bizType'" class="category_container sort_detail_type">
+                            <section class="category_right">
+                                <ul>
+                                    <li class="category_right_li" @click="selectBizType(12012)" :class="{category_right_choosed: hasSelectedBizType(12012)}">
+                                        <span>销售订单</span>
+                                        <svg v-if="hasSelectedBizType(12012)">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                    </li>
+                                    <li class="category_right_li" @click="selectBizType(-12012)" :class="{category_right_choosed: hasSelectedBizType(-12012)}">
+                                        <span>订单退回</span>
+                                        <svg v-if="hasSelectedBizType(-12012)">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                    </li>
+                                    <li class="category_right_li" @click="selectBizType(12032)" :class="{category_right_choosed: hasSelectedBizType(12032)}">
+                                        <span>销售出库</span>
+                                        <svg v-if="hasSelectedBizType(12032)">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                    </li>
+                                    <li class="category_right_li" @click="selectBizType(-12032)" :class="{category_right_choosed: hasSelectedBizType(-12032)}">
+                                        <span>出库退回</span>
+                                        <svg v-if="hasSelectedBizType(-12032)">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                    </li>
+                                </ul>
+                            </section>
+                        </section>
+                    </transition>
+                </div>
+                <div class="sort_item" :class="{choose_type:sortBy == 'sort'}">
+                    <div class="sort_item_container" @click="chooseType('sort')">
+                        <div class="sort_item_border">
+                            <span :class="{category_title: sortBy == 'sort'}">排序</span>
+                            <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
+                                <polygon points="0,3 10,3 5,8" />
+                            </svg>
+                        </div>
+                    </div>
+                    <transition name="showlist">
+                        <section v-show="sortBy == 'sort'" class="sort_detail_type">
+                            <ul class="sort_list_container">
+                                <li class="sort_list_li" @click="selectSort('SubmitTime','desc')">
+                                    <svg>
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#default"></use>
+                                    </svg>
+                                    <p data="0" :class="{sort_select: sort.sortByFiled == 'SubmitTime'}">
+                                        <span>订单时间</span>
+                                        <svg v-if="sort.sortByFiled == 'SubmitTime'">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                    </p>
+                                </li>
+                                <li class="sort_list_li" @click="selectSort('TotalMoney','desc')">
+                                    <svg>
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#hot"></use>
+                                    </svg>
+                                    <p data="1" :class="{sort_select: sort.sortByFiled == 'TotalMoney'}">
+                                        <span>订单金额</span>
+                                        <svg v-if="sort.sortByFiled == 'TotalMoney'">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                    </p>
+                                </li>
+                                <li class="sort_list_li" @click="selectSort('GoodsTotalNum','desc')">
+                                    <svg>
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#speed"></use>
+                                    </svg>
+                                    <p data="2" :class="{sort_select: sort.sortByFiled == 'GoodsTotalNum'}">
+                                        <span>商品数量</span>
+                                        <svg v-if="sort.sortByFiled == 'GoodsTotalNum'">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                    </p>
+                                </li>
+                                <li class="sort_list_li" @click="selectSort('CategoryNum','desc')">
+                                    <svg>
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#speed"></use>
+                                    </svg>
+                                    <p data="3" :class="{sort_select: sort.sortByFiled == 'CategoryNum'}">
+                                        <span>品类</span>
+                                        <svg v-if="sort.sortByFiled == 'CategoryNum'">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                    </p>
+                                </li>
+                            </ul>
+                        </section>
+                    </transition>
+                </div>
+                <div class="sort_item" :class="{choose_type:sortBy == 'activity'}">
+                    <div class="sort_item_container" @click="chooseType('activity')">
+                        <span :class="{category_title: sortBy == 'activity'}">筛选</span>
+                        <svg width="10" height="10" xmlns="http://www.w3.org/2000/svg" version="1.1" class="sort_icon">
+                            <polygon points="0,3 10,3 5,8" />
+                        </svg>
+                    </div>
+                    <transition name="showlist">
+                        <section v-show="sortBy == 'activity'" class="sort_detail_type filter_container">
+                            <section style="width: 100%;">
+                                <header class="filter_header_style">状态</header>
+                                <ul class="filter_ul">
+                                    <li class="filter_li" @click="selectFilter('orderState',1)">
+                                        <svg v-show="filters.orderState == 1" class="activity_svg">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                        <span :class="{selected_filter: filters.orderState == 1}">草稿</span>
+                                    </li>
+                                    <li class="filter_li" @click="selectFilter('orderState',2)">
+                                        <svg v-show="filters.orderState == 2" class="activity_svg">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                        <span :class="{selected_filter: filters.orderState == 2}">已确认</span>
+                                    </li>
+                                    <li class="filter_li" @click="selectFilter('orderState',5)">
+                                        <svg v-show="filters.orderState == 5" class="activity_svg">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                        <span :class="{selected_filter: filters.orderState == 5}">已审核</span>
+                                    </li>
+                                    <li class="filter_li" @click="selectFilter('orderState',7)">
+                                        <svg v-show="filters.orderState == 7" class="activity_svg">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                        <span :class="{selected_filter: filters.orderState == 7}">已完成</span>
+                                    </li>
+                                </ul>
+                            </section>
+                            <section style="width: 100%;">
+                                <header class="filter_header_style">销售</header>
+                                <ul class="filter_ul">
+                                    <li class="filter_li" @click="selectFilter('OrderTime',1)">
+                                        <svg v-show="filters.OrderTime == 1" class="activity_svg">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                        <span :class="{selected_filter: filters.OrderTime == 1}">今天</span>
+                                    </li>
+                                    <li class="filter_li" @click="selectFilter('OrderTime',7)">
+                                        <svg v-show="filters.OrderTime == 7" class="activity_svg">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                        <span :class="{selected_filter: filters.OrderTime == 7}">一周</span>
+                                    </li>
+                                    <li class="filter_li" @click="selectFilter('OrderTime',30)">
+                                        <svg v-show="filters.OrderTime == 30" class="activity_svg">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                        <span :class="{selected_filter: filters.OrderTime == 30}">一月</span>
+                                    </li>
+                                    <li class="filter_li" @click="selectFilter('OrderTime',365)">
+                                        <svg v-show="filters.OrderTime == 365" class="activity_svg">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                        <span :class="{selected_filter: filters.OrderTime == 365}">一年</span>
+                                    </li>
+                                </ul>
+                            </section>
+                            <section style="width: 100%;">
+                                <header class="filter_header_style">物流代收</header>
+                                <ul class="filter_ul">
+                                    <li class="filter_li" @click="selectFilter('OnlyPayedShip')">
+                                        <svg v-show="filters.OnlyPayedShip" class="activity_svg">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                        <span :class="{selected_filter: filters.OnlyPayedShip}">仅物流代收</span>
+                                    </li>
+                                </ul>
+                            </section>
+                            <footer class="confirm_filter">
+                                <div class="clear_all filter_button_style" @click="clearSelect">清空</div>
+                                <div class="confirm_select filter_button_style" @click="confirmSelectFun">确定
+                                    <span v-show="filterNum">({{filterNum}})</span>
+                                </div>
+                            </footer>
+                        </section>
+                    </transition>
+                </div>
+            </section>
+            <transition name="showcover">
+                <div class="back_cover" v-show="sortBy"></div>
+            </transition>
+            <section class="m-list" v-load-more="loaderMore" v-if="orderList.length">
+                <div v-for="item in orderList" :key="item.Id" @click="selectOrder(item.Id)">
+                    <section class="item">
+                        <section class="title">
+                            <h3 class="name ellipsis">
+                                <strong>{{item.CustomerName}}</strong>
+                            </h3>
+                            <section class="time">
+                                {{item.SubmitTime | time}}
+                            </section>
+                            <section class="content">
+                                <span>单号:</span>
+                                <span>{{item.BillNo}}</span>
+                            </section>
+                            <section class="content">
+                                <span>状态:</span>
+                                <span>{{item.StatusName}}</span>
+                            </section>
+                            <section class="content">
+                                <span>仓库:</span>
+                                <span>{{item.SendStorageName}}</span>
+                            </section>
+                            <section class="content">
+                                <span>品类:</span>
+                                <span>
+                                    <b class="count">{{item.CategoryNum}}</b>, 数量:
+                                    <b class="number">{{item.GoodsTotalNum}}</b>
+                                    <span class="total">总计:￥
+                                        <b class="money">{{item.TotalMoney}}</b>
+                                    </span>
+                                </span>
+                            </section>
+                        </section>
+                    </section>
+                </div>
+            </section>
+            <section v-else class="m-list">
+                <section class="list_back_li" v-for="item in 10" :key="item">
+                    <img src="../../../images/shopback.svg" class="list_back_svg">
+                </section>
+            </section>
+            <p v-if="touchend" class="empty_data">没有更多了</p>
+            <aside class="return_top" @click="backTop" v-if="showBackStatus">
+                <svg class="back_top_svg">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
+                </svg>
+            </aside>
         </section>
-		<section v-else class="m-list">
-			<section class="list_back_li" v-for="item in 10" :key="item">
-				<img src="../../../images/shopback.svg" class="list_back_svg">
-			</section>
-		</section>
-        <p v-if="touchend" class="empty_data">没有更多了</p>
-        <aside class="return_top" @click="backTop" v-if="showBackStatus">
-            <svg class="back_top_svg">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
-            </svg>
-        </aside>
         <transition name="loading">
             <loading v-show="showLoading"></loading>
         </transition>
+        <foot-guide></foot-guide>
         <transition name="router-slid" mode="out-in">
             <router-view></router-view>
         </transition>
-        <foot-guide></foot-guide>
     </div>
 </template>
 
@@ -470,14 +469,9 @@ export default {
 @import '../order';
 
 .page {
-    margin-top: 1.275rem;
-    margin-bottom: 2.2rem;
-
-    #header_search .header_search_icon {
-        @include indent05;
-        margin-top: .275rem;
+    .scroll_container {
+        padding-top: 3.2rem;
     }
-
     .m-list {
         margin-top: .4rem;
         header {
@@ -490,9 +484,9 @@ export default {
             .title {
                 flex: auto;
                 display: block;
-               
-                .name{
-                     width: 9rem;
+
+                .name {
+                    width: 9rem;
                 }
             }
             .time {
@@ -501,7 +495,7 @@ export default {
                 top: 0.65rem;
             }
 
-            .total{
+            .total {
                 position: absolute;
                 right: 0.55rem;
             }

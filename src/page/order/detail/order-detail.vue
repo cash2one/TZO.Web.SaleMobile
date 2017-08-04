@@ -1,126 +1,125 @@
  <template>
     <div class="page rating">
-        <header-title header-title="订单详情" goback='true'>
-        </header-title>
-        <div v-if="!showLoading">
-            <div class="address_container">
-                <div class="address_empty_left">
-                    <svg class="location_icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#location"></use>
-                    </svg>
-                    <div class="address_detail_container">
-                        <header>
-                            <span>{{orderDetail.Address.Contacts}}</span>
-                            <span>{{orderDetail.Address.Phone}}</span>
-                        </header>
-                        <div class="address_detail">
-                            <p>{{orderDetail.Address.RecAddress}}</p>
+        <section class="scroll_container paddingTop">
+            <header-title header-title="订单详情" goback='true'>
+            </header-title>
+            <div v-if="!showLoading">
+                <div class="address_container">
+                    <div class="address_empty_left">
+                        <svg class="location_icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#location"></use>
+                        </svg>
+                        <div class="address_detail_container">
+                            <header>
+                                <span>{{orderDetail.Address.Contacts}}</span>
+                                <span>{{orderDetail.Address.Phone}}</span>
+                            </header>
+                            <div class="address_detail">
+                                <p>{{orderDetail.Address.RecAddress}}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
     
-            <div class="delivery_model container_style">
-                <p class="deliver_text">{{orderDetail.SendStorageName}}</p>
-                <section class="deliver_time">
-                    <p>配送方式 | {{orderDetail.ShipTypeName}} </p>
-                    <p v-if="orderDetail.ShipType==1 && orderDetail.LogisticsCorpName">{{orderDetail.LogisticsCorpName}}</p>
+                <div class="delivery_model container_style">
+                    <p class="deliver_text">{{orderDetail.SendStorageName}}</p>
+                    <section class="deliver_time">
+                        <p>配送方式 | {{orderDetail.ShipTypeName}} </p>
+                        <p v-if="orderDetail.ShipType==1 && orderDetail.LogisticsCorpName">{{orderDetail.LogisticsCorpName}}</p>
+                    </section>
+                </div>
+    
+                <section class="m-form-list">
+                    <div class="item start">
+                        <h2>
+                            <strong>{{orderDetail.CustomerName}}</strong>
+                        </h2>
+                        <div class="content">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>
+                            支付方式
+                        </h2>
+                        <div class="content">
+                            <p>{{orderDetail.ChargeTypeName}}</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>
+                            单号
+                        </h2>
+                        <div class="content">
+                            <p>{{orderDetail.BillNo}}</p>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <h2>
+                            下单时间
+                        </h2>
+                        <div class="content">
+                            <p>{{orderDetail.SubmitTime | time}}</p>
+                        </div>
+                    </div>
+                    <div class="item end">
+                        <h2>
+                            备注
+                        </h2>
+                        <div class="content">
+                            <p>{{orderDetail.Note}}</p>
+                        </div>
+                    </div>
                 </section>
-            </div>
     
-            <section class="m-form-list">
-                <div class="item start">
-                    <h2>
-                        <strong>{{orderDetail.CustomerName}}</strong>
-                    </h2>
-                    <div class="content">
-                        <p></p>
-                    </div>
-                </div>
-                <div class="item">
-                    <h2>
-                        支付方式
-                    </h2>
-                    <div class="content">
-                        <p>{{orderDetail.ChargeTypeName}}</p>
-                    </div>
-                </div>
-                <div class="item">
-                    <h2>
-                        单号
-                    </h2>
-                    <div class="content">
-                        <p>{{orderDetail.BillNo}}</p>
-                    </div>
-                </div>
-                <div class="item">
-                    <h2>
-                        下单时间
-                    </h2>
-                    <div class="content">
-                        <p>{{orderDetail.SubmitTime | time}}</p>
-                    </div>
-                </div>
-                <div class="item end">
-                    <h2>
-                        备注
-                    </h2>
-                    <div class="content">
-                        <p>{{orderDetail.Note}}</p>
-                    </div>
-                </div>
-            </section>
-    
-            <section class="m-list">
-                <header>
-                    商品列表(品类:
-                    <span class="count">{{orderDetail.CategoryNum}}</span>,数量:
-                    <span class="number">{{orderDetail.GoodsTotalNum}}</span>,总计:￥
-                    <span class="money">{{orderDetail.TotalMoney}}</span>)
-                </header>
-                <section v-for="item in orderDetail.Items" :key="item.Id" class="item">
-                    <section class="title">
-                        <h3 class="name ellipsis">
-                            <strong>{{item.Goods.Name}}</strong>
-                        </h3>
-                        <section class="content">
-                            <section v-for="prop in globalPropertyList" :key="prop.Id">
-                                <span>{{prop.Name}}</span>:
-                                <span>{{item.Goods.Properties['p'+prop.Id]}}</span>
+                <section class="m-list">
+                    <header>
+                        商品列表(品类:
+                        <span class="count">{{orderDetail.CategoryNum}}</span>,数量:
+                        <span class="number">{{orderDetail.GoodsTotalNum}}</span>,总计:￥
+                        <span class="money">{{orderDetail.TotalMoney}}</span>)
+                    </header>
+                    <section v-for="item in orderDetail.Items" :key="item.Id" class="item">
+                        <section class="title">
+                            <h3 class="name ellipsis">
+                                <strong>{{item.Goods.Name}}</strong>
+                            </h3>
+                            <section class="content">
+                                <section v-for="prop in globalPropertyList" :key="prop.Id">
+                                    <span>{{prop.Name}}</span>:
+                                    <span>{{item.Goods.Properties['p'+prop.Id]}}</span>
+                                </section>
                             </section>
                         </section>
-                    </section>
-                    <div class="detail">
-                        <div>
-                            <span>x</span>
-                            <span class="number">{{item.GoodsNum}}</span>
+                        <div class="detail">
+                            <div>
+                                <span>x</span>
+                                <span class="number">{{item.GoodsNum}}</span>
+                            </div>
+                            <div>
+                                <span>¥</span>
+                                <span class="money">{{item.Price}}</span>
+                            </div>
                         </div>
-                        <div>
-                            <span>¥</span>
-                            <span class="money">{{item.Price}}</span>
+                    </section>
+                </section>
+    
+                <section class="m-form-list">
+                    <header class="item start">历史记录</header>
+                    <div class="item" v-for="(item,index) in orderDetail.Histories" :key="index" :class="{end:index==(orderDetail.Histories.length-1)}">
+                        <h2>
+                            {{item.StatusName}}
+                        </h2>
+                        <div class="content">
+                            <p>{{item.OperatorName}}&nbsp;&nbsp;{{item.OperateTime | time}}</p>
                         </div>
                     </div>
                 </section>
-            </section>
-    
-            <section class="m-form-list">
-                <header class="item start">历史记录</header>
-                <div class="item" v-for="(item,index) in orderDetail.Histories" :key="index" :class="{end:index==(orderDetail.Histories.length-1)}">
-                    <h2>
-                        {{item.StatusName}}
-                    </h2>
-                    <div class="content">
-                        <p>{{item.OperatorName}}&nbsp;&nbsp;{{item.OperateTime | time}}</p>
-                    </div>
-                </div>
-            </section>
-    
-        </div>
-    
+            </div>
+        </section>
         <transition name="loading">
             <loading v-show="showLoading"></loading>
         </transition>
-    
     </div>
 </template>
 

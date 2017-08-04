@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <header-title header-title="订单确认" goback='true'></header-title>
-        <section v-if="!showLoading">
+        <section v-if="!showLoading" class="scroll_container paddingTop">
             <router-link :to="{name:'order-confirm-address'}" class="address_container">
                 <div class="address_empty_left">
                     <svg class="location_icon">
@@ -380,17 +380,6 @@ export default {
 
 .fade-enter,
 .fade-leave-active {
-    opacity: 0;
-}
-
-.router-slid-enter-active,
-.router-slid-leave-active {
-    transition: all .4s;
-}
-
-.router-slid-enter,
-.router-slid-leave-active {
-    transform: translate3d(2rem, 0, 0);
     opacity: 0;
 }
 </style>

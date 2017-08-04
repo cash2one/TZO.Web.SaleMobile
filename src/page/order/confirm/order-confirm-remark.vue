@@ -1,7 +1,7 @@
 <template>
     <section class="page rating">
         <header-title header-title="订单备注" goback="true"></header-title>
-        <section v-if="!showLoading">
+        <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="input_remark quick_remark">
                 <h3>其他备注</h3>
                 <textarea class="input_text" v-model="inputText" placeholder="请输入备注内容(可不填)"></textarea>
