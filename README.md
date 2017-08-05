@@ -22,7 +22,7 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [x] 0.1.0 客户列表 customer-list -- 完成 李季
 - [x] 0.1.0 客户搜索 customer/search -- 完成 李季
 - [x] 0.1.0 商家详情页 customer/detail -- 完成 李广波
-- [ ] 0.1.0 客户对账 customer/bill -- 未完成 李广波
+- [x] 0.1.0 客户对账 customer/bill -- 未完成 李广波
 - [x] 0.1.0 购物车 cart -- 完成 李季
 - [x] 0.1.0 添加购物车功能 buy-cart -- 完成 李季
 - [x] 0.1.0 商品列表 goods-list -- 完成 李季
