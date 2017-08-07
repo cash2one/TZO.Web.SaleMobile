@@ -39,22 +39,22 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [x] 0.1.0 个人中心 profile -- 完成 李季
 - [x] 0.1.0 设置 profile/settings -- 完成 李季
 - 
-- [ ] 0.2.0 库存商品列表 goods-stock -- 未完成
-- [ ] 0.2.0 销售出库 order-retail -- 未完成
-- [ ] 0.2.0 退货 order/return -- 未完成 冯建彬
-- [ ] 0.2.0 收款 payment/new-- 未完成
-- [ ] 0.2.0 收款列表 payment/list -- 未完成
-- [ ] 0.2.0 收款单详情 payment/detail -- 未完成
-- [ ] 0.2.0 商家签到页 customer/sign-in -- 未完成 李光波
-- [ ] 0.2.0 新客户 customer/new -- 未完成
-- [ ] 0.2.0 微信推广 customer-detail／we-chat-- 未完成 李光波
+- [ ] 0.2.0 库存商品列表 goods-stock -- 未完成 李季
+- [ ] 0.2.0 销售出库 order-retail -- 未完成 李季
+- [ ] 0.2.0 退货 order/return -- 未完成
+- [ ] 0.2.0 收款 payment/new-- 未完成 李海全
+- [ ] 0.2.0 收款列表 payment/list -- 未完成 李海全
+- [ ] 0.2.0 收款单详情 payment/detail -- 未完成 李海全
+- [ ] 0.2.0 商家签到页 customer/sign-in -- 未完成 李广波
+- [ ] 0.2.0 新客户 customer/new -- 未完成 李广波
+- [ ] 0.2.0 微信推广 customer-detail／we-chat-- 未完成 李广波
 - [ ] 0.2.0 出店 shop-go -- 未完成 李季
 - [ ] 0.2.0 回店 shop-back -- 未完成 李季
-- [ ] 0.2.0 送货 delivery/list -- 未完成 李季
-- [ ] 0.2.0 送货明细 delivery/detail -- 未完成 李季
-- [ ] 0.2.0 物流发货 express/list -- 未完成 李季
-- [ ] 0.2.0 物流发货 express/detail -- 未完成 李季
-- [ ] 0.2.0 路线规划 path -- 未完成
+- [ ] 0.2.0 送货 delivery/list -- 未完成
+- [ ] 0.2.0 送货明细 delivery/detail -- 未完成
+- [ ] 0.2.0 物流发货 express/list -- 未完成
+- [ ] 0.2.0 物流发货 express/detail -- 未完成
+- [ ] 0.2.0 路线规划 path -- 未完成 
 - [ ] 0.2.0 定位功能 location -- 未完成
 - 
 - [ ] 0.3.0 蓝牙打印 -- 未完成
