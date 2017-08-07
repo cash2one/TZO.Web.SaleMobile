@@ -15,6 +15,15 @@ export const apiGetUserInfo = () => fetch('/api/Account/UserInfo');
 // 获取有效的仓库信息
 export const apiGetStorages = () => fetch('/api/Storage/Storage/IsValid');
 
+// 获取我的仓库
+export const apiGetMyStorages = (corpId, userId) => {
+	let data = {
+		CorpId: corpId,
+		EmployeeId: userId
+	};
+	return fetch('/api/Storage/EmployeeStorageRel', data);
+};
+
 // 获取物流公司信息
 export const apiGetExpressCorps = (isCollects) => {
 	let data = {
@@ -319,8 +328,8 @@ export const apiGetCustomerReconciliation = (customerId, keyword, timeSpan, offs
 		PageSize: 0,
 		Keyword: keyword,
 		CustomerId: customerId,
-		timeSpan:timeSpan,
-		AdvancedResult: {},		
+		timeSpan: timeSpan,
+		AdvancedResult: {},
 	};
 
 	return fetch('/api/Finance/Query/CustReconciliation', data)

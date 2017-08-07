@@ -2,6 +2,7 @@ import {
 	apiSetCorpId,
 	apiGetUserInfo,
 	apiGetStorages,
+	apiGetMyStorages,
 	apiGetExpressCorps,
 	apiGetBizAreas,
 	apiGetCategories,
@@ -15,6 +16,7 @@ import {
 	INIT_CORP_DATA,
 	GET_USERINFO,
 	GET_STORAGE_LIST,
+	GET_MY_STORAGE_LIST,
 	GET_EXPRESS_LIST,
 	GET_POSITION,
 	GET_BIZAREA_LIST,
@@ -56,7 +58,15 @@ export default {
 			let res = await apiGetStorages();
 			commit(GET_STORAGE_LIST, res.Items);
 		}
+	},
 
+	async getMyStorageList({ commit, state }) {
+		if (!state.myStorageList.length > 0) {
+			let res = await apiGetMyStorages(state.userInfo.CorpId, state.userInfo.UserId);
+			commit(GET_MY_STORAGE_LIST, res.EmployeeStorages.map((val) => {
+				return { Id: val.StorageId, Name: val.StorageName };
+			}));
+		}
 	},
 
 	async getExpressList({ commit, state }) {
