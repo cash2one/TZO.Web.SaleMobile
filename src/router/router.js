@@ -218,7 +218,7 @@ export default [{
                     component: orderDetail
                 },
                 {
-                    path: 'confirm/:customerId', // 确认订单页
+                    path: 'confirm/:storageId/:customerId', // 确认订单页
                     component: orderConfirm,
                     children: [
                         {

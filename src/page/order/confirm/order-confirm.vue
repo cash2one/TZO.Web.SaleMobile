@@ -2,7 +2,7 @@
     <div class="page">
         <header-title header-title="订单确认" goback='true'></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
-            <router-link :to="{name:'order-confirm-address'}" class="address_container">
+            <router-link v-if="isOrder" :to="{name:'order-confirm-address'}" class="address_container">
                 <div class="address_empty_left">
                     <svg class="location_icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#location"></use>
@@ -28,7 +28,7 @@
                 <h2>
                     <strong>{{cart.storage.Name}}</strong>
                 </h2>
-                <section class="deliver_time">
+                <section v-if="isOrder" class="deliver_time">
                     <p>配送方式 | {{cart.ship.Name}} </p>
                     <p v-if="cart.ship.TypeCode==1 && cart.express.Name">{{cart.express.Name}}</p>
                 </section>
@@ -127,6 +127,7 @@ export default {
     data() {
         return {
             customerId: '', // 当前客户id
+            isOrder: true,
             editItem: null,
             showEdit: false,
             showLoading: true, //显示加载动画
@@ -141,6 +142,7 @@ export default {
             'shipTypeList',
             'chargeTypeList',
             'orderStorage',
+            'curStorage',
             'cartList',
             'userInfo'
         ]),
@@ -197,7 +199,17 @@ export default {
             await this.getChargeType();
             this.SAVE_CHARGE_TYPE({ customerId: this.customerId, charge: this.chargeTypeList[0] });
 
-            this.SAVE_STORAGE({ customerId: this.customerId, storage: this.orderStorage });
+            let storage;
+
+            if (this.$route.params.storageId == this.orderStorage.Id)
+                storage = this.orderStorage;
+
+            if (this.$route.params.storageId == this.curStorage.Id) {
+                storage = this.curStorage;
+                this.isOrder = false;
+            }
+
+            this.SAVE_STORAGE({ customerId: this.customerId, storage: storage });
 
             this.SAVE_EXPRESS({ customerId: this.customerId, express: {} })
 

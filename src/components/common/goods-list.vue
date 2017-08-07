@@ -77,7 +77,7 @@
             </section>
             <section class="gotopay" :class="{gotopay_acitvity: minimumOrderAmount <= 0}">
                 <span class="gotopay_button_style" v-if="minimumOrderAmount > 0">还差¥{{minimumOrderAmount}}起送</span>
-                <router-link :to="'/order/confirm/'+curCustomer.CustomerId" class="gotopay_button_style" v-else>去下单</router-link>
+                <router-link :to="'/order/confirm/'+storage.Id+'/'+curCustomer.CustomerId" class="gotopay_button_style" v-else>{{linkText}}</router-link>
             </section>
         </section>
         <transition name="toggle-cart">
@@ -168,12 +168,20 @@ export default {
         loading,
         buyCart
     },
-    props: ['keyword', 'categoryId', 'sortByFiled', 'sortByType', 'filters', 'confirmSelect'],
+    props: [
+        'keyword',
+        'storage',
+        'categoryId',
+        'sortByFiled',
+        'sortByType',
+        'filters',
+        'confirmSelect',
+        'linkText'
+    ],
     mixins: [loadMore, getImgPath],
     computed: {
         ...mapState([
             'propertyList',
-            'orderStorage',
             'curCustomer',
             'cartList',
             'curGoods'
@@ -228,7 +236,7 @@ export default {
             'CLEAR_CART'
         ]),
         async getGoods() {
-            return await apiGetGoods(this.curCustomer.CustomerId, this.orderStorage.Id, this.categoryId, this.keyword, this.sortByFiled, this.sortByType, this.filters, this.offset);
+            return await apiGetGoods(this.curCustomer.CustomerId, this.storage.Id, this.categoryId, this.keyword, this.sortByFiled, this.sortByType, this.filters, this.offset);
         },
         async initData() {
             //获取数据
