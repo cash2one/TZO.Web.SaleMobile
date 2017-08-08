@@ -103,7 +103,7 @@ export default {
   },
 
   [GET_EXPRESS_LIST](state, list) {
-    state.exprpessList = list;
+    state.expressList = list;
   },
 
   [GET_PRINTER_LIST](state, list) {

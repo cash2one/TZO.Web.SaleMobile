@@ -361,19 +361,20 @@ small{
 .m-tabs{
     display: flex;
     background-color: #fff;
-    padding: .3rem 0 .6rem;
-    border-bottom: 1px solid #ebebeb;
+    @include indent10;
+    border-bottom: 1px solid $border-color;
     .item{
         flex: 1;
         text-align: center;
+        @include indent10;
         span {
-            @include sc(.65rem, #666);
-            padding: .2rem .1rem;
-            border-bottom: 0.12rem solid #fff;
+            @include sc(.65rem, $font-color1);
+            padding: .275rem .1rem;
+            border-bottom: 2px solid #fff;
         }
         .active{
-            color: #3190e8;
-            border-color: #3190e8;
+            color: $blue;
+            border-color: $blue;
         }
     }
 }

@@ -295,7 +295,7 @@ export const apiGetAllStorageStocks = goodsId => fetch('/api/Storage/SubStock/Ge
 // 获取某商品在所有公司的可用库存
 export const apiGetAllCorpsGoodsStocks = goodsId => fetch('/api/Storage/Report/AllCorpsGoodsStock?GoodsId=' + goodsId);
 
-//获取某商品的等级价格、销售价格
+// 获取某商品的等级价格、销售价格
 export const apiGoodsSaleRefPrice = (goodsId, customerId) => fetch('/api/Sale/SaleRefPrice/' + goodsId + "/" + customerId);
 
 // 获取客户应收款列表
@@ -361,4 +361,42 @@ export const apiExpresses = (customerId, storageId, logisticsCorpId, keyword, so
 	};
 
 	return fetch('/api/Logistics/Express/', data)
+};
+
+// 获取我的送货清单
+export const apiMyExpresses = logisticsCorpId => {
+	let data = {
+		LogisticsCorpId: logisticsCorpId,
+		QuickResult: {
+			LogisticsStates: [2],		//接收数组，物流状态1、未出库；2、已出库；3、已发货；4、已收货
+		}
+	};
+	return fetch('/api/Logistics/Express/', data);
+};
+
+// 获取执行单
+export const apiGetDeal = id => fetch('api/Sale/SaleDeal/' + id);
+
+// 获取库存
+export const apiGetGoodsStock = storageId => {
+	let data = {
+		StorageId: storageId,
+		QuickResult: {
+			IsValid: [1],
+			IsHaveStockNum: [1]
+		}
+	};
+	return fetch('/api/Storage/SubStock/GetGoodsStocks', data);
+};
+
+// 获取退货
+export const apiGetSaleReturn = storageId => {
+	let data = {
+		StorageId: storageId,
+		QuickResult: {
+			Status: [2]
+		},
+		advancedResult:{"Properties":{}}
+	};
+	return fetch('/api/Sale/ForeignSaleReturn', data);
 };
