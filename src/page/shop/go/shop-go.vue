@@ -85,7 +85,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
 import { apiMyExpresses, apiGetDeal, apiGetGoodsStock, apiGetSaleReturn } from 'src/service/getData'
@@ -119,7 +119,7 @@ export default {
         ]),
         async initData() {
             await this.getGlobalProperty();
-            await apiGetSaleReturn(this.curStorage.Id).then(res => this.saleReturnNum = res.Count);
+            await apiGetSaleReturn(this.curStorage.Id, [2]).then(res => this.saleReturnNum = res.Count);
 
             await apiMyExpresses(this.curExpress.Id).then(res => this.expressList = res.Items);
             for (var i = 0; i < this.expressList.length; i++) {

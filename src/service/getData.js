@@ -390,13 +390,22 @@ export const apiGetGoodsStock = storageId => {
 };
 
 // 获取退货
-export const apiGetSaleReturn = storageId => {
+export const apiGetSaleReturn = (storageId, status, startDate, endDate) => {
 	let data = {
 		StorageId: storageId,
 		QuickResult: {
-			Status: [2]
+			Status: status
 		},
-		advancedResult:{"Properties":{}}
+		advancedResult: { "Properties": {} },
 	};
+	if (startDate && endDate) {
+		data.timeSpan = {
+			startDate: startDate,
+			endDate: endDate
+		};
+	}
 	return fetch('/api/Sale/ForeignSaleReturn', data);
 };
+
+// 获取退货单
+export const apiGetSaleReturnDetail = id => fetch('/api/Sale/ForeignSaleReturn/' + id);
