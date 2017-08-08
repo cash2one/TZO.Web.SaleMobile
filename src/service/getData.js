@@ -364,13 +364,20 @@ export const apiExpresses = (customerId, storageId, logisticsCorpId, keyword, so
 };
 
 // 获取我的送货清单
-export const apiMyExpresses = logisticsCorpId => {
+export const apiMyExpresses = (logisticsCorpId, status, startDate, endDate) => {
 	let data = {
 		LogisticsCorpId: logisticsCorpId,
 		QuickResult: {
-			LogisticsStates: [2],		//接收数组，物流状态1、未出库；2、已出库；3、已发货；4、已收货
+			LogisticsStates: status,		//接收数组，物流状态1、未出库；2、已出库；3、已发货；4、已收货
 		}
 	};
+
+	if (startDate && endDate) {
+		data.TimeSpan = {
+			startDate: startDate,
+			endDate: endDate
+		};
+	}
 	return fetch('/api/Logistics/Express/', data);
 };
 
@@ -399,7 +406,7 @@ export const apiGetSaleReturn = (storageId, status, startDate, endDate) => {
 		advancedResult: { "Properties": {} },
 	};
 	if (startDate && endDate) {
-		data.timeSpan = {
+		data.TimeSpan = {
 			startDate: startDate,
 			endDate: endDate
 		};
