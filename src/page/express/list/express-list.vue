@@ -32,6 +32,14 @@
                                 <span>仓库:</span>
                                 <span>{{item.StorageName}}</span>
                             </section>
+                            <section class="content">
+                                <span>物流:</span>
+                                <span>
+                                    <span class="express">
+                                        {{item.LogisticsCorpName}}
+                                    </span>
+                                </span>
+                            </section>
                         </section>
                     </router-link>
                 </section>
@@ -126,6 +134,16 @@ export default {
             position: absolute;
             right: 0.55rem;
             top: 0.65rem;
+        }
+        .express {
+            position: absolute;
+            right: 0.55rem;
+            @include sc(.55rem, #fff);
+            background-color: $blue;
+            width: 2.4rem;
+            text-align: center;
+            border-radius: 0.12rem;
+            padding: .1rem;
         }
     }
 }
