@@ -60,6 +60,19 @@
                     </div>
                 </router-link>
             </section>
+            <section class="m-form-list">
+                <div class="item start end">
+                    <h2>
+                        <svg class="icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#version"></use>
+                        </svg>
+                        版本
+                    </h2>
+                    <div class="content">
+                        <p>0.1.0</p>
+                    </div>
+                </div>
+            </section>
         </section>
         <transition name="router-slid" mode="out-in">
             <router-view></router-view>

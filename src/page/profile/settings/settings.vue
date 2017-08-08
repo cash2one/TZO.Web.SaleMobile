@@ -2,7 +2,7 @@
     <div class="page rating paddingTop">
         <header-title header-title="设置" goback="true"></header-title>
         <select-slid-up title="订单仓库" :model="orderStorage" :selected="chooseOrderStorage" :items="storageList"></select-slid-up>
-        <select-slid-up title="移动仓库" :model="curStorage" :selected="chooseStorage" :items="storageList"></select-slid-up>
+        <select-slid-up title="移动仓库" :model="curStorage" :selected="chooseStorage" :items="myStorageList"></select-slid-up>
         <select-slid-up title="物流" :model="curExpress" :selected="chooseExpress" :items="expressList"></select-slid-up>
         <select-slid-up title="打印机" :model="curPrinter" :selected="choosePrinter" :items="printerList"></select-slid-up>
     </div>
@@ -29,6 +29,7 @@ export default {
             'curExpress',
             'curPrinter',
             'storageList',
+            'myStorageList',
             'expressList',
             'printerList'
         ]),
@@ -36,6 +37,7 @@ export default {
     methods: {
         ...mapActions([
             'getStorageList',
+            'getMyStorageList',
             'getExpressList'
         ]),
         ...mapMutations([
@@ -62,6 +64,7 @@ export default {
         },
         initData() {
             this.getStorageList();
+            this.getMyStorageList();
             this.getExpressList();
         },
     },

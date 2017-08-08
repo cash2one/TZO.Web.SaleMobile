@@ -5,6 +5,7 @@ import {
   GET_USERINFO,
   GET_CORP_LIST,
   GET_STORAGE_LIST,
+  GET_MY_STORAGE_LIST,
   GET_EXPRESS_LIST,
   GET_PRINTER_LIST,
   GET_BIZAREA_LIST,
@@ -95,6 +96,10 @@ export default {
 
   [GET_STORAGE_LIST](state, list) {
     state.storageList = list;
+  },
+
+  [GET_MY_STORAGE_LIST](state, list) {
+    state.myStorageList = list;
   },
 
   [GET_EXPRESS_LIST](state, list) {
@@ -250,7 +255,7 @@ export default {
     let cart = state.cartList;
     let customerCart = cart[customerId] = (cart[customerId] || {});
     let items = customerCart.items = (customerCart.items || {});
-    
+
     console.log(items);
     console.log(goodsId);
     console.log(price);

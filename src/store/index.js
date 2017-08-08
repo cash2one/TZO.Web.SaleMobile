@@ -13,7 +13,7 @@ const state = {
 	lastPositionTime: null,		// 位置更新时间
 	intervalId: '',				// 自动获取位置的定时句柄
 
-	orderStorage:{},			// 订单仓库
+	orderStorage: {},			// 订单仓库
 	curCorp: {},				// 当前公司
 	curStorage: {}, 			// 当前仓库
 	curExpress: {}, 			// 当前物流
@@ -22,6 +22,7 @@ const state = {
 
 	corpList: [],				// 身份公司列表
 	storageList: [],			// 有效仓库列表
+	myStorageList: [],			// 我的仓库
 	expressList: [],			// 可用物流列表
 	printerList: [],			// 打印机列表
 	bizAreaList: [],			// 业务区域
@@ -29,11 +30,11 @@ const state = {
 	propertyList: [],			// 商品属性
 	categoryList: [],			// 商品类目
 	categoryDetailList: [],		// 二级类目
-	shipTypeList:[],			// 配送方式
-	chargeTypeList:[],			// 支付方式
+	shipTypeList: [],			// 配送方式
+	chargeTypeList: [],			// 支付方式
 
 	cartList: {}, 				// 购物车的商品列表
-	curGoods:{},				// 当前商品
+	curGoods: {},				// 当前商品
 }
 
 export default new Vuex.Store({

@@ -140,7 +140,7 @@
                             </ul>
                         </section>
                         <section style="width: 100%;">
-                            <header class="filter_header_style">销售</header>
+                            <header class="filter_header_style">销量</header>
                             <ul class="filter_ul">
                                 <li class="filter_li" @click="selectFilter('LastSaleTime',7)">
                                     <svg v-show="filters.LastSaleTime == 7" class="activity_svg">
@@ -186,7 +186,7 @@
         <transition name="showcover">
             <div class="back_cover" v-show="sortBy"></div>
         </transition>
-        <goods-list :keyword='keyword' :categoryId='categoryId' :sortByFiled='sort.sortByFiled' :sortByType='sort.sortByType' :filters='filters' :confirmSelect="confirmStatus" @DidConfrim="clearSelect"></goods-list>
+        <goods-list :keyword='keyword' :storage='orderStorage' :categoryId='categoryId' :sortByFiled='sort.sortByFiled' :sortByType='sort.sortByType' :filters='filters' :confirmSelect="confirmStatus" @DidConfrim="clearSelect" linkText="去下单"></goods-list>
     </div>
 </template>
 
@@ -306,7 +306,8 @@ export default {
             'propertyList',
             'categoryList',
             'categoryDetailList',
-            'curCustomer'
+            'curCustomer',
+            'orderStorage'
         ]),
     }
 }
@@ -314,10 +315,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-// .search_container {
-//     display: flex;
-//     flex-direction: column;
-// }
+
 .showcover-enter-active,
 .showcover-leave-active {
     transition: opacity .3s
