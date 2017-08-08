@@ -23,7 +23,7 @@
                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-right"></use>
                 </svg>
             </router-link>
-            <select-slid-up title="支付方式" :model="charge" :selected="chooseChargeType" :items="chargeTypeList"></select-slid-up>
+            <select-slid-up title="支付方式" :model="charge" :selected="chooseChargeType" :items="orderChargeTypeList"></select-slid-up>
             <router-link :to="{name:'order-confirm-ship-express'}" class="delivery_model container_style">
                 <h2>
                     <strong>{{cart.storage.Name}}</strong>
@@ -72,7 +72,7 @@
             </section>
             <section class="confrim_order">
                 <p>总金额 ¥{{total}}</p>
-                <p @click="confrimOrder">确认下单</p>
+                <p @click="confrim">确认下单</p>
             </section>
             <br />
             <br />
@@ -109,6 +109,28 @@
             </transition>
         </section>
         <loading v-if="showLoading"></loading>
+        <transition name="fade">
+            <section class="confrim_details" v-if="showConfrim">
+                <section v-if="!Message">
+                    <h2 class="title">意向／确认</h2>
+                    <header class="title_style" @click="createOrder">
+                        <span>意向</span>
+                    </header>
+                    <header class="title_style" @click="confrimOrder">
+                        <span>确认</span>
+                    </header>
+                </section>
+                <section v-else>
+                    <h2 class="title">{{Message}}</h2>
+                    <p>{{ExceptionMessage}}</p>
+                </section>
+                <svg width="60" height="60" class="close_activities" @click.stop="showConfrimFun">
+                    <circle cx="30" cy="30" r="25" stroke="#555" stroke-width="1" fill="none" />
+                    <line x1="22" y1="38" x2="38" y2="22" style="stroke:#999;stroke-width:2" />
+                    <line x1="22" y1="22" x2="38" y2="38" style="stroke:#999;stroke-width:2" />
+                </svg>
+            </section>
+        </transition>
         <transition name="router-slid" mode="out-in">
             <router-view></router-view>
         </transition>
@@ -121,7 +143,7 @@ import headerTitle from 'src/components/header/header-title'
 import selectSlidUp from 'src/components/common/select-slid-up'
 import loading from 'src/components/common/loading'
 import buyCart from 'src/components/common/buy-cart'
-import { apiConfirmOrder } from 'src/service/getData'
+import { apiCreateOrder, apiConfirmOrder, apiVerifyOrder } from 'src/service/getData'
 
 export default {
     data() {
@@ -131,6 +153,9 @@ export default {
             editItem: null,
             showEdit: false,
             showLoading: true, //显示加载动画
+            showConfrim: false, //是否显示活动详情
+            Message: '',
+            ExceptionMessage: ''
         }
     },
     mounted() {
@@ -154,6 +179,18 @@ export default {
         },
         charge: function () {
             return this.cart.charge;
+        },
+        orderChargeTypeList: function () {
+            let rel = [];
+            if (this.isOrder)
+                rel = this.chargeTypeList;
+            else {
+                this.chargeTypeList.forEach((val) => {
+                    if (val.Id == 0 || val.Id == 3)
+                        rel.push(val);
+                });
+            }
+            return rel;
         },
         total: function () {
             let money = 0;
@@ -258,11 +295,48 @@ export default {
             this.SAVE_PRICE({ customerId: this.customerId, goodsId: this.editItem.id, price: this.editItem.price });
             this.showEdit = false;
         },
-        async confrimOrder() {
-            await apiConfirmOrder(this.userInfo, this.cart);
+        async confrim() {
+            if (this.isOrder)
+                this.showConfrim = true;
+            else {
+                let order = await apiCreateOrder(this.userInfo, this.cart);
+                let corder = await apiConfirmOrder(order.Id);
+                let vorder = await apiVerifyOrder(order.Id);
+
+                if (res.Message) {
+                    this.Message = res.Message;
+                    this.ExceptionMessage = res.ExceptionMessage;
+                }
+                else {
+                    this.CLEAR_CART(this.customerId);
+                    this.$router.replace({ path: '/order/detail/', query: { Id: order.Id, bizType: 12012 } });
+                }
+            }
+        },
+        async createOrder() {
+            let order = await apiCreateOrder(this.userInfo, this.cart);
+
             this.CLEAR_CART(this.customerId);
-            this.$router.push('/home');
-        }
+            this.$router.replace({ path: '/order/detail/', query: { Id: order.Id, bizType: 12012 } });
+        },
+        async confrimOrder() {
+
+            let order = await apiCreateOrder(this.userInfo, this.cart);
+            let res = await apiConfirmOrder(order.Id);
+
+            if (res.Message) {
+                this.Message = res.Message;
+                this.ExceptionMessage = res.ExceptionMessage;
+            }
+            else {
+                this.CLEAR_CART(this.customerId);
+                this.$router.replace({ path: '/order/detail/', query: { Id: order.Id, bizType: 12012 } });
+            }
+        },
+        // 控制活动详情页的显示隐藏
+        showConfrimFun() {
+            this.showConfrim = !this.showConfrim;
+        },
     },
 }
 </script>
@@ -382,6 +456,41 @@ export default {
             text-align: center;
             line-height: 1.3rem;
         }
+    }
+}
+
+.confrim_details {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #262626;
+    z-index: 200;
+    padding: 1.25rem;
+    .title {
+        text-align: center;
+        @include sc(.8rem, #fff);
+    }
+    .title_style {
+        text-align: center;
+        margin-top: 7rem;
+        span {
+            @include sc(1.5rem, #fff);
+            border: 3px solid #555;
+            padding: 2rem 1.4rem;
+            border-radius: 3rem;
+        }
+    }
+    .close_activities {
+        position: absolute;
+        bottom: 1rem;
+        @include cl;
+    }
+    p {
+        margin-top: 2rem;
+        line-height: .7rem;
+        @include sc(.65rem, #fff);
     }
 }
 

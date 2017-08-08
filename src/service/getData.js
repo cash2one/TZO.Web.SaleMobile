@@ -244,8 +244,8 @@ export const apiGetRetailReturnOrderList = (salerId, customerId, keyword, sortBy
 // 销售出库详情
 export const apiGetRetailReturnOrderDetail = orderId => fetch('/api/Sale/RetailReturn/' + orderId);
 
-// 提交订单
-export const apiConfirmOrder = (userInfo, cart) => {
+// 创建订单
+export const apiCreateOrder = (userInfo, cart) => {
 	let data = {
 		Address: {
 			RecAddress: cart.addr.Addr,
@@ -282,7 +282,12 @@ export const apiConfirmOrder = (userInfo, cart) => {
 
 	return fetch('/api/Sale/ForeignSale', data, 'POST')
 };
-// 修改订单
+
+// 提交订单
+export const apiConfirmOrder = (id) => fetch('/api/Sale/ForeignSale/Confirm/' + id);
+
+// 审核订单
+export const apiVerifyOrder = (id) => fetch('/api/Sale/ForeignSale/Verify/' + id);
 
 // 获取某商品在本公司各仓库的可用库存
 export const apiGetAllStorageStocks = goodsId => fetch('/api/Storage/SubStock/GetAllStorageByGoodsId?SubStockType=2&GoodsIds=' + goodsId);

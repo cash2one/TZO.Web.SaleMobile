@@ -39,8 +39,8 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [x] 0.1.0 个人中心 profile -- 完成 李季
 - [x] 0.1.0 设置 profile/settings -- 完成 李季
 - 
-- [ ] 0.2.0 库存商品列表 goods-stock -- 未完成 李季
-- [ ] 0.2.0 销售出库 order-retail -- 未完成 李季
+- [x] 0.2.0 库存商品列表 goods-stock -- 未完成 李季
+- [x] 0.2.0 销售出库 order-retail -- 未完成 李季
 - [ ] 0.2.0 退货 order/return -- 未完成
 - [ ] 0.2.0 收款 payment/new-- 未完成 李海全
 - [ ] 0.2.0 收款列表 payment/list -- 未完成 李海全
