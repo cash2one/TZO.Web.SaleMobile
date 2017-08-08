@@ -34,10 +34,8 @@
                             </section>
                             <section class="content">
                                 <span>物流:</span>
-                                <span>
-                                    <span class="express">
-                                        {{item.LogisticsCorpName}}
-                                    </span>
+                                <span class="express">
+                                    {{item.LogisticsCorpName}}
                                 </span>
                             </section>
                         </section>
@@ -81,7 +79,7 @@
 <script>
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
-import { apiExpresses } from 'src/service/getData'
+import { apiGetExpresses } from 'src/service/getData'
 
 export default {
     data() {
@@ -106,8 +104,8 @@ export default {
             let endDate = new Date();
             endDate.setHours(23, 59, 59, 999);
 
-            await apiExpresses([2]).then(res => this.undone = res.Items);
-            await apiExpresses([3], startDate, endDate).then(res => this.complete = res.Items);
+            await apiGetExpresses([2]).then(res => this.undone = res.Items);
+            await apiGetExpresses([3], startDate, endDate).then(res => this.complete = res.Items);
 
             this.showLoading = false;
         }

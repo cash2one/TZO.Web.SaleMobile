@@ -364,7 +364,7 @@ export const apiGetCustomerReconciliation = (customerId, keyword, timeSpan, offs
 // };
 
 // 获取发货列表简化
-export const apiExpresses = (status, startDate, endDate, logisticsId) => {
+export const apiGetExpresses = (status, startDate, endDate, logisticsId) => {
 	let data = {
 		QuickResult: {
 			LogisticsStates: status,		//接收数组，物流状态1、未出库；2、已出库；3、已发货；4、已收货
@@ -383,8 +383,11 @@ export const apiExpresses = (status, startDate, endDate, logisticsId) => {
 	return fetch('/api/Logistics/Express/', data);
 };
 
+// 获取发货单
+export const apiGetExpress = id => fetch('/api/Logistics/Express/' + id);
+
 // 获取执行单
-export const apiGetDeal = id => fetch('api/Sale/SaleDeal/' + id);
+export const apiGetDeal = id => fetch('/api/Sale/SaleDeal/' + id);
 
 // 获取库存
 export const apiGetGoodsStock = storageId => {
