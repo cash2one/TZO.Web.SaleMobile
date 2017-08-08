@@ -225,7 +225,8 @@ export default {
         ...mapMutations([
             'ADD_CART',
             'REDUCE_CART',
-            'CLEAR_CART'
+            'CLEAR_CART',
+            'SAVE_CUR_GOODS'
         ]),
         async getGoods() {
             return await apiGetGoods(this.curCustomer.CustomerId, this.orderStorage.Id, this.categoryId, this.keyword, this.sortByFiled, this.sortByType, this.filters, this.offset);
@@ -339,9 +340,9 @@ export default {
             this.ADD_CART({ customer: this.curCustomer, goods, price: goods.LevelPrice });
         },
         //选中商品查看明细
-        selectGoods: function (data) {
-            this.$store.state.curGoods = data;
-        },
+        selectGoods(val) {
+			this.SAVE_CUR_GOODS(val);
+		}
     },
     watch: {
         keyword: function (val) {

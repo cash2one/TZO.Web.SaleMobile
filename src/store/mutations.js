@@ -32,6 +32,7 @@ import {
   SAVE_PRICE,
   CONFIRM_REMARK,
   POSITION_INTERVAL,
+  SAVE_CUR_GOODS,
 } from './mutation-types.js'
 
 import { setStore, getStore } from 'src/config/mUtils'
@@ -167,6 +168,11 @@ export default {
   // 选择当前客户
   [SAVE_CUR_CUSTOMER](state, customer) {
     state.curCustomer = customer;
+  },
+
+  // 选择当前商品
+  [SAVE_CUR_GOODS](state, goods) {
+    state.curGoods = goods;
   },
 
   [GET_POSITION](state, position) {
