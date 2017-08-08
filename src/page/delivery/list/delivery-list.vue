@@ -74,7 +74,7 @@
 import { mapState } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
-import { apiMyExpresses } from 'src/service/getData'
+import { apiExpresses } from 'src/service/getData'
 
 export default {
     data() {
@@ -113,7 +113,7 @@ export default {
             let endDate = new Date();
             endDate.setHours(23, 59, 59, 999);
 
-            await apiMyExpresses(this.curExpress.Id, [2, 3], startDate, endDate).then(res => this.expressList = res.Items);
+            await apiExpresses([2, 3], startDate, endDate, this.curExpress.Id).then(res => this.expressList = res.Items);
 
             this.showLoading = false;
         }

@@ -88,7 +88,7 @@
 import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
-import { apiMyExpresses, apiGetDeal, apiGetGoodsStock, apiGetSaleReturn } from 'src/service/getData'
+import { apiExpresses, apiGetDeal, apiGetGoodsStock, apiGetSaleReturn } from 'src/service/getData'
 export default {
     data() {
         return {
@@ -121,7 +121,7 @@ export default {
             await this.getGlobalProperty();
             await apiGetSaleReturn(this.curStorage.Id, [2]).then(res => this.saleReturnNum = res.Count);
 
-            await apiMyExpresses(this.curExpress.Id, [2]).then(res => this.expressList = res.Items);
+            await apiExpresses([2], false, false, this.curExpress.Id).then(res => this.expressList = res.Items);
             for (var i = 0; i < this.expressList.length; i++) {
                 var val = this.expressList[i];
                 await apiGetDeal(val.BillId).then(res => val.Items = res.Items);

@@ -341,36 +341,38 @@ export const apiGetCustomerReconciliation = (customerId, keyword, timeSpan, offs
 };
 
 // 获取发货列表
-export const apiExpresses = (customerId, storageId, logisticsCorpId, keyword, sortByFiled, sortByType, timeSpan, logisticsStates, settleStates, offset) => {
-	let data = {
-		PageIndex: parseInt(offset / 20),
-		PageSize: 20,
-		Keyword: keyword,
-		CustomerId: customerId,
-		StorageId: storageId,
-		LogisticsCorpId: logisticsCorpId,
-		SortParam: {
-			FiledName: sortByFiled,
-			SortType: sortByType ? sortByType : 'asc'
-		},
-		TimeSpan: timeSpan,
-		QuickResult: {
-			LogisticsStates: logisticsStates,		//接收数组，物流状态1、未出库；2、已出库；3、已发货；4、已收货
-			SettleStates: settleStates				//接收数组，结销状态8、未结销；16、部分结销；24、已结销
-		}
-	};
+// export const apiExpresses = (customerId, storageId, logisticsCorpId, keyword, sortByFiled, sortByType, timeSpan, logisticsStates, settleStates, offset) => {
+// 	let data = {
+// 		PageIndex: parseInt(offset / 20),
+// 		PageSize: 20,
+// 		Keyword: keyword,
+// 		CustomerId: customerId,
+// 		StorageId: storageId,
+// 		LogisticsCorpId: logisticsCorpId,
+// 		SortParam: {
+// 			FiledName: sortByFiled,
+// 			SortType: sortByType ? sortByType : 'asc'
+// 		},
+// 		TimeSpan: timeSpan,
+// 		QuickResult: {
+// 			LogisticsStates: logisticsStates,		//接收数组，物流状态1、未出库；2、已出库；3、已发货；4、已收货
+// 			SettleStates: settleStates				//接收数组，结销状态8、未结销；16、部分结销；24、已结销
+// 		}
+// 	};
 
-	return fetch('/api/Logistics/Express/', data)
-};
+// 	return fetch('/api/Logistics/Express/', data)
+// };
 
-// 获取我的送货清单
-export const apiMyExpresses = (logisticsCorpId, status, startDate, endDate) => {
+// 获取发货列表简化
+export const apiExpresses = (status, startDate, endDate, logisticsId) => {
 	let data = {
-		LogisticsCorpId: logisticsCorpId,
 		QuickResult: {
 			LogisticsStates: status,		//接收数组，物流状态1、未出库；2、已出库；3、已发货；4、已收货
 		}
 	};
+
+	if (logisticsId)
+		data.LogisticsCorpId = logisticsId;
 
 	if (startDate && endDate) {
 		data.TimeSpan = {
