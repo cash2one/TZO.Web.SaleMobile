@@ -261,7 +261,7 @@ export const apiCreateOrder = (userInfo, cart) => {
 		SupplierId: userInfo.CorpId,				// 供应商
 		SalerId: userInfo.UserId,					// 业务员
 		ChargeType: cart.charge.Id,					// 应收应付类别
-		ShipType: cart.ship.TypeCode,						// 配送方式
+		ShipType: cart.ship.TypeCode,				// 配送方式
 		LogisticsCorpId: cart.express.Id,			// 物流公司Id
 		CreateUserId: userInfo.UserId,				// 创建人
 
@@ -385,6 +385,12 @@ export const apiGetExpresses = (status, startDate, endDate, logisticsId) => {
 
 // 获取发货单
 export const apiGetExpress = id => fetch('/api/Logistics/Express/' + id);
+
+// 保存发货单
+export const apiSaveExpress = express => fetch('/api/Logistics/Express/' + express.Id, express, 'POST');
+
+// 发货
+export const apiSendOutExpress = id => fetch('/api/Logistics/Express/SendOut', { id }, 'POST');
 
 // 获取执行单
 export const apiGetDeal = id => fetch('/api/Sale/SaleDeal/' + id);

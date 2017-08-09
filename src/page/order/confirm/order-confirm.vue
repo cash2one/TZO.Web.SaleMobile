@@ -111,7 +111,7 @@
         <loading v-if="showLoading"></loading>
         <transition name="fade">
             <section class="confrim_details" v-if="showConfrim">
-                <section v-if="!Message">
+                <section v-if="!message">
                     <h2 class="title">意向／确认</h2>
                     <header class="title_style" @click="createOrder">
                         <span>意向</span>
@@ -121,8 +121,8 @@
                     </header>
                 </section>
                 <section v-else>
-                    <h2 class="title">{{Message}}</h2>
-                    <p>{{ExceptionMessage}}</p>
+                    <h2 class="title">错误</h2>
+                    <p>{{message}}{{exceptionMessage}}</p>
                 </section>
                 <svg width="60" height="60" class="close_activities" @click.stop="showConfrimFun">
                     <circle cx="30" cy="30" r="25" stroke="#555" stroke-width="1" fill="none" />
@@ -154,8 +154,8 @@ export default {
             showEdit: false,
             showLoading: true, //显示加载动画
             showConfrim: false, //是否显示活动详情
-            Message: '',
-            ExceptionMessage: ''
+            message: '',
+            exceptionMessage: ''
         }
     },
     mounted() {
@@ -299,38 +299,45 @@ export default {
             if (this.isOrder)
                 this.showConfrim = true;
             else {
-                let order = await apiCreateOrder(this.userInfo, this.cart);
-                let corder = await apiConfirmOrder(order.Id);
-                let vorder = await apiVerifyOrder(order.Id);
+                let res = await apiCreateOrder(this.userInfo, this.cart);
+
+                if (res.Id) {
+                    res = await apiConfirmOrder(res.Id);
+                }
+
+                if (res.Id) {
+                    res = await apiVerifyOrder(res.Id);
+                }
 
                 if (res.Message) {
-                    this.Message = res.Message;
-                    this.ExceptionMessage = res.ExceptionMessage;
+                    this.message = res.Message;
+                    this.exceptionMessage = res.ExceptionMessage;
                 }
                 else {
                     this.CLEAR_CART(this.customerId);
-                    this.$router.replace({ path: '/order/detail/', query: { Id: order.Id, bizType: 12012 } });
+                    this.$router.replace({ path: '/order/detail/', query: { Id: res.Id, bizType: 12012 } });
                 }
             }
         },
         async createOrder() {
-            let order = await apiCreateOrder(this.userInfo, this.cart);
+            let res = await apiCreateOrder(this.userInfo, this.cart);
 
             this.CLEAR_CART(this.customerId);
-            this.$router.replace({ path: '/order/detail/', query: { Id: order.Id, bizType: 12012 } });
+            this.$router.replace({ path: '/order/detail/', query: { Id: res.Id, bizType: 12012 } });
         },
         async confrimOrder() {
+            let res = await apiCreateOrder(this.userInfo, this.cart);
 
-            let order = await apiCreateOrder(this.userInfo, this.cart);
-            let res = await apiConfirmOrder(order.Id);
+            if (res.Id)
+                res = await apiConfirmOrder(order.Id);
 
             if (res.Message) {
-                this.Message = res.Message;
-                this.ExceptionMessage = res.ExceptionMessage;
+                this.message = res.Message;
+                this.exceptionMessage = res.ExceptionMessage;
             }
             else {
                 this.CLEAR_CART(this.customerId);
-                this.$router.replace({ path: '/order/detail/', query: { Id: order.Id, bizType: 12012 } });
+                this.$router.replace({ path: '/order/detail/', query: { Id: res.Id, bizType: 12012 } });
             }
         },
         // 控制活动详情页的显示隐藏

@@ -43,10 +43,23 @@
                     </div>
                 </section>
             </section>
-            <section class="confrim">
+            <section class="confrim" @click="confrim">
                 <p>确认送货</p>
             </section>
         </section>
+        <transition name="fade">
+            <section class="confrim_details" v-if="showError">
+                <section>
+                    <h2 class="title">错误</h2>
+                    <p>{{message}}{{exceptionMessage}}</p>
+                </section>
+                <svg width="60" height="60" class="close_activities" @click.stop="showErrorFun">
+                    <circle cx="30" cy="30" r="25" stroke="#555" stroke-width="1" fill="none" />
+                    <line x1="22" y1="38" x2="38" y2="22" style="stroke:#999;stroke-width:2" />
+                    <line x1="22" y1="22" x2="38" y2="38" style="stroke:#999;stroke-width:2" />
+                </svg>
+            </section>
+        </transition>
         <transition name="router-slid" mode="out-in">
             <router-view></router-view>
         </transition>
@@ -58,14 +71,17 @@
 import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
-import { apiGetExpress, apiGetDeal } from 'src/service/getData'
+import { apiGetExpress, apiGetDeal, apiSaveExpress, apiSendOutExpress } from 'src/service/getData'
 
 export default {
     data() {
         return {
             showLoading: true,
+            showError: false,
             bill: null,
-            express: null
+            express: null,
+            message: '',
+            exceptionMessage: ''
         }
     },
     mounted() {
@@ -73,7 +89,8 @@ export default {
     },
     computed: {
         ...mapState([
-            'globalPropertyList'
+            'globalPropertyList',
+            'userInfo'
         ]),
     },
     components: {
@@ -93,8 +110,28 @@ export default {
             this.bill = await apiGetDeal(billId);
             this.express = await apiGetExpress(id);
 
+            this.express.Shippers.push({ Shipper: this.userInfo.UserId, Workload: this.bill.GoodsTotalNum });
+
             this.showLoading = false;
-        }
+        },
+        async confrim() {
+
+            let res = await apiSaveExpress(this.express);
+            if (res.Id)
+                await apiSendOutExpress(res.Id);
+
+            if (res.Message) {
+                this.showError = true;
+                this.message = res.Message;
+                this.exceptionMessage = res.ExceptionMessage;
+            }
+            else
+                this.$router.replace('/delivery');
+        },
+        // 控制活动详情页的显示隐藏
+        showErrorFun() {
+            this.showError = !this.showError;
+        },
     }
 }
 </script>
@@ -117,7 +154,30 @@ export default {
         }
     }
 }
-
+.confrim_details {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #262626;
+    z-index: 200;
+    padding: 1.25rem;
+    .title {
+        text-align: center;
+        @include sc(.8rem, #fff);
+    }
+    .close_activities {
+        position: absolute;
+        bottom: 1rem;
+        @include cl;
+    }
+    p {
+        margin-top: 2rem;
+        line-height: .7rem;
+        @include sc(.65rem, #fff);
+    }
+}
 .confrim {
     position: fixed;
     bottom: 0;

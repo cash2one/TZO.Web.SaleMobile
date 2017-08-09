@@ -54,7 +54,9 @@
                     </h2>
                 </div>
                 <div class="content">
-                    <div class="user" v-for="(item,index) in express.ShippersName" :key="index">{{item}}</div>
+                    <div v-if="item.checked" class="user" v-for="(item,index) in shipperList" :key="index">{{item.Name}}
+                        <b v-if="item.workload">[{{item.workload}}]</b>
+                    </div>
                 </div>
             </section>
             <section class="m-form-list">
@@ -156,9 +158,9 @@
                 </header>
                 <section class="scroll_container paddingTop">
                     <section class="m-list">
-                        <header>员工</header>
-                        <section class="item" v-for="item in employeeList" :key="item.Id" @click="chooseShipper(item.Id,item.Name)">
-                            <section v-if="checkShipper(item.Id)" class="item-left">
+                        <header>发货人员</header>
+                        <section class="item" v-for="item in shipperList" :key="item.Id" @click="chooseShipper(item)">
+                            <section v-if="item.checked" class="item-left">
                                 <svg class="icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
                                 </svg>
@@ -169,12 +171,26 @@
                                     <h3 class="name">
                                         {{item.Name}}
                                     </h3>
+                                    <input type="text" class="money" v-model="item.workload" />
                                 </section>
                             </section>
                         </section>
                     </section>
                 </section>
             </div>
+        </transition>
+        <transition name="fade">
+            <section class="confrim_details" v-if="showError">
+                <section>
+                    <h2 class="title">错误</h2>
+                    <p>{{message}}{{exceptionMessage}}</p>
+                </section>
+                <svg width="60" height="60" class="close_activities" @click.stop="showErrorFun">
+                    <circle cx="30" cy="30" r="25" stroke="#555" stroke-width="1" fill="none" />
+                    <line x1="22" y1="38" x2="38" y2="22" style="stroke:#999;stroke-width:2" />
+                    <line x1="22" y1="22" x2="38" y2="38" style="stroke:#999;stroke-width:2" />
+                </svg>
+            </section>
         </transition>
         <loading v-if="showLoading"></loading>
     </section>
@@ -184,7 +200,13 @@
 import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
-import { apiGetExpressCorps, apiGetExpress, apiGetDeal, apiGetEmployees } from 'src/service/getData'
+import {
+    apiGetExpressCorps,
+    apiGetExpress,
+    apiGetDeal,
+    apiSaveExpress,
+    apiSendOutExpress
+} from 'src/service/getData'
 
 export default {
     data() {
@@ -192,9 +214,13 @@ export default {
             showLoading: true,
             showExpress: false,
             showShippers: false,
+            showError: false,
             bill: null,
             express: null,
             expressCorpsList: [],
+            shipperList: [],
+            message: '',
+            exceptionMessage: ''
         }
     },
     mounted() {
@@ -227,9 +253,13 @@ export default {
             this.bill = await apiGetDeal(billId);
             this.express = await apiGetExpress(id);
 
-            this.express.Shippers.push(this.userInfo.UserId);
-            this.express.ShippersName = [];
-            this.express.ShippersName.push(this.userInfo.UserName);
+            this.shipperList = this.employeeList;
+
+            let shipper = this.shipperList.find((val) => {
+                return val.Id == this.userInfo.UserId;
+            });
+            shipper.checked = true;
+            shipper.workload = this.bill.GoodsTotalNum;
 
             this.initExpress();
 
@@ -256,25 +286,35 @@ export default {
             this.express.LogisticsCorpId = express.Id;
             this.express.LogisticsCorpName = express.Name;
         },
-        chooseShipper(id, name) {
-            let index = this.express.Shippers.indexOf(id);
-            if (index == -1)
-                this.express.Shippers.push(id);
-            else
-                this.express.Shippers.splice(index, 1);
-
-            index = this.express.ShippersName.indexOf(name);
-            if (index == -1)
-                this.express.ShippersName.push(name);
-            else
-                this.express.ShippersName.splice(index, 1);
+        chooseShipper(item) {
+            item.checked = !item.checked;
+            this.shipperList = [...this.shipperList];
         },
-        checkShipper(id) {
-            return this.express.Shippers.includes(id);
-        },
-        confrim() {
+        async confrim() {
 
-        }
+            let shippers = this.shipperList.filter((val) => { return val.checked });
+            shippers = shippers.map((val) => {
+                return { Shipper: val.Id, Workload: val.workload };
+            });
+
+            this.express.Shippers = shippers;
+
+            let res = await apiSaveExpress(this.express);
+            if (res.Id)
+                await apiSendOutExpress(res.Id);
+
+            if (res.Message) {
+                this.showError = true;
+                this.message = res.Message;
+                this.exceptionMessage = res.ExceptionMessage;
+            }
+            else
+                this.$router.replace('/express');
+        },
+        // 控制活动详情页的显示隐藏
+        showErrorFun() {
+            this.showError = !this.showError;
+        },
     }
 }
 </script>
@@ -302,6 +342,10 @@ export default {
             padding-left: .275rem;
             .number {
                 font-size: .55rem;
+            }
+            .money {
+                width: 2rem;
+                text-align: right;
             }
         }
     }
@@ -382,7 +426,35 @@ export default {
             margin-left: .275rem;
             text-align: center;
             border-radius: 0.12rem;
+            b {
+                @include sc(.55rem, #fff);
+            }
         }
+    }
+}
+
+.confrim_details {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #262626;
+    z-index: 200;
+    padding: 1.25rem;
+    .title {
+        text-align: center;
+        @include sc(.8rem, #fff);
+    }
+    .close_activities {
+        position: absolute;
+        bottom: 1rem;
+        @include cl;
+    }
+    p {
+        margin-top: 2rem;
+        line-height: .7rem;
+        @include sc(.65rem, #fff);
     }
 }
 

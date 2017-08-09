@@ -50,10 +50,10 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [ ] 0.2.0 微信推广 customer-detail／we-chat-- 未完成 李广波
 - [ ] 0.2.0 出店 shop-go -- 未完成 李季
 - [ ] 0.2.0 回店 shop-back -- 未完成 李季
-- [ ] 0.2.0 送货 delivery/list -- 未完成
-- [ ] 0.2.0 送货明细 delivery/detail -- 未完成
-- [ ] 0.2.0 物流发货 express/list -- 未完成
-- [ ] 0.2.0 物流发货 express/detail -- 未完成
+- [ ] 0.2.0 送货 delivery/list -- 未完成 李季
+- [ ] 0.2.0 送货明细 delivery/detail -- 未完成 李季
+- [ ] 0.2.0 物流发货 express/list -- 未完成 李季
+- [ ] 0.2.0 物流发货 express/detail -- 未完成 李季
 - [ ] 0.2.0 路线规划 path -- 未完成 
 - [ ] 0.2.0 定位功能 location -- 未完成
 - 

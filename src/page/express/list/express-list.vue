@@ -4,7 +4,7 @@
         <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="m-tabs" ref="chooseType">
                 <div class="item">
-                    <span :class='{active: changeShowType =="undone"}' @click="changeShowType='undone'">待送</span>
+                    <span :class='{active: changeShowType =="undone"}' @click="changeShowType='undone'">待发</span>
                 </div>
                 <div class="item">
                     <span :class='{active: changeShowType =="complete"}' @click="changeShowType='complete'">完成</span>
