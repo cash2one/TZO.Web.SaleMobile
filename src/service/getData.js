@@ -418,3 +418,19 @@ export const apiGetSaleReturn = (storageId, status, startDate, endDate) => {
 
 // 获取退货单
 export const apiGetSaleReturnDetail = id => fetch('/api/Sale/ForeignSaleReturn/' + id);
+
+// 获取某业务员某时间段内收现金情况,返回对象为{m_Item1:金额}
+export const apiGetEmployeeSettlementMoney = (startDate, endDate, customerId) => {
+	let data = {};
+
+	if (customerId)
+		data.CustomerId = customerId;
+
+	if (startDate && endDate) {
+		data.TimeSpan = {
+			startDate: startDate,
+			endDate: endDate
+		};
+	}
+	return fetch('/api/Finance/RecSettlement/GetEmployeeSettlementMoney', data);
+};
