@@ -12,7 +12,7 @@
             </section>
             <transition name="m-tab-choose">
                 <section v-show="changeShowType =='undone'" class="m-tab-container m-list">
-                    <router-link v-for="item in Undone" :key="item.Id" :to="'/delivery/detail/'+item.Id" tag="section" class="item">
+                    <router-link v-for="item in Undone" :key="item.Id" :to="'/delivery/detail/'+item.Id+'/'+item.BillId" tag="section" class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
@@ -26,7 +26,7 @@
                             </section>
                             <section class="content">
                                 <span>状态:</span>
-                                <span>{{item.LogisticsStatusName}}</span>
+                                <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
                             <section class="content">
                                 <span>仓库:</span>
@@ -38,7 +38,7 @@
             </transition>
             <transition name="m-tab-choose">
                 <section v-show="changeShowType =='complete'" class="m-tab-container m-list">
-                    <router-link v-for="item in Complete" :key="item.Id" :to="'/delivery/detail/'+item.Id" tag="section" class="item">
+                    <router-link v-for="item in Complete" :key="item.Id" :to="'/delivery/detail/'+item.Id+'/'+item.BillId" tag="section" class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
@@ -52,7 +52,7 @@
                             </section>
                             <section class="content">
                                 <span>状态:</span>
-                                <span>{{item.LogisticsStatusName}}</span>
+                                <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
                             <section class="content">
                                 <span>仓库:</span>
@@ -74,7 +74,7 @@
 import { mapState } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
-import { apiExpresses } from 'src/service/getData'
+import { apiGetExpresses } from 'src/service/getData'
 
 export default {
     data() {
@@ -113,7 +113,7 @@ export default {
             let endDate = new Date();
             endDate.setHours(23, 59, 59, 999);
 
-            await apiExpresses([2, 3], startDate, endDate, this.curExpress.Id).then(res => this.expressList = res.Items);
+            await apiGetExpresses([2, 3], startDate, endDate, this.curExpress.Id).then(res => this.expressList = res.Items);
 
             this.showLoading = false;
         }
@@ -140,6 +140,9 @@ export default {
             position: absolute;
             right: 0.55rem;
             top: 0.65rem;
+        }
+        b {
+            font-size: .55rem;
         }
     }
 }

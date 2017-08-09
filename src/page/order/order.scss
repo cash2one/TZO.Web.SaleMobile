@@ -72,22 +72,6 @@
     background-color: #fff;
     margin-top: .4rem;
     padding: 0 .7rem;
-    .header_style {
-        @include fj;
-        line-height: 2rem;
-        span:nth-of-type(1) {
-            @include sc(.7rem, #666);
-        }
-        .more_type {
-            span:nth-of-type(1) {
-                @include sc(.6rem, #aaa);
-                width: 10rem;
-                display: inline-block;
-                text-align: right;
-                vertical-align: middle;
-            }
-        }
-    }
 }
 
 .delivery_model {

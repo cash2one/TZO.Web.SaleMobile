@@ -1,10 +1,10 @@
 <template>
-    <div class="page">
+    <section class="page">
         <header-title header-title="发货" goback="true"></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="m-tabs" ref="chooseType">
                 <div class="item">
-                    <span :class='{active: changeShowType =="undone"}' @click="changeShowType='undone'">待送</span>
+                    <span :class='{active: changeShowType =="undone"}' @click="changeShowType='undone'">待发</span>
                 </div>
                 <div class="item">
                     <span :class='{active: changeShowType =="complete"}' @click="changeShowType='complete'">完成</span>
@@ -12,7 +12,7 @@
             </section>
             <transition name="m-tab-choose">
                 <section v-show="changeShowType =='undone'" class="m-tab-container m-list">
-                    <router-link v-for="item in undone" :key="item.Id" :to="'/express/detail/'+item.Id" tag="section" class="item">
+                    <router-link v-for="item in undone" :key="item.Id" :to="'/express/detail/'+item.Id+'/'+item.BillId" tag="section" class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
@@ -26,18 +26,13 @@
                             </section>
                             <section class="content">
                                 <span>状态:</span>
-                                <span>{{item.LogisticsStatusName}}</span>
+                                <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
                             <section class="content">
                                 <span>仓库:</span>
                                 <span>{{item.StorageName}}</span>
-                            </section>
-                            <section class="content">
-                                <span>物流:</span>
-                                <span>
-                                    <span class="express">
-                                        {{item.LogisticsCorpName}}
-                                    </span>
+                                <span class="express">
+                                    {{item.LogisticsCorpName}}
                                 </span>
                             </section>
                         </section>
@@ -46,7 +41,7 @@
             </transition>
             <transition name="m-tab-choose">
                 <section v-show="changeShowType =='complete'" class="m-tab-container m-list">
-                    <router-link v-for="item in complete" :key="item.Id" :to="'/express/detail/'+item.Id" tag="section" class="item">
+                    <router-link v-for="item in complete" :key="item.Id" :to="'/express/detail/'+item.Id+'/'+item.BillId" tag="section" class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
@@ -60,11 +55,14 @@
                             </section>
                             <section class="content">
                                 <span>状态:</span>
-                                <span>{{item.LogisticsStatusName}}</span>
+                                <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
                             <section class="content">
                                 <span>仓库:</span>
                                 <span>{{item.StorageName}}</span>
+                                <span class="express">
+                                    {{item.LogisticsCorpName}}
+                                </span>
                             </section>
                         </section>
                     </router-link>
@@ -75,13 +73,13 @@
             <router-view></router-view>
         </transition>
         <loading v-if="showLoading"></loading>
-    </div>
+    </section>
 </template>
 
 <script>
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
-import { apiExpresses } from 'src/service/getData'
+import { apiGetExpresses } from 'src/service/getData'
 
 export default {
     data() {
@@ -106,8 +104,8 @@ export default {
             let endDate = new Date();
             endDate.setHours(23, 59, 59, 999);
 
-            await apiExpresses([2]).then(res => this.undone = res.Items);
-            await apiExpresses([3], startDate, endDate).then(res => this.complete = res.Items);
+            await apiGetExpresses([2]).then(res => this.undone = res.Items);
+            await apiGetExpresses([3], startDate, endDate).then(res => this.complete = res.Items);
 
             this.showLoading = false;
         }
@@ -144,6 +142,9 @@ export default {
             text-align: center;
             border-radius: 0.12rem;
             padding: .1rem;
+        }
+        b {
+            font-size: .55rem;
         }
     }
 }

@@ -261,7 +261,7 @@ export const apiCreateOrder = (userInfo, cart) => {
 		SupplierId: userInfo.CorpId,				// 供应商
 		SalerId: userInfo.UserId,					// 业务员
 		ChargeType: cart.charge.Id,					// 应收应付类别
-		ShipType: cart.ship.TypeCode,						// 配送方式
+		ShipType: cart.ship.TypeCode,				// 配送方式
 		LogisticsCorpId: cart.express.Id,			// 物流公司Id
 		CreateUserId: userInfo.UserId,				// 创建人
 
@@ -364,7 +364,7 @@ export const apiGetCustomerReconciliation = (customerId, keyword, timeSpan, offs
 // };
 
 // 获取发货列表简化
-export const apiExpresses = (status, startDate, endDate, logisticsId) => {
+export const apiGetExpresses = (status, startDate, endDate, logisticsId) => {
 	let data = {
 		QuickResult: {
 			LogisticsStates: status,		//接收数组，物流状态1、未出库；2、已出库；3、已发货；4、已收货
@@ -383,8 +383,17 @@ export const apiExpresses = (status, startDate, endDate, logisticsId) => {
 	return fetch('/api/Logistics/Express/', data);
 };
 
+// 获取发货单
+export const apiGetExpress = id => fetch('/api/Logistics/Express/' + id);
+
+// 保存发货单
+export const apiSaveExpress = express => fetch('/api/Logistics/Express/' + express.Id, express, 'POST');
+
+// 发货
+export const apiSendOutExpress = id => fetch('/api/Logistics/Express/SendOut', { id }, 'POST');
+
 // 获取执行单
-export const apiGetDeal = id => fetch('api/Sale/SaleDeal/' + id);
+export const apiGetDeal = id => fetch('/api/Sale/SaleDeal/' + id);
 
 // 获取库存
 export const apiGetGoodsStock = storageId => {
@@ -434,3 +443,15 @@ export const apiGetEmployeeSettlementMoney = (startDate, endDate, customerId) =>
 	}
 	return fetch('/api/Finance/RecSettlement/GetEmployeeSettlementMoney', data);
 };
+
+// 获取员工列表 
+export const apiGetEmployees = corpid => {
+	let data = {
+		CorpId: corpid,
+		QuickResult: {
+			IsValids: [true]
+		}
+	};
+	return fetch('/api/Core/Employee', data);
+};
+
