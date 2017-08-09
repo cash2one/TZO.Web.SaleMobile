@@ -5,6 +5,7 @@
             <section class="m-form-list">
                 <header class="item start">
                     {{bill.CustomerName}}
+                    <span :class="{money:express.LogisticsStatus==2,number:express.LogisticsStatus==3}">{{express.LogisticsStatusName}}</span>
                 </header>
                 <section class="item">
                     <h3>单号</h3>
@@ -94,7 +95,7 @@
                     </div>
                 </section>
             </section>
-            <section class="confrim" @click="confrim">
+            <section v-if="express.LogisticsStatus==2" class="confrim" @click="confrim">
                 <p>确认发货</p>
             </section>
             <br />

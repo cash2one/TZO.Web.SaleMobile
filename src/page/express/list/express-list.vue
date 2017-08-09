@@ -26,7 +26,7 @@
                             </section>
                             <section class="content">
                                 <span>状态:</span>
-                                <span>{{item.LogisticsStatusName}}</span>
+                                <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
                             <section class="content">
                                 <span>仓库:</span>
@@ -55,11 +55,14 @@
                             </section>
                             <section class="content">
                                 <span>状态:</span>
-                                <span>{{item.LogisticsStatusName}}</span>
+                                <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
                             <section class="content">
                                 <span>仓库:</span>
                                 <span>{{item.StorageName}}</span>
+                                <span class="express">
+                                    {{item.LogisticsCorpName}}
+                                </span>
                             </section>
                         </section>
                     </router-link>
@@ -139,6 +142,9 @@ export default {
             text-align: center;
             border-radius: 0.12rem;
             padding: .1rem;
+        }
+        b {
+            font-size: .55rem;
         }
     }
 }

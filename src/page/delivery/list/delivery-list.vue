@@ -26,7 +26,7 @@
                             </section>
                             <section class="content">
                                 <span>状态:</span>
-                                <span>{{item.LogisticsStatusName}}</span>
+                                <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
                             <section class="content">
                                 <span>仓库:</span>
@@ -52,7 +52,7 @@
                             </section>
                             <section class="content">
                                 <span>状态:</span>
-                                <span>{{item.LogisticsStatusName}}</span>
+                                <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
                             <section class="content">
                                 <span>仓库:</span>
@@ -140,6 +140,9 @@ export default {
             position: absolute;
             right: 0.55rem;
             top: 0.65rem;
+        }
+        b {
+            font-size: .55rem;
         }
     }
 }

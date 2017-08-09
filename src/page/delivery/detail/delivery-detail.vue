@@ -3,7 +3,10 @@
         <header-title header-title="送货明细" goback="true"></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="m-list">
-                <header>{{bill.CustomerName}}[{{bill.BillNo}}]</header>
+                <header>
+                    {{bill.CustomerName}}[{{bill.BillNo}}]
+                    <span :class="{money:express.LogisticsStatus==2,number:express.LogisticsStatus==3}">{{express.LogisticsStatusName}}</span>
+                </header>
                 <section v-for="goods in bill.Items" :key="goods.Id" class="item">
                     <section class="title">
                         <h3 class="name ellipsis">
@@ -43,7 +46,7 @@
                     </div>
                 </section>
             </section>
-            <section class="confrim" @click="confrim">
+            <section v-if="express.LogisticsStatus==2" class="confrim" @click="confrim">
                 <p>确认送货</p>
             </section>
         </section>
@@ -140,6 +143,12 @@ export default {
 @import 'src/style/mixin';
 
 .m-list {
+    header {
+        @include fj();
+        span {
+            font-size: .55rem;
+        }
+    }
     .item {
         @include fj();
         @include indent10;
@@ -154,6 +163,7 @@ export default {
         }
     }
 }
+
 .confrim_details {
     position: fixed;
     top: 0;
@@ -178,6 +188,7 @@ export default {
         @include sc(.65rem, #fff);
     }
 }
+
 .confrim {
     position: fixed;
     bottom: 0;
