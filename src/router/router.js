@@ -144,7 +144,7 @@ export default [{
             path: '/express',
             component: expressList,
             children: [{
-                path: 'detail/:Id', // 发货详情
+                path: 'detail/:Id/:BillId', // 发货详情
                 component: expressDetail
             }]
         },

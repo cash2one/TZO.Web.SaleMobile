@@ -9,7 +9,8 @@ import {
 	apiGetGlobalProperty,
 	apiGetProperties,
 	apiGetChargeType,
-	apiGetShipType
+	apiGetShipType,
+	apiGetEmployees
 } from 'src/service/getData'
 import {
 	REFRESH_TOKEN,
@@ -26,6 +27,7 @@ import {
 	GET_CATEGORY_DETAIL_LIST,
 	GET_CHARGE_TYPE,
 	GET_SHIP_TYPE,
+	GET_EMPLOYEE,
 	SAVE_CUR_CORP,
 	POSITION_INTERVAL,
 	SAVE_ADDRESS,
@@ -121,6 +123,14 @@ export default {
 			let res = await apiGetShipType();
 
 			commit(GET_SHIP_TYPE, res.Items)
+		}
+	},
+
+	async getEmployees({ commit, state }) {
+		if (!state.employeeList.length > 0) {
+			let res = await apiGetEmployees(state.curCorp.CorpId);
+
+			commit(GET_EMPLOYEE, res.Items);
 		}
 	},
 

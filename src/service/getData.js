@@ -421,3 +421,14 @@ export const apiGetSaleReturn = (storageId, status, startDate, endDate) => {
 
 // 获取退货单
 export const apiGetSaleReturnDetail = id => fetch('/api/Sale/ForeignSaleReturn/' + id);
+
+// 获取员工列表 
+export const apiGetEmployees = corpid => {
+	let data = {
+		CorpId: corpid,
+		QuickResult: {
+			IsValids: [true]
+		}
+	};
+	return fetch('/api/Core/Employee', data);
+};

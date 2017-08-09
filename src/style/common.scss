@@ -324,10 +324,10 @@ small{
                 }
         }
         .content {
-            line-height: 1.5rem;
+            line-height: 1.3rem;
             p {
                 text-align: left;
-                @include sc(.6rem, $font-color1);
+                @include sc(.65rem, $font-color1);
                 font-weight: 400;
                 font-family: Arial;
                 display: inline-block;
@@ -666,7 +666,7 @@ small{
 }
 
 .loader_more {
-	@include font(0.6rem, 3);
+	@include font(0.65rem, 3);
 	text-align: center;
 	color: #999;
 }

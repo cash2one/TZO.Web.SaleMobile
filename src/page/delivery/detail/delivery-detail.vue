@@ -2,7 +2,6 @@
     <div class="page rating">
         <header-title header-title="送货明细" goback="true"></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
-    
             <section class="m-list">
                 <header>{{bill.CustomerName}}[{{bill.BillNo}}]</header>
                 <section v-for="goods in bill.Items" :key="goods.Id" class="item">

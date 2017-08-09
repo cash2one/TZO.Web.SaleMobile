@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <section class="page">
         <header-title header-title="发货" goback="true"></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="m-tabs" ref="chooseType">
@@ -12,7 +12,7 @@
             </section>
             <transition name="m-tab-choose">
                 <section v-show="changeShowType =='undone'" class="m-tab-container m-list">
-                    <router-link v-for="item in undone" :key="item.Id" :to="'/express/detail/'+item.Id" tag="section" class="item">
+                    <router-link v-for="item in undone" :key="item.Id" :to="'/express/detail/'+item.Id+'/'+item.BillId" tag="section" class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
@@ -31,9 +31,6 @@
                             <section class="content">
                                 <span>仓库:</span>
                                 <span>{{item.StorageName}}</span>
-                            </section>
-                            <section class="content">
-                                <span>物流:</span>
                                 <span class="express">
                                     {{item.LogisticsCorpName}}
                                 </span>
@@ -44,7 +41,7 @@
             </transition>
             <transition name="m-tab-choose">
                 <section v-show="changeShowType =='complete'" class="m-tab-container m-list">
-                    <router-link v-for="item in complete" :key="item.Id" :to="'/express/detail/'+item.Id" tag="section" class="item">
+                    <router-link v-for="item in complete" :key="item.Id" :to="'/express/detail/'+item.Id+'/'+item.BillId" tag="section" class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
@@ -73,7 +70,7 @@
             <router-view></router-view>
         </transition>
         <loading v-if="showLoading"></loading>
-    </div>
+    </section>
 </template>
 
 <script>

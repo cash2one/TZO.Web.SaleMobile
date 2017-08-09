@@ -15,6 +15,7 @@ import {
   GET_POSITION,
   GET_CHARGE_TYPE,
   GET_SHIP_TYPE,
+  GET_EMPLOYEE,
   SAVE_CUR_CORP,
   SAVE_CUR_STORAGE,
   SAVE_CUR_EXPRESS,
@@ -145,6 +146,10 @@ export default {
 
   [GET_SHIP_TYPE](state, list) {
     state.shipTypeList = list;
+  },
+
+  [GET_EMPLOYEE](state, list) {
+    state.employeeList = list;
   },
 
   // 订单仓库
