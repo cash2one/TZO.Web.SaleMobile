@@ -208,7 +208,7 @@ var _createQueryModel = (salerId, customerId, keyword, sortByFiled, sortByType, 
 	return data;
 }
 
-// 外销订单
+// 外销订单,需要另加参数：CreateUserId:传入当前员工ID，TimeSpan,QuickResult.Status:状态参数（4、已审核；5、已完成），ChargeType:支付方式（0、挂账）
 export const apiGetForeignSaleOrderList = (salerId, customerId, keyword, sortByFiled, sortByType, filters, offset) => {
 	let data = _createQueryModel(salerId, customerId, keyword, sortByFiled, sortByType, filters, offset);
 	return fetch('/api/Sale/ForeignSale/', data);
