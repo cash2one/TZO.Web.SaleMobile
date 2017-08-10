@@ -5,7 +5,12 @@ import store from 'src/store/'
 import 'src/config/rem'
 import { routerMode, setToken, debug } from 'src/config/env'
 import FastClick from 'fastclick'
-import { apiGetToken } from 'src/service/getData'
+import {
+	apiGetToken,
+	apiGetWxJsConfig,
+} from 'src/service/getData'
+
+import wx from 'weixin-js-sdk'
 
 // if ('addEventListener' in document) {
 // 	document.addEventListener('DOMContentLoaded', function () {
@@ -26,24 +31,23 @@ if (!debug)
 
 Vue.use(VueRouter)
 Vue.filter('time', function (value) {//value为13位的时间戳
-	if(value=='0001-01-01T00:00:00+00:00') 
-	{
+	if (value == '0001-01-01T00:00:00+00:00') {
 		return "无";
 	}
 
-    function add0(m) {
-        return m < 10 ? '0' + m : m
-    }
-    var time = new Date(value);
-    var y = time.getFullYear();
-    var m = time.getMonth() + 1;
+	function add0(m) {
+		return m < 10 ? '0' + m : m
+	}
+	var time = new Date(value);
+	var y = time.getFullYear();
+	var m = time.getMonth() + 1;
 	var d = time.getDate();
-	
+
 	var hh = time.getHours();
 	var mm = time.getMinutes();
 	var ss = time.getSeconds();
 
-    return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(hh) + ':' + add0(mm) + ':' + add0(ss);
+	return y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(hh) + ':' + add0(mm) + ':' + add0(ss);
 });
 
 const router = new VueRouter({
@@ -74,6 +78,20 @@ router.beforeEach((to, from, next) => {
 apiGetToken(GetQueryString('code')).then(rec => {
 	setToken('bearer ' + rec.Token);
 	store.state.corpList = rec.EmployeeCorpRel;
+
+	apiGetWxJsConfig().then(data => {
+		wx.config({
+			debug:true,
+			appId:data.AppId,
+			timestamp:data.TimeStamp,
+			nonceStr:data.NonceStr,
+			signature:data.Sign,
+			jsApiList:[
+				'checkJsApi',
+				'scanQRCode',
+			]
+		});
+	});
 
 	new Vue({
 		router,

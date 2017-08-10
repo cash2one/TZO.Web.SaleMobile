@@ -455,3 +455,62 @@ export const apiGetEmployees = corpid => {
 	return fetch('/api/Core/Employee', data);
 };
 
+
+// 微信jsConfig
+export const apiGetWxJsConfig = () => {
+	let url = encodeURIComponent(window.location.href.split('#')[0]);
+	return fetch('/WxQyJS/GetConfig?url=' + url);
+}
+
+// *********************************
+// 收付款相关服务
+// 收款账户列表
+export const apiGetRecPayAccountList = () => fetch('/api/Finance/RecPayAccount/GetRecPayAccount4Select');
+
+// 创建收款单
+// 预收款 和 收款结算 唯一的区别是业务类型 12010:收款单  22020:预收款单
+export const apiCreateRecSettlement = (userId, customerId, recAccountId, money, bizType) => {
+	let data = {
+		BizType: bizType,
+		CustomerId: customerId,
+		HanderId: userId,
+		Money: money,
+		SupAccountId: recAccountId,
+		BizDateTime: new Date(),
+		CreateTime: new Date(),
+	};
+
+	return fetch('/api/Finance/RecSettlement', data, 'POST');
+}
+
+// 删除预收款单
+export const apiDeleteRecSettlement = id => fetch('/api/Finance/RecSettlement/' + id, null,"DELETE");
+
+// 创建支付流水
+export const apiProcessPay = (providerName, recAccountId, billId, billNo, bizType, money, customerId) => {
+	let data = {
+		ProviderName: providerName,
+		RecAccountId: recAccountId,
+		PayOrder: {
+			BillId: billId,
+			BillNo: billNo,
+			BizType: bizType,
+			Money: money,
+			CustomerId: customerId
+		}
+	};
+
+	return fetch('/api/Finance/Payments/ProcessPay', data, 'POST');
+};
+
+// 当面扫码付发起支付
+export const apiPay = payModel => fetch('/api/Finance/Payments/Pay', payModel, 'POST');
+
+// 预收/收款单详情
+export const apiGetPaymentsDetail = id => fetch('/api/Finance/Payments/Query/' + id);
+
+// 在线支付流水详情
+export const apiGetPaymentsJournalDetail = id => fetch('/api/Finance/PaymentsJournal/' + id);
+
+// end 收付款相关服务
+// **********************************
