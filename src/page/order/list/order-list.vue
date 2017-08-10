@@ -181,14 +181,14 @@
                                     </li>
                                 </ul>
                             </section>
-                            <section style="width: 100%;">
-                                <header class="filter_header_style">物流代收</header>
+                            <section style="width: 100%;" v-show="bizType == 12012">
+                                <header class="filter_header_style">款到发货</header>
                                 <ul class="filter_ul">
                                     <li class="filter_li" @click="selectFilter('OnlyPayedShip')">
                                         <svg v-show="filters.OnlyPayedShip" class="activity_svg">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
                                         </svg>
-                                        <span :class="{selected_filter: filters.OnlyPayedShip}">仅物流代收</span>
+                                        <span :class="{selected_filter: filters.OnlyPayedShip}">仅款到发货</span>
                                     </li>
                                 </ul>
                             </section>

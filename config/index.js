@@ -26,6 +26,7 @@ module.exports = {
         assetsPublicPath: '/',
         context: [ //代理路径
             '/api',
+            '/WxQyJS',
         ],
         proxypath: 'http://oaingatek.eicp.net:27473',
         // CSS Sourcemaps off by default because relative paths are "buggy"

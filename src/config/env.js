@@ -9,7 +9,7 @@
  */
 
 let baseUrl = '';
-let routerMode = 'history';
+let routerMode = 'hash';
 let imgBaseUrl = 'http://oaingatek.eicp.net:27473/';
 let token = '';
 let corpList = [];
