@@ -37,7 +37,7 @@
                             <strong class="money">111.00</strong>元</span>
                         <span class="info-data-bottom">退货</span>
                     </router-link>
-                    <router-link to="/points" tag="li" class="info-data-link">
+                    <router-link to="/payment/list" tag="li" class="info-data-link">
                         <span class="info-data-top">
                             <strong class="number">222.00</strong>元</span>
                         <span class="info-data-bottom">收款</span>

@@ -263,7 +263,13 @@ export default [{
                 },
                 {
                     path: 'list',// 支付列表
-                    component: paymentList
+                    component: paymentList,
+                    children: [
+                        {
+                            path: 'detail', // 支付明细
+                            component: paymentDetail
+                        },
+                    ]
                 },
                 {
                     path: 'detail', // 支付明细

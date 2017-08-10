@@ -483,8 +483,35 @@ export const apiCreateRecSettlement = (userId, customerId, recAccountId, money, 
 	return fetch('/api/Finance/RecSettlement', data, 'POST');
 }
 
+// 收款/预收款单据列表
+export const apiGetRecSettlementList = (createUserId, bizType, keyword, sortByFiled, sortByType, filters, offset) => {
+	let data = {
+		PageIndex: parseInt(offset / 20),
+		PageSize: 20,
+		BizType: bizType,
+		Keyword: keyword,
+		CreateUserId: createUserId,
+		SortParam: {
+			FiledName: sortByFiled,
+			SortType: sortByType ? sortByType : 'asc'
+		},
+		AdvancedResult: { "Properties": {} }
+	};
+
+	if (filters.orderState) {
+		data.quickResult = {};
+		data.quickResult.Status = [];
+		data.quickResult.Status.push(filters.orderState);
+	}
+
+	return fetch('/api/Finance/RecSettlement', data);
+}
+
+// 获取收款/预收款单详情
+export const apiGetRecSettlementDetail = id => fetch('/api/Finance/RecSettlement/' + id);
+
 // 删除预收款单
-export const apiDeleteRecSettlement = id => fetch('/api/Finance/RecSettlement/' + id, null,"DELETE");
+export const apiDeleteRecSettlement = id => fetch('/api/Finance/RecSettlement/' + id, null, "DELETE");
 
 // 创建支付流水
 export const apiProcessPay = (providerName, recAccountId, billId, billNo, bizType, money, customerId) => {
@@ -506,7 +533,7 @@ export const apiProcessPay = (providerName, recAccountId, billId, billNo, bizTyp
 // 当面扫码付发起支付
 export const apiPay = payModel => fetch('/api/Finance/Payments/Pay', payModel, 'POST');
 
-// 预收/收款单详情
+// 支付详情
 export const apiGetPaymentsDetail = id => fetch('/api/Finance/Payments/Query/' + id);
 
 // 在线支付流水详情
