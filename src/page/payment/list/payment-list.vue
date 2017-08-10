@@ -109,7 +109,7 @@
                                         </svg>
                                         <span :class="{selected_filter: filters.orderState == 4}">已审核</span>
                                     </li>
-                                    
+    
                                 </ul>
                             </section>
                             <footer class="confirm_filter">
@@ -302,7 +302,14 @@ export default {
             this.orderList = [...res.Items];
         },
         async getOrders() {
-            return await apiGetRecSettlementList(this.userInfo.UserId, this.bizType, this.keyword, this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
+
+            let startDate = new Date();
+            startDate.setHours(0, 0, 0, 0);
+            let endDate = new Date();
+            endDate.setHours(23, 59, 59, 999);
+
+            return await apiGetRecSettlementList(this.userInfo.UserId, this.bizType, this.keyword, startDate, endDate,
+                this.sort.sortByFiled, this.sort.sortByType, this.filters, this.offset);
         },
         // 到达底部加载更多数据
         async loaderMore() {
@@ -364,6 +371,16 @@ export default {
 .page {
     .scroll_container {
         padding-top: 3.2rem;
+
+        .m-sort{
+            .sort_item{
+                .category_container{
+                    .category_right{
+                        height:4rem;
+                    }   
+                }
+            }
+        }
     }
     .m-list {
         margin-top: .4rem;

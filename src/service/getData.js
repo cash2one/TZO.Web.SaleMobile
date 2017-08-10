@@ -140,7 +140,7 @@ export const apiCreateCustomer = (userId, bizObjInfo, customerInfo, contactArr, 
 }
 
 // 编辑
-export const apiEditCustomer = customerObj => fetch('/api/CRM/Customer/',customerObj,'POST');
+export const apiEditCustomer = customerObj => fetch('/api/CRM/Customer/', customerObj, 'POST');
 
 // 获取客户详细信息
 export const apiGetCustomer = customerId => fetch('/api/CRM/Customer/' + customerId);
@@ -466,7 +466,7 @@ export const apiGetWxJsConfig = () => {
 }
 
 // 微信获取公众号二维码（带客户id标识）
-export const apiGetWeChatSubscriptionQrCode = customerId =>{
+export const apiGetWeChatSubscriptionQrCode = customerId => {
 	return fetch('/WxMpAuxiliary/GetQrCodeUrl?userId=' + customerId);
 }
 
@@ -492,16 +492,20 @@ export const apiCreateRecSettlement = (userId, customerId, recAccountId, money, 
 }
 
 // 收款/预收款单据列表
-export const apiGetRecSettlementList = (createUserId, bizType, keyword, sortByFiled, sortByType, filters, offset) => {
+export const apiGetRecSettlementList = (createUserId, bizType, keyword, startDate, endDate, sortByFiled, sortByType, filters, offset) => {
 	let data = {
 		PageIndex: parseInt(offset / 20),
 		PageSize: 20,
 		BizType: bizType,
 		Keyword: keyword,
-		CreateUserId: createUserId,
+		UserId: createUserId,
 		SortParam: {
 			FiledName: sortByFiled,
 			SortType: sortByType ? sortByType : 'asc'
+		},
+		TimeSpan: {
+			startDate: startDate,
+			endDate: endDate
 		},
 		AdvancedResult: { "Properties": {} }
 	};

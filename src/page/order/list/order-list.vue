@@ -473,6 +473,15 @@ export default {
 .page {
     .scroll_container {
         padding-top: 3.2rem;
+        .m-sort{
+            .sort_item{
+                .category_container{
+                    .category_right{
+                        height:4rem;
+                    }   
+                }
+            }
+        }
     }
     .m-list {
         margin-top: .4rem;
