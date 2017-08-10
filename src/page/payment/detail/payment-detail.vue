@@ -9,10 +9,10 @@
                         <h2>
                             <strong>{{orderDetail.CustomerName}}</strong>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="50" height="14" style="margin-bottom: -0.08rem;">
-                                <polygon points="0,14 4,0 44,0 40,14" style="fill:none;stroke:#FF6000;stroke-width:1" />
-                                <line x1="1.5" y1="12" x2="40" y2="12" style="stroke:#FF6000;stroke-width:1.5" />
-                                <text x="3.5" y="9" style="fill:#FF6000;font-size:10;font-weight:bold;">{{orderDetail.StatusName}}</text>
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="40" height="14">
+                                    <polygon points="0,10 4,0 40,0 36,10" style="fill:none;stroke:#FF6000;stroke-width:1" />
+                                    <line x1="1.5" y1="11" x2="36" y2="11" style="stroke:#FF6000;stroke-width:1.5" />
+                                    <text x="3.5" y="9" style="fill:#FF6000;font-size:10;font-weight:bold;">{{orderDetail.StatusName}}</text>
                             </svg>
                         </h2>
                         <div class="content">

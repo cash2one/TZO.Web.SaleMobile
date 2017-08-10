@@ -97,12 +97,6 @@
                             <section style="width: 100%;">
                                 <header class="filter_header_style">状态</header>
                                 <ul class="filter_ul">
-                                    <li class="filter_li" @click="selectFilter('orderState',1)">
-                                        <svg v-show="filters.orderState == 1" class="activity_svg">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
-                                        </svg>
-                                        <span :class="{selected_filter: filters.orderState == 1}">草稿</span>
-                                    </li>
                                     <li class="filter_li" @click="selectFilter('orderState',2)">
                                         <svg v-show="filters.orderState == 2" class="activity_svg">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
@@ -126,6 +120,12 @@
                             <section style="width: 100%;">
                                 <header class="filter_header_style">账户</header>
                                 <ul class="filter_ul">
+                                    <li class="filter_li" @click="selectFilter('RecAccountType',0)">
+                                        <svg v-show="filters.RecAccountType == 0" class="activity_svg">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
+                                        </svg>
+                                        <span :class="{selected_filter: filters.OrderTime == 0}">全部</span>
+                                    </li>
                                     <li class="filter_li" @click="selectFilter('RecAccountType',1)">
                                         <svg v-show="filters.RecAccountType == 1" class="activity_svg">
                                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#selected"></use>
@@ -165,6 +165,11 @@
                                 <p class="money">{{item.Money}}</p>
                             </section>
                             <section class="content">
+                                <span>账户:</span>
+                                <span>{{item.RecAccountName}}</span>
+    
+                            </section>
+                            <section class="content">
                                 <span>时间:</span>
                                 <span>{{item.CreateTime | time}}</span>
                             </section>
@@ -172,9 +177,12 @@
                                 <span>单号:</span>
                                 <span>{{item.BillNo}}</span>
                             </section>
-                            <section class="content">
-                                <span>状态:</span>
-                                <span>{{item.StatusName}}</span>
+                            <section class="status">
+                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="40" height="14">
+                                    <polygon points="0,10 4,0 40,0 36,10" style="fill:none;stroke:#FF6000;stroke-width:1" />
+                                    <line x1="1.5" y1="11" x2="36" y2="11" style="stroke:#FF6000;stroke-width:1.5" />
+                                    <text x="3.5" y="9" style="fill:#FF6000;font-size:10;font-weight:bold;">{{item.StatusName}}</text>
+                                </svg>
                             </section>
                         </section>
                     </section>
@@ -219,7 +227,8 @@ export default {
                 sortByType: 'desc',
             },
             filters: {
-
+                orderState: 2,
+                RecAccountType: 0,
             },
             filterNum: 0,                                           // 所选中的所有样式的集合
             confirmStatus: false,                                   // 确认选择
@@ -349,7 +358,7 @@ export default {
         },
         // 选定收款单
         selectOrder(orderId) {
-            this.$router.push({ path: '/payment/list/detail/', query: { Id: orderId} });
+            this.$router.push({ path: '/payment/list/detail/', query: { Id: orderId } });
         },
         // 返回顶部
         backTop() {
@@ -401,15 +410,17 @@ export default {
                     width: 9rem;
                 }
             }
+
             .time {
                 position: absolute;
                 right: 0.55rem;
                 top: 0.65rem;
             }
 
-            .total {
+            .status {
                 position: absolute;
                 right: 0.55rem;
+                bottom: 3rem;
             }
         }
     }
