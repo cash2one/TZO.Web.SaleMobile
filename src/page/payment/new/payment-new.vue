@@ -239,23 +239,23 @@ export default {
             let rel = await apiPay(this.facePayModel);
 
             // 服务器500错误
-            if(rel.Message){
+            if (rel.Message) {
                 this.Message = rel.Message;
                 return;
             }
 
             // 服务器返回200,但实际支付未成功之前
-            if(rel.status==500 && rel.data.ExceptionMessage =='Repeat authcode submit'){
-                setTimeout(() => this.queryPaymentsJournalDetail(),1000 * 5);
+            if (rel.status == 500 && rel.data.ExceptionMessage == 'Repeat authcode submit') {
+                setTimeout(() => this.queryPaymentsJournalDetail(), 1000 * 5);
                 return;
-            }else{
+            } else {
                 this.Message = '';
                 this.showAlert = true;
                 this.alertText = '支付成功!';
             }
         },
         // 查询支付流水情况
-        async queryPaymentsJournalDetail(){
+        async queryPaymentsJournalDetail() {
             let rel = await apiGetPaymentsJournalDetail(this.facePayModel.Order.PayJournalId);
             if (rel.Status == 1) {
                 this.queryPaymentsJournalDetail = null;
@@ -264,7 +264,7 @@ export default {
                 this.alertText = '支付成功!';
             } else if (rel.Status == 0) {
                 this.Message = '支付失败，错误信息：支付超时!';
-            }else{
+            } else {
                 // 继续轮询
                 this.queryPaymentsJournalDetail();
             }
@@ -327,9 +327,9 @@ export default {
         async toggleConfirm() {
             this.showConfirm = !this.showConfirm;
 
-            if(!this.showConfirm){
+            if (!this.showConfirm) {
                 let rel = await apiGetPaymentsDetail(this.facePayModel.Order.PayJournalId);
-                if(rel.Status != 1)
+                if (rel.Status != 1)
                     apiDeleteRecSettlement(this.billId);
             }
         },
@@ -370,97 +370,82 @@ export default {
 <style lang="scss" scoped>
 @import '../../order/order';
 
-.add_icon_footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2.5rem;
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 204;
-    span {
-        @include sc(.7rem, $blue);
-        margin-left: .275rem;
-    }
-}
-
-.m-form-list {
-    header {
-        padding: .1375rem .275rem;
-        font-size: 0.65rem;
-        color: #666;
-    }
-}
-
-.item {
-    .item-left {
-        margin-top: .55rem;
-        font-size: .8rem;
-    }
-    .item-right {
-        .title {
-            .money {
-                font-size: 1.3rem;
-            }
-            p {
-                margin-top: .275rem;
-            }
-        }
-    }
-}
-
-.confirm_order {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 2rem;
-    p {
-        line-height: 2rem;
-        @include sc(.75rem, #fff);
-        background-color: #56d176;
-        text-align: center;
-    }
-}
-
-.confirm_details {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #262626;
-    z-index: 200;
-    padding: 1.25rem;
-
-    .close_activities {
-        position: absolute;
-        bottom: 1rem;
-        @include cl;
-    }
-
+.page {
     .m-form-list {
-        .item {
-            img {
-                width: 100%;
-                height: 10rem;
-            }
-            .error{
-                color:$red;
+        header {
+            padding: .1375rem .275rem;
+            font-size: 0.65rem;
+            color: #666;
+        }
+    }
+
+    .item {
+        .item-left {
+            margin-top: .55rem;
+            font-size: .8rem;
+        }
+        .item-right {
+            .title {
+                .money {
+                    font-size: 1.3rem;
+                }
+                p {
+                    margin-top: .275rem;
+                }
             }
         }
     }
-}
 
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity .5s;
-}
+    .confirm_order {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 2rem;
+        p {
+            line-height: 2rem;
+            @include sc(.75rem, #fff);
+            background-color: #56d176;
+            text-align: center;
+        }
+    }
 
-.fade-enter,
-.fade-leave-active {
-    opacity: 0;
+    .confirm_details {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #262626;
+        z-index: 200;
+        padding: 1.25rem;
+
+        .close_activities {
+            position: absolute;
+            bottom: 1rem;
+            @include cl;
+        }
+
+        .m-form-list {
+            .item {
+                img {
+                    width: 100%;
+                    height: 10rem;
+                }
+                .error {
+                    color: $red;
+                }
+            }
+        }
+    }
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity .5s;
+    }
+
+    .fade-enter,
+    .fade-leave-active {
+        opacity: 0;
+    }
 }
 </style>

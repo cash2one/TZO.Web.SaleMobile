@@ -139,6 +139,9 @@ export const apiCreateCustomer = (userId, bizObjInfo, customerInfo, contactArr, 
 	return fetch('/api/CRM/Customer/', data, 'POST', 'fetch');
 }
 
+// 编辑
+export const apiEditCustomer = customerObj => fetch('/api/CRM/Customer/',customerObj,'POST');
+
 // 获取客户详细信息
 export const apiGetCustomer = customerId => fetch('/api/CRM/Customer/' + customerId);
 
@@ -460,6 +463,11 @@ export const apiGetEmployees = corpid => {
 export const apiGetWxJsConfig = () => {
 	let url = encodeURIComponent(window.location.href.split('#')[0]);
 	return fetch('/WxQyJS/GetConfig?url=' + url);
+}
+
+// 微信获取公众号二维码（带客户id标识）
+export const apiGetWeChatSubscriptionQrCode = customerId =>{
+	return fetch('/WxMpAuxiliary/GetQrCodeUrl?userId=' + customerId);
 }
 
 // *********************************

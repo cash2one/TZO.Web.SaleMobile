@@ -27,6 +27,7 @@ module.exports = {
         context: [ //代理路径
             '/api',
             '/WxQyJS',
+            '/WxMpAuxiliary',
         ],
         proxypath: 'http://oaingatek.eicp.net:27473',
         // CSS Sourcemaps off by default because relative paths are "buggy"
