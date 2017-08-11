@@ -145,6 +145,9 @@ export const apiGetCustomer = customerId => fetch('/api/CRM/Customer/' + custome
 // 获取负责的业务区域
 export const apiGetBizAreas = () => fetch('/api/Core/BizArea/getMyResponsibleArea');
 
+// 获取本公司可用的客户等级
+export const apiGetCustomerLevels = () => fetch('/api/CRM/CustomerLevel');
+
 // 获取商品类目
 export const apiGetCategories = () => fetch('/api/Goods/Category');
 
