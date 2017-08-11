@@ -137,7 +137,7 @@ import { showBack, animate } from 'src/config/mUtils'
 import { imgBaseUrl } from 'src/config/env'
 import loading from './loading'
 import buyCart from './buy-cart'
-import { apiGetGoods } from 'src/service/getData'
+import { apiGetGoodsList } from 'src/service/getData'
 
 export default {
     data() {
@@ -237,7 +237,7 @@ export default {
             'SAVE_CUR_GOODS'
         ]),
         async getGoods() {
-            return await apiGetGoods(this.curCustomer.CustomerId, this.storage.Id, this.categoryId, this.keyword, this.sortByFiled, this.sortByType, this.filters, this.offset);
+            return await apiGetGoodsList(this.curCustomer.CustomerId, this.storage.Id, this.categoryId, this.keyword, this.sortByFiled, this.sortByType, this.filters, this.offset);
         },
         async initData() {
             //获取数据

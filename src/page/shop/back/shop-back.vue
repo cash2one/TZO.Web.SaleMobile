@@ -6,12 +6,12 @@
                 <ul class="clear">
                     <router-link to="/balance" tag="li" class="info-data-link">
                         <span class="info-data-top">
-                            <strong class="money">**</strong>元</span>
+                            <strong class="money">{{cashMoney}}</strong>元</span>
                         <span class="info-data-bottom">现金</span>
                     </router-link>
                     <router-link to="/benefit" tag="li" class="info-data-link">
                         <span class="info-data-top">
-                            <strong class="count">**</strong>元</span>
+                            <strong class="count">{{chargeOrder}}</strong>单</span>
                         <span class="info-data-bottom">挂帐</span>
                     </router-link>
                     <router-link to="/points" tag="li" class="info-data-link">
@@ -85,7 +85,13 @@
 import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
-import { apiGetGoodsStock, apiGetSaleReturn, apiGetSaleReturnDetail } from 'src/service/getData'
+import {
+    apiGetGoodsStock,
+    apiGetSaleReturnByStorageId,
+    apiGetForeignSaleReturnOrderDetail,
+    apiGetEmployeeSettlementMoney,
+    apiGetSaleOrderByUserId
+} from 'src/service/getData'
 
 export default {
     data() {
@@ -93,7 +99,9 @@ export default {
             showLoading: true,
             changeShowType: 'return',
             stockList: [],
-            saleReturnList: []
+            saleReturnList: [],
+            cashMoney: 0,
+            chargeOrder: 0
         }
     },
     mounted() {
@@ -102,7 +110,8 @@ export default {
     computed: {
         ...mapState([
             'globalPropertyList',
-            'curStorage'
+            'curStorage',
+            'userInfo'
         ]),
     },
     components: {
@@ -121,15 +130,19 @@ export default {
             let endDate = new Date();
             endDate.setHours(23, 59, 59, 999);
 
-            await apiGetSaleReturn(this.curStorage.Id, [4, 5, 7], startDate, endDate)
+            await apiGetSaleReturnByStorageId(this.curStorage.Id, [4, 5, 7], startDate, endDate)
                 .then(res => this.saleReturnList = res.Items);
 
             for (var i = 0; i < this.saleReturnList.length; i++) {
                 var val = this.saleReturnList[i];
-                await apiGetSaleReturnDetail(val.Id).then(res => val.Items = res.Items);
+                await apiGetForeignSaleReturnOrderDetail(val.Id).then(res => val.Items = res.Items);
             }
 
             await apiGetGoodsStock(this.curStorage.Id).then(res => this.stockList = res.Items);
+
+            await apiGetEmployeeSettlementMoney(startDate, endDate).then(res => this.cashMoney = res.m_Item1);
+
+            await apiGetSaleOrderByUserId(this.userInfo.UserId, [4, 5], [0], startDate, endDate).then(res => this.chargeOrder = res.Count);
 
             this.showLoading = false;
         }

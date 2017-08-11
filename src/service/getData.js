@@ -12,8 +12,25 @@ export const apiSetCorpId = corpId => fetch('/api/WxQy/Auth/setCorpId/' + corpId
 // 获取用户信息
 export const apiGetUserInfo = () => fetch('/api/Account/UserInfo');
 
+// 获取员工列表 
+export const apiGetEmployees = corpid => {
+	let data = {
+		CorpId: corpid,
+		QuickResult: {
+			IsValids: [true]
+		}
+	};
+	return fetch('/api/Core/Employee', data);
+};
+
 // 获取有效的仓库信息
 export const apiGetStorages = () => fetch('/api/Storage/Storage/IsValid');
+
+// 获取支付方式
+export const apiGetChargeType = () => fetch('/api/Finance/ChargeType', { QuickResult: { "IsEnabled": [true] } });
+
+// 获取配送方式
+export const apiGetShipType = () => fetch('/api/Logistics/ShipType', { QuickResult: { "IsEnabled": [true] } });
 
 // 获取我的仓库
 export const apiGetMyStorages = (corpId, userId) => {
@@ -34,7 +51,7 @@ export const apiGetExpressCorps = (isCollects) => {
 };
 
 // 获取客户列表
-export const apiGetCustomers = (longitude, latitude, areaId, keyword, sortByFiled, sortByType, filters, offset) => {
+export const apiGetCustomerList = (longitude, latitude, areaId, keyword, sortByFiled, sortByType, filters, offset) => {
 	let data = {
 		PageIndex: parseInt(offset / 20),
 		PageSize: 20,
@@ -77,7 +94,7 @@ export const apiGetCustomers = (longitude, latitude, areaId, keyword, sortByFile
 //			"Longitude":100.001,
 //			"Time":"2017-07-27T14:57:41.9233324+08:00"
 //			}
-export const apiSetVisitingAndSigningIn = (customerId, latitude, longitude) => {
+export const apiSetSignIn = (customerId, latitude, longitude) => {
 	let data = {
 		BizObjId: customerId,
 		Latitude: latitude,
@@ -136,7 +153,7 @@ export const apiCreateCustomer = (userId, bizObjInfo, customerInfo, contactArr, 
 		data.BizObj.Phones.push(item);
 	});
 
-	return fetch('/api/CRM/Customer/', data, 'POST', 'fetch');
+	return fetch('/api/CRM/Customer/', data, 'POST');
 }
 
 // 编辑
@@ -144,6 +161,9 @@ export const apiEditCustomer = customerObj => fetch('/api/CRM/Customer/', custom
 
 // 获取客户详细信息
 export const apiGetCustomer = customerId => fetch('/api/CRM/Customer/' + customerId);
+
+// 获取客户信用。。。可以考虑和客户信息合并
+export const apiGetCustomerCredit = customerId => fetch('/api/Finance/CustCredit/' + customerId);
 
 // 获取负责的业务区域
 export const apiGetBizAreas = () => fetch('/api/Core/BizArea/getMyResponsibleArea');
@@ -158,7 +178,7 @@ export const apiGetGlobalProperty = () => fetch('/api/Goods/Goods/ListView');
 export const apiGetProperties = () => fetch('/api/Goods/Category/GetProperties/1');
 
 // 获取商品列表
-export const apiGetGoods = (customerId, storageId, categoryId, keyword, sortByFiled, sortByType, filters, offset) => {
+export const apiGetGoodsList = (customerId, storageId, categoryId, keyword, sortByFiled, sortByType, filters, offset) => {
 	let data = {
 		PageIndex: parseInt(offset / 20),
 		PageSize: 20,
@@ -181,9 +201,7 @@ export const apiGetGoods = (customerId, storageId, categoryId, keyword, sortByFi
 	return fetch('/api/Goods/Goods/GetGoods4Mobile', data)
 };
 
-// 获取客户信用。。。可以考虑和客户信息合并
-export const apiGetCustomerCredit = customerId => fetch('/api/Finance/CustCredit/' + customerId);
-
+// 订单查询参数组织
 var _createQueryModel = (salerId, customerId, keyword, sortByFiled, sortByType, filters, offset) => {
 	let data = {
 		CustomerId: customerId,
@@ -217,6 +235,23 @@ export const apiGetForeignSaleOrderList = (salerId, customerId, keyword, sortByF
 	return fetch('/api/Sale/ForeignSale/', data);
 }
 
+export const apiGetSaleOrderByUserId = (userId, status, chargeType, startDate, endDate) => {
+	let data = {
+		CreateUserId: userId,
+		QuickResult: {
+			Status: status,
+			ChargeType: chargeType
+		},
+	};
+	if (startDate && endDate) {
+		data.TimeSpan = {
+			startDate: startDate,
+			endDate: endDate
+		};
+	}
+	return fetch('/api/Sale/ForeignSale/', data);
+};
+
 // 外销订单详情
 export const apiGetForeignSaleOrderDetail = orderId => fetch('/api/Sale/ForeignSale/' + orderId);
 
@@ -225,6 +260,24 @@ export const apiGetForeignSaleReturnOrderList = (salerId, customerId, keyword, s
 	let data = _createQueryModel(salerId, customerId, keyword, sortByFiled, sortByType, filters, offset);
 	return fetch('/api/Sale/ForeignSaleReturn/', data);
 }
+
+// 获取退货
+export const apiGetSaleReturnByStorageId = (storageId, status, startDate, endDate) => {
+	let data = {
+		StorageId: storageId,
+		QuickResult: {
+			Status: status
+		},
+		advancedResult: { "Properties": {} },
+	};
+	if (startDate && endDate) {
+		data.TimeSpan = {
+			startDate: startDate,
+			endDate: endDate
+		};
+	}
+	return fetch('/api/Sale/ForeignSaleReturn', data);
+};
 
 // 外销退回详情
 export const apiGetForeignSaleReturnOrderDetail = orderId => fetch('/api/Sale/ForeignSaleReturn/' + orderId);
@@ -292,6 +345,18 @@ export const apiConfirmOrder = (id) => fetch('/api/Sale/ForeignSale/Confirm/' + 
 // 审核订单
 export const apiVerifyOrder = (id) => fetch('/api/Sale/ForeignSale/Verify/' + id);
 
+// 获取库存
+export const apiGetGoodsStock = storageId => {
+	let data = {
+		StorageId: storageId,
+		QuickResult: {
+			IsValid: [1],
+			IsHaveStockNum: [1]
+		}
+	};
+	return fetch('/api/Storage/SubStock/GetGoodsStocks', data);
+};
+
 // 获取某商品在本公司各仓库的可用库存
 export const apiGetAllStorageStocks = goodsId => fetch('/api/Storage/SubStock/GetAllStorageByGoodsId?SubStockType=2&GoodsIds=' + goodsId);
 
@@ -320,12 +385,6 @@ export const apiGetOughtRecs = (customerId, keyword, sortByFiled, sortByType, qu
 
 	return fetch('/api/Finance/OughtRec/', data)
 };
-
-// 获取支付方式
-export const apiGetChargeType = () => fetch('/api/Finance/ChargeType', { QuickResult: { "IsEnabled": [true] } });
-
-// 获取配送方式
-export const apiGetShipType = () => fetch('/api/Logistics/ShipType', { QuickResult: { "IsEnabled": [true] } });
 
 // 获取客户对账列表（S弯）
 export const apiGetCustomerReconciliation = (customerId, keyword, timeSpan, offset) => {
@@ -398,42 +457,12 @@ export const apiSendOutExpress = id => fetch('/api/Logistics/Express/SendOut', {
 // 获取执行单
 export const apiGetDeal = id => fetch('/api/Sale/SaleDeal/' + id);
 
-// 获取库存
-export const apiGetGoodsStock = storageId => {
-	let data = {
-		StorageId: storageId,
-		QuickResult: {
-			IsValid: [1],
-			IsHaveStockNum: [1]
-		}
-	};
-	return fetch('/api/Storage/SubStock/GetGoodsStocks', data);
-};
-
-// 获取退货
-export const apiGetSaleReturn = (storageId, status, startDate, endDate) => {
-	let data = {
-		StorageId: storageId,
-		QuickResult: {
-			Status: status
-		},
-		advancedResult: { "Properties": {} },
-	};
-	if (startDate && endDate) {
-		data.TimeSpan = {
-			startDate: startDate,
-			endDate: endDate
-		};
-	}
-	return fetch('/api/Sale/ForeignSaleReturn', data);
-};
-
-// 获取退货单
-export const apiGetSaleReturnDetail = id => fetch('/api/Sale/ForeignSaleReturn/' + id);
-
 // 获取某业务员某时间段内收现金情况,返回对象为{m_Item1:金额}
 export const apiGetEmployeeSettlementMoney = (startDate, endDate, customerId) => {
-	let data = {};
+	let data = {
+		PageIndex: 0,
+		PageSize: 1,
+	};
 
 	if (customerId)
 		data.CustomerId = customerId;
@@ -445,17 +474,6 @@ export const apiGetEmployeeSettlementMoney = (startDate, endDate, customerId) =>
 		};
 	}
 	return fetch('/api/Finance/RecSettlement/GetEmployeeSettlementMoney', data);
-};
-
-// 获取员工列表 
-export const apiGetEmployees = corpid => {
-	let data = {
-		CorpId: corpid,
-		QuickResult: {
-			IsValids: [true]
-		}
-	};
-	return fetch('/api/Core/Employee', data);
 };
 
 
