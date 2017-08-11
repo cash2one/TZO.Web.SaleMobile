@@ -81,7 +81,7 @@ apiGetToken(GetQueryString('code')).then(rec => {
 
 	apiGetWxJsConfig().then(data => {
 		wx.config({
-			debug:true,
+			debug:false,
 			appId:data.AppId,
 			timestamp:data.TimeStamp,
 			nonceStr:data.NonceStr,

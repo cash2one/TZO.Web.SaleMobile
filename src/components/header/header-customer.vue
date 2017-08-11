@@ -6,7 +6,7 @@
                     <path fill="#fff" d="M20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4C12.76,4 13.5,4.11 14.2,4.31L15.77,2.74C14.61,2.26 13.34,2 12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12M7.91,10.08L6.5,11.5L11,16L21,6L19.59,4.58L11,13.17L7.91,10.08Z" />
                 </symbol>
                 <symbol viewBox="0 0 24 24" id="header_signInActive">
-                    <path fill="#000000" d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
+                    <path fill="#45C144" d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
                 </symbol>
             </defs>
         </svg>
@@ -29,11 +29,19 @@
                 <router-link to="/customer/search" class="search">
                     <strong>搜索</strong>
                 </router-link>
-                <router-link to="/customer/sgin-in">
-                    <svg class="sign_in">
+                <!-- <router-link to="/customer/sgin-in">
+                            <svg class="sign_in">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
+                            </svg>
+                        </router-link> -->
+                <section @click="signIn">
+                    <svg class="sign_in" v-if="!signInActive">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
                     </svg>
-                </router-link>
+                    <svg class="sign_in" v-if="signInActive">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signInActive"></use>
+                    </svg>
+                </section>
             </section>
             <footer class="description_footer">
                 <p v-for="item in curCustomer.BizObj.Addrs" :key="item.Id" class="ellipsis">
@@ -45,21 +53,21 @@
             </footer>
         </section>
         <!-- <section class="shop_status_container">
-                        <div class="shop_status_header">
-                            <router-link to="/path">
-                                <span class="shop_detail_title">路线</span>
-                            </router-link>
-                            <svg style="width:24px;height:24px">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
-                            </svg>
-                            <router-link to="location">
-                                <span class="identification_detail">定位</span>
-                                <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
-                                </svg>
-                            </router-link>
-                        </div>
-                    </section> -->
+                                <div class="shop_status_header">
+                                    <router-link to="/path">
+                                        <span class="shop_detail_title">路线</span>
+                                    </router-link>
+                                    <svg style="width:24px;height:24px">
+                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
+                                    </svg>
+                                    <router-link to="location">
+                                        <span class="identification_detail">定位</span>
+                                        <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
+                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
+                                        </svg>
+                                    </router-link>
+                                </div>
+                            </section> -->
         <section class="status_container">
             <router-link to="/shop/shopDetail/shopSafe" class="header">
                 <h3>业务情况</h3>
@@ -97,14 +105,26 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import { imgBaseUrl } from 'src/config/env'
+import { apiSetVisitingAndSigningIn } from 'src/service/getData'
 
 export default {
     data() {
         return {
             imgBaseUrl,
+            signInActive:false, 
+        }
+    },
+    methods: {
+        ...mapActions([
+            'autoGetPosition'
+        ]),
+        async signIn() {
+            await this.autoGetPosition();
+            await apiSetVisitingAndSigningIn(this.curCustomer.CustomerId, this.latitude, this.longitude);
+            this.signInActive=true;
         }
     },
     components: {
@@ -112,7 +132,9 @@ export default {
     },
     computed: {
         ...mapState([
-            'curCustomer'
+            'curCustomer',
+            'latitude', 				// 当前位置纬度
+            'longitude', 				// 当前位置经度
         ]),
     }
 }
