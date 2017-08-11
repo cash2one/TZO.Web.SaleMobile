@@ -73,7 +73,7 @@ import { mapState, mapMutations } from 'vuex'
 import { loadMore, getImgPath } from './mixin'
 import { showBack, animate } from 'src/config/mUtils'
 import loading from './loading'
-import { apiGetCustomers } from 'src/service/getData'
+import { apiGetCustomerList } from 'src/service/getData'
 
 export default {
 	data() {
@@ -115,7 +115,7 @@ export default {
 			this.$router.push('/home');
 		},
 		async getCustomers() {
-			return await apiGetCustomers(this.curLongitude, this.curLatitude, this.bizAreaId, this.keyword, this.sortByFiled, this.sortByType, this.filters, this.offset);
+			return await apiGetCustomerList(this.curLongitude, this.curLatitude, this.bizAreaId, this.keyword, this.sortByFiled, this.sortByType, this.filters, this.offset);
 		},
 		async initData() {
 			//获取数据

@@ -90,6 +90,7 @@
                                     <span>{{item.Goods.Properties['p'+prop.Id]}}</span>
                                 </section>
                             </section>
+                            <return-cart :goods="item"></return-cart>
                         </section>
                         <div class="detail">
                             <div>
@@ -127,6 +128,8 @@
 import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
+import returnCart from 'src/components/common/return-cart'
+
 import {
     apiGetForeignSaleOrderDetail,
     apiGetForeignSaleReturnOrderDetail,
@@ -138,7 +141,6 @@ export default {
     data() {
         return {
             orderDetail: {},
-
             showLoading: true,                                      //显示加载动画
         }
     },
@@ -185,6 +187,7 @@ export default {
     components: {
         headerTitle,
         loading,
+        returnCart
     },
 }
 </script>

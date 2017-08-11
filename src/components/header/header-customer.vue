@@ -112,7 +112,7 @@ import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import alertTip from 'src/components/common/alert-tip'
 import { imgBaseUrl } from 'src/config/env'
-import { apiSetVisitingAndSigningIn } from 'src/service/getData'
+import { apiSetSignIn } from 'src/service/getData'
 
 export default {
     data() {
@@ -189,7 +189,7 @@ export default {
                 return;
             }
 
-            await apiSetVisitingAndSigningIn(this.curCustomer.CustomerId, this.latitude, this.longitude);
+            await apiSetSignIn(this.curCustomer.CustomerId, this.latitude, this.longitude);
             this.signInActive = true;
         },
         closeTip() {

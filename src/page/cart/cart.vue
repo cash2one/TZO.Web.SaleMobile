@@ -4,7 +4,7 @@
         <section v-if="cart" v-for="(cart,index) in cartList" :key="index" class="m-list">
             <header>
                 <span>{{cart.customer.BizObj.Name}}</span>
-                <router-link :to="'/order/confirm/'+cart.customer.CustomerId" tag="a" class="right">
+                <router-link :to="'/order/confirm/'+orderStorage.Id+'/'+cart.customer.CustomerId" tag="a" class="right">
                     下单
                 </router-link>
             </header>
@@ -48,7 +48,8 @@ export default {
     computed: {
         ...mapState([
             'propertyList',
-            'cartList'
+            'cartList',
+            'orderStorage'
         ]),
     },
     components: {

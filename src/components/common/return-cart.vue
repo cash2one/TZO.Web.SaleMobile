@@ -30,14 +30,14 @@ export default {
     },
     computed: {
         ...mapState([
-            'cartList',
+            'returnCartList',
             'curCustomer'
         ]),
         /**
          * 监听cartList变化，更新当前商铺的购物车信息customerCart，同时返回一个新的对象
          */
         customerCart: function () {
-            return Object.assign({}, this.cartList[this.curCustomer.CustomerId]);
+            return Object.assign({}, this.returnCartList[this.curCustomer.CustomerId]);
         },
         // shopCart变化的时候重新计算当前商品的数量
         goodsNum: function () {
@@ -51,23 +51,22 @@ export default {
     props: ['goods', 'price'],
     methods: {
         ...mapMutations([
-            'ADD_CART',
-            'REDUCE_CART',
+            'ADD_RETURN_CART',
+            'REDUCE_RETURN_CART',
         ]),
         // 移出购物车
         removeOutCart(goodsId) {
             if (this.goodsNum > 0) {
-                this.REDUCE_CART({ customerId: this.curCustomer.CustomerId, goodsId });
+                this.REDUCE_RETURN_CART({ customerId: this.curCustomer.CustomerId, goodsId });
             }
         },
         // 加入购物车，计算按钮位置。
         addToCart(event) {
-            this.ADD_CART({ customer: this.curCustomer, goods: this.goods, price: this.goods.LevelPrice });
+            this.ADD_RETURN_CART({ customer: this.curCustomer, goods: this.goods, price: this.goods.LevelPrice });
             let elLeft = event.target.getBoundingClientRect().left;
             let elBottom = event.target.getBoundingClientRect().bottom;
             this.showMoveDot.push(true);
             this.$emit('showMoveDot', this.showMoveDot, elLeft, elBottom);
-
         },
     },
 }
@@ -78,7 +77,7 @@ export default {
 .cart_module {
     display: inline-block;
     position: absolute;
-    top: 1rem;
+    bottom: .55rem;
     right: .55rem;
 
     .add_icon {
@@ -90,7 +89,7 @@ export default {
     }
     svg {
         @include wh(.9rem, .9rem);
-        fill: $blue;
+        fill: $red;
     }
     .cart_num {
         @include sc(.65rem, #666);
