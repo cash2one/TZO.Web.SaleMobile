@@ -35,6 +35,9 @@ import {
   CONFIRM_REMARK,
   POSITION_INTERVAL,
   SAVE_CUR_GOODS,
+  ADD_RETURN_CART,
+  REDUCE_RETURN_CART,
+  CLEAR_RETURN_CART
 } from './mutation-types.js'
 
 import { setStore, getStore } from 'src/config/mUtils'
@@ -350,6 +353,59 @@ export default {
       ...cart
     };
   },
+
+  // 加入退货
+  [ADD_RETURN_CART](state, { customer, goods, price }) {
+    let cart = state.returnCartList;
+    let customerCart = cart[customer.CustomerId] = (cart[customer.CustomerId] || {});
+    customerCart.customer = customer;
+    let items = customerCart.items = (customerCart.items || {});
+    if (items[goods.GoodsId]) {
+      items[goods.GoodsId]['num']++;
+    } else {
+      items[goods.GoodsId] = {
+        "num": 1,
+        "id": goods.GoodsId,
+        "info": goods,
+        "price": price
+      };
+    }
+    state.returnCartList = {
+      ...cart
+    };
+    //存入localStorage
+    setStore('returnCart', state.returnCartList);
+  },
+
+  // 移出购物车
+  [REDUCE_RETURN_CART](state, { customerId, goodsId }) {
+    let cart = state.returnCartList;
+    let customerCart = cart[customerId] = (cart[customerId] || {});
+    let items = customerCart.items = (customerCart.items || {});
+    if (items[goodsId]) {
+      if (items[goodsId]['num'] > 0) {
+        items[goodsId]['num']--;
+        state.returnCartList = {
+          ...cart
+        };
+        //存入localStorage
+        setStore('returnCart', state.returnCartList);
+      } else {
+        //商品数量为0，则清空当前商品的信息
+        delete items[goodsId];
+      }
+    }
+  },
+
+  // 清空当前商品的购物车信息
+  [CLEAR_RETURN_CART](state, customerId) {
+    state.returnCartList[customerId] = null;
+    state.returnCartList = {
+      ...state.returnCartList
+    };
+    setStore('returnCart', state.returnCartList);
+  },
+
   //网页初始化时从本地缓存获取购物车数据
   // [INIT_BUYCART](state) {
   // 	let initCart = getStore('buyCart');
