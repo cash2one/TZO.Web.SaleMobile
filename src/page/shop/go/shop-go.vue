@@ -88,7 +88,7 @@
 import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
-import { apiGetExpresses, apiGetDeal, apiGetGoodsStock, apiGetSaleReturn } from 'src/service/getData'
+import { apiGetExpresses, apiGetDeal, apiGetGoodsStock, apiGetSaleReturnByStorageId } from 'src/service/getData'
 export default {
     data() {
         return {
@@ -108,6 +108,7 @@ export default {
             'curStorage',
             'curExpress'
         ]),
+
     },
     components: {
         headerTitle,
@@ -119,7 +120,7 @@ export default {
         ]),
         async initData() {
             await this.getGlobalProperty();
-            await apiGetSaleReturn(this.curStorage.Id, [2]).then(res => this.saleReturnNum = res.Count);
+            await apiGetSaleReturnByStorageId(this.curStorage.Id, [2]).then(res => this.saleReturnNum = res.Count);
 
             await apiGetExpresses([2], false, false, this.curExpress.Id).then(res => this.expressList = res.Items);
             for (var i = 0; i < this.expressList.length; i++) {

@@ -32,9 +32,10 @@ const state = {
 	categoryDetailList: [],		// 二级类目
 	shipTypeList: [],			// 配送方式
 	chargeTypeList: [],			// 支付方式
-	employeeList:[],			// 员工列表
+	employeeList: [],			// 员工列表
 
 	cartList: {}, 				// 购物车的商品列表
+	returnCartList: {},			// 退货清单
 	curGoods: {},				// 当前商品
 }
 
