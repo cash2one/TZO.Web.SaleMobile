@@ -59,7 +59,15 @@
                 </p>
             </div>
         </section>
-
+        <br>
+        <br>
+        <br>
+        <br>
+        <section class="confirm_order" @click="getGpsCoordinates()">
+            <p>重定位</p>
+        </section>
+        <alert-tip v-if="showAlert" @closeTip="closeTip" :alertText="alertText"></alert-tip>
+    
         <transition name="fade">
             <section class="confirm_details" v-if="showConfirm">
                 <section class="m-form-list">
@@ -87,13 +95,17 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
+import alertTip from 'src/components/common/alert-tip'
 import {
     apiGetCustomer,
     apiGetCustomerCredit,
     apiEditCustomer,
-    apiGetWeChatSubscriptionQrCode
+    apiGetWeChatSubscriptionQrCode,
+    apiUpdateGPSLaction,
 } from 'src/service/getData'
+
 export default {
     data() {
         return {
@@ -104,6 +116,9 @@ export default {
 
             showConfirm: false,
             qrcodeImg: {},           // 微信二维码 图片 和过期时间
+
+            showAlert: false,
+            alertText: null,
         }
     },
 
@@ -131,7 +146,6 @@ export default {
                     item.WeixinOpenId = 'ingatek';
                 }
             }
-
             await apiEditCustomer(this.customer);
 
             this.qrcodeImg = await apiGetWeChatSubscriptionQrCode(this.customerId);
@@ -140,11 +154,40 @@ export default {
         },
         toggleConfirm() {
             this.showConfirm = !this.showConfirm;
-        }
+        },
+        async getGpsCoordinates() {
+
+            // 未获取到地理位置信息
+            if (this.latitude == 0 || this.longitude == 0) {
+                this.alertText = '重定位失败:未获取到您所在的地理位置，请重试!';
+                this.showAlert = true;
+                return;
+            }
+
+            let rel = await apiUpdateGPSLaction(this.curCustomer.CustomerId, this.latitude, this.longitude);
+            console.log(rel);
+            if (rel) {
+                this.alertText = '重定位成功!';
+            } else {
+                this.alertText = '重定位失败:提交数据失败，请重试!';
+            }
+            this.showAlert = true;
+        },
+        closeTip() {
+            this.showAlert = false;
+        },
     },
     components: {
-        headerTitle
+        headerTitle,
+        alertTip,
     },
+    computed: {
+        ...mapState([
+            'curCustomer',
+            'latitude', 				// 当前位置纬度
+            'longitude', 				// 当前位置经度
+        ]),
+    }
 }
 </script>
 
@@ -173,6 +216,18 @@ export default {
                     width: 100%;
                 }
             }
+        }
+    }
+    .confirm_order {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 2rem;
+        p {
+            line-height: 2rem;
+            @include sc(.75rem, #fff);
+            background-color: #56d176;
+            text-align: center;
         }
     }
 }

@@ -30,10 +30,10 @@
                     <strong>搜索</strong>
                 </router-link>
                 <!-- <router-link to="/customer/sgin-in">
-                            <svg class="sign_in">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
-                            </svg>
-                        </router-link> -->
+                                <svg class="sign_in">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
+                                </svg>
+                            </router-link> -->
                 <section @click="signIn">
                     <svg class="sign_in" v-if="!signInActive">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
@@ -53,21 +53,21 @@
             </footer>
         </section>
         <!-- <section class="shop_status_container">
-                                <div class="shop_status_header">
-                                    <router-link to="/path">
-                                        <span class="shop_detail_title">路线</span>
-                                    </router-link>
-                                    <svg style="width:24px;height:24px">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
-                                    </svg>
-                                    <router-link to="location">
-                                        <span class="identification_detail">定位</span>
-                                        <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-                                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
-                                        </svg>
-                                    </router-link>
-                                </div>
-                            </section> -->
+                        <div class="shop_status_header">
+                            <router-link to="/path">
+                                <span class="shop_detail_title">路线</span>
+                            </router-link>
+                            <svg style="width:24px;height:24px">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
+                            </svg>
+                            <router-link to="location">
+                                <span class="identification_detail">定位</span>
+                                <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
+                                </svg>
+                            </router-link>
+                        </div>
+                    </section> -->
         <section class="status_container">
             <router-link to="/shop/shopDetail/shopSafe" class="header">
                 <h3>业务情况</h3>
@@ -98,6 +98,9 @@
                 </ul>
             </section>
         </section>
+    
+        <alert-tip v-if="showAlert" @closeTip="closeTip" :alertText="alertText"></alert-tip>
+    
     </header>
     <router-link v-else to="/customer/search" tag="section" class="customer_header">
         <header-title header-title="请选择客户"></header-title>
@@ -107,6 +110,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
+import alertTip from 'src/components/common/alert-tip'
 import { imgBaseUrl } from 'src/config/env'
 import { apiSetVisitingAndSigningIn } from 'src/service/getData'
 
@@ -114,21 +118,91 @@ export default {
     data() {
         return {
             imgBaseUrl,
-            signInActive:false, 
+            signInActive: false,
+
+            showAlert: false,
+            alertText: null,
+            goNext: false,
+
+            EARTH_RADIUS: 6378137.0,    //单位M
+            PI: Math.PI,
         }
     },
     methods: {
         ...mapActions([
             'autoGetPosition'
         ]),
+        getRad(d) {
+            return d * this.PI / 180.0;
+        },
+        getFlatternDistance(lat1, lng1, lat2, lng2) {
+            var f = this.getRad((lat1 + lat2) / 2);
+            var g = this.getRad((lat1 - lat2) / 2);
+            var l = this.getRad((lng1 - lng2) / 2);
+
+            var sg = Math.sin(g);
+            var sl = Math.sin(l);
+            var sf = Math.sin(f);
+
+            var s, c, w, r, d, h1, h2;
+            var a = this.EARTH_RADIUS;
+            var fl = 1 / 298.257;
+
+            sg = sg * sg;
+            sl = sl * sl;
+            sf = sf * sf;
+
+            s = sg * (1 - sl) + (1 - sf) * sl;
+            c = (1 - sg) * (1 - sl) + sf * sl;
+
+            w = Math.atan(Math.sqrt(s / c));
+            r = Math.sqrt(s * c) / w;
+            d = 2 * w * a;
+            h1 = (3 * r - 1) / 2 / c;
+            h2 = (3 * r + 1) / 2 / s;
+
+            return d * (1 + fl * (h1 * sf * (1 - sg) - h2 * (1 - sf) * sg));
+        },
         async signIn() {
-            await this.autoGetPosition();
+            // 未获取到地理位置信息
+            if (this.latitude == 0 || this.longitude == 0) {
+                this.alertText = '签到失败:未获取到您所在的地理位置，请重试!';
+                this.showAlert = true;
+                return;
+            }
+
+            // 客户未定位
+            if (this.curCustomer.BizObj.Latitude == 0 || this.curCustomer.BizObj.Longitude == 0) {
+                // 跳转到定位
+                this.alertText = '签到失败:当前客户未采集地理位置，请先采集!';
+                this.showAlert = true;
+                this.goNext = true;
+                return;
+            }
+
+            // 距离大于300M
+            let distance = this.getFlatternDistance(this.latitude, this.longitude, this.curCustomer.BizObj.Latitude, this.curCustomer.BizObj.Longitude);
+            //let distance = this.getFlatternDistance(116.384374, 39.914668, 116.382967, 39.913285);
+            if (distance > 300) {
+                this.alertText = '签到失败:当前位置距离客户所在位置大于300米!';
+                this.showAlert = true;
+                return;
+            }
+
             await apiSetVisitingAndSigningIn(this.curCustomer.CustomerId, this.latitude, this.longitude);
-            this.signInActive=true;
-        }
+            this.signInActive = true;
+        },
+        closeTip() {
+            if (this.goNext) {
+                this.$router.push('/customer/detail/' + this.curCustomer.CustomerId);
+            }
+            else
+                this.showAlert = false;
+        },
     },
     components: {
-        headerTitle
+        headerTitle,
+        alertTip,
     },
     computed: {
         ...mapState([

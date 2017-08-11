@@ -246,7 +246,7 @@ export default {
 
             // 服务器返回200,但实际支付未成功之前
             if (rel.status == 500 && rel.data.ExceptionMessage == 'Repeat authcode submit') {
-                setTimeout(() => this.queryPaymentsJournalDetail(), 1000 * 5);
+                this.queryPaymentsJournalDetail();
                 return;
             } else {
                 this.Message = '';
@@ -266,7 +266,7 @@ export default {
                 this.Message = '支付失败，错误信息：支付超时!';
             } else {
                 // 继续轮询
-                this.queryPaymentsJournalDetail();
+                setTimeout(() => this.queryPaymentsJournalDetail(), 1000 * 10);
             }
         },
         // 查询支付状态

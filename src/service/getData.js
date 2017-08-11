@@ -86,6 +86,15 @@ export const apiSetVisitingAndSigningIn = (customerId, latitude, longitude) => {
 	return fetch('/api/CRM/SignLog/', data, 'POST', 'fetch');
 }
 
+export const apiUpdateGPSLaction = (customerId, latitude, longitude)=>{
+	let data = {
+		BizObjId: customerId,
+		Latitude: latitude,
+		Longitude: longitude
+	};
+	return fetch('/api/Core/BizObj/updateGpsLocation', data, 'POST');
+}
+
 // 新增客户
 // 参数：
 //		userId:								当前用户标识		long,必填非0
