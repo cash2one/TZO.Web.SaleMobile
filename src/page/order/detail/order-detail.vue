@@ -90,7 +90,7 @@
                                     <span>{{item.Goods.Properties['p'+prop.Id]}}</span>
                                 </section>
                             </section>
-                            <return-cart :goods="item"></return-cart>
+                            <return-cart :orderId="orderDetail.Id" :customer="{CustomerId:orderDetail.CustomerId,Name:orderDetail.CustomerName}" :item="item"></return-cart>
                         </section>
                         <div class="detail">
                             <div>
@@ -150,12 +150,10 @@ export default {
     methods: {
         ...mapActions([
             'getGlobalProperty',
-            'getPorpertyList',
         ]),
         async initData() {
 
             await this.getGlobalProperty();
-            await this.getPorpertyList();
 
             if (this.$route.query.bizType == 12012) {
                 await apiGetForeignSaleOrderDetail(this.$route.query.Id).then(val => {

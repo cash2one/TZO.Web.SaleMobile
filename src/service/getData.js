@@ -103,7 +103,7 @@ export const apiSetSignIn = (customerId, latitude, longitude) => {
 	return fetch('/api/CRM/SignLog/', data, 'POST', 'fetch');
 }
 
-export const apiUpdateGPSLaction = (customerId, latitude, longitude)=>{
+export const apiUpdateGPSLaction = (customerId, latitude, longitude) => {
 	let data = {
 		BizObjId: customerId,
 		Latitude: latitude,
@@ -356,6 +356,24 @@ export const apiConfirmOrder = (id) => fetch('/api/Sale/ForeignSale/Confirm/' + 
 
 // 审核订单
 export const apiVerifyOrder = (id) => fetch('/api/Sale/ForeignSale/Verify/' + id);
+
+// 可退清单
+export const apiGetSaleDealItem = (customerId, keyword, startDate, endDate) => {
+	let data = {
+		CustomerId: customerId,
+		Keyword: keyword,
+		QuickResult: { "Status": [2] },
+		AdvancedResult: {}
+	};
+
+	if (startDate && endDate) {
+		data.TimeSpan = {
+			startDate: startDate,
+			endDate: endDate
+		};
+	}
+	return fetch('api/Sale/SaleDeal/Get4Transfer', data);
+};
 
 // 获取库存
 export const apiGetGoodsStock = storageId => {

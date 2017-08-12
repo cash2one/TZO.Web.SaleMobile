@@ -45,6 +45,7 @@ const orderDetail = r => require.ensure([], () => r(require('../page/order/detai
 const orderList = r => require.ensure([], () => r(require('../page/order/list/order-list')), 'order')
 const orderRetail = r => require.ensure([], () => r(require('../page/order/retail/order-retail')), 'order')
 const orderReturn = r => require.ensure([], () => r(require('../page/order/return/order-return')), 'order')
+const dealList = r => require.ensure([], () => r(require('../page/order/return/deal-list')), 'order')
 
 const payment = r => require.ensure([], () => r(require('../page/payment/payment')), 'payment')
 const paymentDetail = r => require.ensure([], () => r(require('../page/payment/detail/payment-detail')), 'payment')
@@ -244,6 +245,10 @@ export default [{
                     path: 'return', // 销售退货
                     component: orderReturn
                 },
+                {
+                    path: 'deal',
+                    component: dealList
+                }
             ]
         },
         // 路径

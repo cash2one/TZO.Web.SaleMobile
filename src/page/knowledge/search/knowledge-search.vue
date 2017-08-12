@@ -1,6 +1,6 @@
 <template>
     <div>
-        <header-title header-title="知识库搜索" go-back='true'>
+        <header-title header-title="知识库搜索" goback='true'>
         </header-title>
     </div>
 </template>
