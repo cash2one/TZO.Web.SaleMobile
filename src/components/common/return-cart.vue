@@ -2,7 +2,7 @@
     <section class="cart_module">
         <section class="cart_button">
             <transition name="showReduce">
-                <span @click="removeOutCart(goods.GoodsId)" v-if="goodsNum">
+                <span @click="removeOutCart(item.GoodsId)" v-if="goodsNum">
                     <svg>
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart-minus"></use>
                     </svg>
@@ -37,18 +37,18 @@ export default {
          * 监听cartList变化，更新当前商铺的购物车信息customerCart，同时返回一个新的对象
          */
         customerCart: function () {
-            return Object.assign({}, this.returnCartList[this.curCustomer.CustomerId]);
+            return Object.assign({}, this.returnCartList[this.customer.CustomerId]);
         },
         // shopCart变化的时候重新计算当前商品的数量
         goodsNum: function () {
-            if (this.customerCart.items && this.customerCart.items[this.goods.GoodsId]) {
-                return this.customerCart.items[this.goods.GoodsId].num;
+            if (this.customerCart.items && this.customerCart.items[this.item.GoodsId]) {
+                return this.customerCart.items[this.item.GoodsId].num;
             } else {
                 return 0;
             }
         },
     },
-    props: ['goods', 'price'],
+    props: ['dealId', 'customer', 'item'],
     methods: {
         ...mapMutations([
             'ADD_RETURN_CART',
@@ -57,12 +57,12 @@ export default {
         // 移出购物车
         removeOutCart(goodsId) {
             if (this.goodsNum > 0) {
-                this.REDUCE_RETURN_CART({ customerId: this.curCustomer.CustomerId, goodsId });
+                this.REDUCE_RETURN_CART({ customerId: this.customer.CustomerId, goodsId });
             }
         },
         // 加入购物车，计算按钮位置。
         addToCart(event) {
-            this.ADD_RETURN_CART({ customer: this.curCustomer, goods: this.goods, price: this.goods.LevelPrice });
+            this.ADD_RETURN_CART({ customer: this.customer, goods: this.item.Goods, price: this.item.Price, dealId: this.dealId, item: this.item });
             let elLeft = event.target.getBoundingClientRect().left;
             let elBottom = event.target.getBoundingClientRect().bottom;
             this.showMoveDot.push(true);
@@ -121,4 +121,3 @@ export default {
     opacity: 0;
 }
 </style>
-

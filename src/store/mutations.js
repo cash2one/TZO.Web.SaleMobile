@@ -355,19 +355,21 @@ export default {
   },
 
   // 加入退货
-  [ADD_RETURN_CART](state, { customer, goods, price }) {
+  [ADD_RETURN_CART](state, { customer, goods, price, dealId, item }) {
     let cart = state.returnCartList;
     let customerCart = cart[customer.CustomerId] = (cart[customer.CustomerId] || {});
     customerCart.customer = customer;
+    customerCart.dealId = dealId;
     let items = customerCart.items = (customerCart.items || {});
-    if (items[goods.GoodsId]) {
-      items[goods.GoodsId]['num']++;
+    if (items[goods.Id]) {
+      items[goods.Id]['num']++;
     } else {
-      items[goods.GoodsId] = {
+      items[goods.Id] = {
         "num": 1,
-        "id": goods.GoodsId,
+        "id": goods.Id,
         "info": goods,
-        "price": price
+        "price": price,
+        "item": item
       };
     }
     state.returnCartList = {
