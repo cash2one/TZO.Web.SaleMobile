@@ -41,7 +41,6 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - 
 - [x] 0.2.0 库存商品列表 goods-stock -- 完成 李季
 - [x] 0.2.0 销售出库 order-retail -- 完成 李季
-- [ ] 0.2.0 退货 order/return -- 未完成
 - [x] 0.2.0 收款 payment/new-- 完成 李海全
 - [x] 0.2.0 收款列表 payment/list -- 完成 李海全
 - [x] 0.2.0 收款单详情 payment/detail -- 完成 李海全
@@ -54,9 +53,18 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [x] 0.2.0 送货明细 delivery/detail -- 完成 李季
 - [x] 0.2.0 物流发货 express/list -- 完成 李季
 - [x] 0.2.0 物流发货 express/detail -- 完成 李季
+- 
+- [ ] 0.2.0 执行单明细 order/deal -- 未完成
+- [ ] 0.2.0 退货清单 return-cart -- 未完成
+- [ ] 0.2.0 退货 order/return -- 未完成
+- [ ] 0.2.0 退货确认 order/confirm-return -- 未完成
 - [ ] 0.2.0 路线规划 path -- 未完成 
 - [ ] 0.2.0 定位功能 location -- 未完成
-- 
+- [ ] 0.2.0 客户欠款样式调整 order/return -- 未完成
+- [ ] 0.2.0 客户对账单样式调整 order/return -- 未完成
+- [ ] 0.2.0 客户历史订单 order/return -- 未完成
+- [ ] 0.2.0 客户新增页面样式调整 order/return -- 未完成
+
 - [ ] 0.3.0 蓝牙打印 -- 未完成
 - [ ] 0.3.0 知识库-车型搜索 knowledge-search -- 未完成
 - [ ] 0.3.0 知识库-车型详情 knowledge-detail -- 未完成

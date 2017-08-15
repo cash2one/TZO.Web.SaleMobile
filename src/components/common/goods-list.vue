@@ -243,9 +243,7 @@ export default {
             //获取数据
             let res = await this.getGoods();
             this.goodsList = [...res.Items];
-            if (res.length < 20) {
-                this.touchend = true;
-            }
+            
             this.hideLoading();
             //开始监听scrollTop的值，达到一定程度后显示返回顶部按钮
             showBack(status => {
@@ -270,7 +268,7 @@ export default {
             this.hideLoading();
             this.goodsList = [...this.goodsList, ...res.Items];
             //当获取数据小于20，说明没有更多数据，不需要再次请求数据
-            if (res.length < 20) {
+            if (res.Items.length < 20) {
                 this.touchend = true;
                 return
             }

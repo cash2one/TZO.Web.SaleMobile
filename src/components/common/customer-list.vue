@@ -148,7 +148,7 @@ export default {
 			this.hideLoading();
 			this.customerList = [...this.customerList, ...res.Items];
 			//当获取数据小于20，说明没有更多数据，不需要再次请求数据
-			if (res.length < 20) {
+			if (res.Items.length < 20) {
 				this.touchend = true;
 				return
 			}
