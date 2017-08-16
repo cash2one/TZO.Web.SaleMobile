@@ -1,56 +1,31 @@
 <template>
     <section class="page rating">
-        <header-title header-title="订单备注" goback="true"></header-title>
-        <section v-if="!showLoading" class="scroll_container paddingTop">
+        <header-title header-title="退货备注" goback="true"></header-title>
+        <section class="scroll_container paddingTop">
             <section class="input_remark quick_remark">
                 <h3>其他备注</h3>
                 <textarea class="input_text" v-model="inputText" placeholder="请输入备注内容(可不填)"></textarea>
             </section>
             <div class="determine" @click="confirmRemark">确定</div>
         </section>
-        <loading v-if="showLoading"></loading>
     </section>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
-import loading from 'src/components/common/loading'
 
 export default {
     data() {
         return {
-            customerId: 0,
             inputText: null,
-            showLoading: true, //显示加载动画
         }
     },
-    mounted() {
-        this.initData();
-    },
-    computed: {
-        ...mapState([
-            'cartList'
-        ]),
-        cart: function () {
-            return Object.assign({}, this.cartList[this.customerId]);
-        },
-    },
     components: {
-        headerTitle,
-        loading
+        headerTitle
     },
     methods: {
-        ...mapMutations([
-            'CONFIRM_REMARK'
-        ]),
-        async initData() {
-            this.customerId = this.$route.params.customerId;
-
-            this.showLoading = false;
-        },
         //确认选择
         confirmRemark() {
-            this.CONFIRM_REMARK({ customerId: this.customerId, remark: this.inputText });
+            this.$parent.remark = this.inputText;
             this.$router.go(-1);
         }
     },
@@ -58,7 +33,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import '../order';
+@import 'src/style/order';
 
 .input_remark {
     background-color: $background-light-color;

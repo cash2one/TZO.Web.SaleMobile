@@ -98,7 +98,8 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '../order';
+@import 'src/style/mixin';
+@import 'src/style/order';
 
 .add_icon_footer {
     position: fixed;

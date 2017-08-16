@@ -1,65 +1,62 @@
 <template>
-    <section class="goods_container">
-        <div v-load-more="loaderMore" v-if="goodsList.length" class="m-list">
-            <section v-for="item in goodsList" :key="item.Id" class="item">
-                <router-link :to="'detail/' + item.GoodsId" @click.native="selectGoods(item)" class="item-left">
-                    <!-- <img :src="imgBaseUrl + item.image_path"> -->
+    <section class="page">
+        <header class="header_search">
+            <section class="header_title_goback" @click="$router.go(-1)">
+                <svg class="icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>
+                </svg>
+            </section>
+            <section class="search_keyword">
+                <section class="header_search_icon">
                     <svg class="icon">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#goods"></use>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
                     </svg>
-                </router-link>
-                <section class="item-right">
+                </section>
+                <input v-model="keyword" type="text" placeholder="请输规格型号" class="search_text" />
+            </section>
+        </header>
+        <section class="scroll_container paddingTop">
+            <section v-load-more="loaderMore" v-if="dealItems.length" class="m-list">
+                <section v-for="item in dealItems" :key="item.Id" class="item">
                     <section class="title">
                         <h3 class="name ellipsis">
-                            <strong>{{item.GoodsName}}</strong>
+                            <strong>{{item.Goods.Name}}</strong>
                         </h3>
-                    </section>
-                    <section class="content">
-                        <section v-for="prop in propertyList" :key="prop.Id">
-                            <span>{{prop.PropertyName}}</span>:
-                            <span>{{item.Goods.Properties['p'+prop.PropertyId]}}</span>
+                        <section class="content">
+                            <section v-for="prop in globalPropertyList" :key="prop.Id">
+                                <span>{{prop.Name}}</span>:
+                                <span>{{item.Goods.Properties['p'+prop.Id]}}</span>
+                            </section>
+                        </section>
+                        <return-cart :customer="curCustomer" :item="item" @showMoveDot="showMoveDotFun"></return-cart>
+                        <section class="content">
+                            单号:{{item.BizBillNo}}
                         </section>
                     </section>
-                    <section>
-                        <span>价格:</span>
-                        <span>¥</span>
-                        <span class="money">{{item.LevelPrice}}</span>
-                    </section>
-                    <buy-cart :goods="item" @showMoveDot="showMoveDotFun"></buy-cart>
-                    <ul class="detail">
-                        <li>
-                            <span>库存:</span>
-                            <b class="number">{{item.StockNum}}</b>
-                            <span>{{item.Goods.Units}}</span>
-                        </li>
-                        <li v-if="item.RangeSaleNum">
-                            <span>近{{filters.LastSaleTime}}天:</span>
-                            <b class="count">{{item.RangeSaleNum}}</b>
-                            <span>{{item.Goods.Units}}</span>
-                        </li>
-                        <li v-if="item.LastSaleNum">
-                            <span>上次销售:</span>
-                            <b class="count">{{item.LastSaleNum}}</b>
-                            <span>{{item.Goods.Units}}</span>
-                        </li>
-                    </ul>
+                    <div class="detail">
+                        <div>
+                            <span>x</span>
+                            <span class="number">{{item.CanReturnNum}}</span>
+                        </div>
+                        <div>
+                            <span>¥</span>
+                            <span class="money">{{item.Price}}</span>
+                        </div>
+                    </div>
                 </section>
             </section>
-        </div>
-        <ul v-else class="animation_opactiy">
-            <li class="list_back_li" v-for="item in 10" :key="item">
-                <img src="../../images/shopback.svg" class="list_back_svg">
-            </li>
-        </ul>
-        <p v-if="touchend" class="empty_data">没有更多了</p>
-        <aside class="return_top" @click="backTop" v-if="showBackStatus">
-            <svg class="back_top_svg">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
-            </svg>
-        </aside>
-        <transition name="loading">
-            <loading v-show="showLoading"></loading>
-        </transition>
+            <section v-else class="m-list">
+                <section class="list_back_li" v-for="item in 10" :key="item">
+                    <img src="../../images/shopback.svg" class="list_back_svg">
+                </section>
+            </section>
+            <p v-if="touchend" class="empty_data">没有更多了</p>
+            <aside class="return_top" @click="backTop" v-if="showBackStatus">
+                <svg class="back_top_svg">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
+                </svg>
+            </aside>
+        </section>
         <section class="buy_cart_container">
             <section @click="toggleCartList" class="cart_icon_num">
                 <div class="cart_icon_container" :class="{cart_icon_activity: totalPrice > 0, move_in_cart:receiveInCart}" ref="cartContainer">
@@ -72,12 +69,11 @@
                 </div>
                 <div class="cart_num">
                     <div>¥ {{totalPrice}}</div>
-                    <div>可用额度:¥100</div>
                 </div>
             </section>
             <section class="gotopay" :class="{gotopay_acitvity: minimumOrderAmount <= 0}">
                 <span class="gotopay_button_style" v-if="minimumOrderAmount > 0">还差¥{{minimumOrderAmount}}起送</span>
-                <router-link :to="'/cart/order/'+storage.Id+'/'+curCustomer.CustomerId" class="gotopay_button_style" v-else>{{linkText}}</router-link>
+                <router-link :to="'/cart/return/'+curStorage.Id+'/'+curCustomer.CustomerId" class="gotopay_button_style" v-else>退货</router-link>
             </section>
         </section>
         <transition name="toggle-cart">
@@ -120,6 +116,9 @@
         <transition name="fade">
             <div class="screen_cover" v-show="showCartList&&customerCartCount" @click="toggleCartList"></div>
         </transition>
+        <transition name="loading">
+            <loading v-show="showLoading"></loading>
+        </transition>
         <transition appear @after-appear='afterEnter' @before-appear="beforeEnter" v-for="(item,index) in showMoveDot" :key="index">
             <span class="move_dot" v-if="item">
                 <svg class="move_liner">
@@ -131,20 +130,20 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import { loadMore, getImgPath } from './mixin'
+import { mapState, mapActions, mapMutations } from 'vuex'
+import { loadMore, getImgPath } from 'src/components/common/mixin'
 import { showBack, animate } from 'src/config/mUtils'
-import { imgBaseUrl } from 'src/config/env'
-import loading from './loading'
-import buyCart from './buy-cart'
-import { apiGetGoodsList } from 'src/service/getData'
+import headerTitle from 'src/components/header/header-title'
+import loading from 'src/components/common/loading'
+import returnCart from 'src/components/common/return-cart'
+import { apiGetSaleDealItem } from 'src/service/getData'
 
 export default {
     data() {
         return {
-
             offset: 0,
-            goodsList: [], // 商品列表
+            keyword: '',
+            dealItems: [],
 
             preventRepeatReuqest: false, //到达底部加载数据，防止重复加载
             showBackStatus: false, //显示返回顶部按钮
@@ -160,34 +159,15 @@ export default {
             elBottom: 0, //当前点击加按钮在网页中的绝对left值
         }
     },
-    mounted() {
-        this.initData();
-        this.windowHeight = window.innerHeight;
-    },
-    components: {
-        loading,
-        buyCart
-    },
-    props: [
-        'keyword',
-        'storage',
-        'categoryId',
-        'sortByFiled',
-        'sortByType',
-        'filters',
-        'confirmSelect',
-        'linkText'
-    ],
-    mixins: [loadMore, getImgPath],
     computed: {
         ...mapState([
-            'propertyList',
+            'globalPropertyList',
+            'returnCartList',
             'curCustomer',
-            'cartList',
-            'curGoods'
+            'curStorage'
         ]),
         customerCart: function () {
-            return Object.assign({}, this.cartList[this.curCustomer.CustomerId]);
+            return Object.assign({}, this.returnCartList[this.curCustomer.CustomerId]);
         },
         customerCartCount: function () {
             var count = 0;
@@ -196,14 +176,6 @@ export default {
                     count++;
                 }
             return count;
-        },
-        // 检查额度 TODO:
-        minimumOrderAmount: function () {
-            if (this.shopDetailData) {
-                return this.shopDetailData.float_minimum_order_amount - this.totalPrice;
-            } else {
-                return null;
-            }
         },
         // 总共价格
         totalPrice: function () {
@@ -227,73 +199,100 @@ export default {
             }
             return num;
         },
-
+        // 检查额度 TODO:
+        minimumOrderAmount: function () {
+            if (this.shopDetailData) {
+                return this.shopDetailData.float_minimum_order_amount - this.totalPrice;
+            } else {
+                return null;
+            }
+        },
+    },
+    components: {
+        headerTitle,
+        loading,
+        returnCart
+    },
+    mixins: [loadMore, getImgPath],
+    created() {
+        if (!this.curCustomer || !this.curCustomer.CustomerId) this.$router.push('/customer/search');
+    },
+    mounted() {
+        this.initData();
+        this.windowHeight = window.innerHeight;
     },
     methods: {
-        ...mapMutations([
-            'ADD_CART',
-            'REDUCE_CART',
-            'CLEAR_CART',
-            'SAVE_CUR_GOODS'
+        ...mapActions([
+            'getGlobalProperty'
         ]),
-        async getGoods() {
-            return await apiGetGoodsList(this.curCustomer.CustomerId, this.storage.Id, this.categoryId, this.keyword, this.sortByFiled, this.sortByType, this.filters, this.offset);
+        ...mapMutations([
+            'ADD_RETURN_CART',
+            'REDUCE_RETURN_CART',
+            'CLEAR_RETURN_CART'
+        ]),
+        async getSaleDealItem() {
+            let startDate = new Date();
+            startDate.setHours(0, 0, 0, 0);
+            startDate.setFullYear(startDate.getFullYear() - 1);
+            let endDate = new Date();
+            endDate.setHours(23, 59, 59, 999);
+
+            return await apiGetSaleDealItem(this.curCustomer.CustomerId, this.keyword, startDate, endDate, this.offset);
         },
         async initData() {
-            //获取数据
-            let res = await this.getGoods();
-            this.goodsList = [...res.Items];
+            await this.getGlobalProperty();
+
+            let res = await this.getSaleDealItem();
+            this.dealItems = [...res.Items];
 
             this.hideLoading();
-            
             // 当获取数据小于20，说明没有更多数据，不需要再次请求数据
             if (res.Items.length < 20) {
                 this.touchend = true;
                 return;
             }
 
-            this.hideLoading();
             //开始监听scrollTop的值，达到一定程度后显示返回顶部按钮
             showBack(status => {
                 this.showBackStatus = status;
             });
         },
-        //到达底部加载更多数据
+        // 到达底部加载更多数据
         async loaderMore() {
             if (this.touchend) {
                 return
             }
-            //防止重复请求
+            // 防止重复请求
             if (this.preventRepeatReuqest) {
                 return
             }
             this.showLoading = true;
             this.preventRepeatReuqest = true;
 
-            //数据的定位加20位
+            // 数据的定位加20位
             this.offset += 20;
-            let res = await this.getGoods();
+            let res = await this.getSaleDealItem();
             this.hideLoading();
-            this.goodsList = [...this.goodsList, ...res.Items];
-            //当获取数据小于20，说明没有更多数据，不需要再次请求数据
+            this.dealItems = [...this.dealItems, ...res.Items];
+            // 当获取数据小于20，说明没有更多数据，不需要再次请求数据
             if (res.Items.length < 20) {
                 this.touchend = true;
-                return
+                return;
             }
             this.preventRepeatReuqest = false;
-        },
-        // 返回顶部
-        backTop() {
-            animate(document.body, { scrollTop: '0' }, 400, 'ease-out');
         },
         // 监听父级传来的数据发生变化时，触发此函数重新根据属性值获取数据
         async listenPropChange() {
             this.showLoading = true;
             this.offset = 0;
-            let res = await this.getGoods();;
+            let res = await this.getSaleDealItem();
             this.hideLoading();
-            // 考虑到本地模拟数据是引用类型，所以返回一个新的数组
-            this.goodsList = [...res.Items];
+            //考虑到本地模拟数据是引用类型，所以返回一个新的数组
+            this.dealItems = [...res.Items];
+        },
+        // 返回顶部
+        backTop() {
+            animate(document.body, { scrollTop: '0' }, 400, 'ease-out');
         },
         // 开发环境与编译环境loading隐藏方式不同
         hideLoading() {
@@ -306,7 +305,7 @@ export default {
         // 清除购物车
         clearCart() {
             this.toggleCartList();
-            this.CLEAR_CART(this.curCustomer.CustomerId);
+            this.CLEAR_RETURN_CART(this.curCustomer.CustomerId);
         },
         // 监听圆点是否进入购物车
         listenInCart() {
@@ -347,33 +346,15 @@ export default {
         },
         // 移出购物车
         removeOutCart(goodsId) {
-            this.REDUCE_CART({ customerId: this.curCustomer.CustomerId, goodsId });
+            this.REDUCE_RETURN_CART({ customerId: this.curCustomer.CustomerId, goodsId });
         },
         // 加入购物车，计算按钮位置。
-        addToCart(goods) {
-            this.ADD_CART({ customer: this.curCustomer, goods, price: goods.LevelPrice });
+        addToCart(item) {
+            this.ADD_RETURN_CART({ customer: this.curCustomer, goods: item.Goods, price: item.Price, item: item });
         },
-        //选中商品查看明细
-        selectGoods(val) {
-            this.SAVE_CUR_GOODS(val);
-        }
     },
     watch: {
         keyword: function (val) {
-            this.listenPropChange();
-        },
-        categoryId: function (val) {
-            this.listenPropChange();
-        },
-        //监听父级传来的排序方式
-        sortByFiled: function (val) {
-            this.listenPropChange();
-        },
-        sortByType: function (val) {
-            if (this.sortByFiled == 'Property')
-                this.listenPropChange();
-        },
-        confirmSelect: function (val) {
             this.listenPropChange();
         },
     }
@@ -382,6 +363,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
+@import 'src/style/order';
 
 @keyframes mymove {
     0% {
@@ -455,31 +437,23 @@ export default {
     }
 }
 
-.goods_container {
-    padding-bottom: 2rem;
-    margin-top: 3.7rem;
-    .m-list {
-        .item {
+.m-list {
+    header {
+        background-color: $background-light-color;
+        @include indent10;
+        @include sc(.65rem, $font-color);
+    }
+    .item {
+        @include indent10;
+        .title {
+            flex: auto;
+            display: block;
+            width: 8rem;
+        }
+        .detail {
+            flex: 1;
             @include fj();
-            .item-left {
-                .icon {
-                    @include wh(2.7rem, 2.7rem);
-                    display: block;
-                }
-            }
-            .item-right {
-                margin-left: .55rem;
-                flex: auto;
-                .detail {
-                    padding-top: 0.275rem;
-                    border-top: 0.025rem solid $border-color;
-                    li {
-                        span {
-                            @include sc(.45rem, $font-color1);
-                        }
-                    }
-                }
-            }
+            line-height: 1.5rem;
         }
     }
 }
@@ -633,7 +607,7 @@ export default {
     z-index: 200;
     svg {
         @include wh(.9rem, .9rem);
-        fill: $blue;
+        fill: $red;
     }
 }
 

@@ -366,7 +366,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import '../../order/order';
+@import 'src/style/order';
 
 .page {
     .scroll_container {

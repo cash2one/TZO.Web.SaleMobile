@@ -77,7 +77,7 @@ export default {
 				[
 					{ id: 1, path: '/goods/search', image_url: '#home_order', title: '订单' },
 					{ id: 2, path: '/goods/stock', image_url: '#home_retail', title: '销售出库' },
-					{ id: 3, path: '/order/deal', image_url: '#home_return', title: '退货' },
+					{ id: 3, path: '/deal', image_url: '#home_return', title: '退货' },
 					{ id: 4, path: '/payment/new', image_url: '#home_payment', title: '收款' },
 					{ id: 5, path: '/delivery', image_url: '#home_delivery', title: '送货' },
 					{ id: 6, path: '/express', image_url: '#home_express', title: '发货' },

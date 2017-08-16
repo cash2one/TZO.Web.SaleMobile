@@ -48,7 +48,7 @@ export default {
             }
         },
     },
-    props: ['dealId', 'customer', 'item'],
+    props: ['customer', 'item'],
     methods: {
         ...mapMutations([
             'ADD_RETURN_CART',
@@ -62,7 +62,8 @@ export default {
         },
         // 加入购物车，计算按钮位置。
         addToCart(event) {
-            this.ADD_RETURN_CART({ customer: this.customer, goods: this.item.Goods, price: this.item.Price, dealId: this.dealId, item: this.item });
+            if (this.item.CanReturnNum == this.goodsNum) return;
+            this.ADD_RETURN_CART({ customer: this.customer, goods: this.item.Goods, price: this.item.Price, item: this.item });
             let elLeft = event.target.getBoundingClientRect().left;
             let elBottom = event.target.getBoundingClientRect().bottom;
             this.showMoveDot.push(true);
