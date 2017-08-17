@@ -113,7 +113,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import '../../order/order';
+@import 'src/style/order';
 
 .m-form-list {
     header {

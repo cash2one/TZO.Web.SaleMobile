@@ -37,15 +37,10 @@ const location = r => require.ensure([], () => r(require('../page/location/locat
 const path = r => require.ensure([], () => r(require('../page/path/path')), 'location')
 
 const order = r => require.ensure([], () => r(require('../page/order/order')), 'order')
-const orderConfirm = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm')), 'order')
-const orderConfirmContactAddress = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-contact-address')), 'order')
-const orderConfirmShipExpress = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-ship-express')), 'order')
-const orderConfirmRemark = r => require.ensure([], () => r(require('../page/order/confirm/order-confirm-remark')), 'order')
 const orderDetail = r => require.ensure([], () => r(require('../page/order/detail/order-detail')), 'order')
 const orderList = r => require.ensure([], () => r(require('../page/order/list/order-list')), 'order')
-const orderRetail = r => require.ensure([], () => r(require('../page/order/retail/order-retail')), 'order')
-const orderReturn = r => require.ensure([], () => r(require('../page/order/return/order-return')), 'order')
-const dealList = r => require.ensure([], () => r(require('../page/order/return/deal-list')), 'order')
+
+const dealList = r => require.ensure([], () => r(require('../page/deal/deal-list')), 'deal')
 
 const payment = r => require.ensure([], () => r(require('../page/payment/payment')), 'payment')
 const paymentDetail = r => require.ensure([], () => r(require('../page/payment/detail/payment-detail')), 'payment')
@@ -60,6 +55,13 @@ const shopBack = r => require.ensure([], () => r(require('../page/shop/back/shop
 const shopGo = r => require.ensure([], () => r(require('../page/shop/go/shop-go')), 'shop')
 
 const cart = r => require.ensure([], () => r(require('../page/cart/cart')), 'cart')
+const cartOrder = r => require.ensure([], () => r(require('../page/cart/order/order')), 'cart')
+const cartOrderContactAddress = r => require.ensure([], () => r(require('../page/cart/order/order-contact-address')), 'cart')
+const cartOrderShipExpress = r => require.ensure([], () => r(require('../page/cart/order/order-ship-express')), 'cart')
+const cartOrderRemark = r => require.ensure([], () => r(require('../page/cart/order/order-remark')), 'cart')
+
+const cartReturn = r => require.ensure([], () => r(require('../page/cart/return/return')), 'cart')
+const cartReturnRemark = r => require.ensure([], () => r(require('../page/cart/return/return-remark')), 'cart')
 
 export default [{
     path: '/',
@@ -217,39 +219,12 @@ export default [{
                 {
                     path: 'detail', // 订单详情
                     component: orderDetail
-                },
-                {
-                    path: 'confirm/:storageId/:customerId', // 确认订单页
-                    component: orderConfirm,
-                    children: [
-                        {
-                            path: 'remark', // 订单备注
-                            name: 'order-confirm-remark',
-                            component: orderConfirmRemark
-                        }, {
-                            path: 'choose-address', // 选择地址
-                            name: 'order-confirm-address',
-                            component: orderConfirmContactAddress
-                        }, {
-                            path: 'ship-express',
-                            name: 'order-confirm-ship-express',
-                            component: orderConfirmShipExpress
-                        }
-                    ]
-                },
-                {
-                    path: 'retail', // 销售出库
-                    component: orderRetail
-                },
-                {
-                    path: 'return', // 销售退货
-                    component: orderReturn
-                },
-                {
-                    path: 'deal',
-                    component: dealList
                 }
             ]
+        },
+        {
+            path: '/deal',
+            component: dealList
         },
         // 路径
         {
@@ -282,8 +257,6 @@ export default [{
                 }
             ]
         },
-
-
         // 回店
         {
             path: '/shop-back',
@@ -296,7 +269,39 @@ export default [{
         },
         {
             path: '/cart',
-            component: cart
-        }
+            component: cart,
+        },
+        {
+            path: '/cart/order/:storageId/:customerId', // 确认订单页
+            component: cartOrder,
+            children: [
+                {
+                    path: 'remark', // 订单备注
+                    name: 'order-remark',
+                    component: cartOrderRemark
+                },
+                {
+                    path: 'choose-address', // 选择地址
+                    name: 'order-address',
+                    component: cartOrderContactAddress
+                },
+                {
+                    path: 'ship-express',
+                    name: 'order-ship-express',
+                    component: cartOrderShipExpress
+                }
+            ]
+        },
+        {
+            path: '/cart/return/:storageId/:customerId',
+            component: cartReturn,
+            children: [
+                {
+                    path: 'remark',
+                    name: 'return-remark',
+                    component: cartReturnRemark
+                },
+            ]
+        },
     ]
 }]

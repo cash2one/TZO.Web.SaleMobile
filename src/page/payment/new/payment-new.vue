@@ -370,7 +370,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '../../order/order';
+@import 'src/style/order';
 
 .page {
     .m-form-list {

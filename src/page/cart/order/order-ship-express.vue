@@ -111,7 +111,9 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '../order';
+@import 'src/style/mixin';
+@import 'src/style/order';
+
 .m-list {
     header {
         @include fj();

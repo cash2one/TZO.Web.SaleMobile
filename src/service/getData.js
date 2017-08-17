@@ -358,12 +358,13 @@ export const apiConfirmOrder = (id) => fetch('/api/Sale/ForeignSale/Confirm/' + 
 export const apiVerifyOrder = (id) => fetch('/api/Sale/ForeignSale/Verify/' + id);
 
 // 可退清单
-export const apiGetSaleDealItem = (customerId, keyword, startDate, endDate) => {
+export const apiGetSaleDealItem = (customerId, keyword, startDate, endDate, offset) => {
 	let data = {
+		PageIndex: parseInt(offset / 20),
+		PageSize: 20,
 		CustomerId: customerId,
-		Keyword: keyword,
 		QuickResult: { "Status": [2] },
-		AdvancedResult: {}
+		AdvancedResult: { Properties: { "1": keyword } }
 	};
 
 	if (startDate && endDate) {

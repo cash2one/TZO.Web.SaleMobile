@@ -2,7 +2,7 @@
     <div class="page">
         <header-title header-title="订单确认" goback='true'></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
-            <router-link v-if="isOrder" :to="{name:'order-confirm-address'}" class="address_container">
+            <router-link v-if="isOrder" :to="{name:'order-address'}" class="address_container">
                 <div class="address_empty_left">
                     <svg class="location_icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#location"></use>
@@ -24,7 +24,7 @@
                 </svg>
             </router-link>
             <select-slid-up title="支付方式" :model="charge" :selected="chooseChargeType" :items="orderChargeTypeList"></select-slid-up>
-            <router-link :to="{name:'order-confirm-ship-express'}" class="delivery_model container_style">
+            <router-link :to="{name:'order-ship-express'}" class="delivery_model container_style">
                 <h2>
                     <strong>{{cart.storage.Name}}</strong>
                 </h2>
@@ -60,7 +60,7 @@
                 </section>
             </section>
             <section class="m-form-list">
-                <router-link :to="{name:'order-confirm-remark'}" class="item start end">
+                <router-link :to="{name:'order-remark'}" class="item start end">
                     <h2>订单备注</h2>
                     <div class="content">
                         <p class="ellipsis">{{cart.remark}}</p>
@@ -340,7 +340,6 @@ export default {
                 this.$router.replace({ path: '/order/detail/', query: { Id: res.Id, bizType: 12012 } });
             }
         },
-        // 控制活动详情页的显示隐藏
         showConfrimFun() {
             this.showConfrim = !this.showConfrim;
         },
@@ -350,7 +349,7 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import '../order';
+@import 'src/style/order';
 
 .m-list {
     margin-top: .4rem;

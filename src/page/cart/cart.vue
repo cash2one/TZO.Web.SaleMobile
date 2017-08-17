@@ -4,7 +4,7 @@
         <section v-if="cart" v-for="(cart,index) in cartList" :key="index" class="m-list">
             <header>
                 <span>{{cart.customer.BizObj.Name}}</span>
-                <router-link :to="'/order/confirm/'+orderStorage.Id+'/'+cart.customer.CustomerId" tag="a" class="right">
+                <router-link :to="'/cart/order/'+orderStorage.Id+'/'+cart.customer.CustomerId" tag="a" class="right">
                     下单
                 </router-link>
             </header>
@@ -15,9 +15,9 @@
                     </h3>
                 </section>
                 <section class="content">
-                    <section v-for="prop in propertyList" :key="prop.Id">
-                        <span>{{prop.PropertyName}}</span>:
-                        <span>{{item.info.Goods.Properties['p'+prop.PropertyId]}}</span>
+                    <section v-for="prop in globalPropertyList" :key="prop.Id">
+                        <span>{{prop.Name}}</span>:
+                        <span>{{item.info.Goods.Properties['p'+prop.Id]}}</span>
                     </section>
                 </section>
                 <div class="price">
@@ -35,28 +35,77 @@
                 </ul>
             </section>
         </section>
+        <section v-if="cart" v-for="(cart,index) in returnCartList" :key="index" class="m-list">
+            <header>
+                <span>{{cart.customer.BizObj.Name}}</span>
+                <router-link :to="'/cart/return/'+orderStorage.Id+'/'+cart.customer.CustomerId" tag="a" class="right red">
+                    退货
+                </router-link>
+            </header>
+            <section v-for="(item,index) in cart.items" :key="index" class="item">
+                <section class="title">
+                    <h3 class="name ellipsis">
+                        <strong>{{item.info.Name}}</strong>
+                    </h3>
+                </section>
+                <section class="content">
+                    <section v-for="prop in globalPropertyList" :key="prop.Id">
+                        <span>{{prop.Name}}</span>:
+                        <span>{{item.info.Properties['p'+prop.Id]}}</span>
+                    </section>
+                </section>
+                <div class="price">
+                    <span>价格:</span>
+                    <span class="money">{{item.price}}</span>
+                    <span>¥</span>
+                </div>
+                <return-cart :customer="cart.customer" :item="item.item"></return-cart>
+                <ul class="detail">
+                    <li>
+                        <span>可退数量:</span>
+                        <b class="number">{{item.item.CanReturnNum}}</b>
+                        <span>{{item.info.Units}}</span>
+                    </li>
+                </ul>
+            </section>
+        </section>
         <foot-guide></foot-guide>
     </div>
 </template>
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import buyCart from 'src/components/common/buy-cart'
+import returnCart from 'src/components/common/return-cart'
 import footGuide from 'src/components/footer/foot-guide'
 
 export default {
     computed: {
         ...mapState([
-            'propertyList',
+            'globalPropertyList',
             'cartList',
-            'orderStorage'
+            'returnCartList',
+            'orderStorage',
+            'curStorage'
         ]),
+    },
+    mounted() {
+        this.initData();
     },
     components: {
         headerTitle,
         buyCart,
+        returnCart,
         footGuide
     },
+    methods: {
+        ...mapActions([
+            'getGlobalProperty'
+        ]),
+        async initData() {
+            await this.getGlobalProperty();
+        },
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -73,11 +122,13 @@ export default {
         .right {
             color: $blue;
         }
+        .red {
+            color: $red;
+        }
     }
     .item {
         .price {
             position: absolute;
-            top: 4rem;
             right: .8rem;
             input {
                 @include sc(.8rem, $red);
@@ -86,6 +137,11 @@ export default {
             }
         }
     }
+}
+
+.cart_module {
+    top: 1rem;
+    bottom: initial;
 }
 </style>
 
