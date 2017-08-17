@@ -38,10 +38,10 @@
         <transition name="fade">
             <section class="confirm_details" v-if="showConfirm">
                 <section class="m-form-list">
-                    <section class="item" @click="openCamera">
+                    <section class="item">
                         <!-- 微信-收款码 -->
                         <img :src="qrcodeImg" v-if="facePayModel.PayData && facePayModel.PayData.qrcode_url_pem" />
-                        <img src="../../../images/camera.png" v-if="!facePayModel.PayData || !facePayModel.PayData.qrcode_url_pem" />
+                        <img src="../../../images/camera.png" v-if="!facePayModel.PayData || !facePayModel.PayData.qrcode_url_pem" @click="openCamera" />
                     </section>
                     <section class="item">
                         <h3>{{userInfo.CorpFullName}}</h3>
@@ -173,6 +173,8 @@ export default {
             qrcodeImg: '',
             facePayModel: {},                        // 当面付支付模型
 
+            auth_code:'',
+
             cash: [],
             bank: [],
 
@@ -236,6 +238,7 @@ export default {
         },
         // 扫码付发起支付
         async pay() {
+            
             let rel = await apiPay(this.facePayModel);
 
             // 服务器500错误
@@ -309,7 +312,11 @@ export default {
 
                 if (this.facePayModel.PayData && this.facePayModel.PayData.qrcode_url_pem) {
                     this.qrcodeImg = "data:image/png;base64," + this.facePayModel.PayData.qrcode_url_pem;
+                    this.queryPaymentsJournalDetail();
                 } else {
+                    console.log(this.facePayModel);
+
+                    this.facePayModel.PayData = {};
                     this.openCamera();
                 }
 
@@ -337,34 +344,29 @@ export default {
             this.$router.push('/home');
         },
         openCamera() {
-            // 非扫码收款直接返回
-            if (this.recAccount.PaymentsProvider == 'Payments-Heepay-WechatQrCodePay' ||
-                this.recAccount.PaymentsProvider == 'Payments-Heepay-AliQrCodePay')
-                return;
-
-            // // 调用相机
-            // var scan = () => wx.scanQRCode({
-            //     desc: 'scanQRCode desc',
-            //     needResult: 1,
-            //     scanType: ['qrCode', 'barCode'],
-            // }).then(data => {
-            //     if (data.errMsg.indexOf('function_not_exist')) {
-            //         this.showAlert = true;
-            //         this.alertText = '微信版本过低，请升级微信版本!';
-            //         return;
-            //     }
-
-            //     this.facePayModel.PayData.auth_code = res.resultStr;
-            //     this.pay();
-            // });
-
-            // scan();
-
-            // // 以下2句为调试代码
-            // this.facePayModel.PayData.auth_code = '130840797904361222';
-            // this.pay();
+            let self = this;
+            // 调用相机
+            wx.scanQRCode({
+                desc: 'scanQRCode desc',
+                needResult: 1,
+                scanType: ['qrCode', 'barCode'],
+                success: function (res) {
+                    self.auth_code= res.resultStr;
+                },
+                error: function (err) {
+                    if (data.errMsg.indexOf('function_not_exist')) {
+                        this.showAlert = true;
+                        this.alertText = '微信版本过低，请升级微信版本!';
+                    }
+                }
+            });
         },
-    }
+    },
+    watch: {
+        auth_code: function (val) {
+           this.pay();
+        },
+    },
 }
 </script>
 <style lang="scss" scoped>
