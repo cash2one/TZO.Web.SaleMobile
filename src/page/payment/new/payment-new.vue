@@ -250,10 +250,7 @@ export default {
                     this.Message = rel.Message;
                 }
             } catch (error) {
-                if(error=='Uncaught (in promise) Error: SyntaxError: Unexpected end of JSON input')
-                    alert('cccc');
-                else
-                    alert(JSON.stringify(error));
+                throw new Error(error);
             }
         },
         // 查询支付流水情况
