@@ -173,7 +173,7 @@ export default {
             qrcodeImg: '',
             facePayModel: {},                        // 当面付支付模型
 
-            auth_code:'',
+            auth_code: '',
 
             cash: [],
             bank: [],
@@ -238,23 +238,22 @@ export default {
         },
         // 扫码付发起支付
         async pay() {
-            
+
             let rel = await apiPay(this.facePayModel);
 
-            // 服务器500错误
-            if (rel.Message) {
-                this.Message = rel.Message;
-                return;
-            }
-
-            // 服务器返回200,但实际支付未成功之前
-            if (rel.status == 500 && rel.data.ExceptionMessage == 'Repeat authcode submit') {
-                this.queryPaymentsJournalDetail();
-                return;
-            } else {
-                this.Message = '';
-                this.showAlert = true;
-                this.alertText = '支付成功!';
+            try {
+                // 服务器返回错误
+                if (rel.ExceptionMessage == 'Repeat authcode submit') {
+                    this.queryPaymentsJournalDetail();
+                    return;
+                } else {
+                    this.Message = rel.Message;
+                }
+            } catch (error) {
+                if(error=='Uncaught (in promise) Error: SyntaxError: Unexpected end of JSON input')
+                    alert('cccc');
+                else
+                    alert(JSON.stringify(error));
             }
         },
         // 查询支付流水情况
@@ -292,10 +291,10 @@ export default {
             if (recSettlementOrder.Message) {
                 this.Message = recSettlementOrder.Message;
                 this.ExceptionMessage = recSettlementOrder.ExceptionMessage;
-
                 this.showConfirm = true;
                 return;
             } else {
+                this.Message = '订单未支付!',
                 this.billId = recSettlementOrder.Id;
                 this.billNo = recSettlementOrder.BillNo;
                 this.bizType = 22020;
@@ -314,8 +313,6 @@ export default {
                     this.qrcodeImg = "data:image/png;base64," + this.facePayModel.PayData.qrcode_url_pem;
                     this.queryPaymentsJournalDetail();
                 } else {
-                    console.log(this.facePayModel);
-
                     this.facePayModel.PayData = {};
                     this.openCamera();
                 }
@@ -351,7 +348,7 @@ export default {
                 needResult: 1,
                 scanType: ['qrCode', 'barCode'],
                 success: function (res) {
-                    self.auth_code= res.resultStr;
+                    self.auth_code = res.resultStr;
                 },
                 error: function (err) {
                     if (data.errMsg.indexOf('function_not_exist')) {
@@ -364,7 +361,8 @@ export default {
     },
     watch: {
         auth_code: function (val) {
-           this.pay();
+            this.facePayModel.PayData.auth_code = val;
+            this.pay();
         },
     },
 }
