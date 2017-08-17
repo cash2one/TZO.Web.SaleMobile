@@ -2,8 +2,8 @@
     <div class="page paddingTop">
         <header-title header-title="选择公司"></header-title>
         <section class="m-form-list">
-            <h3>最近用过的公司</h3>
-            <section class="item" @click="chooseCorp(curCorp)">
+            <div class="h3">最近用过的公司</div>
+            <section class="item end" @click="chooseCorp(curCorp)">
                 <h2>
                     <div>
                         <p>{{curCorp.CorpName}}</p>
@@ -16,7 +16,7 @@
                     <span class="red">{{curCorp.Position}}</span>
                 </section>
             </section>
-            <h3>选择公司</h3>
+            <div class="h3">选择公司</div>
             <section class="item" v-for="item in corpList" :key="item.CorpId" @click="chooseCorp(item)">
                 <h2>
                     <div>

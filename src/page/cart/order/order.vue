@@ -481,4 +481,8 @@ export default {
         @include sc(.65rem, #fff);
     }
 }
+.address_container {
+    background: url(../../../images/address_bottom.png) left bottom repeat-x;
+    background-color: $background-light-color;
+}
 </style>

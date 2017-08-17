@@ -3,7 +3,7 @@
         <header-title header-title="收款" goback='true'></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="m-form-list" v-if="!showSelectRecAccountDiv">
-                <h3>收款账户</h3>
+                <div class="h3">收款账户</div>
                 <section class="item end" @click="toggleAccountList">
                     <h2>{{recAccount.Name}}</h2>
                     <div class="content">
@@ -19,7 +19,7 @@
                         </svg>
                     </div>
                 </section>
-                <h3>收款金额</h3>
+                <div class="h3">收款金额</div>
                 <section class="input_remark quick_remark">
                     <h2>￥</h2>
                     <input type="number" class="input_text money" v-model="money" min="0" />
@@ -87,6 +87,11 @@
         <transition name="router-slid" mode="out-in">
             <div class="page rating" v-if="showSelectRecAccountDiv">
                 <header class="header_title">
+                    <section class="header_title_goback" @click="toggleAccountList()">
+                        <svg class="icon">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>
+                        </svg>
+                    </section>
                     <section class="title_head ellipsis">
                         <h2>
                             <strong>选择账户</strong>
@@ -95,7 +100,7 @@
                 </header>
                 <section class="scroll_container paddingTop">
                     <section class="m-form-list">
-                        <h3>现金账户</h3>
+                        <div class="h3">现金账户</div>
                         <section class="item" v-for="item in cash" :key="item.Id" @click="tempRecAccount = item">
                             <h2>
                                 <svg v-if="tempRecAccount.Id==item.Id" class="icon">
@@ -105,7 +110,7 @@
                                 <p>{{item.Name}}</p>
                             </h2>
                         </section>
-                        <h3>银行账户</h3>
+                        <div class="h3">银行账户</div>
                         <section class="item" v-for="item in bank" :key="item.Id" @click="tempRecAccount = item">
                             <h2>
                                 <svg v-if="tempRecAccount.Id==item.Id" class="icon">

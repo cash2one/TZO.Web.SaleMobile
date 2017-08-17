@@ -288,11 +288,11 @@ small{
     header {
         @include fj;
         background-color: $background-light-color;
-        padding: .55rem;
+        @include indent05();
         @include sc(.8rem, $font-color);
         border-top: 1px solid $border-color;
     }
-    h3{
+    .h3 {
         @include fj;
         @include indent05();
         @include sc(.65rem, $font-color1);
@@ -834,7 +834,7 @@ small{
     @include fj;
     align-items: center;
     @include indent10;
-    background: url(/src/images/address_bottom.png) left bottom repeat-x;
+    // background: url(/src/images/address_bottom.png) left bottom repeat-x;
     background-color: $background-light-color;
     background-size: auto .12rem;
     .address_empty_left {

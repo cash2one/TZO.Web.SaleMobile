@@ -199,4 +199,9 @@ export default {
 .item-list {
     margin-top: .4rem;
 }
+
+.address_container {
+    background: url(../../../images/address_bottom.png) left bottom repeat-x;
+    background-color: $background-light-color;
+}
 </style>
