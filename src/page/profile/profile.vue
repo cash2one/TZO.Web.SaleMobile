@@ -69,7 +69,7 @@
                         版本
                     </h2>
                     <div class="content">
-                        <p>0.1.0</p>
+                        <p>0.3.0</p>
                     </div>
                 </div>
             </section>
