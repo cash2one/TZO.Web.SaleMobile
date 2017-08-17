@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <header-title header-title="购物车"></header-title>
-        <section v-if="cart" v-for="(cart,index) in cartList" :key="index" class="m-list">
+        <section v-if="cart" v-for="(cart,index) in cartList" :key="index" class="cart-list">
             <header>
                 <span>{{cart.customer.BizObj.Name}}</span>
                 <router-link :to="'/cart/order/'+orderStorage.Id+'/'+cart.customer.CustomerId" tag="a" class="right">
@@ -19,23 +19,24 @@
                         <span>{{prop.Name}}</span>:
                         <span>{{item.info.Goods.Properties['p'+prop.Id]}}</span>
                     </section>
+    
                 </section>
-                <div class="price">
-                    <span>价格:</span>
-                    <input class="money" v-model="item.price" type="number" />
-                    <span>¥</span>
-                </div>
-                <buy-cart :goods="item.info"></buy-cart>
-                <ul class="detail">
-                    <li>
+                <section class="detail">
+                    <div>
                         <span>库存:</span>
                         <b class="number">{{item.info.StockNum}}</b>
                         <span>{{item.info.Goods.Units}}</span>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="price">
+                        <span>价格:</span>
+                        <input class="money" v-model="item.price" type="number" />
+                        <span>¥</span>
+                    </div>
+                </section>
+                <buy-cart :goods="item.info"></buy-cart>
             </section>
         </section>
-        <section v-if="cart" v-for="(cart,index) in returnCartList" :key="index" class="m-list">
+        <section v-if="cart" v-for="(cart,index) in returnCartList" :key="index" class="cart-list">
             <header>
                 <span>{{cart.customer.BizObj.Name}}</span>
                 <router-link :to="'/cart/return/'+orderStorage.Id+'/'+cart.customer.CustomerId" tag="a" class="right red">
@@ -54,19 +55,19 @@
                         <span>{{item.info.Properties['p'+prop.Id]}}</span>
                     </section>
                 </section>
-                <div class="price">
-                    <span>价格:</span>
-                    <span class="money">{{item.price}}</span>
-                    <span>¥</span>
-                </div>
-                <return-cart :customer="cart.customer" :item="item.item"></return-cart>
-                <ul class="detail">
-                    <li>
+                <section class="detail">
+                    <div>
                         <span>可退数量:</span>
                         <b class="number">{{item.item.CanReturnNum}}</b>
                         <span>{{item.info.Units}}</span>
-                    </li>
-                </ul>
+                    </div>
+                    <div class="price">
+                        <span>价格:</span>
+                        <span class="money">{{item.price}}</span>
+                        <span>¥</span>
+                    </div>
+                </section>
+                <return-cart :customer="cart.customer" :item="item.item"></return-cart>
             </section>
         </section>
         <foot-guide></foot-guide>
@@ -116,31 +117,8 @@ export default {
     margin-bottom: 2rem;
 }
 
-.m-list {
-    header {
-        @include fj();
-        .right {
-            color: $blue;
-        }
-        .red {
-            color: $red;
-        }
-    }
-    .item {
-        .price {
-            position: absolute;
-            right: .8rem;
-            input {
-                @include sc(.8rem, $red);
-                width: 1.5rem;
-                text-align: right;
-            }
-        }
-    }
-}
-
 .cart_module {
-    top: 1rem;
+    top: .55rem;
     bottom: initial;
 }
 </style>

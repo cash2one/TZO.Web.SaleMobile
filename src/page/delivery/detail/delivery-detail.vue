@@ -2,16 +2,33 @@
     <div class="page rating">
         <header-title header-title="送货明细" goback="true"></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
-            <section class="m-list">
+            <section class="m-form-list">
+                <section class="item start">
+                    <h2>单号</h2>
+                    <div class="content">
+                        <p>{{bill.BillNo}}</p>
+                    </div>
+                </section>
+                <section class="item end">
+                    <h2>状态</h2>
+                    <div class="content">
+                        <p>
+                            <span :class="{red:express.LogisticsStatus==2,green:express.LogisticsStatus==3}">{{express.LogisticsStatusName}}</span>
+                        </p>
+                    </div>
+                </section>
+            </section>
+            <section class="item-list">
                 <header>
-                    {{bill.CustomerName}}[{{bill.BillNo}}]
-                    <span :class="{money:express.LogisticsStatus==2,number:express.LogisticsStatus==3}">{{express.LogisticsStatusName}}</span>
+                    {{bill.CustomerName}}
                 </header>
                 <section v-for="goods in bill.Items" :key="goods.Id" class="item">
-                    <section class="title">
-                        <h3 class="name ellipsis">
-                            <strong>{{goods.GoodsName}}</strong>
-                        </h3>
+                    <section class="item-left">
+                        <section class="title">
+                            <h3 class="name ellipsis">
+                                <strong>{{goods.GoodsName}}</strong>
+                            </h3>
+                        </section>
                         <section class="content">
                             <section v-for="prop in globalPropertyList" :key="prop.Id">
                                 <span>{{prop.Name}}</span>:
@@ -20,9 +37,11 @@
                         </section>
                     </section>
                     <div class="detail">
-                        <span>x</span>
-                        <span class="number">{{goods.GoodsNum}}</span>
-                        <span>{{goods.Units}}</span>
+                        <div>
+                            <span>x</span>
+                            <span class="number">{{goods.GoodsNum}}</span>
+                            <span>{{goods.Units}}</span>
+                        </div>
                     </div>
                 </section>
             </section>
@@ -49,6 +68,10 @@
             <section v-if="express.LogisticsStatus==2" class="confrim" @click="confrim">
                 <p>确认送货</p>
             </section>
+            <br />
+            <br />
+            <br />
+            <br />
         </section>
         <transition name="fade">
             <section class="confrim_details" v-if="showError">
@@ -142,26 +165,8 @@ export default {
 <style lang="scss" scoped>
 @import 'src/style/mixin';
 
-.m-list {
-    header {
-        @include fj();
-        span {
-            font-size: .55rem;
-        }
-    }
-    .item {
-        @include fj();
-        @include indent10;
-        .title {
-            flex: auto;
-            display: block;
-            width: 8rem;
-        }
-        .detail {
-            line-height: 1.5rem;
-            text-align: right;
-        }
-    }
+.item-list {
+    margin-top: .4rem;
 }
 
 .confrim_details {

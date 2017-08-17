@@ -6,46 +6,49 @@
                 <img src="../../../images/add_address.png" height="24" width="24">
                 <span>新增收货地址</span>
             </router-link>
-            <section class="m-list">
+            <section class="m-form-list">
                 <header>联系人</header>
                 <section class="item" v-for="item in bizObj.Phones" :key="item.Id" @click="choosePhone(item)">
-                    <section v-if="cart.phone.Id==item.Id" class="item-left">
-                        <svg class="icon">
+                    <h2>
+                        <svg v-if="cart.phone.Id==item.Id" class="icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
                         </svg>
-                    </section>
-                    <section v-else class="item-left"></section>
-                    <section class="item-right">
-                        <section class="title">
+                        <section v-else class="icon"></section>
+                        <div>
                             <strong class="name">{{item.Contact}}</strong>
-                            <div class="number">
-                                <span v-if="item.IsPrimaryPhone">主</span>
-                            </div>
-                        </section>
-                        <p class="content">{{item.PhoneNum}}</p>
+                        </div>
+                    </h2>
+                    <section class="content">
+                        <p>
+                            <span class="red" v-if="item.IsPrimaryPhone">主</span>
+                        </p>
+                        <p>{{item.PhoneNum}}</p>
                     </section>
                 </section>
+                <br />
                 <header>地址</header>
                 <section class="item" v-for="item in bizObj.Addrs" :key="item.CorpId" @click="chooseAddr(item)">
-                    <section v-if="cart.addr.Id==item.Id" class="item-left">
-                        <svg class="icon">
+                    <h2>
+                        <svg v-if="cart.addr.Id==item.Id" class="icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
                         </svg>
-                    </section>
-                    <section v-else class="item-left"></section>
-                    <section class="item-right">
-                        <section class="title">
+                        <section v-else class="icon"></section>
+                        <div>
                             <p>{{item.Addr}}</p>
-                            <div class="number">
-                                <span v-if="item.IsPrimaryAddr">主</span>
-                            </div>
-                        </section>
-                        <p class="content">{{item.PostCode}}</p>
+                        </div>
+                    </h2>
+                    <section class="content">
+                        <p>
+                            <span class="red" v-if="!item.IsPrimaryAddr">主</span>
+                        </p>
+                        <p>{{item.PostCode}}</p>
                     </section>
                 </section>
             </section>
         </section>
-        <loading v-if="showLoading"></loading>
+        <transition name="loading">
+            <loading v-show="showLoading"></loading>
+        </transition>
     </section>
 </template>
 <script>
@@ -99,7 +102,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import 'src/style/order';
 
 .add_icon_footer {
     position: fixed;

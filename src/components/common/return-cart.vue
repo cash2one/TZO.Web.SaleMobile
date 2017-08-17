@@ -111,14 +111,4 @@ export default {
     opacity: 0;
     transform: translateX(1rem);
 }
-
-.fade-enter-active,
-.fade-leave-active {
-    transition: all .3s;
-}
-
-.fade-enter,
-.fade-leave-active {
-    opacity: 0;
-}
 </style>

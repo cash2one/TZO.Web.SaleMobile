@@ -3,7 +3,7 @@
         <header-title header-title="发货明细" goback="true"></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="m-form-list">
-                <header class="item start">
+                <header>
                     {{bill.CustomerName}}
                     <span :class="{money:express.LogisticsStatus==2,number:express.LogisticsStatus==3}">{{express.LogisticsStatusName}}</span>
                 </header>
@@ -74,13 +74,15 @@
                     <input type="text" v-model="express.CollectCost" class="input-text" placeholder="请输入物流佣金" />
                 </section>
             </section>
-            <section class="m-list">
+            <section class="item-list">
                 <header>商品信息</header>
                 <section v-for="goods in bill.Items" :key="goods.Id" class="item">
-                    <section class="title">
-                        <h3 class="name ellipsis">
-                            <strong>{{goods.GoodsName}}</strong>
-                        </h3>
+                    <section class="item-left">
+                        <section class="title">
+                            <h3 class="name ellipsis">
+                                <strong>{{goods.GoodsName}}</strong>
+                            </h3>
+                        </section>
                         <section class="content">
                             <section v-for="prop in globalPropertyList" :key="prop.Id">
                                 <span>{{prop.Name}}</span>:
@@ -89,9 +91,11 @@
                         </section>
                     </section>
                     <div class="detail">
-                        <span>x</span>
-                        <span class="number">{{goods.GoodsNum}}</span>
-                        <span>{{goods.Units}}</span>
+                        <div>
+                            <span>x</span>
+                            <span class="number">{{goods.GoodsNum}}</span>
+                            <span>{{goods.Units}}</span>
+                        </div>
                     </div>
                 </section>
             </section>
@@ -118,27 +122,22 @@
                     </section>
                 </header>
                 <section class="scroll_container paddingTop">
-                    <section class="m-list">
-                        <header>物流</header>
+                    <section class="m-form-list">
                         <section class="item" v-for="item in expressCorpsList" :key="item.Id" @click="chooseExpress(item)">
-                            <section v-if="express.LogisticsCorpId==item.Id" class="item-left">
-                                <svg class="icon">
+                            <h2>
+                                <svg v-if="express.LogisticsCorpId==item.Id" class="icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
                                 </svg>
-                            </section>
-                            <section v-else class="item-left"></section>
-                            <section class="item-right">
-                                <section class="title">
-                                    <h3 class="name">
-                                        <strong>{{item.Name}}</strong>
-                                    </h3>
-                                    <span v-if="item.IsCollect" class="number">
-                                        可代收
+                                <section v-else class="icon"></section>
+                                <strong>{{item.Name}}</strong>
+                            </h2>
+                            <section class="content">
+                                <p>
+                                    <span v-if="item.Phone">
+                                        联系电话：{{item.Phone}}
                                     </span>
-                                </section>
-                                <section v-if="item.Phone" class="content">
-                                    <p>联系电话：{{item.Phone}}</p>
-                                </section>
+                                    <span v-if="item.IsCollect" class="green">可代收</span>
+                                </p>
                             </section>
                         </section>
                     </section>
@@ -158,22 +157,17 @@
                     </section>
                 </header>
                 <section class="scroll_container paddingTop">
-                    <section class="m-list">
-                        <header>发货人员</header>
+                    <section class="m-form-list">
                         <section class="item" v-for="item in shipperList" :key="item.Id" @click="chooseShipper(item)">
-                            <section v-if="item.checked" class="item-left">
-                                <svg class="icon">
+                            <h2>
+                                <svg v-if="item.checked" class="icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
                                 </svg>
-                            </section>
-                            <section v-else class="item-left"></section>
-                            <section class="item-right">
-                                <section class="title">
-                                    <h3 class="name">
-                                        {{item.Name}}
-                                    </h3>
-                                    <input type="text" class="money" v-model="item.workload" />
-                                </section>
+                                <section v-else class="icon"></section>
+                                <strong>{{item.Name}}</strong>
+                            </h2>
+                            <section class="content">
+                                <input type="text" class="input-text red" v-model="item.workload" />
                             </section>
                         </section>
                     </section>
@@ -193,7 +187,9 @@
                 </svg>
             </section>
         </transition>
-        <loading v-if="showLoading"></loading>
+        <transition name="loading">
+            <loading v-show="showLoading"></loading>
+        </transition>
     </section>
 </template>
 
@@ -323,88 +319,13 @@ export default {
 <style lang="scss" scoped>
 @import 'src/style/mixin';
 
-.m-list {
-    .item {
-        @include fj();
-
-        .detail {
-            line-height: 1.5rem;
-        }
-        .item-left {
-            width: .8rem;
-            .icon {
-                @include wh(.8rem, .8rem);
-                fill: #4cd964;
-                @include ct;
-            }
-        }
-        .item-right {
-            flex: auto;
-            padding-left: .275rem;
-            .number {
-                font-size: .55rem;
-            }
-            .money {
-                width: 2rem;
-                text-align: right;
-            }
-        }
-    }
-    .item>.title {
-        flex: auto;
-        display: block;
-        width: 8rem;
-    }
-}
-
-.m-form-list {
-    header {
-        background-color: $background-light-color;
-        padding: .55rem;
-        @include sc(.8rem, $font-color);
-    }
-    .item.end {
-        h3 {
-            width: 6rem;
-        }
-    }
-    .item {
-        .input-text {
-            text-align: right;
-            font-size: .65rem;
-        }
-    }
-}
-
-.container_style {
-    background-color: #fff;
+.item-list {
     margin-top: .4rem;
-    padding: 0 .7rem;
 }
 
-.delivery_model {
-    border-left: .2rem solid $blue;
-    @include indent10;
-    min-height: 4rem;
-    @include fj;
-    align-items: center;
-    .deliver_time {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        p:nth-of-type(1) {
-            @include sc(.7rem, $blue);
-        }
-        p:nth-of-type(2) {
-            @include sc(.55rem, #fff);
-            background-color: $blue;
-            width: 2.4rem;
-            margin-top: .5rem;
-            text-align: center;
-            border-radius: 0.12rem;
-            padding: .1rem;
-        }
-    }
+.input-text {
+    text-align: right;
+    font-size: .65rem;
 }
 
 .shippers_model {

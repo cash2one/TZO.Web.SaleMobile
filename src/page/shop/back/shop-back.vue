@@ -30,14 +30,16 @@
                 </div>
             </section>
             <transition name="m-tab-choose">
-                <section v-show="changeShowType =='return'" class="m-tab-container m-list">
+                <section v-show="changeShowType =='return'" class="m-tab-container item-list">
                     <section v-for="item in saleReturnList" :key="item.Id">
                         <header>{{item.CustomerName}}[{{item.BillNo}}]</header>
                         <section v-for="goods in item.Items" :key="goods.Id" class="item">
-                            <section class="title">
-                                <h3 class="name ellipsis">
-                                    <strong>{{goods.Goods.Name}}</strong>
-                                </h3>
+                            <section class="item-left">
+                                <section class="title">
+                                    <h3 class="name ellipsis">
+                                        <strong>{{goods.Goods.Name}}</strong>
+                                    </h3>
+                                </section>
                                 <section class="content">
                                     <section v-for="prop in globalPropertyList" :key="prop.Id">
                                         <span>{{prop.Name}}</span>:
@@ -46,21 +48,25 @@
                                 </section>
                             </section>
                             <div class="detail">
-                                <span>x</span>
-                                <span class="number">{{goods.GoodsNum}}</span>
-                                <span>{{goods.Units}}</span>
+                                <div>
+                                    <span>x</span>
+                                    <span class="number">{{goods.GoodsNum}}</span>
+                                    <span>{{goods.Units}}</span>
+                                </div>
                             </div>
                         </section>
                     </section>
                 </section>
             </transition>
             <transition name="tab-choose">
-                <section v-show="changeShowType =='transfer'" class="tab-container m-list">
+                <section v-show="changeShowType =='transfer'" class="tab-container item-list">
                     <section v-for="goods in stockList" :key="goods.GoodsId" class="item">
-                        <section class="title">
-                            <h3 class="name ellipsis">
-                                <strong>{{goods.Goods.Name}}</strong>
-                            </h3>
+                        <section class="item-left">
+                            <section class="title">
+                                <h3 class="name ellipsis">
+                                    <strong>{{goods.Goods.Name}}</strong>
+                                </h3>
+                            </section>
                             <section class="content">
                                 <section v-for="prop in globalPropertyList" :key="prop.Id">
                                     <span>{{prop.Name}}</span>:
@@ -69,15 +75,19 @@
                             </section>
                         </section>
                         <div class="detail">
-                            <span>x</span>
-                            <span class="number">{{goods.StockNum}}</span>
-                            <span>{{goods.Goods.Units}}</span>
+                            <div>
+                                <span>x</span>
+                                <span class="number">{{goods.StockNum}}</span>
+                                <span>{{goods.Goods.Units}}</span>
+                            </div>
                         </div>
                     </section>
                 </section>
             </transition>
         </section>
-        <loading v-if="showLoading"></loading>
+        <transition name="loading">
+            <loading v-show="showLoading"></loading>
+        </transition>
     </div>
 </template>
 
@@ -149,22 +159,3 @@ export default {
     }
 }
 </script>
-<style lang="scss" scoped>
-@import 'src/style/mixin';
-
-.m-list {
-    .item {
-        @include fj();
-        @include indent10;
-        .title {
-            flex: auto;
-            display: block;
-            width: 8rem;
-        }
-        .detail {
-            line-height: 1.5rem;
-            text-align: right;
-        }
-    }
-}
-</style>

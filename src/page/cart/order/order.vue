@@ -33,17 +33,19 @@
                     <p v-if="cart.ship.TypeCode==1 && cart.express.Name">{{cart.express.Name}}</p>
                 </section>
             </router-link>
-            <section class="m-list">
+            <section class="item-list">
                 <header>{{bizObj.Name}}</header>
                 <section v-for="(item,index) in cart.items" :key="index" class="item" @click="showEditItem(item)">
-                    <section class="title">
-                        <h3 class="name ellipsis">
-                            <strong>{{item.info.GoodsName}}</strong>
-                        </h3>
+                    <section class="item-left">
+                        <section class="title">
+                            <h3 class="name ellipsis">
+                                <strong>{{item.info.GoodsName}}</strong>
+                            </h3>
+                        </section>
                         <section class="content">
-                            <section v-for="prop in propertyList" :key="prop.Id">
-                                <span>{{prop.PropertyName}}</span>:
-                                <span>{{item.info.Goods.Properties['p'+prop.PropertyId]}}</span>
+                            <section v-for="prop in globalPropertyList" :key="prop.Id">
+                                <span>{{prop.Name}}</span>:
+                                <span>{{item.info.Goods.Properties['p'+prop.Id]}}</span>
                             </section>
                         </section>
                     </section>
@@ -163,7 +165,7 @@ export default {
     },
     computed: {
         ...mapState([
-            'propertyList',
+            'globalPropertyList',
             'shipTypeList',
             'chargeTypeList',
             'orderStorage',
@@ -349,30 +351,10 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import 'src/style/order';
 
-.m-list {
+.item-list {
     margin-top: .4rem;
-    header {
-        background-color: $background-light-color;
-        padding: .55rem;
-        @include sc(.8rem, $font-color);
-    }
-    .item {
-        @include indent10;
-        .title {
-            flex: auto;
-            display: block;
-            width: 8rem;
-        }
-        .detail {
-            flex: 1;
-            @include fj();
-            line-height: 1.5rem;
-        }
-    }
 }
-
 
 .address_empty_right {
     @include wh(.6rem, .6rem);
@@ -498,15 +480,5 @@ export default {
         line-height: .7rem;
         @include sc(.65rem, #fff);
     }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity .5s;
-}
-
-.fade-enter,
-.fade-leave-active {
-    opacity: 0;
 }
 </style>

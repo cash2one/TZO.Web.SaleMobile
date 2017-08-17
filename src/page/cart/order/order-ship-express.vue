@@ -2,43 +2,32 @@
     <div class="page rating paddingTop">
         <header-title header-title="配送方式" goback="true"></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
-            <section class="m-list">
-                <header>配送方式</header>
+            <section class="m-form-list">
                 <section class="item" v-for="item in shipTypeList" :key="item.Id" @click="chooseShipType(item)">
-                    <section v-if="cart.ship.Id==item.Id" class="item-left">
-                        <svg class="icon">
+                    <h2>
+                        <svg v-if="cart.ship.Id==item.Id" class="icon">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
                         </svg>
-                    </section>
-                    <section v-else class="item-left"></section>
-                    <section class="item-right">
-                        <section class="title">
-                            <h3 class="name">
-                                <strong>{{item.Name}}</strong>
-                            </h3>
-                        </section>
-                    </section>
+                        <section v-else class="icon"></section>
+                        <strong>{{item.Name}}</strong>
+                    </h2>
                 </section>
                 <section v-if="cart.ship.TypeCode">
-                    <header>物流
-                        <span class="right" @click="clearExpress()">清空</span>
-                    </header>
+                    <h3>物流
+                        <span class="link" @click="clearExpress()">清空</span>
+                    </h3>
                     <section class="item" v-for="item in expressCorpsList" :key="item.Id" @click="chooseExpress(item)">
-                        <section v-if="cart.express.Id==item.Id" class="item-left">
-                            <svg class="icon">
+                        <h2>
+                            <svg v-if="cart.express.Id==item.Id" class="icon">
                                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
                             </svg>
-                        </section>
-                        <section v-else class="item-left"></section>
-                        <section class="item-right">
-                            <section class="title">
-                                <h3 class="name">
-                                    <strong>{{item.Name}}</strong>
-                                </h3>
-                                <span v-if="item.IsCollect" class="number">
-                                    可代收
-                                </span>
-                            </section>
+                            <section v-else class="icon"></section>
+                            <strong>{{item.Name}}</strong>
+                        </h2>
+                        <section class="content">
+                            <p>
+                                <span v-if="item.IsCollect" class="green">可代收</span>
+                            </p>
                         </section>
                     </section>
                 </section>
@@ -112,20 +101,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import 'src/style/order';
-
-.m-list {
-    header {
-        @include fj();
-        .right {
-            color: $blue;
-        }
-    }
-    .item-right {
-        .number {
-            font-size: .55rem;
-        }
-    }
+.link {
+    color: $blue;
 }
 </style>
 

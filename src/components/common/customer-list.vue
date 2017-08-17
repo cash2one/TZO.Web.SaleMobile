@@ -1,6 +1,6 @@
 <template>
 	<div class="customer_container">
-		<div v-load-more="loaderMore" v-if="customerList.length" class="m-list">
+		<div v-load-more="loaderMore" v-if="customerList.length" class="customer-list">
 			<section v-for="item in customerList" :key="item.Id" class="item">
 				<section class="item-left" :to="'customer/detail/' + item.Id">
 					<!-- <img :src="imgBaseUrl + item.image_path" class="customer_img"> -->
@@ -51,7 +51,7 @@
 				</section>
 			</section>
 		</div>
-		<section v-else class="m-list">
+		<section v-else class="customer-list">
 			<section class="list_back_li" v-for="item in 10" :key="item">
 				<img src="../../images/shopback.svg" class="list_back_svg">
 			</section>
@@ -198,44 +198,6 @@ export default {
 @import 'src/style/mixin';
 .customer_container {
 	margin-top: 3.7rem;
-	.m-list {
-		.item {
-			@include fj();
-			.item-left {
-				.icon {
-					@include wh(2.7rem, 2.7rem);
-					display: block;
-				}
-			}
-			.item-right {
-				margin-left: .55rem;
-				flex: auto;
-				.title {
-					.name {
-						width: 8rem;
-					}
-					.level {
-						color: $font-color1;
-					}
-				}
-				.detail {
-					padding-top: 0.275rem;
-					border-top: 1px solid $border-color;
-					li {
-						span {
-							@include sc(.45rem, $font-color1);
-						}
-					}
-				}
-			}
-
-			.distance {
-				margin-top: 1rem;
-				text-align: center;
-				color: $font-color1;
-			}
-		}
-	}
 }
 
 </style>

@@ -33,7 +33,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import 'src/style/order';
 
 .input_remark {
     background-color: $background-light-color;

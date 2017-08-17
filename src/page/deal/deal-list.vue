@@ -16,9 +16,9 @@
             </section>
         </header>
         <section class="scroll_container paddingTop">
-            <section v-load-more="loaderMore" v-if="dealItems.length" class="m-list">
+            <section v-load-more="loaderMore" v-if="dealItems.length" class="item-list">
                 <section v-for="item in dealItems" :key="item.Id" class="item">
-                    <section class="title">
+                    <section class="item-left">
                         <h3 class="name ellipsis">
                             <strong>{{item.Goods.Name}}</strong>
                         </h3>
@@ -28,7 +28,6 @@
                                 <span>{{item.Goods.Properties['p'+prop.Id]}}</span>
                             </section>
                         </section>
-                        <return-cart :customer="curCustomer" :item="item" @showMoveDot="showMoveDotFun"></return-cart>
                         <section class="content">
                             单号:{{item.BizBillNo}}
                         </section>
@@ -43,9 +42,10 @@
                             <span class="money">{{item.Price}}</span>
                         </div>
                     </div>
+                    <return-cart :customer="curCustomer" :item="item" @showMoveDot="showMoveDotFun"></return-cart>
                 </section>
             </section>
-            <section v-else class="m-list">
+            <section v-else class="item-list">
                 <section class="list_back_li" v-for="item in 10" :key="item">
                     <img src="../../images/shopback.svg" class="list_back_svg">
                 </section>
@@ -363,7 +363,6 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import 'src/style/order';
 
 @keyframes mymove {
     0% {
@@ -434,27 +433,6 @@ export default {
     }
     100% {
         transform: scale(1)
-    }
-}
-
-.m-list {
-    header {
-        background-color: $background-light-color;
-        @include indent10;
-        @include sc(.65rem, $font-color);
-    }
-    .item {
-        @include indent10;
-        .title {
-            flex: auto;
-            display: block;
-            width: 8rem;
-        }
-        .detail {
-            flex: 1;
-            @include fj();
-            line-height: 1.5rem;
-        }
     }
 }
 

@@ -1,6 +1,6 @@
 <template>
     <section class="goods_container">
-        <div v-load-more="loaderMore" v-if="goodsList.length" class="m-list">
+        <div v-load-more="loaderMore" v-if="goodsList.length" class="goods-list">
             <section v-for="item in goodsList" :key="item.Id" class="item">
                 <router-link :to="'detail/' + item.GoodsId" @click.native="selectGoods(item)" class="item-left">
                     <!-- <img :src="imgBaseUrl + item.image_path"> -->
@@ -458,30 +458,6 @@ export default {
 .goods_container {
     padding-bottom: 2rem;
     margin-top: 3.7rem;
-    .m-list {
-        .item {
-            @include fj();
-            .item-left {
-                .icon {
-                    @include wh(2.7rem, 2.7rem);
-                    display: block;
-                }
-            }
-            .item-right {
-                margin-left: .55rem;
-                flex: auto;
-                .detail {
-                    padding-top: 0.275rem;
-                    border-top: 0.025rem solid $border-color;
-                    li {
-                        span {
-                            @include sc(.45rem, $font-color1);
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
 
 .buy_cart_container {

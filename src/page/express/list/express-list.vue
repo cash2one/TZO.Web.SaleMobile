@@ -11,24 +11,26 @@
                 </div>
             </section>
             <transition name="m-tab-choose">
-                <section v-show="changeShowType =='undone'" class="m-tab-container m-list">
+                <section v-show="changeShowType =='undone'" class="m-tab-container order-list">
                     <router-link v-for="item in undone" :key="item.Id" :to="'/express/detail/'+item.Id+'/'+item.BillId" tag="section" class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
                             </h3>
-                            <section class="time">
+                            <section>
                                 {{item.BizDateTime | time}}
                             </section>
-                            <section class="content">
+                        </section>
+                        <section class="content">
+                            <section>
                                 <span>单号:</span>
                                 <span>{{item.BillNo}}</span>
                             </section>
-                            <section class="content">
+                            <section>
                                 <span>状态:</span>
                                 <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
-                            <section class="content">
+                            <section>
                                 <span>仓库:</span>
                                 <span>{{item.StorageName}}</span>
                                 <span class="express">
@@ -40,24 +42,26 @@
                 </section>
             </transition>
             <transition name="m-tab-choose">
-                <section v-show="changeShowType =='complete'" class="m-tab-container m-list">
+                <section v-show="changeShowType =='complete'" class="m-tab-container order-list">
                     <router-link v-for="item in complete" :key="item.Id" :to="'/express/detail/'+item.Id+'/'+item.BillId" tag="section" class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
                             </h3>
-                            <section class="time">
+                            <section>
                                 {{item.BizDateTime | time}}
                             </section>
-                            <section class="content">
+                        </section>
+                        <section class="content">
+                            <section>
                                 <span>单号:</span>
                                 <span>{{item.BillNo}}</span>
                             </section>
-                            <section class="content">
+                            <section>
                                 <span>状态:</span>
                                 <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
-                            <section class="content">
+                            <section>
                                 <span>仓库:</span>
                                 <span>{{item.StorageName}}</span>
                                 <span class="express">
@@ -72,7 +76,9 @@
         <transition name="router-slid" mode="out-in">
             <router-view></router-view>
         </transition>
-        <loading v-if="showLoading"></loading>
+        <transition name="loading">
+            <loading v-show="showLoading"></loading>
+        </transition>
     </section>
 </template>
 
@@ -116,36 +122,19 @@ export default {
 <style lang="scss" scoped>
 @import 'src/style/mixin';
 
-.m-list {
-    .item {
-        @include fj();
-        @include indent10;
-        .title {
-            flex: auto;
-            display: block;
+.number,
+.money {
+    font-size: .55rem;
+}
 
-            .name {
-                width: 9rem;
-            }
-        }
-        .time {
-            position: absolute;
-            right: 0.55rem;
-            top: 0.65rem;
-        }
-        .express {
-            position: absolute;
-            right: 0.55rem;
-            @include sc(.55rem, #fff);
-            background-color: $blue;
-            width: 2.4rem;
-            text-align: center;
-            border-radius: 0.12rem;
-            padding: .1rem;
-        }
-        b {
-            font-size: .55rem;
-        }
-    }
+.express {
+    position: absolute;
+    right: 0.55rem;
+    @include sc(.55rem, #fff);
+    background-color: $blue;
+    width: 2.4rem;
+    text-align: center;
+    border-radius: 0.12rem;
+    padding: .1rem;
 }
 </style>

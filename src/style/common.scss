@@ -92,30 +92,10 @@ small{
 .red {
     color:$red;
 }
-// .back_img{
-//     background-repeat: no-repeat;
-//     background-size: 100% 100%;
-// }
 
-// .margin{
-//     margin: 0 auto;
-// }
-
-// .left{
-//     float: left;
-// }
-
-// .right{
-//     float: right;
-// }
-
-// .hide{
-//     display: none;
-// }
-
-// .show{
-//     display: block;
-// }
+.green {
+    color: $green;
+}
 
 .ellipsis{
     overflow: hidden;
@@ -305,6 +285,18 @@ small{
 }
 
 .m-form-list{
+    header {
+        @include fj;
+        background-color: $background-light-color;
+        padding: .55rem;
+        @include sc(.8rem, $font-color);
+        border-top: 1px solid $border-color;
+    }
+    h3{
+        @include fj;
+        @include indent05();
+        @include sc(.65rem, $font-color1);
+    }
     .item {
         @include indent10();
         @include fj();
@@ -407,18 +399,98 @@ small{
     opacity: 0;
 }
 
-.m-list {
+.goods-list {
+    .item {
+        @include fj();
+        @include indent10();
+        background-color: $background-light-color;
+        border-bottom: 1px solid $border-color;
+        position: relative;
+        overflow: hidden;
+        .item-left {
+            .icon {
+                @include wh(2.7rem, 2.7rem);
+                display: block;
+            }
+        }
+        .item-right {
+            margin-left: .55rem;
+            flex: auto;
+            .title{
+                margin: .275rem 0;
+            }
+            .content{
+                color: $font-color1;
+                margin:.275rem 0;
+            }
+            .detail {
+                padding-top: 0.275rem;
+                border-top: 0.025rem solid $border-color;
+                @include sc(.45rem, $font-color1);
+            }
+        }
+    }
+}
+
+.customer-list {
+    .item {
+        @include fj();
+        @include indent10();
+        background-color: $background-light-color;
+        border-bottom: 1px solid $border-color;
+        position: relative;
+        overflow: hidden;
+        .item-left {
+            .icon {
+                @include wh(2.7rem, 2.7rem);
+                display: block;
+            }
+        }
+        .item-right {
+            margin-left: .55rem;
+            flex: auto;
+            .title {
+                @include fj();
+                margin: .275rem 0;
+                .name {
+                    width: 8rem;
+                }
+                .level {
+                    color: $font-color1;
+                }
+            }
+            .detail {
+                padding-top: 0.275rem;
+                border-top: 1px solid $border-color;
+                @include sc(.45rem, $font-color1);
+            }
+        }
+        .distance {
+            margin-top: 1rem;
+            text-align: center;
+            color: $font-color1;
+        }
+    }
+}
+.cart-list {
     header{
         @include indent05();
         @include sc(.65rem, $font-color1);
+        @include fj();
+        .right {
+            color: $blue;
+        }
+        .red {
+            color: $red;
+        }
     }
     header + .item{
         border-top: 1px solid $border-color;
     }
+
     .item {
-        width: 100%;
-        background-color: $background-light-color;
         @include indent10();
+        background-color: $background-light-color;
         border-bottom: 1px solid $border-color;
         position: relative;
         overflow: hidden;
@@ -429,9 +501,81 @@ small{
         .content {
             color: $font-color1;
             margin:.275rem 0;
-            span {
-                color: $font-color1;
+        }
+        .detail {
+            padding-top: 0.275rem;
+            @include sc(.55rem, $font-color1);
+            @include fj();
+            input {
+                @include sc(.8rem, $red);
+                width: 1.5rem;
+                text-align: right;
             }
+        }
+    }
+}
+
+.order-list {
+    .item {
+        @include indent10();
+        background-color: $background-light-color;
+        border-bottom: 1px solid $border-color;
+        position: relative;
+        overflow: hidden;
+        .title {
+            @include fj();
+            margin: .275rem 0;
+            .name {
+                width: 9rem;
+            }
+        }
+        .content {
+            color: $font-color1;
+            margin:.275rem 0;
+        }
+        .detail {
+            padding-top: 0.275rem;
+            @include sc(.55rem, $font-color1);
+            @include fj();
+        }
+    }
+}
+
+.item-list {
+    header {
+        @include fj();
+        background-color: $background-light-color;
+        padding: .55rem;
+        @include sc(.8rem, $font-color);
+        border-top: 1px solid $border-color;
+    }
+    header + .item{
+        border-top: 1px solid $border-color;
+    }
+    .item {
+        @include fj();
+        @include indent10();
+        background-color: $background-light-color;
+        border-bottom: 1px solid $border-color;
+        position: relative;
+        overflow: hidden;
+        .item-left {
+            flex: auto;
+            .title{
+                @include fj();
+                margin: .275rem 0;
+                
+            }
+            .content {
+                color: $font-color1;
+                margin:.275rem 0;
+            }
+        }
+        .detail {
+            padding-top: 0.275rem;
+            @include sc(.55rem, $font-color1);
+            @include fj();
+            width: 3rem;
         }
     }
 }
@@ -461,7 +605,6 @@ small{
             @include wh(100%, 100%);
             position: relative;
             z-index: 14;
-            background-color: $background-light-color;
             box-sizing: border-box;
             padding-top: .275rem;
             .sort_item_border {
@@ -686,6 +829,86 @@ small{
 	}
 }
 
+.address_container {
+    min-height: 3.5rem;
+    @include fj;
+    align-items: center;
+    @include indent10;
+    background: url(/src/images/address_bottom.png) left bottom repeat-x;
+    background-color: $background-light-color;
+    background-size: auto .12rem;
+    .address_empty_left {
+        display: flex;
+        align-items: center;
+        .location_icon {
+            @include wh(.8rem, .8rem);
+            fill: $blue;
+            margin-right: .275rem;
+        }
+        .add_address {
+            @include sc(.7rem, $font-color);
+        }
+        .address_detail_container {
+            margin-left: .275rem;
+            header {
+                @include sc(.65rem, $font-color);
+                span:nth-of-type(1) {
+                    font-size: .8rem;
+                    font-weight: bold;
+                }
+            }
+            .address_detail {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                span {
+                    @include sc(.5rem, #fff);
+                    border-radius: .15rem;
+                    background-color: #ff5722;
+                    height: .6rem;
+                    line-height: .6rem;
+                    padding: 0 .2rem;
+                    margin-right: .3rem;
+                }
+                p {
+                    color:$font-color1;
+                }
+            }
+        }
+    }
+}
+
+.container_style {
+    background-color: #fff;
+    margin-top: .4rem;
+    padding: 0 .7rem;
+}
+
+.delivery_model {
+    border-left: .2rem solid $blue;
+    @include indent10;
+    min-height: 4rem;
+    @include fj;
+    align-items: center;
+    .deliver_time {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        p:nth-of-type(1) {
+            @include sc(.7rem, $blue);
+        }
+        p:nth-of-type(2) {
+            @include sc(.55rem, #fff);
+            background-color: $blue;
+            width: 2.4rem;
+            margin-top: .5rem;
+            text-align: center;
+            border-radius: 0.12rem;
+            padding: .1rem;
+        }
+    }
+}
+
 // 页面切换动画
 .router-fade-enter-active {
 	transition: opacity .3s;
@@ -715,4 +938,14 @@ small{
 .loading-enter,
 .loading-leave-active {
 	opacity: 0
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: all .3s;
+}
+
+.fade-enter,
+.fade-leave-active {
+    opacity: 0;
 }

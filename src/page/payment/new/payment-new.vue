@@ -3,11 +3,9 @@
         <header-title header-title="收款" goback='true'></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="m-form-list" v-if="!showSelectRecAccountDiv">
-                <header>收款账户</header>
-                <section class="item" @click="toggleAccountList">
-                    <h2>
-                        {{recAccount.Name}}
-                    </h2>
+                <h3>收款账户</h3>
+                <section class="item end" @click="toggleAccountList">
+                    <h2>{{recAccount.Name}}</h2>
                     <div class="content">
                         <p>
                             <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="50" height="14" style="margin-bottom: -0.08rem;" v-if="recAccount.IsFacePay">
@@ -21,19 +19,13 @@
                         </svg>
                     </div>
                 </section>
-                <header>收款金额</header>
-                <section class="item">
-                    <section class="item-left">￥</section>
-                    <section class="item-right">
-                        <section class="title">
-                            <input type="number" class="money" v-model="money" min="0" />
-                        </section>
-                    </section>
+                <h3>收款金额</h3>
+                <section class="input_remark quick_remark">
+                    <h2>￥</h2>
+                    <input type="number" class="input_text money" v-model="money" min="0" />
                 </section>
             </section>
-            <section class="confirm_order">
-                <p @click="confirmRec">确认收款</p>
-            </section>
+            <div class="determine" @click="confirmRec">确认收款</div>
         </section>
         <transition name="fade">
             <section class="confirm_details" v-if="showConfirm">
@@ -74,7 +66,7 @@
                     </section>
                     <section class="item" v-if="Message">
                         <h3>
-                            <span class="error">{{Message}}</span>
+                            <span class="red">{{Message}}</span>
                         </h3>
                         <div class="content" @click="queryPaymentsDetail">
                             <p>
@@ -93,40 +85,35 @@
         <loading v-if="showLoading"></loading>
         <alert-tip v-if="showAlert" @closeTip="closeTip" :alertText="alertText"></alert-tip>
         <transition name="router-slid" mode="out-in">
-            <div class="page" v-if="showSelectRecAccountDiv">
+            <div class="page rating" v-if="showSelectRecAccountDiv">
+                <header class="header_title">
+                    <section class="title_head ellipsis">
+                        <h2>
+                            <strong>选择账户</strong>
+                        </h2>
+                    </section>
+                </header>
                 <section class="scroll_container paddingTop">
-                    <section class="m-list">
-                        <header>现金账户</header>
+                    <section class="m-form-list">
+                        <h3>现金账户</h3>
                         <section class="item" v-for="item in cash" :key="item.Id" @click="tempRecAccount = item">
-                            <section v-if="tempRecAccount.Id==item.Id" class="item-left">
-                                <svg class="icon">
+                            <h2>
+                                <svg v-if="tempRecAccount.Id==item.Id" class="icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
                                 </svg>
-                            </section>
-                            <section v-else class="item-left"></section>
-                            <section class="item-right">
-                                <section class="title">
-                                    <h3 class="name">
-                                        <strong>{{item.Name}}</strong>
-                                    </h3>
-                                </section>
-                            </section>
+                                <section v-else class="icon"></section>
+                                <p>{{item.Name}}</p>
+                            </h2>
                         </section>
-                        <header>银行账户</header>
+                        <h3>银行账户</h3>
                         <section class="item" v-for="item in bank" :key="item.Id" @click="tempRecAccount = item">
-                            <section v-if="tempRecAccount.Id==item.Id" class="item-left">
-                                <svg class="icon">
+                            <h2>
+                                <svg v-if="tempRecAccount.Id==item.Id" class="icon">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
                                 </svg>
-                            </section>
-                            <section v-else class="item-left"></section>
-                            <section class="item-right">
-                                <section class="title">
-                                    <h3 class="name">
-                                        <strong>{{item.Name}}</strong>
-                                    </h3>
-                                </section>
-                            </section>
+                                <section v-else class="icon"></section>
+                                <p>{{item.Name}}</p>
+                            </h2>
                         </section>
                     </section>
                     <br>
@@ -365,84 +352,67 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import 'src/style/order';
+@import 'src/style/mixin';
 
-.page {
-    .m-form-list {
-        header {
-            padding: .1375rem .275rem;
-            font-size: 0.65rem;
-            color: #666;
-        }
-    }
-
-    .item {
-        .item-left {
-            margin-top: .55rem;
-            font-size: .8rem;
-        }
-        .item-right {
-            .title {
-                .money {
-                    font-size: 1.3rem;
-                }
-                p {
-                    margin-top: .275rem;
-                }
-            }
-        }
-    }
-
-    .confirm_order {
-        position: fixed;
-        bottom: 0;
+.input_remark {
+    background-color: $background-light-color;
+    .input_text {
         width: 100%;
-        height: 2rem;
-        p {
-            line-height: 2rem;
-            @include sc(.75rem, #fff);
-            background-color: #56d176;
-            text-align: center;
-        }
+        background-color: $background-color;
+        border: 1px solid $border-color;
+        resize: none;
+        min-height: 4.5rem;
+        border-radius: .2rem;
+        @include sc(2rem, $red);
+        @include indent10;
+        text-align: right;
+    }
+}
+
+.quick_remark {
+    background-color: #fff;
+    padding: 0 .55rem 1rem;
+}
+
+.determine {
+    background-color: #4cd964;
+    @include sc(.7rem, #fff);
+    text-align: center;
+    margin: 0.5rem .7rem;
+    line-height: 1.8rem;
+    border-radius: 0.2rem;
+}
+
+.confirm_order {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    p {
+        line-height: 2rem;
+        @include sc(.75rem, #fff);
+        background-color: #56d176;
+        text-align: center;
+    }
+}
+
+.confirm_details {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #262626;
+    z-index: 200;
+    padding: 1.25rem;
+
+    .close_activities {
+        position: absolute;
+        bottom: 1rem;
+        @include cl;
     }
 
-    .confirm_details {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #262626;
-        z-index: 200;
-        padding: 1.25rem;
-
-        .close_activities {
-            position: absolute;
-            bottom: 1rem;
-            @include cl;
-        }
-
-        .m-form-list {
-            .item {
-                img {
-                    width: 100%;
-                    height: 10rem;
-                }
-                .error {
-                    color: $red;
-                }
-            }
-        }
-    }
-
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: opacity .5s;
-    }
-
-    .fade-enter,
-    .fade-leave-active {
-        opacity: 0;
+    img {
+        width: 100%;
     }
 }
 </style>

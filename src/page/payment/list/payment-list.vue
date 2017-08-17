@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <section class="scroll_container">
+        <section v-show="!showLoading" class="scroll_container">
             <header class="header_search">
                 <section class="header_title_goback" @click="$router.go(-1)">
                     <svg class="icon">
@@ -125,42 +125,47 @@
             <transition name="showcover">
                 <div class="back_cover" v-show="sortBy"></div>
             </transition>
-            <section class="m-list" v-load-more="loaderMore" v-if="orderList.length">
+            <section class="order-list" v-load-more="loaderMore" v-if="orderList.length">
                 <div v-for="item in orderList" :key="item.Id" @click="selectOrder(item.Id)">
                     <section class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
                             </h3>
-                            <section class="time">
-                                ￥
-                                <p class="money">{{item.Money}}</p>
+                            <section>
+                                {{item.CreateTime | time}}
                             </section>
-                            <section class="content">
-                                <span>账户:</span>
-                                <span>{{item.RecAccountName}}</span>
+    
+                            <section class="status">
     
                             </section>
-                            <section class="content">
-                                <span>时间:</span>
-                                <span>{{item.CreateTime | time}}</span>
-                            </section>
-                            <section class="content">
+                        </section>
+                        <section class="content">
+                            <section>
                                 <span>单号:</span>
                                 <span>{{item.BillNo}}</span>
                             </section>
-                            <section class="status">
-                                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="40" height="14">
-                                    <polygon points="0,10 4,0 40,0 36,10" style="fill:none;stroke:#FF6000;stroke-width:1" />
-                                    <line x1="1.5" y1="11" x2="36" y2="11" style="stroke:#FF6000;stroke-width:1.5" />
-                                    <text x="3.5" y="9" style="fill:#FF6000;font-size:10;font-weight:bold;">{{item.StatusName}}</text>
-                                </svg>
+                            <section>
+                                <span>账户:</span>
+                                <span>{{item.RecAccountName}}</span>
                             </section>
+                        </section>
+                        <section class="detail">
+                            <section>
+                                <span>金额:￥
+                                    <b class="money">{{item.Money}}</b>
+                                </span>
+                            </section>
+                            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="40" height="14">
+                                <polygon points="0,10 4,0 40,0 36,10" style="fill:none;stroke:#FF6000;stroke-width:1" />
+                                <line x1="1.5" y1="11" x2="36" y2="11" style="stroke:#FF6000;stroke-width:1.5" />
+                                <text x="3.5" y="9" style="fill:#FF6000;font-size:10;font-weight:bold;">{{item.StatusName}}</text>
+                            </svg>
                         </section>
                     </section>
                 </div>
             </section>
-            <section v-else class="m-list">
+            <section v-else class="order-list">
                 <section class="list_back_li" v-for="item in 10" :key="item">
                     <img src="../../../images/shopback.svg" class="list_back_svg">
                 </section>
@@ -366,50 +371,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import 'src/style/order';
 
 .page {
     .scroll_container {
-        padding-top: 3.2rem;
-
-        .m-sort{
-            .sort_item{
-                .category_container{
-                    .category_right{
-                        height:4rem;
-                    }   
+        padding-top: 3.7rem;
+        .m-sort {
+            .sort_item {
+                .category_container {
+                    .category_right {
+                        height: initial;
+                    }
                 }
-            }
-        }
-    }
-    .m-list {
-        margin-top: .4rem;
-        header {
-            background-color: $background-light-color;
-            @include indent10;
-            @include sc(.65rem, $font-color);
-        }
-        .item {
-            @include indent10;
-            .title {
-                flex: auto;
-                display: block;
-
-                .name {
-                    width: 9rem;
-                }
-            }
-
-            .time {
-                position: absolute;
-                right: 0.55rem;
-                top: 0.65rem;
-            }
-
-            .status {
-                position: absolute;
-                right: 0.55rem;
-                bottom: 3rem;
             }
         }
     }

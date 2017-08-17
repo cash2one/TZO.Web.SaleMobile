@@ -7,13 +7,15 @@
                     <strong>{{curStorage.Name}}</strong>
                 </h2>
             </div>
-            <section class="m-list">
+            <section class="item-list">
                 <header>{{bizObj.Name}}</header>
                 <section v-for="(item,index) in cart.items" :key="index" class="item">
-                    <section class="title">
-                        <h3 class="name ellipsis">
-                            <strong>{{item.info.GoodsName}}</strong>
-                        </h3>
+                    <section class="item-left">
+                        <section class="title">
+                            <h3 class="name ellipsis">
+                                <strong>{{item.info.Name}}</strong>
+                            </h3>
+                        </section>
                         <section class="content">
                             <section v-for="prop in globalPropertyList" :key="prop.Id">
                                 <span>{{prop.Name}}</span>:
@@ -75,7 +77,6 @@
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
-import selectSlidUp from 'src/components/common/select-slid-up'
 import loading from 'src/components/common/loading'
 import returnCart from 'src/components/common/return-cart'
 import { apiCreateOrder, apiConfirmOrder, apiVerifyOrder } from 'src/service/getData'
@@ -165,30 +166,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import 'src/style/order';
 
-.m-list {
+.item-list {
     margin-top: .4rem;
-    header {
-        background-color: $background-light-color;
-        padding: .55rem;
-        @include sc(.8rem, $font-color);
-    }
-    .item {
-        @include indent10;
-        .title {
-            flex: auto;
-            display: block;
-            width: 8rem;
-        }
-        .detail {
-            flex: 1;
-            @include fj();
-            line-height: 1.5rem;
-        }
-    }
 }
-
 
 .confrim_order {
     display: flex;
@@ -245,15 +226,5 @@ export default {
         line-height: .7rem;
         @include sc(.65rem, #fff);
     }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity .5s;
-}
-
-.fade-enter,
-.fade-leave-active {
-    opacity: 0;
 }
 </style>

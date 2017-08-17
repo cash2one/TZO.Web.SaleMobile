@@ -1,26 +1,34 @@
 <template>
     <div class="page paddingTop">
         <header-title header-title="选择公司"></header-title>
-        <section class="m-list">
-            <header>最近用过的公司</header>
+        <section class="m-form-list">
+            <h3>最近用过的公司</h3>
             <section class="item" @click="chooseCorp(curCorp)">
-                <section class="title">
-                    <h3>
-                        <strong class="name">{{curCorp.CorpName}}</strong>
-                    </h3>
+                <h2>
+                    <div>
+                        <p>{{curCorp.CorpName}}</p>
+                        <p>
+                            <small>{{curCorp.DeptName}}</small>
+                        </p>
+                    </div>
+                </h2>
+                <section class="content">
                     <span class="red">{{curCorp.Position}}</span>
                 </section>
-                <p class="content">{{curCorp.DeptName}}</p>
             </section>
-            <header>选择公司</header>
+            <h3>选择公司</h3>
             <section class="item" v-for="item in corpList" :key="item.CorpId" @click="chooseCorp(item)">
-                <section class="title">
-                    <h3>
-                        <strong class="name">{{item.CorpName}}</strong>
-                    </h3>
+                <h2>
+                    <div>
+                        <p>{{item.CorpName}}</p>
+                        <p>
+                            <small>{{item.DeptName}}</small>
+                        </p>
+                    </div>
+                </h2>
+                <section class="content">
                     <span class="red">{{item.Position}}</span>
                 </section>
-                <p class="content">{{item.DeptName}}</p>
             </section>
         </section>
     </div>

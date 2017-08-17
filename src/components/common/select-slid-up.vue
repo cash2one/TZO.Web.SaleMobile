@@ -19,16 +19,18 @@
         <transition name="slid_up">
             <div class="item_container" v-if="show">
                 <header>{{title}}</header>
-                <ul>
-                    <li v-for="item in items" :key="item.Id" :class="{selected: model.Id == item.Id}" @click="selectItem(item.Id,item.Name)">
-                        <span>
-                            {{item.Name}}
-                        </span>
-                        <svg class="icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
-                        </svg>
-                    </li>
-                </ul>
+                <section class="items">
+                    <ul>
+                        <li v-for="item in items" :key="item.Id" :class="{selected: model.Id == item.Id}" @click="selectItem(item.Id,item.Name)">
+                            <span>
+                                {{item.Name}}
+                            </span>
+                            <svg class="icon">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
+                            </svg>
+                        </li>
+                    </ul>
+                </section>
             </div>
         </transition>
     </div>
@@ -69,6 +71,7 @@ export default {
     }
     .item_container {
         min-height: 10rem;
+        max-height: 15rem;
         background-color: $background-light-color;
         position: fixed;
         bottom: 0;
@@ -79,6 +82,11 @@ export default {
             @include sc(.7rem, $font-color);
             text-align: center;
             line-height: 2rem;
+        }
+        .items {
+            height: 10rem;
+            overflow-y: auto;
+            margin-bottom: 2rem;
         }
         ul {
             li {
@@ -104,17 +112,6 @@ export default {
             }
         }
     }
-
-    .fade-enter-active,
-    .fade-leave-active {
-        transition: opacity .3s;
-    }
-
-    .fade-enter,
-    .fade-leave-active {
-        opacity: 0;
-    }
-
 
     .slid_up-enter-active,
     .slid_up-leave-active {

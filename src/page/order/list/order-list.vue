@@ -1,16 +1,16 @@
 <template>
     <div class="page">
-        <section class="scroll_container">
-            <header class="header_search">
-                <section class="search_keyword">
-                    <section class="header_search_icon">
-                        <svg class="icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
-                        </svg>
-                    </section>
-                    <input v-model="keyword" type="number" placeholder="请输入单号..." class="search_text" />
+        <header class="header_search">
+            <section class="search_keyword">
+                <section class="header_search_icon">
+                    <svg class="icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search"></use>
+                    </svg>
                 </section>
-            </header>
+                <input v-model="keyword" type="number" placeholder="请输入单号..." class="search_text" />
+            </section>
+        </header>
+        <section class="scroll_container paddingTop">
             <section class="m-sort">
                 <div class="sort_item" :class="{choose_type:sortBy == 'bizType'}">
                     <div class="sort_item_container" @click="chooseType('bizType')">
@@ -205,43 +205,45 @@
             <transition name="showcover">
                 <div class="back_cover" v-show="sortBy"></div>
             </transition>
-            <section class="m-list" v-load-more="loaderMore" v-if="orderList.length">
-                <div v-for="item in orderList" :key="item.Id" @click="selectOrder(item.Id)">
-                    <section class="item">
-                        <section class="title">
-                            <h3 class="name ellipsis">
-                                <strong>{{item.CustomerName}}</strong>
-                            </h3>
-                            <section class="time">
-                                {{item.SubmitTime | time}}
-                            </section>
-                            <section class="content">
-                                <span>单号:</span>
-                                <span>{{item.BillNo}}</span>
-                            </section>
-                            <section class="content">
-                                <span>状态:</span>
-                                <span>{{item.StatusName}}</span>
-                            </section>
-                            <section class="content">
-                                <span>仓库:</span>
-                                <span>{{item.SendStorageName}}</span>
-                            </section>
-                            <section class="content">
-                                <span>品类:</span>
-                                <span>
-                                    <b class="count">{{item.CategoryNum}}</b>, 数量:
-                                    <b class="number">{{item.GoodsTotalNum}}</b>
-                                    <span class="total">总计:￥
-                                        <b class="money">{{item.TotalMoney}}</b>
-                                    </span>
-                                </span>
-                            </section>
+            <section class="order-list" v-load-more="loaderMore" v-if="orderList.length">
+                <section v-for="item in orderList" :key="item.Id" @click="selectOrder(item.Id)" class="item">
+                    <section class="title">
+                        <h3 class="name ellipsis">
+                            <strong>{{item.CustomerName}}</strong>
+                        </h3>
+                        <section>
+                            {{item.SubmitTime | time}}
                         </section>
                     </section>
-                </div>
+                    <section class="content">
+                        <section>
+                            <span>单号:</span>
+                            <span>{{item.BillNo}}</span>
+                        </section>
+                        <section>
+                            <span>状态:</span>
+                            <span>{{item.StatusName}}</span>
+                        </section>
+                        <section>
+                            <span>仓库:</span>
+                            <span>{{item.SendStorageName}}</span>
+                        </section>
+                    </section>
+                    <section class="detail">
+                        <section>
+                            <span>品类:</span>
+                            <b class="count">{{item.CategoryNum}}</b>, 数量:
+                            <b class="number">{{item.GoodsTotalNum}}</b>
+                        </section>
+                        <section>
+                            <span>总计:￥
+                                <b class="money">{{item.TotalMoney}}</b>
+                            </span>
+                        </section>
+                    </section>
+                </section>
             </section>
-            <section v-else class="m-list">
+            <section v-else class="order-list">
                 <section class="list_back_li" v-for="item in 10" :key="item">
                     <img src="../../../images/shopback.svg" class="list_back_svg">
                 </section>
@@ -468,47 +470,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import 'src/style/order';
 
 .page {
     .scroll_container {
-        padding-top: 3.2rem;
-        .m-sort{
-            .sort_item{
-                .category_container{
-                    .category_right{
-                        height:4rem;
-                    }   
+        padding-top: 3.7rem;
+        .m-sort {
+            .sort_item {
+                .category_container {
+                    .category_right {
+                        height: initial;
+                    }
                 }
-            }
-        }
-    }
-    .m-list {
-        margin-top: .4rem;
-        header {
-            background-color: $background-light-color;
-            @include indent10;
-            @include sc(.65rem, $font-color);
-        }
-        .item {
-            @include indent10;
-            .title {
-                flex: auto;
-                display: block;
-
-                .name {
-                    width: 9rem;
-                }
-            }
-            .time {
-                position: absolute;
-                right: 0.55rem;
-                top: 0.65rem;
-            }
-
-            .total {
-                position: absolute;
-                right: 0.55rem;
             }
         }
     }

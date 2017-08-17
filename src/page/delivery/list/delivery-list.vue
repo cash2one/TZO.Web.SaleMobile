@@ -11,24 +11,26 @@
                 </div>
             </section>
             <transition name="m-tab-choose">
-                <section v-show="changeShowType =='undone'" class="m-tab-container m-list">
+                <section v-show="changeShowType =='undone'" class="m-tab-container order-list">
                     <router-link v-for="item in Undone" :key="item.Id" :to="'/delivery/detail/'+item.Id+'/'+item.BillId" tag="section" class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
                             </h3>
-                            <section class="time">
+                            <section>
                                 {{item.BizDateTime | time}}
                             </section>
-                            <section class="content">
+                        </section>
+                        <section class="content">
+                            <section>
                                 <span>单号:</span>
                                 <span>{{item.BillNo}}</span>
                             </section>
-                            <section class="content">
+                            <section>
                                 <span>状态:</span>
                                 <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
-                            <section class="content">
+                            <section>
                                 <span>仓库:</span>
                                 <span>{{item.StorageName}}</span>
                             </section>
@@ -37,24 +39,26 @@
                 </section>
             </transition>
             <transition name="m-tab-choose">
-                <section v-show="changeShowType =='complete'" class="m-tab-container m-list">
+                <section v-show="changeShowType =='complete'" class="m-tab-container order-list">
                     <router-link v-for="item in Complete" :key="item.Id" :to="'/delivery/detail/'+item.Id+'/'+item.BillId" tag="section" class="item">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.CustomerName}}</strong>
                             </h3>
-                            <section class="time">
+                            <section>
                                 {{item.BizDateTime | time}}
                             </section>
-                            <section class="content">
+                        </section>
+                        <section class="content">
+                            <section>
                                 <span>单号:</span>
                                 <span>{{item.BillNo}}</span>
                             </section>
-                            <section class="content">
+                            <section>
                                 <span>状态:</span>
                                 <b :class="{money:item.LogisticsStatus==2,number:item.LogisticsStatus==3}">{{item.LogisticsStatusName}}</b>
                             </section>
-                            <section class="content">
+                            <section>
                                 <span>仓库:</span>
                                 <span>{{item.StorageName}}</span>
                             </section>
@@ -66,7 +70,9 @@
         <transition name="router-slid" mode="out-in">
             <router-view></router-view>
         </transition>
-        <loading v-if="showLoading"></loading>
+        <transition name="loading">
+            <loading v-show="showLoading"></loading>
+        </transition>
     </div>
 </template>
 
@@ -122,28 +128,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'src/style/mixin';
-
-.m-list {
-    .item {
-        @include fj();
-        @include indent10;
-        .title {
-            flex: auto;
-            display: block;
-
-            .name {
-                width: 9rem;
-            }
-        }
-        .time {
-            position: absolute;
-            right: 0.55rem;
-            top: 0.65rem;
-        }
-        b {
-            font-size: .55rem;
-        }
-    }
+.number,
+.money {
+    font-size: .55rem;
 }
 </style>

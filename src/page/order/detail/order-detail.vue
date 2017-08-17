@@ -1,122 +1,119 @@
  <template>
     <div class="page rating">
-        <section class="scroll_container paddingTop">
-            <header-title header-title="订单详情" goback='true'>
-            </header-title>
-            <div v-if="!showLoading">
-                <div class="address_container">
-                    <div class="address_empty_left">
-                        <svg class="location_icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#location"></use>
-                        </svg>
-                        <div class="address_detail_container">
-                            <header>
-                                <span>{{orderDetail.Address.Contacts}}</span>
-                                <span>{{orderDetail.Address.Phone}}</span>
-                            </header>
-                            <div class="address_detail">
-                                <p>{{orderDetail.Address.RecAddress}}</p>
-                            </div>
+        <header-title header-title="订单详情" goback='true'></header-title>
+        <section v-if="!showLoading" class="scroll_container paddingTop">
+            <div class="address_container">
+                <div class="address_empty_left">
+                    <svg class="location_icon">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#location"></use>
+                    </svg>
+                    <div class="address_detail_container">
+                        <header>
+                            <span>{{orderDetail.Address.Contacts}}</span>
+                            <span>{{orderDetail.Address.Phone}}</span>
+                        </header>
+                        <div class="address_detail">
+                            <p>{{orderDetail.Address.RecAddress}}</p>
                         </div>
                     </div>
                 </div>
+            </div>
     
-                <div class="delivery_model container_style">
-                    <p class="deliver_text">{{orderDetail.SendStorageName}}</p>
-                    <section class="deliver_time">
-                        <p>配送方式 | {{orderDetail.ShipTypeName}} </p>
-                        <p v-if="orderDetail.ShipType==1 && orderDetail.LogisticsCorpName">{{orderDetail.LogisticsCorpName}}</p>
-                    </section>
-                </div>
-    
-                <section class="m-form-list">
-                    <div class="item start">
-                        <h2>
-                            <strong>{{orderDetail.CustomerName}}</strong>
-                        </h2>
-                        <div class="content">
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <h2>
-                            支付方式
-                        </h2>
-                        <div class="content">
-                            <p>{{orderDetail.ChargeTypeName}}</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <h2>
-                            单号
-                        </h2>
-                        <div class="content">
-                            <p>{{orderDetail.BillNo}}</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <h2>
-                            下单时间
-                        </h2>
-                        <div class="content">
-                            <p>{{orderDetail.SubmitTime | time}}</p>
-                        </div>
-                    </div>
-                    <div class="item end">
-                        <h2>
-                            备注
-                        </h2>
-                        <div class="content">
-                            <p>{{orderDetail.Note}}</p>
-                        </div>
-                    </div>
+            <div class="delivery_model container_style">
+                <p class="deliver_text">{{orderDetail.SendStorageName}}</p>
+                <section class="deliver_time">
+                    <p>配送方式 | {{orderDetail.ShipTypeName}} </p>
+                    <p v-if="orderDetail.ShipType==1 && orderDetail.LogisticsCorpName">{{orderDetail.LogisticsCorpName}}</p>
                 </section>
+            </div>
     
-                <section class="m-list">
-                    <header>
-                        商品列表(品类:
-                        <span class="count">{{orderDetail.CategoryNum}}</span>,数量:
-                        <span class="number">{{orderDetail.GoodsTotalNum}}</span>,总计:￥
-                        <span class="money">{{orderDetail.TotalMoney}}</span>)
-                    </header>
-                    <section v-for="item in orderDetail.Items" :key="item.Id" class="item">
+            <section class="m-form-list">
+                <div class="item start">
+                    <h2>
+                        <strong>{{orderDetail.CustomerName}}</strong>
+                    </h2>
+                    <div class="content">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="item">
+                    <h2>
+                        支付方式
+                    </h2>
+                    <div class="content">
+                        <p>{{orderDetail.ChargeTypeName}}</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <h2>
+                        单号
+                    </h2>
+                    <div class="content">
+                        <p>{{orderDetail.BillNo}}</p>
+                    </div>
+                </div>
+                <div class="item">
+                    <h2>
+                        下单时间
+                    </h2>
+                    <div class="content">
+                        <p>{{orderDetail.SubmitTime | time}}</p>
+                    </div>
+                </div>
+                <div class="item end">
+                    <h2>
+                        备注
+                    </h2>
+                    <div class="content">
+                        <p>{{orderDetail.Note}}</p>
+                    </div>
+                </div>
+            </section>
+    
+            <section class="item-list">
+                <header>
+                    商品列表(品类:
+                    <span class="count">{{orderDetail.CategoryNum}}</span>,数量:
+                    <span class="number">{{orderDetail.GoodsTotalNum}}</span>,总计:￥
+                    <span class="money">{{orderDetail.TotalMoney}}</span>)
+                </header>
+                <section v-for="item in orderDetail.Items" :key="item.Id" class="item">
+                    <section class="item-left">
                         <section class="title">
                             <h3 class="name ellipsis">
                                 <strong>{{item.Goods.Name}}</strong>
                             </h3>
-                            <section class="content">
-                                <section v-for="prop in globalPropertyList" :key="prop.Id">
-                                    <span>{{prop.Name}}</span>:
-                                    <span>{{item.Goods.Properties['p'+prop.Id]}}</span>
-                                </section>
-                            </section>
-                            <return-cart :orderId="orderDetail.Id" :customer="{CustomerId:orderDetail.CustomerId,Name:orderDetail.CustomerName}" :item="item"></return-cart>
                         </section>
-                        <div class="detail">
-                            <div>
-                                <span>x</span>
-                                <span class="number">{{item.GoodsNum}}</span>
-                            </div>
-                            <div>
-                                <span>¥</span>
-                                <span class="money">{{item.Price}}</span>
-                            </div>
-                        </div>
+                        <section class="content">
+                            <section v-for="prop in globalPropertyList" :key="prop.Id">
+                                <span>{{prop.Name}}</span>:
+                                <span>{{item.Goods.Properties['p'+prop.Id]}}</span>
+                            </section>
+                        </section>
                     </section>
-                </section>
-    
-                <section class="m-form-list">
-                    <header class="item start">历史记录</header>
-                    <div class="item" v-for="(item,index) in orderDetail.Histories" :key="index" :class="{end:index==(orderDetail.Histories.length-1)}">
-                        <h2>
-                            {{item.StatusName}}
-                        </h2>
-                        <div class="content">
-                            <p>{{item.OperatorName}}&nbsp;&nbsp;{{item.OperateTime | time}}</p>
+                    <div class="detail">
+                        <div>
+                            <span>x</span>
+                            <span class="number">{{item.GoodsNum}}</span>
+                        </div>
+                        <div>
+                            <span>¥</span>
+                            <span class="money">{{item.Price}}</span>
                         </div>
                     </div>
                 </section>
-            </div>
+            </section>
+            <section class="m-form-list">
+                <header class="item start">历史记录</header>
+                <div class="item" v-for="(item,index) in orderDetail.Histories" :key="index" :class="{end:index==(orderDetail.Histories.length-1)}">
+                    <h2>
+                        {{item.StatusName}}
+                    </h2>
+                    <div class="content">
+                        <p>{{item.OperatorName}}&nbsp;&nbsp;{{item.OperateTime | time}}</p>
+                    </div>
+                </div>
+            </section>
         </section>
         <transition name="loading">
             <loading v-show="showLoading"></loading>
@@ -128,7 +125,6 @@
 import { mapState, mapActions } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
-import returnCart from 'src/components/common/return-cart'
 
 import {
     apiGetForeignSaleOrderDetail,
@@ -184,15 +180,13 @@ export default {
     },
     components: {
         headerTitle,
-        loading,
-        returnCart
+        loading
     },
 }
 </script>
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-@import 'src/style/order';
 
 .m-form-list {
     header {
@@ -202,25 +196,7 @@ export default {
     }
 }
 
-.m-list {
+.item-list {
     margin-top: .4rem;
-    header {
-        background-color: $background-light-color;
-        @include indent10;
-        @include sc(.65rem, $font-color);
-    }
-    .item {
-        @include indent10;
-        .title {
-            flex: auto;
-            display: block;
-            width: 8rem;
-        }
-        .detail {
-            flex: 1;
-            @include fj();
-            line-height: 1.5rem;
-        }
-    }
 }
 </style>

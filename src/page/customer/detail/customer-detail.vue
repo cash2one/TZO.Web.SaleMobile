@@ -1,62 +1,90 @@
 <template>
     <div class="page rating paddingTop">
-        <header-title header-title="客户资料" goback='true'>
-        </header-title>
+        <header-title header-title="客户资料" goback='true'></header-title>
         <section class="m-form-list">
-            <div class="item">
-                <h2>{{customer.BizObj.Name}}</h2>
-            </div>
-            <div v-for="(item,index) in customer.BizObj.Phones" :key="item.id">
-                <div class="item">
-                    <p class="content">联系人：{{item.Contact}}</p>
+            <header>{{customer.BizObj.Name}}</header>
+            <div v-for="(item,index) in customer.BizObj.Phones" :key="item.id" class="item" :class="{end:index==(customer.BizObj.Phones.length-1)}">
+                <h2>
+                    {{item.Contact}}
+                </h2>
+                <div class="content">
+                    <p>{{item.PhoneNum}}</p>
                     <svg class="icon" @click="bindWxOpenId(index)">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#weixin"></use>
                     </svg>
                 </div>
-                <div class="item">
-                    <p class="content">电话：{{item.PhoneNum}}</p>
-                </div>
             </div>
-            <div v-for="item in customer.BizObj.Addrs" :key="item.id">
-                <div class="item">
-                    <p class="content">地址：{{item.Addr}}</p>
-                </div>
+            <div v-for="item in customer.BizObj.Addrs" :key="item.id" class="item start end">
+                <p>
+                    地址:{{item.Addr}}
+                </p>
             </div>
-            <div class="item">
-                <p class="content">业务区域：{{customer.BizAreaName}}</p>
+            <div class="item start">
+                <h2>业务区域</h2>
+                <p>{{customer.BizAreaName}}</p>
             </div>
             <div class="item">
-                <p class="content">客户等级：{{customer.CustomerLevelName}}</p>
+                <h2>客户等级:</h2>
+                <p>{{customer.CustomerLevelName}}</p>
             </div>
             <div class="item">
-                <p class="content">业务员：{{customer.EmployeeName}}</p>
+                <h2>业务员:</h2>
+                <p>{{customer.EmployeeName}}</p>
             </div>
             <div class="item end">
-                <p class="content">备注：{{customer.BizObj.Note}}</p>
+                <h2>备注:</h2>
+                <p>{{customer.BizObj.Note}}</p>
             </div>
         </section>
-        <section class="m-list" style="margin-top:.4rem">
+        <section class="m-form-list">
             <div class="item start">
                 <h2>信用信息</h2>
             </div>
-            <div class="item" v-if="customerCredit.ChargeOffDay>0 &&customerCredit.BalanceDay>0">
-                <p class="content">信用模式：信用卡模式</p>
-                <p class="content">出账日（首月）：{{customerCredit.ChargeOffDay}}</p>
-                <p class="content">结算日（末月）：{{customerCredit.BalanceDay}}</p>
-                <p class="content">结算周期（月）：{{customerCredit.GapMonth}}</p>
+            <div v-if="customerCredit.ChargeOffDay>0 &&customerCredit.BalanceDay>0" class="item">
+                <div>
+                    <p>
+                        <span>信用模式:</span>
+                        <span>信用卡模式</span>
+                    </p>
+                    <p>
+                        <span>出账日（首月）:</span>
+                        <span>{{customerCredit.ChargeOffDay}}</span>
+                    </p>
+                    <p>
+                        <span>结算日（末月）:</span>
+                        <span>{{customerCredit.BalanceDay}}</span>
+                    </p>
+                    <p>
+                        <span>结算周期（月）:</span>
+                        <span>{{customerCredit.GapMonth}}</span>
+                    </p>
+                </div>
             </div>
-            <div class="item" v-else>
-                <p class="content">信用模式：账期模式</p>
-                <p class="content">账期天数：
-                    <span v-if="customerCredit.UnlimitedDeadLine">无限账期</span>
-                    <span v-else>{{customerCredit.DeadLine}}</span>
-                </p>
+            <div v-else class="item">
+                <div>
+                    <p>
+                        <span>信用模式:</span>
+                        <span>账期模式</span>
+                    </p>
+                    <p>
+                        <span>账期天数:</span>
+                        <span>
+                            <span v-if="customerCredit.UnlimitedDeadLine">无限账期</span>
+                            <span v-else>{{customerCredit.DeadLine}}</span>
+                        </span>
+                    </p>
+                </div>
             </div>
-            <div class="item">
-                <p class="content">信用额度：
-                    <span v-if="customerCredit.UnlimitedCredit">无限额度</span>
-                    <span v-else>{{customerCredit.CreditLimit}}</span>
-                </p>
+            <div class="item end">
+                <h2>
+                    信用额度
+                </h2>
+                <div class="content">
+                    <p class="money" v-if="customerCredit.UnlimitedCredit">无限额度</p>
+                    <p v-else>
+                        <span class="money">{{customerCredit.CreditLimit}}</span>
+                    </p>
+                </div>
             </div>
         </section>
         <br>
@@ -193,42 +221,36 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/style/mixin';
-.page {
-    .confirm_details {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #262626;
-        z-index: 200;
-        padding: 1.25rem;
+.confirm_details {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #262626;
+    z-index: 200;
+    padding: 1.25rem;
 
-        .close_activities {
-            position: absolute;
-            bottom: 1rem;
-            @include cl;
-        }
-
-        .m-form-list {
-            .item {
-                img {
-                    width: 100%;
-                }
-            }
-        }
+    .close_activities {
+        position: absolute;
+        bottom: 1rem;
+        @include cl;
     }
-    .confirm_order {
-        position: fixed;
-        bottom: 0;
+
+    img {
         width: 100%;
-        height: 2rem;
-        p {
-            line-height: 2rem;
-            @include sc(.75rem, #fff);
-            background-color: #56d176;
-            text-align: center;
-        }
+    }
+}
+
+.confirm_order {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    p {
+        line-height: 2rem;
+        @include sc(.75rem, #fff);
+        background-color: #56d176;
+        text-align: center;
     }
 }
 </style>
