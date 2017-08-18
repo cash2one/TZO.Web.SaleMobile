@@ -44,7 +44,6 @@ export default {
         }
     },
     mounted() {
-        console.log('corp-list mounted');
         this.initData();
     },
     components: {

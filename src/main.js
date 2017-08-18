@@ -10,6 +10,8 @@ import {
 	apiGetWxJsConfig,
 } from 'src/service/getData'
 
+import AMap from 'vue-amap'
+import { lazyAMapApiLoaderInstance } from 'vue-amap';
 import wx from 'weixin-js-sdk'
 
 // if ('addEventListener' in document) {
@@ -29,7 +31,17 @@ if (!debug)
 		return false;
 	}
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+
+Vue.use(AMap);
+AMap.initAMapApiLoader({
+  //key换成自己的，这个是在网络上找的，不是我们自己申请的
+  key: '199462e78d12956cf1e5e4c7e340f2ec',
+  plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView',
+   'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor',
+   'AMap.Transfer','AMap.Walking','AMap.Driving','AMap.Riding','Walking']
+});
+
 Vue.filter('time', function (value) {//value为13位的时间戳
 	if (value == '0001-01-01T00:00:00+00:00') {
 		return "无";
@@ -98,6 +110,5 @@ apiGetToken(GetQueryString('code')).then(rec => {
 		store,
 	}).$mount('#app')
 });
-
 
 

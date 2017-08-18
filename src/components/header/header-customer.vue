@@ -8,6 +8,12 @@
                 <symbol viewBox="0 0 24 24" id="header_signInActive">
                     <path fill="#45C144" d="M10,17L5,12L6.41,10.58L10,14.17L17.59,6.58L19,8M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
                 </symbol>
+                <symbol viewBox="0 0 24 24" id="header_path">
+					<path d="M16,2V8H17.08L14.95,13H14.26L12,9.97V5H6V11H6.91L4.88,16H2V22H8V16H7.04L9.07,11H10.27L12,13.32V19H18V13H17.12L19.25,8H22V2M18,4H20V6H18M8,7H10V9H8M14,15H16V17H14M4,18H6V20H4" />
+				</symbol>
+				<symbol viewBox="0 0 14 14" id="header_arrow">
+					<path d="M0 0 L8 7 L0 14" stroke="#bbb" stroke-width="1.5" fill="none" />
+				</symbol>
             </defs>
         </svg>
         <!-- <img :src="imgBaseUrl+'/images/customer/'+ curCustomer.CoustomerId +'.jpg'" class="header_cover_img"> -->
@@ -30,10 +36,10 @@
                     <strong>搜索</strong>
                 </router-link>
                 <!-- <router-link to="/customer/sgin-in">
-                                <svg class="sign_in">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
-                                </svg>
-                            </router-link> -->
+                                            <svg class="sign_in">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
+                                            </svg>
+                                        </router-link> -->
                 <section @click="signIn">
                     <svg class="sign_in" v-if="!signInActive">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
@@ -52,29 +58,29 @@
                 <p>{{curCustomer.BizAreaName}}</p>
             </footer>
         </section>
-        <!-- <section class="shop_status_container">
-                        <div class="shop_status_header">
-                            <router-link to="/path">
-                                <span class="shop_detail_title">路线</span>
-                            </router-link>
-                            <svg style="width:24px;height:24px">
-                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_path"></use>
-                            </svg>
-                            <router-link to="location">
-                                <span class="identification_detail">定位</span>
-                                <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
-                                </svg>
-                            </router-link>
-                        </div>
-                    </section> -->
+        <section class="status_container">
+            <div class="header">
+                <router-link to="/location" tag="h3">
+                    定位
+                </router-link>
+                <svg class="icon">
+                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_path"></use>
+                </svg>
+                <router-link to="/path">
+                    <span class="detail">路线</span>
+                    <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_arrow"></use>
+                    </svg>
+                </router-link>
+            </div>
+        </section>
         <section class="status_container">
             <router-link to="/shop/shopDetail/shopSafe" class="header">
                 <h3>业务情况</h3>
                 <div>
                     <span class="detail">详情</span>
                     <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1" class="description_arrow">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#home_arrow"></use>
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_arrow"></use>
                     </svg>
                 </div>
             </router-link>
@@ -302,6 +308,10 @@ export default {
         svg {
             @include wh(.45rem, .45rem);
             vertical-align: middle;
+        }
+        .icon {
+            @include wh(.8rem, .8rem);
+            fill: $blue;
         }
     }
 }
