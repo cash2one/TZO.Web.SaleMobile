@@ -166,11 +166,13 @@ export default [{
                     component: goodsDetail,
                     children: [
                         {
-                            path: 'stocks/:goodsId',
+                            path: 'stocks',
+                            name: 'goods-stocks',
                             component: goodsDetailStocks
                         },
                         {
-                            path: 'prices/:goodsId',
+                            path: 'prices',
+                            name: 'goods-prices',
                             component: goodsDetailPrices
                         }
                     ]
@@ -192,7 +194,7 @@ export default [{
                     component: knowledgeSearch,
                 },
                 {
-                    path: 'detail', // 知识库详情
+                    path: 'detail/:Id', // 知识库详情
                     component: knowledgeDetail
                 }
             ]

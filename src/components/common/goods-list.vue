@@ -2,12 +2,12 @@
     <section class="goods_container">
         <div v-load-more="loaderMore" v-if="goodsList.length" class="goods-list">
             <section v-for="item in goodsList" :key="item.Id" class="item">
-                <router-link :to="'detail/' + item.GoodsId" @click.native="selectGoods(item)" class="item-left">
+                <div @click="selectGoods(item)" class="item-left">
                     <!-- <img :src="imgBaseUrl + item.image_path"> -->
                     <svg class="icon">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#goods"></use>
                     </svg>
-                </router-link>
+                </div>
                 <section class="item-right">
                     <section class="title">
                         <h3 class="name ellipsis">
@@ -131,7 +131,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import { loadMore, getImgPath } from './mixin'
 import { showBack, animate } from 'src/config/mUtils'
 import { imgBaseUrl } from 'src/config/env'
@@ -230,6 +230,9 @@ export default {
 
     },
     methods: {
+        ...mapActions([
+            'setCurGoods'
+        ]),
         ...mapMutations([
             'ADD_CART',
             'REDUCE_CART',
@@ -245,7 +248,7 @@ export default {
             this.goodsList = [...res.Items];
 
             this.hideLoading();
-            
+
             // 当获取数据小于20，说明没有更多数据，不需要再次请求数据
             if (res.Items.length < 20) {
                 this.touchend = true;
@@ -354,8 +357,9 @@ export default {
             this.ADD_CART({ customer: this.curCustomer, goods, price: goods.LevelPrice });
         },
         //选中商品查看明细
-        selectGoods(val) {
-            this.SAVE_CUR_GOODS(val);
+        async selectGoods(val) {
+            await this.setCurGoods(val);
+            this.$router.push('detail/' + val.GoodsId);
         }
     },
     watch: {

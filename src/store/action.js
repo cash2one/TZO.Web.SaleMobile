@@ -29,6 +29,7 @@ import {
 	GET_SHIP_TYPE,
 	GET_EMPLOYEE,
 	SAVE_CUR_CORP,
+	SAVE_CUR_GOODS,
 	POSITION_INTERVAL,
 	SAVE_ADDRESS,
 } from './mutation-types.js'
@@ -38,6 +39,10 @@ export default {
 
 	async refreshToken({ commit }, code) {
 		commit(REFRESH_TOKEN, code);
+	},
+
+	async setCurGoods({ commit }, goods) {
+		commit(SAVE_CUR_GOODS, goods)
 	},
 
 	async setCurCorp({ commit }, corp) {
@@ -147,6 +152,7 @@ export default {
 		}, 1000000);
 		commit(POSITION_INTERVAL, interval);
 	},
+
 
 	async saveAddress({
 		commit,

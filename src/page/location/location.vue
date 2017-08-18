@@ -2,7 +2,8 @@
     <div class="page rating">
         <header-title header-title="路径" goback='true'></header-title>
         <section class="rating paddingTop">
-            <iframe v-bind:src="getlocationMap" frameborder=0 seamless="seamless"></iframe>
+            <div id="container" ref="map" class="amap"></div>
+            <div class="address">{{address}}</div>
         </section>
     </div>
 </template>
@@ -16,36 +17,82 @@ export default {
             lon: '117.145287',
             //lat纬度
             lat: '36.664081',
-            //用户自定义显示名称
-            name: '舜泰广场',
-            //使用方来源信息
-            map_src: '保证服务质量',
-            //坐标系参数coordinate=gaode,表示高德坐标（gcj02坐标），
-            //coordinate=wgs84,表示wgs84坐标（GPS原始坐标）
-            coordinate: 'gaode',
-            //是否尝试调起高德地图APP并在APP中查看，0表示不调起，1表示调起, 默认值为0
-            callnative: 1
+            //地图中心位置 
+            conter: [117.145287, 36.664081],
+            address: ''
         }
     },
-    computed: {
-        getlocationMap: function () {
-            var srcValue = '//uri.amap.com/marker?position=' + this.lon + ',' + this.lat + '&name=' + this.name + '&src=' + this.map_src + '&coordinate=' + this.coordinate + '&callnative=' + this.callnative;
-            return srcValue;
-        }
+    mounted() {
+        this.createMap()
     },
     components: {
         headerTitle
+    },
+    methods: {
+        createMap() {
+            var map, marker;
+            map = new AMap.Map('container', {
+                resizeEnable: true,
+                zoom: 15,
+                //中心位置
+                center: this.conter
+            });
+
+            // 給地图添加缩放工具条,默认显示在右下角
+            var toolBar = new AMap.ToolBar({
+                position: "lt"
+            });
+            map.addControl(toolBar);
+
+            marker = new AMap.Marker({
+                icon: "https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png",
+                position: [this.lon, this.lat]
+            });
+            marker.setMap(map);
+
+            //根据经纬度获得地址(逆地理编码)
+            var geocoder = new AMap.Geocoder();
+
+            let self = this;
+            let callback = function (status, result) {
+                if (status === 'complete' && result.info === 'OK') {
+                    self.address = result.regeocode.formattedAddress;
+                } else {
+                    //获取地址失败
+                    self.address = "获取地址失败！";
+                }
+            };
+
+            geocoder.getAddress([this.lon, this.lat], callback);
+        }
     }
 }
 </script>
 
 <style lang="scss" scoped>
+@import 'src/style/mixin';
+
 .header_title {
     z-index: 300;
 }
 
-iframe {
-    width: 100%;
+.amap {
     height: 100%;
+    width: 100%;
+    padding-top: 1rem;
+}
+
+.address {
+    position: fixed;
+    z-index: 300;
+    bottom: .275rem;
+    left: 1rem;
+    right: 1rem;
+    text-align: center;
+    background-color: $background-color;
+    border: 1px solid $border-color;
+    border-radius: .275rem;
+    @include sc(.65rem, $font-color);
+    @include indent10;
 }
 </style>

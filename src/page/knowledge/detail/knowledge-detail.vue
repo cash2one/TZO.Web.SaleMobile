@@ -1,7 +1,6 @@
 <template>
     <div>
-        <header-title header-title="车辆详情" go-back='true'>
-        </header-title>
+        <header-title header-title="车辆详情" goback='true'></header-title>
     </div>
 </template>
 

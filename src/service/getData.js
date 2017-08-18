@@ -602,3 +602,35 @@ export const apiGetPaymentsJournalDetail = id => fetch('/api/Finance/PaymentsJou
 
 // end 收付款相关服务
 // **********************************
+
+// 获取车型
+export const apiGetCarTypes = keyword => {
+	let data = {
+		KeyWord: keyword
+	};
+	return fetch('/api/Knowledge/KnowledgeSearch/GetCarTypeViewForKnowledge', data)
+};
+
+// 获取车型年款
+export const apiGetCarTypeYears = ids => {
+	let data = {
+		CarTypeIds: ids
+	};
+	return fetch('/api/Knowledge/KnowledgeSearch/GetModelYearForKnowledge', data);
+};
+
+// 获取知识库
+export const apiGetKnowledgeList = (keyword, typeIds, years, offset) => {
+	let data = {
+		PageIndex: parseInt(offset / 20),
+		PageSize: 20,
+		KeyWord: keyword,
+	};
+	
+	if (typeIds)
+		data.CarTypeIds = typeIds;
+	if (years)
+		data.ModelYears = years;
+
+	return fetch('/api/Knowledge/KnowledgeSearch/GetKnowledgeSearchListForCar', data);
+};

@@ -39,7 +39,7 @@ AMap.initAMapApiLoader({
   key: '199462e78d12956cf1e5e4c7e340f2ec',
   plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView',
    'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor',
-   'AMap.Transfer','AMap.Walking','AMap.Driving','AMap.Riding','Walking']
+   'AMap.Transfer','AMap.Walking','AMap.Driving','AMap.Riding','Walking','AMap.Geocoder']
 });
 
 Vue.filter('time', function (value) {//value为13位的时间戳
