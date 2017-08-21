@@ -43,7 +43,10 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
 
 		try {
 			const response = await fetch(url, requestConfig);
-			const responseJson = await response.json();
+			let text = await response.text();
+			if (!text)
+				return {};
+			const responseJson = JSON.parse(text); //await response.json();
 			return responseJson
 		} catch (error) {
 			throw new Error(error)

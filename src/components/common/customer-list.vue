@@ -51,7 +51,7 @@
 				</section>
 			</section>
 		</div>
-		<section v-else class="customer-list">
+		<section v-if="!touchend && !customerList.length" class="customer-list">
 			<section class="list_back_li" v-for="item in 10" :key="item">
 				<img src="../../images/shopback.svg" class="list_back_svg">
 			</section>
@@ -142,6 +142,7 @@ export default {
 			let res = await this.getCustomers();
 			this.hideLoading();
 			this.customerList = [...this.customerList, ...res.Items];
+
 			//当获取数据小于20，说明没有更多数据，不需要再次请求数据
 			if (res.Items.length < 20) {
 				this.touchend = true;
@@ -159,6 +160,11 @@ export default {
 			this.offset = 0;
 			let res = await this.getCustomers();
 			this.hideLoading();
+
+			//当获取数据小于20，说明没有更多数据，不需要再次请求数据
+			if (res.Items.length < 20) {
+				this.touchend = true;
+			}
 			//考虑到本地模拟数据是引用类型，所以返回一个新的数组
 			this.customerList = [...res.Items];
 		},

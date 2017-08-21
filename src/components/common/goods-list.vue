@@ -46,7 +46,7 @@
                 </section>
             </section>
         </div>
-        <ul v-else class="animation_opactiy">
+        <ul v-if="!touchend && !goodsList.length" class="animation_opactiy">
             <li class="list_back_li" v-for="item in 10" :key="item">
                 <img src="../../images/shopback.svg" class="list_back_svg">
             </li>
@@ -255,7 +255,6 @@ export default {
                 return;
             }
 
-            this.hideLoading();
             //开始监听scrollTop的值，达到一定程度后显示返回顶部按钮
             showBack(status => {
                 this.showBackStatus = status;
@@ -295,6 +294,10 @@ export default {
             this.offset = 0;
             let res = await this.getGoods();;
             this.hideLoading();
+            //当获取数据小于20，说明没有更多数据，不需要再次请求数据
+            if (res.Items.length < 20) {
+                this.touchend = true;
+            }
             // 考虑到本地模拟数据是引用类型，所以返回一个新的数组
             this.goodsList = [...res.Items];
         },

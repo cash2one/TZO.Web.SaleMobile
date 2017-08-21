@@ -79,7 +79,7 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import loading from 'src/components/common/loading'
 import returnCart from 'src/components/common/return-cart'
-import { apiCreateOrder, apiConfirmOrder, apiVerifyOrder } from 'src/service/getData'
+import { apiCreateReturn, apiVerifyReturn } from 'src/service/getData'
 
 export default {
     data() {
@@ -139,23 +139,26 @@ export default {
             this.showLoading = false;
         },
         async confrim() {
-            let res = await apiCreateOrder(this.userInfo, this.cart);
+            this.showLoading = true;
+            this.cart.storage = this.curStorage;
+
+            let res = await apiCreateReturn(this.userInfo, this.cart);
+            let id;
 
             if (res.Id) {
-                res = await apiConfirmOrder(res.Id);
-            }
-
-            if (res.Id) {
-                res = await apiVerifyOrder(res.Id);
+                id = res.Id;
+                res = await apiVerifyReturn(res.Id);
             }
 
             if (res.Message) {
+                this.showLoading = false;
+                this.showConfrim = true;
                 this.message = res.Message;
                 this.exceptionMessage = res.ExceptionMessage;
             }
             else {
-                this.CLEAR_CART(this.customerId);
-                this.$router.replace({ path: '/order/detail/', query: { Id: res.Id, bizType: 12012 } });
+                this.CLEAR_RETURN_CART(this.customerId);
+                this.$router.replace({ path: '/order/detail/', query: { Id: id, bizType: -12012 } });
             }
         },
         showConfrimFun() {

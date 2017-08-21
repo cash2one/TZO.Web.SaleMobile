@@ -20,7 +20,7 @@
             </div>
     
             <div class="delivery_model container_style">
-                <p class="deliver_text">{{orderDetail.SendStorageName}}</p>
+                <h2 class="deliver_text">{{orderDetail.SendStorageName}}</h2>
                 <section class="deliver_time">
                     <p>配送方式 | {{orderDetail.ShipTypeName}} </p>
                     <p v-if="orderDetail.ShipType==1 && orderDetail.LogisticsCorpName">{{orderDetail.LogisticsCorpName}}</p>

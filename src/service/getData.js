@@ -312,6 +312,34 @@ export const apiGetRetailReturnOrderList = (salerId, customerId, keyword, sortBy
 // 销售出库详情
 export const apiGetRetailReturnOrderDetail = orderId => fetch('/api/Sale/RetailReturn/' + orderId);
 
+// 创建退货单 
+export const apiCreateReturn = (userInfo, returnCart) => {
+	let data = {
+		Address: { RecAddress: "", Contacts: "", Phone: "" },
+		CustomerId: returnCart.customer.CustomerId,
+		HanderId: userInfo.UserId,
+		Items: [],
+		SalerId: userInfo.UserId,
+		SendStorageId: returnCart.storage.Id,
+	};
+	for (var key in returnCart.items) {
+		if (returnCart.items.hasOwnProperty(key)) {
+			var ele = returnCart.items[key];
+			data.Items.push({
+				GoodsId: ele.id,
+				GoodsNum: ele.num,
+				Price: ele.price,
+				Units: ele.info.Units,
+				IsVirtual: ele.info.GoodsType != 1
+			});
+		}
+	}
+	return fetch('/api/Sale/ForeignSaleReturn', data, 'POST');
+};
+
+// 审核退货单
+export const apiVerifyReturn = (id) => fetch('/api/Sale/ForeignSaleReturn/Verify/' + id);
+
 // 创建订单
 export const apiCreateOrder = (userInfo, cart) => {
 	let data = {

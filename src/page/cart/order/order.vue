@@ -302,8 +302,9 @@ export default {
                 this.showConfrim = true;
             else {
                 let res = await apiCreateOrder(this.userInfo, this.cart);
-
+                let id;
                 if (res.Id) {
+                    id = res.Id;
                     res = await apiConfirmOrder(res.Id);
                 }
 
@@ -312,12 +313,13 @@ export default {
                 }
 
                 if (res.Message) {
+                    this.showConfrim = true;
                     this.message = res.Message;
                     this.exceptionMessage = res.ExceptionMessage;
                 }
                 else {
                     this.CLEAR_CART(this.customerId);
-                    this.$router.replace({ path: '/order/detail/', query: { Id: res.Id, bizType: 12012 } });
+                    this.$router.replace({ path: '/order/detail/', query: { Id: id, bizType: 12012 } });
                 }
             }
         },
@@ -481,6 +483,7 @@ export default {
         @include sc(.65rem, #fff);
     }
 }
+
 .address_container {
     background: url(../../../images/address_bottom.png) left bottom repeat-x;
     background-color: $background-light-color;
