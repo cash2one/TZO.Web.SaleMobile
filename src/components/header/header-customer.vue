@@ -36,10 +36,10 @@
                     <strong>搜索</strong>
                 </router-link>
                 <!-- <router-link to="/customer/sgin-in">
-                                                                <svg class="sign_in">
-                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
-                                                                </svg>
-                                                            </router-link> -->
+                                                                                <svg class="sign_in">
+                                                                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
+                                                                                </svg>
+                                                                            </router-link> -->
                 <section @click="signIn">
                     <svg class="sign_in" v-if="!signInActive">
                         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_signIn"></use>
@@ -68,9 +68,11 @@
                 </svg>
                 <router-link to="/path" tag="div" class="detail">
                     <span>路线</span>
-                    <svg width="14" height="14" xmlns="http://www.w3.org/2000/svg" version="1.1">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_arrow"></use>
-                    </svg>
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#header_arrow"></use>
+                        </svg>
+                    </span>
                 </router-link>
             </div>
         </section>
@@ -295,12 +297,12 @@ export default {
         padding: .275rem;
         align-items: center;
         border-bottom: 1px solid $border-color;
-        vertical-align: middle;
         h3 {
             color: $font-color1;
         }
         .detail {
             color: $font-color2;
+            line-height: 1rem;
             span {
                 color: $font-color2;
             }
@@ -308,9 +310,8 @@ export default {
                 @include wh(.45rem, .45rem);
             }
         }
-        svg {
+        .icon {
             @include wh(.45rem, .45rem);
-            vertical-align: middle;
         }
     }
 }
