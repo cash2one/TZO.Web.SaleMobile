@@ -333,7 +333,7 @@ export default {
             let res = await apiCreateOrder(this.userInfo, this.cart);
 
             if (res.Id)
-                res = await apiConfirmOrder(order.Id);
+                res = await apiConfirmOrder(res.Id);
 
             if (res.Message) {
                 this.message = res.Message;
