@@ -8,6 +8,8 @@
 import { mapActions, mapMutations } from 'vuex'
 import headerTitle from 'src/components/header/header-title'
 import footGuide from 'src/components/footer/foot-guide'
+import loading from 'src/components/common/loading'
+import selectSlidUp from 'src/components/common/select-slid-up'
 
 export default {
 	created() {

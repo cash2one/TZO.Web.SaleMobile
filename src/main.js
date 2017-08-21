@@ -14,11 +14,11 @@ import AMap from 'vue-amap'
 import { lazyAMapApiLoaderInstance } from 'vue-amap';
 import wx from 'weixin-js-sdk'
 
-// if ('addEventListener' in document) {
-// 	document.addEventListener('DOMContentLoaded', function () {
-// 		FastClick.attach(document.body);
-// 	}, false);
-// }
+if ('addEventListener' in document) {
+	document.addEventListener('DOMContentLoaded', function () {
+		FastClick.attach(document.body);
+	}, false);
+}
 
 function GetQueryString(name) {
 	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
@@ -35,11 +35,11 @@ Vue.use(VueRouter);
 
 Vue.use(AMap);
 AMap.initAMapApiLoader({
-  //key换成自己的，这个是在网络上找的，不是我们自己申请的
-  key: '199462e78d12956cf1e5e4c7e340f2ec',
-  plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView',
-   'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor',
-   'AMap.Transfer','AMap.Walking','AMap.Driving','AMap.Riding','Walking','AMap.Geocoder']
+	//key换成自己的，这个是在网络上找的，不是我们自己申请的
+	key: '199462e78d12956cf1e5e4c7e340f2ec',
+	plugin: ['AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView',
+		'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor',
+		'AMap.Transfer', 'AMap.Walking', 'AMap.Driving', 'AMap.Riding', 'Walking', 'AMap.Geocoder']
 });
 
 Vue.filter('time', function (value) {//value为13位的时间戳
@@ -93,12 +93,12 @@ apiGetToken(GetQueryString('code')).then(rec => {
 
 	apiGetWxJsConfig().then(data => {
 		wx.config({
-			debug:false,
-			appId:data.AppId,
-			timestamp:data.TimeStamp,
-			nonceStr:data.NonceStr,
-			signature:data.Sign,
-			jsApiList:[
+			debug: false,
+			appId: data.AppId,
+			timestamp: data.TimeStamp,
+			nonceStr: data.NonceStr,
+			signature: data.Sign,
+			jsApiList: [
 				'checkJsApi',
 				'scanQRCode',
 			]
