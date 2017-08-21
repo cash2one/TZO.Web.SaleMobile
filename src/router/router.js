@@ -31,6 +31,7 @@ const home = r => require.ensure([], () => r(require('../page/home/home')), 'hom
 
 const knowledge = r => require.ensure([], () => r(require('../page/knowledge/knowledge')), 'knowledge')
 const knowledgeDetail = r => require.ensure([], () => r(require('../page/knowledge/detail/knowledge-detail')), 'knowledge')
+const knowledgeText = r => require.ensure([], () => r(require('../page/knowledge/detail/knowledge-text')), 'knowledge')
 const knowledgeSearch = r => require.ensure([], () => r(require('../page/knowledge/search/knowledge-search')), 'knowledge')
 
 const location = r => require.ensure([], () => r(require('../page/location/location')), 'location')
@@ -192,11 +193,17 @@ export default [{
                 {
                     path: 'search',
                     component: knowledgeSearch,
+                    children: [
+                        {
+                            path: 'detail/:Id', // 知识库详情
+                            component: knowledgeDetail
+                        },
+                        {
+                            path: 'text/:Id',
+                            component: knowledgeText
+                        }
+                    ]
                 },
-                {
-                    path: 'detail/:Id', // 知识库详情
-                    component: knowledgeDetail
-                }
             ]
         },
         // 定位

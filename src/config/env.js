@@ -10,7 +10,7 @@
 
 let baseUrl = '';
 let routerMode = 'hash';
-let imgBaseUrl = 'http://oaingatek.eicp.net:27473/';
+let imgBaseUrl = 'http://inga404.51vip.biz:27473/';
 let token = '';
 let corpList = [];
 

@@ -29,7 +29,7 @@ module.exports = {
             '/WxQyJS',
             '/WxMpAuxiliary',
         ],
-        proxypath: 'http://oaingatek.eicp.net:27473',
+        proxypath: 'http://inga404.51vip.biz:27473',
         // CSS Sourcemaps off by default because relative paths are "buggy"
         // with this option, according to the CSS-Loader README
         // (https://github.com/webpack/css-loader#sourcemaps)

@@ -1,15 +1,15 @@
 <template>
     <div class="page">
         <header-title header-title="知识库搜索" goback='true'></header-title>
-        <div class="cartype_form">
-            <div>
-                <input type="search" name="city" placeholder="输入车型" class="city_input input_style" required v-model='inputVaule' />
+        <section class="paddingTop">
+            <div class="cartype_form">
+                <div>
+                    <input type="search" name="city" placeholder="输入车型" class="city_input input_style" required v-model='inputVaule' />
+                </div>
+                <div>
+                    <input type="button" name="submit" class="city_submit input_style" value="提交" @click="search()" />
+                </div>
             </div>
-            <div>
-                <input type="button" name="submit" class="city_submit input_style" value="提交" @click="search()" />
-            </div>
-        </div>
-        <section v-load-more="loaderMore" class="scroll_container paddingTop">
             <section v-if="showHistory">
                 <header>搜索历史</header>
                 <ul class="list">
@@ -37,29 +37,29 @@
                     </li>
                 </ul>
             </section>
-            <header>{{curType.Name}}&nbsp;{{curYear.ModelYear}}</header>
-            <div v-if="carList.length" class="item-list">
-                <section v-for="(item,index) in carList" :key="index" class="item" @click="nextpage(item)">
-                    <section class="item-left">
-                        <section class="title">
-                            <h3 class="name ellipsis">
-                                <strong>{{item.Title}}</strong>
-                            </h3>
-                        </section>
-                        <section class="content">
-                            <section v-for="prop in item.Descriptions" :key="prop.Id">
-                                <span>{{prop.Key}}</span>:
-                                <span>{{prop.Value}}</span>
-                            </section>
-                        </section>
+        </section>
+        <header>{{curType.Name}}&nbsp;{{curYear.ModelYear}}</header>
+        <div v-load-more="loaderMore" v-if="carList.length" class="item-list">
+            <section v-for="(item,index) in carList" :key="index" class="item" @click="nextpage(item)" :class="{start:index==0}">
+                <section class="item-left">
+                    <section class="title">
+                        <h3 class="name ellipsis">
+                            <strong>{{item.Title}}</strong>
+                        </h3>
                     </section>
-                    <section class="type">
-                        <h3>{{item.TypeName}}</h3>
+                    <section class="content">
+                        <section v-for="prop in item.Descriptions" :key="prop.Id">
+                            <span>{{prop.Key}}</span>:
+                            <span>{{prop.Value}}</span>
+                        </section>
                     </section>
                 </section>
-            </div>
-            <p v-if="touchend" class="empty_data">没有更多了</p>
-        </section>
+                <section class="type">
+                    <h3>{{item.TypeName}}</h3>
+                </section>
+            </section>
+        </div>
+        <p v-if="touchend" class="empty_data">没有更多了</p>
         <aside class="return_top" @click="backTop" v-if="showBackStatus">
             <svg class="back_top_svg">
                 <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#backtop"></use>
@@ -67,6 +67,9 @@
         </aside>
         <transition name="loading">
             <loading v-show="showLoading"></loading>
+        </transition>
+        <transition name="router-slid" mode="out-in">
+            <router-view></router-view>
         </transition>
     </div>
 </template>
@@ -83,7 +86,7 @@ export default {
     data() {
         return {
             offset: 0,
-            inputVaule: "高尔夫",
+            inputVaule: "",
             curType: {},
             curYear: {},
             cartypeList: [],
@@ -224,7 +227,10 @@ export default {
             this.showLoading = false;
         },
         nextpage(car) {
-            this.$router.push('/knowledge/detail/' + car.Id);
+            if (car.Type == 2)
+                this.$router.push('/knowledge/search/text/' + car.Id);
+            if (car.Type == 3)
+                this.$router.push('/knowledge/search/detail/' + car.Id);
         },
         clearAll() {
             removeStore('cartypeHistory');
@@ -276,11 +282,12 @@ export default {
     }
 }
 
-.scroll_container {
+.page {
     header {
-        // border-top: 1px solid $bc;
         border-bottom: 1px solid $bc;
         @include indent05;
+        font-size: .65rem;
+        line-height: .975rem;
     }
 }
 
@@ -306,5 +313,9 @@ export default {
     line-height: 2rem;
     background-color: #fff;
     border-bottom: 1px solid $bc;
+}
+
+.return_top {
+    bottom: 1rem;
 }
 </style>

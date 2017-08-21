@@ -603,7 +603,7 @@ export const apiGetPaymentsJournalDetail = id => fetch('/api/Finance/PaymentsJou
 // end 收付款相关服务
 // **********************************
 
-// 获取车型
+// 获取车系
 export const apiGetCarTypes = keyword => {
 	let data = {
 		KeyWord: keyword
@@ -611,7 +611,7 @@ export const apiGetCarTypes = keyword => {
 	return fetch('/api/Knowledge/KnowledgeSearch/GetCarTypeViewForKnowledge', data)
 };
 
-// 获取车型年款
+// 获取车系年款
 export const apiGetCarTypeYears = ids => {
 	let data = {
 		CarTypeIds: ids
@@ -626,7 +626,7 @@ export const apiGetKnowledgeList = (keyword, typeIds, years, offset) => {
 		PageSize: 20,
 		KeyWord: keyword,
 	};
-	
+
 	if (typeIds)
 		data.CarTypeIds = typeIds;
 	if (years)
@@ -634,3 +634,17 @@ export const apiGetKnowledgeList = (keyword, typeIds, years, offset) => {
 
 	return fetch('/api/Knowledge/KnowledgeSearch/GetKnowledgeSearchListForCar', data);
 };
+
+// 获取车型信息
+export const apiGetCar = id => fetch('/api/Knowledge/Car/' + id);
+// 获取文章
+export const apiGetKnowledgeText = id => fetch('/api/Knowledge/Text/' + id);
+
+// 获取适用配件信息
+export const apiGetMatchParts = id => fetch('/api/Knowledge/MatchPart/' + id)
+
+// 获取通用件信息
+export const apiGetGlobalParts = id => fetch('/api/Knowledge/PartsType/Global');
+
+// 关键字获取文章
+export const apiGetTextList = keyword => fetch('/api/Knowledge/Text', { Keyword: keyword });
