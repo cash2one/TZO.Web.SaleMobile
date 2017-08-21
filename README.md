@@ -58,12 +58,12 @@ npm run local (访问本地后台系统，需运行node-elm后台系统)
 - [x] 0.3.0 退货确认 cart/return -- 完成 李季
 - [x] 0.3.0 退货确认备注 cart/return/remark -- 完成 李季
 - 
-- [ ] 0.4.0 路线规划 path -- 未完成 
-- [ ] 0.4.0 定位功能 location -- 未完成
-- [ ] 0.4.0 知识库-车型搜索 knowledge-search -- 未完成
-- [ ] 0.4.0 知识库-车型详情 knowledge-detail -- 未完成
+- [x] 0.4.0 路线规划 path -- 未完成 
+- [x] 0.4.0 定位功能 location -- 未完成
+- [x] 0.4.0 知识库-车型搜索 knowledge-search -- 未完成
+- [x] 0.4.0 知识库-车型详情 knowledge-detail -- 未完成
 
-- [ ] 0.4.0 蓝牙打印 -- 未完成
+- [ ] 0.5.0 蓝牙打印 -- 未完成
 
 
 # 项目布局
