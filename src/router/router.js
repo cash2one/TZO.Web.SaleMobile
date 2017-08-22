@@ -19,6 +19,8 @@ const deliveryDetail = r => require.ensure([], () => r(require('../page/delivery
 
 const expressList = r => require.ensure([], () => r(require('../page/express/list/express-list')), 'express')
 const expressDetail = r => require.ensure([], () => r(require('../page/express/detail/express-detail')), 'express')
+const expressCorp = r => require.ensure([], () => r(require('../page/express/detail/express-corp')), 'express')
+const expressShipper = r => require.ensure([], () => r(require('../page/express/detail/express-shipper')), 'express')
 
 const goods = r => require.ensure([], () => r(require('../page/goods/goods')), 'goods')
 const goodsDetail = r => require.ensure([], () => r(require('../page/goods/detail/goods-detail')), 'goods')
@@ -149,7 +151,19 @@ export default [{
             component: expressList,
             children: [{
                 path: 'detail/:Id/:BillId', // 发货详情
-                component: expressDetail
+                component: expressDetail,
+                children: [
+                    {
+                        path: 'corp',
+                        name: 'express-corp',
+                        component: expressCorp
+                    },
+                    {
+                        path: 'shipper',
+                        name: 'express-shipper',
+                        component: expressShipper
+                    }
+                ]
             }]
         },
         // 商品

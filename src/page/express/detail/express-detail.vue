@@ -1,12 +1,12 @@
 <template>
-    <section class="page">
+    <section class="page rating">
         <header-title header-title="发货明细" goback="true"></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="m-form-list">
-                <header>
+                <div class="h3">
                     {{bill.CustomerName}}
-                    <span :class="{money:express.LogisticsStatus==2,number:express.LogisticsStatus==3}">{{express.LogisticsStatusName}}</span>
-                </header>
+                    <span :class="{red:express.LogisticsStatus==2,green:express.LogisticsStatus==3}">{{express.LogisticsStatusName}}</span>
+                </div>
                 <section class="item">
                     <h3>单号</h3>
                     <div class="content">
@@ -99,83 +99,14 @@
                     </div>
                 </section>
             </section>
+            <br />
+            <br />
+            <br />
+            <br />
             <section v-if="express.LogisticsStatus==2" class="confrim" @click="confrim">
                 <p>确认发货</p>
             </section>
-            <br />
-            <br />
-            <br />
-            <br />
         </section>
-        <!-- TODO: -->
-        <transition name="router-slid" mode="out-in">
-            <div v-if="showExpress" class="page rating">
-                <header class="header_title">
-                    <section class="header_title_goback" @click="showExprerssPage">
-                        <svg class="icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>
-                        </svg>
-                    </section>
-                    <section class="title_head ellipsis">
-                        <h2>
-                            <strong>选择物流</strong>
-                        </h2>
-                    </section>
-                </header>
-                <section class="scroll_container paddingTop">
-                    <section class="m-form-list">
-                        <section class="item" v-for="item in expressCorpsList" :key="item.Id" @click="chooseExpress(item)">
-                            <h2>
-                                <svg v-if="express.LogisticsCorpId==item.Id" class="icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
-                                </svg>
-                                <section v-else class="icon"></section>
-                                <strong>{{item.Name}}</strong>
-                            </h2>
-                            <section class="content">
-                                <p>
-                                    <span v-if="item.Phone">
-                                        联系电话：{{item.Phone}}
-                                    </span>
-                                    <span v-if="item.IsCollect" class="green">可代收</span>
-                                </p>
-                            </section>
-                        </section>
-                    </section>
-                </section>
-            </div>
-            <!-- TODO: -->
-            <div v-if="showShippers" class="page rating">
-                <header class="header_title">
-                    <section class="header_title_goback" @click="showShippersPage">
-                        <svg class="icon">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#chevron-left"></use>
-                        </svg>
-                    </section>
-                    <section class="title_head ellipsis">
-                        <h2>
-                            <strong>添加发货人</strong>
-                        </h2>
-                    </section>
-                </header>
-                <section class="scroll_container paddingTop">
-                    <section class="m-form-list">
-                        <section class="item" v-for="item in shipperList" :key="item.Id" @click="chooseShipper(item)">
-                            <h2>
-                                <svg v-if="item.checked" class="icon">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#select"></use>
-                                </svg>
-                                <section v-else class="icon"></section>
-                                <strong>{{item.Name}}</strong>
-                            </h2>
-                            <section class="content">
-                                <input type="text" class="input-text red" v-model="item.workload" />
-                            </section>
-                        </section>
-                    </section>
-                </section>
-            </div>
-        </transition>
         <transition name="fade">
             <section class="confrim_details" v-if="showError">
                 <section>
@@ -188,6 +119,9 @@
                     <line x1="22" y1="22" x2="38" y2="38" style="stroke:#999;stroke-width:2" />
                 </svg>
             </section>
+        </transition>
+        <transition name="router-slid" mode="out-in">
+            <router-view></router-view>
         </transition>
         <transition name="loading">
             <loading v-show="showLoading"></loading>
@@ -211,12 +145,9 @@ export default {
     data() {
         return {
             showLoading: true,
-            showExpress: false,
-            showShippers: false,
             showError: false,
             bill: null,
             express: null,
-            expressCorpsList: [],
             shipperList: [],
             message: '',
             exceptionMessage: ''
@@ -252,7 +183,7 @@ export default {
             this.bill = await apiGetDeal(billId);
             this.express = await apiGetExpress(id);
 
-            this.shipperList = this.employeeList;
+            this.shipperList = [...this.employeeList];
 
             let shipper = this.shipperList.find((val) => {
                 return val.Id == this.userInfo.UserId;
@@ -260,36 +191,18 @@ export default {
             shipper.checked = true;
             shipper.workload = this.bill.GoodsTotalNum;
 
-            this.initExpress();
-
             this.showLoading = false;
         },
-        async initExpress() {
-            let res;
 
-            if (this.express.CollectCost == 1)
-                res = await apiGetExpressCorps(true);
-            else
-                res = await apiGetExpressCorps();
-
-            this.expressCorpsList = res.Items;
-        },
         showExprerssPage() {
             if (this.express.ShipType == 1)
-                this.showExpress = !this.showExpress;
+                this.$router.push({ name: 'express-corp' });
         },
         showShippersPage() {
-            this.showShippers = !this.showShippers;
-        },
-        chooseExpress(express) {
-            this.express.LogisticsCorpId = express.Id;
-            this.express.LogisticsCorpName = express.Name;
-        },
-        chooseShipper(item) {
-            item.checked = !item.checked;
-            this.shipperList = [...this.shipperList];
+            this.$router.push({ name: 'express-shipper' });
         },
         async confrim() {
+            this.showLoading = true;
 
             let shippers = this.shipperList.filter((val) => { return val.checked });
             shippers = shippers.map((val) => {
@@ -301,6 +214,8 @@ export default {
             let res = await apiSaveExpress(this.express);
             if (res.Id)
                 await apiSendOutExpress(res.Id);
+                
+            this.showLoading = false;
 
             if (res.Message) {
                 this.showError = true;
@@ -386,7 +301,6 @@ export default {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 2rem;
     p {
         line-height: 2rem;
         @include sc(.75rem, #fff);

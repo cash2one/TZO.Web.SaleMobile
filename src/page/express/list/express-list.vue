@@ -73,9 +73,6 @@
                 </section>
             </transition>
         </section>
-        <transition name="router-slid" mode="out-in">
-            <router-view></router-view>
-        </transition>
         <transition name="loading">
             <loading v-show="showLoading"></loading>
         </transition>
