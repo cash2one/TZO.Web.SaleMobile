@@ -1,5 +1,5 @@
 <template>
-    <div class="page rating paddingTop">
+    <div class="page rating">
         <header-title header-title="新增客户" goback='true'></header-title>
         <section v-if="!showLoading" class="scroll_container paddingTop">
             <section class="m-form-list">

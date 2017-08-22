@@ -1,26 +1,27 @@
 <template>
-    <div class="page rating paddingTop">
-        <header-title header-title="库存详情" goback='true'>
-        </header-title>
-        <section class="m-form-list">
-            <div class="item">
-                <h2>本公司各仓库可用库存详情:</h2>
-            </div>
-            <div v-for="(stock, index) in allStorageStocks" :key="stock.Id">
-                <div class="item" :class="{'end':index==allStorageStocks.length-1}">
-                    <p class="content">{{stock.StorageName}}：{{stock.Num}}</p>
+    <div class="page rating">
+        <header-title header-title="库存详情" goback='true'></header-title>
+        <section class="scroll_container paddingTop">
+            <section class="m-form-list">
+                <div class="item">
+                    <h2>本公司各仓库可用库存详情:</h2>
                 </div>
-            </div>
-        </section>
-        <section class="m-form-list" style="margin-top:.4rem">
-            <div class="item">
-                <h2>各公司可用库存详情:</h2>
-            </div>
-            <div v-for="(stock, index) in allCorpsStocks" :key="stock.Id">
-                <div class="item" :class="{'end':index==allCorpsStocks.length-1}">
-                    <p class="content">{{stock.CorpName}}：{{stock.StockNum}}</p>
+                <div v-for="(stock, index) in allStorageStocks" :key="stock.Id">
+                    <div class="item" :class="{'end':index==allStorageStocks.length-1}">
+                        <p class="content">{{stock.StorageName}}：{{stock.Num}}</p>
+                    </div>
                 </div>
-            </div>
+            </section>
+            <section class="m-form-list" style="margin-top:.4rem">
+                <div class="item">
+                    <h2>各公司可用库存详情:</h2>
+                </div>
+                <div v-for="(stock, index) in allCorpsStocks" :key="stock.Id">
+                    <div class="item" :class="{'end':index==allCorpsStocks.length-1}">
+                        <p class="content">{{stock.CorpName}}：{{stock.StockNum}}</p>
+                    </div>
+                </div>
+            </section>
         </section>
     </div>
 </template>

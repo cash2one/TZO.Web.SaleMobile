@@ -84,6 +84,7 @@
         </transition>
         <loading v-if="showLoading"></loading>
         <alert-tip v-if="showAlert" @closeTip="closeTip" :alertText="alertText"></alert-tip>
+        <!-- TODO: -->
         <transition name="router-slid" mode="out-in">
             <div class="page rating" v-if="showSelectRecAccountDiv">
                 <header class="header_title">

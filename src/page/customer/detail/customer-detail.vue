@@ -1,101 +1,102 @@
 <template>
-    <div class="page rating paddingTop">
+    <div class="page rating">
         <header-title header-title="客户资料" goback='true'></header-title>
-        <section class="m-form-list">
-            <header>{{customer.BizObj.Name}}</header>
-            <div v-for="(item,index) in customer.BizObj.Phones" :key="item.id" class="item" :class="{end:index==(customer.BizObj.Phones.length-1)}">
-                <h2>
-                    {{item.Contact}}
-                </h2>
-                <div class="content">
-                    <p>{{item.PhoneNum}}</p>
-                    <svg class="icon" @click="bindWxOpenId(index)">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#weixin"></use>
-                    </svg>
+        <section class="scroll_container paddingTop">
+            <section class="m-form-list">
+                <header>{{customer.BizObj.Name}}</header>
+                <div v-for="(item,index) in customer.BizObj.Phones" :key="item.id" class="item" :class="{end:index==(customer.BizObj.Phones.length-1)}">
+                    <h2>
+                        {{item.Contact}}
+                    </h2>
+                    <div class="content">
+                        <p>{{item.PhoneNum}}</p>
+                        <svg class="icon" @click="bindWxOpenId(index)">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#weixin"></use>
+                        </svg>
+                    </div>
                 </div>
-            </div>
-            <div v-for="item in customer.BizObj.Addrs" :key="item.id" class="item start end">
-                <p>
-                    地址:{{item.Addr}}
-                </p>
-            </div>
-            <div class="item start">
-                <h2>业务区域</h2>
-                <p>{{customer.BizAreaName}}</p>
-            </div>
-            <div class="item">
-                <h2>客户等级:</h2>
-                <p>{{customer.CustomerLevelName}}</p>
-            </div>
-            <div class="item">
-                <h2>业务员:</h2>
-                <p>{{customer.EmployeeName}}</p>
-            </div>
-            <div class="item end">
-                <h2>备注:</h2>
-                <p>{{customer.BizObj.Note}}</p>
-            </div>
+                <div v-for="item in customer.BizObj.Addrs" :key="item.id" class="item start end">
+                    <p>
+                        地址:{{item.Addr}}
+                    </p>
+                </div>
+                <div class="item start">
+                    <h2>业务区域</h2>
+                    <p>{{customer.BizAreaName}}</p>
+                </div>
+                <div class="item">
+                    <h2>客户等级:</h2>
+                    <p>{{customer.CustomerLevelName}}</p>
+                </div>
+                <div class="item">
+                    <h2>业务员:</h2>
+                    <p>{{customer.EmployeeName}}</p>
+                </div>
+                <div class="item end">
+                    <h2>备注:</h2>
+                    <p>{{customer.BizObj.Note}}</p>
+                </div>
+            </section>
+            <section class="m-form-list">
+                <div class="item start">
+                    <h2>信用信息</h2>
+                </div>
+                <div v-if="customerCredit.ChargeOffDay>0 &&customerCredit.BalanceDay>0" class="item">
+                    <div>
+                        <p>
+                            <span>信用模式:</span>
+                            <span>信用卡模式</span>
+                        </p>
+                        <p>
+                            <span>出账日（首月）:</span>
+                            <span>{{customerCredit.ChargeOffDay}}</span>
+                        </p>
+                        <p>
+                            <span>结算日（末月）:</span>
+                            <span>{{customerCredit.BalanceDay}}</span>
+                        </p>
+                        <p>
+                            <span>结算周期（月）:</span>
+                            <span>{{customerCredit.GapMonth}}</span>
+                        </p>
+                    </div>
+                </div>
+                <div v-else class="item">
+                    <div>
+                        <p>
+                            <span>信用模式:</span>
+                            <span>账期模式</span>
+                        </p>
+                        <p>
+                            <span>账期天数:</span>
+                            <span>
+                                <span v-if="customerCredit.UnlimitedDeadLine">无限账期</span>
+                                <span v-else>{{customerCredit.DeadLine}}</span>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="item end">
+                    <h2>
+                        信用额度
+                    </h2>
+                    <div class="content">
+                        <p class="money" v-if="customerCredit.UnlimitedCredit">无限额度</p>
+                        <p v-else>
+                            <span class="money">{{customerCredit.CreditLimit}}</span>
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <br>
+            <br>
+            <br>
+            <br>
         </section>
-        <section class="m-form-list">
-            <div class="item start">
-                <h2>信用信息</h2>
-            </div>
-            <div v-if="customerCredit.ChargeOffDay>0 &&customerCredit.BalanceDay>0" class="item">
-                <div>
-                    <p>
-                        <span>信用模式:</span>
-                        <span>信用卡模式</span>
-                    </p>
-                    <p>
-                        <span>出账日（首月）:</span>
-                        <span>{{customerCredit.ChargeOffDay}}</span>
-                    </p>
-                    <p>
-                        <span>结算日（末月）:</span>
-                        <span>{{customerCredit.BalanceDay}}</span>
-                    </p>
-                    <p>
-                        <span>结算周期（月）:</span>
-                        <span>{{customerCredit.GapMonth}}</span>
-                    </p>
-                </div>
-            </div>
-            <div v-else class="item">
-                <div>
-                    <p>
-                        <span>信用模式:</span>
-                        <span>账期模式</span>
-                    </p>
-                    <p>
-                        <span>账期天数:</span>
-                        <span>
-                            <span v-if="customerCredit.UnlimitedDeadLine">无限账期</span>
-                            <span v-else>{{customerCredit.DeadLine}}</span>
-                        </span>
-                    </p>
-                </div>
-            </div>
-            <div class="item end">
-                <h2>
-                    信用额度
-                </h2>
-                <div class="content">
-                    <p class="money" v-if="customerCredit.UnlimitedCredit">无限额度</p>
-                    <p v-else>
-                        <span class="money">{{customerCredit.CreditLimit}}</span>
-                    </p>
-                </div>
-            </div>
-        </section>
-        <br>
-        <br>
-        <br>
-        <br>
         <section class="confirm_order" @click="getGpsCoordinates()">
             <p>重定位</p>
         </section>
         <alert-tip v-if="showAlert" @closeTip="closeTip" :alertText="alertText"></alert-tip>
-    
         <transition name="fade">
             <section class="confirm_details" v-if="showConfirm">
                 <section class="m-form-list">

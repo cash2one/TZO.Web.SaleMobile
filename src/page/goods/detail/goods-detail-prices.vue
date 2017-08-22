@@ -1,44 +1,45 @@
 <template>
-    <div class="page rating paddingTop">
-        <header-title header-title="价格详情" goback='true'>
-        </header-title>
-        <section class="m-form-list">
-            <div class="item">
-                <h2>客户等级价格:</h2>
-            </div>
-            <div v-for="(levelPrice, index) in custLevelPriceSys" :key="levelPrice.Id">
-                <div class="item" :class="{'end':index==custLevelPriceSys.length-1}">
-                    <p class="content">{{levelPrice.CustomerLevelName}}：{{levelPrice.Price}}</p>
+    <div class="page rating">
+        <header-title header-title="价格详情" goback='true'></header-title>
+        <section class="scroll_container paddingTop">
+            <section class="m-form-list">
+                <div class="item">
+                    <h2>客户等级价格:</h2>
                 </div>
-            </div>
-        </section>
-        <section class="m-form-list" style="margin-top:.4rem">
-            <div class="item">
-                <h2>客户最近价格:</h2>
-            </div>
-            <div class="item">
-                <p class="content">最高价格：{{customerPriceView.MaxPrice}}</p>
-            </div>
-            <div class="item">
-                <p class="content">最低价格：{{customerPriceView.MinPrice}}</p>
-            </div>
-            <div class="item end">
-                <p class="content">上次价格：{{customerPriceView.LastPrice}}</p>
-            </div>
-        </section>
-        <section class="m-form-list" style="margin-top:.4rem">
-            <div class="item">
-                <h2>商品最近价格:</h2>
-            </div>
-            <div class="item">
-                <p class="content">最高价格：{{refPriceView.MaxPrice}}</p>
-            </div>
-            <div class="item">
-                <p class="content">最低价格：{{refPriceView.MinPrice}}</p>
-            </div>
-            <div class="item end">
-                <p class="content">上次价格：{{refPriceView.LastPrice}}</p>
-            </div>
+                <div v-for="(levelPrice, index) in custLevelPriceSys" :key="levelPrice.Id">
+                    <div class="item" :class="{'end':index==custLevelPriceSys.length-1}">
+                        <p class="content">{{levelPrice.CustomerLevelName}}：{{levelPrice.Price}}</p>
+                    </div>
+                </div>
+            </section>
+            <section class="m-form-list" style="margin-top:.4rem">
+                <div class="item">
+                    <h2>客户最近价格:</h2>
+                </div>
+                <div class="item">
+                    <p class="content">最高价格：{{customerPriceView.MaxPrice}}</p>
+                </div>
+                <div class="item">
+                    <p class="content">最低价格：{{customerPriceView.MinPrice}}</p>
+                </div>
+                <div class="item end">
+                    <p class="content">上次价格：{{customerPriceView.LastPrice}}</p>
+                </div>
+            </section>
+            <section class="m-form-list" style="margin-top:.4rem">
+                <div class="item">
+                    <h2>商品最近价格:</h2>
+                </div>
+                <div class="item">
+                    <p class="content">最高价格：{{refPriceView.MaxPrice}}</p>
+                </div>
+                <div class="item">
+                    <p class="content">最低价格：{{refPriceView.MinPrice}}</p>
+                </div>
+                <div class="item end">
+                    <p class="content">上次价格：{{refPriceView.LastPrice}}</p>
+                </div>
+            </section>
         </section>
     </div>
 </template>
@@ -55,7 +56,7 @@ export default {
             saleRefPrice: {},           //获取当前商品等级价格、销售价格                  
             custLevelPriceSys: [],      //客户等级价格 
             customerPriceView: {},      //客户最近价格
-            refPriceView: {},           //商品最近价格                            
+            refPriceView: {},           //商品最近价格     
         }
     },
     mounted() {

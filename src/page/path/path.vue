@@ -1,7 +1,7 @@
 <template>
-    <section class="page">
+    <section class="page rating">
         <header-title header-title="路径" goback='true'></header-title>
-        <section class="rating paddingTop">
+        <section class="scroll_container paddingTop">
             <div id="container" ref="map" class="amap"></div>
             <svg @click="showPopup" class="icon navigation" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <path d="M1021.956088 0L0 424.793081 422.749168 601.250832l168.282103 422.749168L1021.956088 0"></path>
