@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <header-title header-title="知识库搜索" goback='true'></header-title>
-        <section class="paddingTop">
+        <section class="container paddingTop">
             <div class="cartype_form">
                 <div>
                     <input type="search" name="city" placeholder="输入车型" class="city_input input_style" required v-model='inputVaule' />
@@ -282,7 +282,7 @@ export default {
     }
 }
 
-.page {
+.container {
     header {
         border-bottom: 1px solid $bc;
         @include indent05;
