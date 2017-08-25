@@ -46,9 +46,9 @@
                     </div>
                 </router-link>
             </section>
-            <section class="confrim_order">
+            <section class="confirm_order">
                 <p>总金额 ¥{{total}}</p>
-                <p @click="confrim">确认退货</p>
+                <p @click="confirm">确认退货</p>
             </section>
             <br />
             <br />
@@ -57,12 +57,12 @@
         </section>
         <loading v-if="showLoading"></loading>
         <transition name="fade">
-            <section class="confrim_details" v-if="showConfrim">
+            <section class="confirm_details" v-if="showConfirm">
                 <section>
                     <h2 class="title">错误</h2>
                     <p>{{message}}{{exceptionMessage}}</p>
                 </section>
-                <svg width="60" height="60" class="close_activities" @click.stop="showConfrimFun">
+                <svg width="60" height="60" class="close_activities" @click.stop="showConfirmFun">
                     <circle cx="30" cy="30" r="25" stroke="#555" stroke-width="1" fill="none" />
                     <line x1="22" y1="38" x2="38" y2="22" style="stroke:#999;stroke-width:2" />
                     <line x1="22" y1="22" x2="38" y2="38" style="stroke:#999;stroke-width:2" />
@@ -87,7 +87,7 @@ export default {
             customerId: '', // 当前客户id
             remark: '',
             showLoading: true, //显示加载动画
-            showConfrim: false, //是否显示活动详情
+            showConfirm: false, //是否显示活动详情
             message: '',
             exceptionMessage: ''
         }
@@ -138,7 +138,7 @@ export default {
 
             this.showLoading = false;
         },
-        async confrim() {
+        async confirm() {
             this.showLoading = true;
             this.cart.storage = this.curStorage;
 
@@ -152,7 +152,7 @@ export default {
 
             if (res.Message) {
                 this.showLoading = false;
-                this.showConfrim = true;
+                this.showConfirm = true;
                 this.message = res.Message;
                 this.exceptionMessage = res.ExceptionMessage;
             }
@@ -161,8 +161,8 @@ export default {
                 this.$router.replace({ path: '/order/detail/', query: { Id: id, bizType: -12012 } });
             }
         },
-        showConfrimFun() {
-            this.showConfrim = !this.showConfrim;
+        showConfirmFun() {
+            this.showConfirm = !this.showConfirm;
         },
     }
 }
@@ -174,7 +174,7 @@ export default {
     margin-top: .4rem;
 }
 
-.confrim_order {
+.confirm_order {
     display: flex;
     position: fixed;
     bottom: 0;
@@ -196,7 +196,7 @@ export default {
     }
 }
 
-.confrim_details {
+.confirm_details {
     position: fixed;
     top: 0;
     left: 0;

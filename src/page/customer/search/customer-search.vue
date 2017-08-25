@@ -203,7 +203,7 @@
         <transition name="showcover">
             <div class="back_cover" v-show="sortBy"></div>
         </transition>
-        <customer-list :keyword='keyword' :bizAreaId='bizAreaId' :sortByFiled='sort.sortByFiled' :sortByType='sort.sortByType' :filters='filters' :confirmSelect="confirmStatus" @DidConfrim="clearSelect"></customer-list>
+        <customer-list :keyword='keyword' :bizAreaId='bizAreaId' :sortByFiled='sort.sortByFiled' :sortByType='sort.sortByType' :filters='filters' :confirmSelect="confirmStatus" @DidConfirm="clearSelect"></customer-list>
     </div>
 </template>
 

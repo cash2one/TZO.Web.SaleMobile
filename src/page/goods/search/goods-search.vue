@@ -186,7 +186,7 @@
         <transition name="showcover">
             <div class="back_cover" v-show="sortBy"></div>
         </transition>
-        <goods-list :keyword='keyword' :storage='orderStorage' :categoryId='categoryId' :sortByFiled='sort.sortByFiled' :sortByType='sort.sortByType' :filters='filters' :confirmSelect="confirmStatus" @DidConfrim="clearSelect" linkText="去下单"></goods-list>
+        <goods-list :keyword='keyword' :storage='orderStorage' :categoryId='categoryId' :sortByFiled='sort.sortByFiled' :sortByType='sort.sortByType' :filters='filters' :confirmSelect="confirmStatus" @DidConfirm="clearSelect" linkText="去下单"></goods-list>
     </div>
 </template>
 

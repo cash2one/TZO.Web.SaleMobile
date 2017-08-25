@@ -103,12 +103,12 @@
             <br />
             <br />
             <br />
-            <section v-if="express.LogisticsStatus==2" class="confrim" @click="confrim">
+            <section v-if="express.LogisticsStatus==2" class="confirm" @click="confirm">
                 <p>确认发货</p>
             </section>
         </section>
         <transition name="fade">
-            <section class="confrim_details" v-if="showError">
+            <section class="confirm_details" v-if="showError">
                 <section>
                     <h2 class="title">错误</h2>
                     <p>{{message}}{{exceptionMessage}}</p>
@@ -201,7 +201,7 @@ export default {
         showShippersPage() {
             this.$router.push({ name: 'express-shipper' });
         },
-        async confrim() {
+        async confirm() {
             this.showLoading = true;
 
             let shippers = this.shipperList.filter((val) => { return val.checked });
@@ -272,7 +272,7 @@ export default {
     }
 }
 
-.confrim_details {
+.confirm_details {
     position: fixed;
     top: 0;
     left: 0;
@@ -297,7 +297,7 @@ export default {
     }
 }
 
-.confrim {
+.confirm {
     position: fixed;
     bottom: 0;
     width: 100%;

@@ -65,7 +65,7 @@
                     </div>
                 </section>
             </section>
-            <section v-if="express.LogisticsStatus==2" class="confrim" @click="confrim">
+            <section v-if="express.LogisticsStatus==2" class="confirm" @click="confirm">
                 <p>确认送货</p>
             </section>
             <br />
@@ -74,7 +74,7 @@
             <br />
         </section>
         <transition name="fade">
-            <section class="confrim_details" v-if="showError">
+            <section class="confirm_details" v-if="showError">
                 <section>
                     <h2 class="title">错误</h2>
                     <p>{{message}}{{exceptionMessage}}</p>
@@ -140,7 +140,7 @@ export default {
 
             this.showLoading = false;
         },
-        async confrim() {
+        async confirm() {
 
             let res = await apiSaveExpress(this.express);
             if (res.Id)
@@ -169,7 +169,7 @@ export default {
     margin-top: .4rem;
 }
 
-.confrim_details {
+.confirm_details {
     position: fixed;
     top: 0;
     left: 0;
@@ -194,7 +194,7 @@ export default {
     }
 }
 
-.confrim {
+.confirm {
     position: fixed;
     bottom: 0;
     width: 100%;

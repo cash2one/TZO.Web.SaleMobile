@@ -625,9 +625,6 @@ export const apiPay = payModel => fetch('/api/Finance/Payments/Pay', payModel, '
 // 支付详情
 export const apiGetPaymentsDetail = id => fetch('/api/Finance/Payments/Query/' + id);
 
-// 在线支付流水详情
-export const apiGetPaymentsJournalDetail = id => fetch('/api/Finance/PaymentsJournal/' + id);
-
 // end 收付款相关服务
 // **********************************
 

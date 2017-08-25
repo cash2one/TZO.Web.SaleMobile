@@ -49,6 +49,8 @@ const payment = r => require.ensure([], () => r(require('../page/payment/payment
 const paymentDetail = r => require.ensure([], () => r(require('../page/payment/detail/payment-detail')), 'payment')
 const paymentList = r => require.ensure([], () => r(require('../page/payment/list/payment-list')), 'payment')
 const paymentNew = r => require.ensure([], () => r(require('../page/payment/new/payment-new')), 'payment')
+const paymentAccount = r => require.ensure([], () => r(require('../page/payment/new/payment-account')), 'payment')
+const paymentOnline = r => require.ensure([], () => r(require('../page/payment/new/payment-online')), 'payment')
 
 const profile = r => require.ensure([], () => r(require('../page/profile/profile')), 'profile')
 const profileInfo = r => require.ensure([], () => r(require('../page/profile/profile-info')), 'profile')
@@ -262,7 +264,19 @@ export default [{
             children: [
                 {
                     path: 'new', // 支付
-                    component: paymentNew
+                    component: paymentNew,
+                    children: [
+                        {
+                            path: 'account',
+                            name: 'payment-account',
+                            component: paymentAccount
+                        },
+                        {
+                            path:'online',
+                            name: 'payment-online',
+                            component:paymentOnline,
+                        },
+                    ]
                 },
                 {
                     path: 'list',// 支付列表

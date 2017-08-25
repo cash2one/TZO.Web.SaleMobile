@@ -187,7 +187,7 @@ export default {
 		//监听父级的确认按钮是否被点击，并且返回一个自定义事件通知父级，已经接收到数据，此时父级才可以清除已选状态
 		confirmSelect: function (val) {
 			this.listenPropChange();
-			// this.$emit('DidConfrim');
+			// this.$emit('DidConfirm');
 		},
 		lastPositionTime: function (val, oldVal) {
 			if (!oldVal) {
