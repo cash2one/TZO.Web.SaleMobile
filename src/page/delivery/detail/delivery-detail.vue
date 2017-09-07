@@ -198,7 +198,6 @@ export default {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 2rem;
     p {
         line-height: 2rem;
         @include sc(.75rem, #fff);
