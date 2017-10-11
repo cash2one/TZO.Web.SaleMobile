@@ -51,6 +51,7 @@
             </svg>
 
         </section>
+        <alert-tip v-if="showAlert" @closeTip="closeTip" :alertText="alertText"></alert-tip>
         <transition name="loading">
             <loading v-show="showLoading"></loading>
         </transition>
@@ -59,6 +60,7 @@
 <script>
 import { mapState } from 'vuex'
 import loading from 'src/components/common/loading'
+import alertTip from 'src/components/common/alert-tip'
 import wx from 'weixin-js-sdk'
 import {
     apiProcessPay,
@@ -80,6 +82,9 @@ export default {
 
             timer: null,
             showLoading: true,
+
+            showAlert: false,
+            alertText: null,
         }
     },
     mounted() {
@@ -95,6 +100,7 @@ export default {
     },
     components: {
         loading,
+        alertTip,
     },
     computed: {
         ...mapState([
@@ -162,6 +168,10 @@ export default {
             let res = await this.queryPaymentsStatus(journalId);
             if (!res)
                 this.timer = setTimeout(() => this.autoQueryPaymentsStatus(journalId), 1000 * 10);
+            else
+                {
+                     this.alert('支付成功!');
+                }
         },
         // 查询支付流水状态
         async queryPaymentsStatus(journalId) {
@@ -177,6 +187,9 @@ export default {
             this.showAlert = true;
             this.alertText = msg;
         },
+        closeTip() {
+            this.$router.replace('/home');
+        },
     },
     watch: {
         auth_code: function(val) {
@@ -187,7 +200,7 @@ export default {
                 if (res.ExceptionMessage == 'Repeat authcode submit') {
                     this.queryPaymentsStatus(this.facePayModel.Order.PayJournalId);
                 } else {
-                    this.message = rel.Message;
+                    this.message = res.Message;
                 }
             });
         },
