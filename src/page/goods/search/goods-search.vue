@@ -13,6 +13,11 @@
                     </svg>
                 </section>
                 <input v-model="keyword" type="text" placeholder="请输关键字或拼音码" class="search_text" />
+                <section class="header_search_icon">
+                    <svg class="icon" viewBox="0 0 24 24" @click="openCamera">
+                        <path d="M4,6H6V18H4V6M7,6H8V18H7V6M9,6H12V18H9V6M13,6H14V18H13V6M16,6H18V18H16V6M19,6H20V18H19V6M2,4V8H0V4A2,2 0 0,1 2,2H6V4H2M22,2A2,2 0 0,1 24,4V8H22V4H18V2H22M2,16V20H6V22H2A2,2 0 0,1 0,20V16H2M22,20V16H24V20A2,2 0 0,1 22,22H18V20H22Z" />
+                    </svg>
+                </section>
             </section>
         </header>
         <section class="m-sort">
@@ -193,6 +198,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import goodsList from 'src/components/common/goods-list'
+import wx from 'weixin-js-sdk'
 
 export default {
     data() {
@@ -293,6 +299,25 @@ export default {
             //状态改变时，因为子组件进行了监听，会重新获取数据进行筛选
             this.confirmStatus = !this.confirmStatus;
             this.sortBy = '';
+        },
+        openCamera() {
+            let self = this;
+            // 调用相机
+            wx.scanQRCode({
+                desc: 'scanQRCode desc',
+                needResult: 1,
+                scanType: ['barCode'],
+                success: function(res) {
+                    if (res.resultStr.indexOf(',') > -1)
+                        self.keyword = res.resultStr.split(',')[1];
+                    else
+                        self.keyword = res.resultStr;
+                },
+                error: function(err) {
+                    if (data.errMsg.indexOf('function_not_exist'))
+                        this.alert('微信版本过低，请升级微信版本!')
+                }
+            });
         },
         async initData() {
             await this.getGlobalProperty();

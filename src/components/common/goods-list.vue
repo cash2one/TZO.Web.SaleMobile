@@ -21,7 +21,7 @@
                         </section>
                     </section>
                     <section>
-                        <span>价格:</span>
+                        <span>{{curCustomer.CustomerLevelName}}价格:</span>
                         <span>¥</span>
                         <span class="money">{{item.LevelPrice}}</span>
                     </section>
@@ -32,14 +32,21 @@
                             <b class="number">{{item.StockNum}}</b>
                             <span>{{item.Goods.Units}}</span>
                         </li>
+                        <li>
+                            <span v-if="item.LastPrice">
+                                <span>上次:</span>
+                                <span>¥</span>
+                                <b class="money">{{item.LastPrice}}</b>
+                            </span>
+                            <span v-if="item.LastSaleNum">
+                                <span>x</span>
+                                <b class="count">{{item.LastSaleNum}}</b>
+                                <span>{{item.Goods.Units}}</span>
+                            </span>
+                        </li>
                         <li v-if="item.RangeSaleNum">
                             <span>近{{filters.LastSaleTime}}天:</span>
                             <b class="count">{{item.RangeSaleNum}}</b>
-                            <span>{{item.Goods.Units}}</span>
-                        </li>
-                        <li v-if="item.LastSaleNum">
-                            <span>上次销售:</span>
-                            <b class="count">{{item.LastSaleNum}}</b>
                             <span>{{item.Goods.Units}}</span>
                         </li>
                     </ul>
@@ -186,10 +193,10 @@ export default {
             'cartList',
             'curGoods'
         ]),
-        customerCart: function () {
+        customerCart: function() {
             return Object.assign({}, this.cartList[this.curCustomer.CustomerId]);
         },
-        customerCartCount: function () {
+        customerCartCount: function() {
             var count = 0;
             for (var i in this.customerCart.items)
                 if (this.customerCart.items.hasOwnProperty(i)) {
@@ -198,7 +205,7 @@ export default {
             return count;
         },
         // 检查额度 TODO:
-        minimumOrderAmount: function () {
+        minimumOrderAmount: function() {
             if (this.shopDetailData) {
                 return this.shopDetailData.float_minimum_order_amount - this.totalPrice;
             } else {
@@ -206,7 +213,7 @@ export default {
             }
         },
         // 总共价格
-        totalPrice: function () {
+        totalPrice: function() {
             let num = 0;
             for (var key in this.customerCart.items) {
                 if (this.customerCart.items.hasOwnProperty(key)) {
@@ -217,7 +224,7 @@ export default {
             return num;
         },
         // 购物车中总共商品的数量
-        totalNum: function () {
+        totalNum: function() {
             let num = 0;
             for (var key in this.customerCart.items) {
                 if (this.customerCart.items.hasOwnProperty(key)) {
@@ -366,21 +373,21 @@ export default {
         }
     },
     watch: {
-        keyword: function (val) {
+        keyword: function(val) {
             this.listenPropChange();
         },
-        categoryId: function (val) {
+        categoryId: function(val) {
             this.listenPropChange();
         },
         //监听父级传来的排序方式
-        sortByFiled: function (val) {
+        sortByFiled: function(val) {
             this.listenPropChange();
         },
-        sortByType: function (val) {
+        sortByType: function(val) {
             if (this.sortByFiled == 'Property')
                 this.listenPropChange();
         },
-        confirmSelect: function (val) {
+        confirmSelect: function(val) {
             this.listenPropChange();
         },
     }

@@ -94,14 +94,33 @@
                             <line x1="0" y1="16" x2="16" y2="0" stroke="#666" stroke-width="1.2" />
                         </svg>
                     </header>
+                    <section class="content">
+                        <div>
+                            <span>数量:</span>
+                            <input type="number" v-model="editItem.num" />
+                            <span> {{editItem.info.Goods.Units}} </span>
+                        </div>
+                        <div>
+                            <span>价格:</span>
+                            <input type="number" v-model="editItem.price" />
+                            <span> 元 </span>
+                        </div>
+                    </section>
                     <section class="details">
-                        <buy-cart :goods="editItem.info"></buy-cart>
-                        <span>价格:</span>
-                        <input type="number" v-model="editItem.price" />
-                        <span> ¥ </span>
+                        <div class="item" @click="editItem.price=editItem.info.LevelPrice">
+                            <span>{{cart.customer.CustomerLevelName}}价格:</span>
+                            <span>¥ </span>
+                            <span class="money">{{editItem.info.LevelPrice}}</span>
+                        </div>
+                        <div class="item" @click="editItem.price=editItem.info.LastPrice">
+                            <span>上次价格:</span>
+                            <span>¥ </span>
+                            <span class="money">{{editItem.info.LastPrice}}</span>
+                        </div>
                     </section>
                     <footer class="footer">
                         <div>
+                            <span>小计:</span>
                             <span>¥ </span>
                             <span class="money">{{editItem.num*editItem.price}}</span>
                         </div>
@@ -173,16 +192,16 @@ export default {
             'cartList',
             'userInfo'
         ]),
-        cart: function () {
+        cart: function() {
             return Object.assign({}, this.cartList[this.customerId]);
         },
-        bizObj: function () {
+        bizObj: function() {
             return this.cart.customer.BizObj;
         },
-        charge: function () {
+        charge: function() {
             return this.cart.charge;
         },
-        orderChargeTypeList: function () {
+        orderChargeTypeList: function() {
             let rel = [];
             if (this.isOrder)
                 rel = this.chargeTypeList;
@@ -194,7 +213,7 @@ export default {
             }
             return rel;
         },
-        total: function () {
+        total: function() {
             let money = 0;
             for (var key in this.cart.items) {
                 if (this.cart.items.hasOwnProperty(key)) {
@@ -292,6 +311,9 @@ export default {
         },
         closeEditItem() {
             this.showEdit = false;
+        },
+        editPrice(price){
+            
         },
         savePrice() {
             this.SAVE_PRICE({ customerId: this.customerId, goodsId: this.editItem.id, price: this.editItem.price });
@@ -417,17 +439,24 @@ export default {
             top: .5rem;
         }
     }
-    .details {
-        padding: .75rem;
-        position: relative;
+    .content {
+        @include fj;
+        @include indent10;
         span {
-            @include sc(.7rem, $font-color);
+            @include sc(.55rem, $font-color);
         }
         input {
-            @include sc(.7rem, $font-color);
-            width: 3rem;
+            @include sc(.8rem, $blue);
+            width: 2rem;
             display: inline-block;
             text-align: right;
+            border-bottom: 1px $border-color solid;
+        }
+    }
+    .details {
+        @include indent10;
+        .item{
+            line-height: 1.3rem;
         }
     }
     .footer {
