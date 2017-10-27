@@ -43,6 +43,13 @@ export default async (url = '', data = {}, type = 'GET', method = 'fetch') => {
 
 		try {
 			const response = await fetch(url, requestConfig);
+			
+			if (!response.ok)
+				return {
+					Message: '网络异常',
+					ExceptionMessage: response.statusText
+				};
+
 			let text = await response.text();
 			if (!text)
 				return {};

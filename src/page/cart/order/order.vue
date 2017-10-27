@@ -1,7 +1,7 @@
 <template>
     <div class="page">
         <header-title header-title="订单确认" goback='true'></header-title>
-        <section v-if="!showLoading" class="scroll_container paddingTop">
+        <section v-if="!showLoading && hasCart" class="scroll_container paddingTop">
             <router-link v-if="isOrder" :to="{name:'order-address'}" class="address_container">
                 <div class="address_empty_left">
                     <svg class="location_icon">
@@ -131,7 +131,7 @@
         </section>
         <loading v-if="showLoading"></loading>
         <transition name="fade">
-            <section class="confirm_details" v-if="showConfirm">
+            <section class="confirm_details" v-if="showConfirm && !showLoading">
                 <section v-if="!message">
                     <h2 class="title">意向／确认</h2>
                     <header class="title_style" @click="createOrder">
@@ -143,7 +143,7 @@
                 </section>
                 <section v-else>
                     <h2 class="title">错误</h2>
-                    <p>{{message}}{{exceptionMessage}}</p>
+                    <p>{{message}}:{{exceptionMessage}}</p>
                 </section>
                 <svg width="60" height="60" class="close_activities" @click.stop="showConfirmFun">
                     <circle cx="30" cy="30" r="25" stroke="#555" stroke-width="1" fill="none" />
@@ -159,362 +159,395 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
-import headerTitle from 'src/components/header/header-title'
-import selectSlidUp from 'src/components/common/select-slid-up'
-import loading from 'src/components/common/loading'
-import buyCart from 'src/components/common/buy-cart'
-import { apiCreateOrder, apiConfirmOrder, apiVerifyOrder } from 'src/service/getData'
+import { mapState, mapActions, mapMutations } from "vuex";
+import headerTitle from "src/components/header/header-title";
+import selectSlidUp from "src/components/common/select-slid-up";
+import loading from "src/components/common/loading";
+import buyCart from "src/components/common/buy-cart";
+import {
+  apiCreateOrder,
+  apiConfirmOrder,
+  apiVerifyOrder
+} from "src/service/getData";
 
 export default {
-    data() {
-        return {
-            customerId: '', // 当前客户id
-            isOrder: true,
-            editItem: null,
-            showEdit: false,
-            showLoading: true, //显示加载动画
-            showConfirm: false, //是否显示活动详情
-            message: '',
-            exceptionMessage: ''
+  data() {
+    return {
+      customerId: "", // 当前客户id
+      isOrder: true,
+      editItem: null,
+      showEdit: false,
+      showLoading: true, //显示加载动画
+      showConfirm: false, //是否显示活动详情
+      message: "",
+      exceptionMessage: ""
+    };
+  },
+  mounted() {
+    this.initData();
+  },
+  computed: {
+    ...mapState([
+      "globalPropertyList",
+      "shipTypeList",
+      "chargeTypeList",
+      "orderStorage",
+      "curStorage",
+      "cartList",
+      "userInfo"
+    ]),
+    hasCart: function() {
+      if (this.cartList[this.customerId]) return true;
+      return false;
+    },
+    cart: function() {
+      return Object.assign({}, this.cartList[this.customerId]);
+    },
+    bizObj: function() {
+      return this.cart.customer.BizObj;
+    },
+    charge: function() {
+      return this.cart.charge;
+    },
+    orderChargeTypeList: function() {
+      let rel = [];
+      if (this.isOrder) rel = this.chargeTypeList;
+      else {
+        this.chargeTypeList.forEach(val => {
+          if (val.Id == 0 || val.Id == 3) rel.push(val);
+        });
+      }
+      return rel;
+    },
+    total: function() {
+      let money = 0;
+      for (var key in this.cart.items) {
+        if (this.cart.items.hasOwnProperty(key)) {
+          var ele = this.cart.items[key];
+          money += ele.num * ele.price;
         }
+      }
+      return money;
+    }
+  },
+  components: {
+    headerTitle,
+    selectSlidUp,
+    loading,
+    buyCart
+  },
+  methods: {
+    ...mapActions(["getChargeType", "getShipType"]),
+    ...mapMutations([
+      "SAVE_ADDR",
+      "SAVE_PHONE",
+      "SAVE_CHARGE_TYPE",
+      "SAVE_SHIP_TYPE",
+      "SAVE_EXPRESS",
+      "SAVE_STORAGE",
+      "SAVE_PRICE",
+      "CLEAR_CART"
+    ]),
+    async initData() {
+      this.customerId = this.$route.params.customerId;
+
+      this.SAVE_ADDR({
+        customerId: this.customerId,
+        addr: this.getDefAddr(this.bizObj)
+      });
+      this.SAVE_PHONE({
+        customerId: this.customerId,
+        phone: this.getDefPhone(this.bizObj)
+      });
+
+      await this.getShipType();
+      this.SAVE_SHIP_TYPE({
+        customerId: this.customerId,
+        ship: this.shipTypeList[0]
+      });
+
+      await this.getChargeType();
+      this.SAVE_CHARGE_TYPE({
+        customerId: this.customerId,
+        charge: this.chargeTypeList[0]
+      });
+
+      let storage;
+
+      if (this.$route.params.storageId == this.orderStorage.Id)
+        storage = this.orderStorage;
+
+      if (this.$route.params.storageId == this.curStorage.Id) {
+        storage = this.curStorage;
+        this.isOrder = false;
+      }
+
+      this.SAVE_STORAGE({ customerId: this.customerId, storage: storage });
+
+      this.SAVE_EXPRESS({ customerId: this.customerId, express: {} });
+
+      this.showLoading = false;
     },
-    mounted() {
-        this.initData();
+    getDefPhone(bizObj) {
+      if (!bizObj) return {};
+
+      let res;
+      if (bizObj.Phones.length > 0) res = bizObj.Phones[0];
+
+      bizObj.Phones.forEach(val => {
+        if (val.IsPrimaryAddr) res = val;
+      });
+
+      return res;
     },
-    computed: {
-        ...mapState([
-            'globalPropertyList',
-            'shipTypeList',
-            'chargeTypeList',
-            'orderStorage',
-            'curStorage',
-            'cartList',
-            'userInfo'
-        ]),
-        cart: function() {
-            return Object.assign({}, this.cartList[this.customerId]);
-        },
-        bizObj: function() {
-            return this.cart.customer.BizObj;
-        },
-        charge: function() {
-            return this.cart.charge;
-        },
-        orderChargeTypeList: function() {
-            let rel = [];
-            if (this.isOrder)
-                rel = this.chargeTypeList;
-            else {
-                this.chargeTypeList.forEach((val) => {
-                    if (val.Id == 0 || val.Id == 3)
-                        rel.push(val);
-                });
-            }
-            return rel;
-        },
-        total: function() {
-            let money = 0;
-            for (var key in this.cart.items) {
-                if (this.cart.items.hasOwnProperty(key)) {
-                    var ele = this.cart.items[key];
-                    money += ele.num * ele.price
-                }
-            }
-            return money;
+    getDefAddr(bizObj) {
+      if (!bizObj) return {};
+
+      let res;
+      if (bizObj.Addrs.length > 0) res = bizObj.Addrs[0];
+
+      bizObj.Addrs.forEach(val => {
+        if (val.IsPrimaryAddr) res = val;
+      });
+
+      return res;
+    },
+    // 支付方式
+    chooseChargeType(id, name) {
+      this.SAVE_CHARGE_TYPE({
+        customerId: this.customerId,
+        charge: { Id: id, Name: name }
+      });
+    },
+    showEditItem(item) {
+      this.editItem = item;
+      this.showEdit = true;
+    },
+    closeEditItem() {
+      this.showEdit = false;
+    },
+    editPrice(price) {},
+    savePrice() {
+      this.SAVE_PRICE({
+        customerId: this.customerId,
+        goodsId: this.editItem.id,
+        price: this.editItem.price
+      });
+      this.showEdit = false;
+    },
+    async confirm() {
+      if (this.isOrder) this.showConfirm = true;
+      else {
+        this.showLoading = true;
+
+        let res = await apiCreateOrder(this.userInfo, this.cart);
+        let id;
+        if (res.Id) {
+          id = res.Id;
+          res = await apiConfirmOrder(res.Id);
         }
+
+        if (res.Id) {
+          res = await apiVerifyOrder(res.Id);
+        }
+
+        this.showLoading = false;
+
+        if (res.Message) {
+          this.showConfirm = true;
+          this.message = res.Message;
+          this.exceptionMessage = res.ExceptionMessage;
+        } else {
+          this.CLEAR_CART(this.customerId);
+          this.$router.replace({
+            path: "/order/detail/",
+            query: { Id: id, bizType: 12012 }
+          });
+        }
+      }
     },
-    components: {
-        headerTitle,
-        selectSlidUp,
-        loading,
-        buyCart
+    async createOrder() {
+      this.showLoading = true;
+
+      let res = await apiCreateOrder(this.userInfo, this.cart);
+      
+      this.showLoading = false;
+
+      this.CLEAR_CART(this.customerId);
+      this.$router.replace({
+        path: "/order/detail/",
+        query: { Id: res.Id, bizType: 12012 }
+      });
     },
-    methods: {
-        ...mapActions([
-            'getChargeType',
-            'getShipType'
-        ]),
-        ...mapMutations([
-            'SAVE_ADDR',
-            'SAVE_PHONE',
-            'SAVE_CHARGE_TYPE',
-            'SAVE_SHIP_TYPE',
-            'SAVE_EXPRESS',
-            'SAVE_STORAGE',
-            'SAVE_PRICE',
-            'CLEAR_CART'
-        ]),
-        async initData() {
-            this.customerId = this.$route.params.customerId;
+    async confirmOrder() {
+      this.showLoading = true;
 
-            this.SAVE_ADDR({ customerId: this.customerId, addr: this.getDefAddr(this.bizObj) });
-            this.SAVE_PHONE({ customerId: this.customerId, phone: this.getDefPhone(this.bizObj) });
+      let res = await apiCreateOrder(this.userInfo, this.cart);
 
-            await this.getShipType();
-            this.SAVE_SHIP_TYPE({ customerId: this.customerId, ship: this.shipTypeList[0] });
+      if (res.Id) res = await apiConfirmOrder(res.Id);
 
-            await this.getChargeType();
-            this.SAVE_CHARGE_TYPE({ customerId: this.customerId, charge: this.chargeTypeList[0] });
+      this.showLoading = false;
 
-            let storage;
-
-            if (this.$route.params.storageId == this.orderStorage.Id)
-                storage = this.orderStorage;
-
-            if (this.$route.params.storageId == this.curStorage.Id) {
-                storage = this.curStorage;
-                this.isOrder = false;
-            }
-
-            this.SAVE_STORAGE({ customerId: this.customerId, storage: storage });
-
-            this.SAVE_EXPRESS({ customerId: this.customerId, express: {} })
-
-            this.showLoading = false;
-        },
-        getDefPhone(bizObj) {
-            if (!bizObj) return {};
-
-            let res;
-            if (bizObj.Phones.length > 0)
-                res = bizObj.Phones[0];
-
-            bizObj.Phones.forEach((val) => {
-                if (val.IsPrimaryAddr)
-                    res = val;
-            });
-
-            return res;
-        },
-        getDefAddr(bizObj) {
-            if (!bizObj) return {};
-
-            let res;
-            if (bizObj.Addrs.length > 0)
-                res = bizObj.Addrs[0];
-
-            bizObj.Addrs.forEach((val) => {
-                if (val.IsPrimaryAddr)
-                    res = val;
-            });
-
-            return res;
-        },
-        // 支付方式
-        chooseChargeType(id, name) {
-            this.SAVE_CHARGE_TYPE({ customerId: this.customerId, charge: { Id: id, Name: name } });
-        },
-        showEditItem(item) {
-            this.editItem = item;
-            this.showEdit = true;
-        },
-        closeEditItem() {
-            this.showEdit = false;
-        },
-        editPrice(price){
-            
-        },
-        savePrice() {
-            this.SAVE_PRICE({ customerId: this.customerId, goodsId: this.editItem.id, price: this.editItem.price });
-            this.showEdit = false;
-        },
-        async confirm() {
-            if (this.isOrder)
-                this.showConfirm = true;
-            else {
-                let res = await apiCreateOrder(this.userInfo, this.cart);
-                let id;
-                if (res.Id) {
-                    id = res.Id;
-                    res = await apiConfirmOrder(res.Id);
-                }
-
-                if (res.Id) {
-                    res = await apiVerifyOrder(res.Id);
-                }
-
-                if (res.Message) {
-                    this.showConfirm = true;
-                    this.message = res.Message;
-                    this.exceptionMessage = res.ExceptionMessage;
-                }
-                else {
-                    this.CLEAR_CART(this.customerId);
-                    this.$router.replace({ path: '/order/detail/', query: { Id: id, bizType: 12012 } });
-                }
-            }
-        },
-        async createOrder() {
-            let res = await apiCreateOrder(this.userInfo, this.cart);
-
-            this.CLEAR_CART(this.customerId);
-            this.$router.replace({ path: '/order/detail/', query: { Id: res.Id, bizType: 12012 } });
-        },
-        async confirmOrder() {
-            let res = await apiCreateOrder(this.userInfo, this.cart);
-
-            if (res.Id)
-                res = await apiConfirmOrder(res.Id);
-
-            if (res.Message) {
-                this.message = res.Message;
-                this.exceptionMessage = res.ExceptionMessage;
-            }
-            else {
-                this.CLEAR_CART(this.customerId);
-                this.$router.replace({ path: '/order/detail/', query: { Id: res.Id, bizType: 12012 } });
-            }
-        },
-        showConfirmFun() {
-            this.showConfirm = !this.showConfirm;
-        },
+      if (res.Message) {
+        this.message = res.Message;
+        this.exceptionMessage = res.ExceptionMessage;
+      } else {
+        this.CLEAR_CART(this.customerId);
+        this.$router.replace({
+          path: "/order/detail/",
+          query: { Id: res.Id, bizType: 12012 }
+        });
+      }
     },
-}
+    showConfirmFun() {
+      this.showConfirm = !this.showConfirm;
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-@import 'src/style/mixin';
+@import "src/style/mixin";
 
 .item-list {
-    margin-top: .4rem;
+  margin-top: 0.4rem;
 }
 
 .address_empty_right {
-    @include wh(.6rem, .6rem);
-    fill: #999;
+  @include wh(0.6rem, 0.6rem);
+  fill: #999;
 }
 
 .confirm_order {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 2rem;
-    p {
-        line-height: 2rem;
-        @include sc(.75rem, #fff);
-    }
-    p:nth-of-type(1) {
-        background-color: #3c3c3c;
-        flex: 5;
-        padding-left: .7rem;
-    }
-    p:nth-of-type(2) {
-        flex: 2;
-        background-color: #56d176;
-        text-align: center;
-    }
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 2rem;
+  p {
+    line-height: 2rem;
+    @include sc(0.75rem, #fff);
+  }
+  p:nth-of-type(1) {
+    background-color: #3c3c3c;
+    flex: 5;
+    padding-left: 0.7rem;
+  }
+  p:nth-of-type(2) {
+    flex: 2;
+    background-color: #56d176;
+    text-align: center;
+  }
 }
 
 .edit_cover {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, .4);
-    z-index: 17;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 17;
 }
 
 .edit {
-    position: fixed;
-    top: 35%;
-    left: 15%;
-    width: 70%;
-    background-color: #fff;
-    z-index: 18;
+  position: fixed;
+  top: 35%;
+  left: 15%;
+  width: 70%;
+  background-color: #fff;
+  z-index: 18;
+  border: 1px;
+  border-radius: 0.2rem;
+  .header {
+    h4 {
+      @include sc(0.7rem, #222);
+      font-weight: normal;
+      text-align: center;
+      padding: 0.5rem;
+    }
+    .cancel {
+      position: absolute;
+      right: 0.5rem;
+      top: 0.5rem;
+    }
+  }
+  .content {
+    @include fj;
+    @include indent10;
+    span {
+      @include sc(0.55rem, $font-color);
+    }
+    input {
+      @include sc(0.8rem, $blue);
+      width: 2rem;
+      display: inline-block;
+      text-align: right;
+      border-bottom: 1px $border-color solid;
+    }
+  }
+  .details {
+    @include indent10;
+    .item {
+      line-height: 1.3rem;
+    }
+  }
+  .footer {
+    @include fj;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 0.5rem;
     border: 1px;
-    border-radius: 0.2rem;
-    .header {
-        h4 {
-            @include sc(.7rem, #222);
-            font-weight: normal;
-            text-align: center;
-            padding: .5rem;
-        }
-        .cancel {
-            position: absolute;
-            right: .5rem;
-            top: .5rem;
-        }
+    border-bottom-left-radius: 0.2rem;
+    border-bottom-right-radius: 0.2rem;
+    .addto_cart {
+      @include wh(4rem, 1.3rem);
+      background-color: $blue;
+      border-radius: 0.15rem;
+      @include sc(0.6rem, $blue-font-color);
+      text-align: center;
+      line-height: 1.3rem;
     }
-    .content {
-        @include fj;
-        @include indent10;
-        span {
-            @include sc(.55rem, $font-color);
-        }
-        input {
-            @include sc(.8rem, $blue);
-            width: 2rem;
-            display: inline-block;
-            text-align: right;
-            border-bottom: 1px $border-color solid;
-        }
-    }
-    .details {
-        @include indent10;
-        .item{
-            line-height: 1.3rem;
-        }
-    }
-    .footer {
-        @include fj;
-        align-items: center;
-        background-color: #f9f9f9;
-        padding: 0.5rem;
-        border: 1px;
-        border-bottom-left-radius: .2rem;
-        border-bottom-right-radius: .2rem;
-        .addto_cart {
-            @include wh(4rem, 1.3rem);
-            background-color: $blue;
-            border-radius: 0.15rem;
-            @include sc(.6rem, $blue-font-color);
-            text-align: center;
-            line-height: 1.3rem;
-        }
-    }
+  }
 }
 
 .confirm_details {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #262626;
-    z-index: 200;
-    padding: 1.25rem;
-    .title {
-        text-align: center;
-        @include sc(.8rem, #fff);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #262626;
+  z-index: 200;
+  padding: 1.25rem;
+  .title {
+    text-align: center;
+    @include sc(0.8rem, #fff);
+  }
+  .title_style {
+    text-align: center;
+    margin-top: 7rem;
+    span {
+      @include sc(1.5rem, #fff);
+      border: 3px solid #555;
+      padding: 2rem 1.4rem;
+      border-radius: 3rem;
     }
-    .title_style {
-        text-align: center;
-        margin-top: 7rem;
-        span {
-            @include sc(1.5rem, #fff);
-            border: 3px solid #555;
-            padding: 2rem 1.4rem;
-            border-radius: 3rem;
-        }
-    }
-    .close_activities {
-        position: absolute;
-        bottom: 1rem;
-        @include cl;
-    }
-    p {
-        margin-top: 2rem;
-        line-height: .7rem;
-        @include sc(.65rem, #fff);
-    }
+  }
+  .close_activities {
+    position: absolute;
+    bottom: 1rem;
+    @include cl;
+  }
+  p {
+    margin-top: 2rem;
+    line-height: 0.7rem;
+    @include sc(0.65rem, #fff);
+  }
 }
 
 .address_container {
-    background: url(../../../images/address_bottom.png) left bottom repeat-x;
-    background-color: $background-light-color;
+  background: url(../../../images/address_bottom.png) left bottom repeat-x;
+  background-color: $background-light-color;
 }
 </style>

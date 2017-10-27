@@ -69,7 +69,7 @@
                         版本
                     </h2>
                     <div class="content">
-                        <p>0.5.0</p>
+                        <p>0.5.1</p>
                     </div>
                 </div>
             </section>
